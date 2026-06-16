@@ -1,0 +1,18 @@
+eBill checker
+Android: https://play.google.com/store/apps/details?id=com.ebill.gas.water.internet.wapda.billchecker
+Dietify:
+Android:https://play.google.com/store/apps/details?id=com.food.diet.nutrition.tracker
+ios: https://apps.apple.com/us/app/dietify-food-nutrition/id6758654565
+
+speak and translate:
+android:https://play.google.com/store/apps/details?id=com.nextep.alllanguage.translator.alllanguagetranslator
+ios:https://apps.apple.com/jp/app/all-languages-translator/id1540403989?l=en-US
+
+expense Manger:
+
+ios: https://apps.apple.com/us/app/expense-flow-tracking/id6765915662
+android: https://play.google.com/store/apps/details?id=com.expensetracker.app.expenseflow
+
+pet Care:
+ios: https://apps.apple.com/us/app/pet-care-my-buddy/id6776939852 
+android: https://play.google.com/store/apps/details?id=com.petcare.dailycare
