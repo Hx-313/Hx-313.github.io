@@ -1,0 +1,5 @@
+[    1723ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4322/assets/favicon.png:0
+[    2246ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:4322/node_modules/.vite/deps/chunk-OY5C42Z6.js?v=1806100e:21608
+[    5344ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:4322/node_modules/.vite/deps/chunk-OY5C42Z6.js?v=0f6a001c:21608
+[  135572ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:4322/node_modules/.vite/deps/chunk-OY5C42Z6.js?v=0f6a001c:21608
+[  158296ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:4322/node_modules/.vite/deps/chunk-OY5C42Z6.js?v=0f6a001c:21608

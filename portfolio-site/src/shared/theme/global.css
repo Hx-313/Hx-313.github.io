@@ -1,0 +1,15 @@
+@import './tokens.css';
+
+* { box-sizing: border-box; }
+
+html {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-body);
+  scroll-behavior: smooth;
+}
+
+body { min-width: 320px; margin: 0; background: var(--color-background); color: var(--color-foreground); transition: background-color 350ms ease, color 350ms ease; }
+button, a { font: inherit; }
+a { color: inherit; }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--color-lime); outline-offset: 4px; }

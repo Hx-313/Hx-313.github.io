@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Principles from '../components/Principles.astro';
+---
+<BaseLayout
+  title="Hire a Flutter App & SaaS Developer | Custom Apps for US & UK Startups"
+  description="Turn your idea into a live, App-Store-ready product. Custom cross-platform Flutter apps & full SaaS platforms for founders in the US & UK. Book a free strategy call."
+  path="/"
+>
+  <Hero />
+  <Principles />
+
+  <!-- Placeholder anchors so the mascot beats + nav resolve while the rest of the
+       funnel is built out. These become the Services / Work / SaaS / Booking sections. -->
+  <section id="services" class="section"><div class="container"><div class="section-header center" data-reveal><span class="eyebrow">What you get</span><h2 class="h2">Services — coming next</h2><p class="lead">MVP, cross-platform apps, and full SaaS platforms. This section is next on the build list.</p></div></div></section>
+
+  <section id="work" class="section"><div class="container"><div class="section-header center" data-reveal><span class="eyebrow">Proof</span><h2 class="h2">Shipped work — coming next</h2><p class="lead">The 5 published apps, each as a full case study. Built collaboratively with your content.</p><a href="/projects" class="btn btn-primary" style="margin-top:20px">Go to projects →</a></div></div></section>
+
+  <section id="saas" class="section"><div class="container"><div class="section-header center" data-reveal><span class="eyebrow">Flagship</span><h2 class="h2">onlineorder.pk SaaS — coming next</h2><p class="lead">The centerpiece: a complete multi-tier platform built end-to-end.</p></div></div></section>
+
+  <section id="book" class="section"><div class="container"><div class="section-header center" data-reveal><span class="eyebrow">Let's build it</span><h2 class="h2">Book your free strategy call 🚀</h2><p class="lead">Calendar embed + lead form land here next. For now: reach out directly.</p><div class="hero-actions" style="justify-content:center;margin-top:24px"><a href="https://wa.me/923475662750" target="_blank" rel="noopener" class="btn btn-primary">WhatsApp</a><a href="mailto:aliabdullahva313@gmail.com" class="btn btn-ghost">Email</a></div></div></div></section>
+</BaseLayout>

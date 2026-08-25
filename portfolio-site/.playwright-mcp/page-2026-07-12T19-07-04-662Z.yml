@@ -1,0 +1,160 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Hafiz Ali Abdullah — home" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - text: <Hx313 />
+      - generic [ref=e5]:
+        - navigation "Primary" [ref=e6]:
+          - link "Services" [ref=e7] [cursor=pointer]:
+            - /url: /#services
+          - link "Work" [ref=e8] [cursor=pointer]:
+            - /url: /projects
+          - link "Principles" [ref=e9] [cursor=pointer]:
+            - /url: /#principles
+          - link "FAQ" [ref=e10] [cursor=pointer]:
+            - /url: /#faq
+        - group "Accent colour" [ref=e11]:
+          - button "Neon teal" [ref=e12] [cursor=pointer]
+          - button "Cyber purple" [ref=e13] [cursor=pointer]
+          - button "Ember orange" [ref=e14] [cursor=pointer]
+        - link "Book a Call" [ref=e15] [cursor=pointer]:
+          - /url: /#book
+  - generic [ref=e17]:
+    - generic [ref=e18]:
+      - img "Aero, robot guide" [ref=e19] [cursor=pointer]
+      - img "Dash, mascot" [ref=e40] [cursor=pointer]
+    - generic [ref=e54]:
+      - generic [ref=e55]: Aero
+      - generic [ref=e56]: Hey there! 👋 I'm Aero. This is Dash. We'll show you around Abdullah's studio.
+      - generic [ref=e57]:
+        - button "Skip" [ref=e58] [cursor=pointer]
+        - link "Book a call →" [ref=e59] [cursor=pointer]:
+          - /url: "#book"
+  - main [ref=e61]:
+    - generic [ref=e62]:
+      - generic:
+        - generic:
+          - generic: "01"
+          - generic: The Studio
+        - generic:
+          - button
+      - generic [ref=e66]:
+        - paragraph [ref=e67]: Hafiz Ali Abdullah · Flutter & SaaS Developer
+        - heading "Your idea, shipped in weeks." [level=1] [ref=e68]:
+          - generic [ref=e69]: Your idea,
+          - generic [ref=e70]:
+            - text: shipped in
+            - emphasis [ref=e71]: weeks.
+        - paragraph [ref=e72]:
+          - text: Custom cross-platform
+          - strong [ref=e73]: Flutter apps
+          - text: and full
+          - strong [ref=e74]: SaaS platforms
+          - text: — one codebase, both app stores, built by a developer who’s already shipped 5+ live products.
+        - generic [ref=e75]:
+          - link "Book a free call" [ref=e76] [cursor=pointer]:
+            - /url: "#book"
+          - link "See the work" [ref=e79] [cursor=pointer]:
+            - /url: /projects
+        - paragraph [ref=e80]: App Store · Google Play · Full SaaS · US & UK
+      - link "Scroll down" [ref=e81] [cursor=pointer]:
+        - /url: "#principles"
+        - generic [ref=e82]: Scroll
+    - generic [ref=e85]:
+      - generic [ref=e86]:
+        - generic [ref=e87]: How I work
+        - heading "The principles behind every build" [level=2] [ref=e88]
+        - paragraph [ref=e89]: The honest answers to what you're actually worried about when you hire a developer you haven't met in person.
+      - generic [ref=e90]:
+        - article [ref=e91]:
+          - text: "01"
+          - generic [ref=e92]: 🎯
+          - heading "Fixed scope, fixed price" [level=3] [ref=e93]
+          - paragraph [ref=e94]: You approve an itemised quote before a single line of code. No runaway hourly bills, no scope-creep surprises.
+        - article [ref=e95]:
+          - text: "02"
+          - generic [ref=e96]: 🪟
+          - heading "Weekly working demos" [level=3] [ref=e97]
+          - paragraph [ref=e98]: You see a real, running build every week — so you steer the product as it comes to life, never guessing.
+        - article [ref=e99]:
+          - text: "03"
+          - generic [ref=e100]: 🔑
+          - heading "You own everything" [level=3] [ref=e101]
+          - paragraph [ref=e102]: Full source code, store listings and IP handed to you on delivery. NDA signed before anything sensitive.
+        - article [ref=e103]:
+          - text: "04"
+          - generic [ref=e104]: 🕒
+          - heading "Real time-zone overlap" [level=3] [ref=e105]
+          - paragraph [ref=e106]: Hours that overlap US & UK business days, in clear English, talking directly to the developer — not a middleman.
+        - article [ref=e107]:
+          - text: "05"
+          - generic [ref=e108]: 📱
+          - heading "Ships to the store" [level=3] [ref=e109]
+          - paragraph [ref=e110]: 5+ apps approved and live on both stores. I handle submission and review, so your launch actually goes live.
+        - article [ref=e111]:
+          - text: "06"
+          - generic [ref=e112]: 🤝
+          - heading "In it past launch" [level=3] [ref=e113]
+          - paragraph [ref=e114]: I don’t vanish at handoff. Post-launch fixes and new features keep your product moving as it grows.
+    - generic [ref=e117]:
+      - generic [ref=e118]: What you get
+      - heading "Services — coming next" [level=2] [ref=e119]
+      - paragraph [ref=e120]: MVP, cross-platform apps, and full SaaS platforms. This section is next on the build list.
+    - generic [ref=e123]:
+      - generic [ref=e124]: Proof
+      - heading "Shipped work — coming next" [level=2] [ref=e125]
+      - paragraph [ref=e126]: The 5 published apps, each as a full case study. Built collaboratively with your content.
+      - link "Go to projects →" [ref=e127] [cursor=pointer]:
+        - /url: /projects
+    - generic [ref=e130]:
+      - generic [ref=e131]: Flagship
+      - heading "onlineorder.pk SaaS — coming next" [level=2] [ref=e132]
+      - paragraph [ref=e133]: "The centerpiece: a complete multi-tier platform built end-to-end."
+    - generic [ref=e136]:
+      - generic [ref=e137]: Let's build it
+      - heading "Book your free strategy call 🚀" [level=2] [ref=e138]
+      - paragraph [ref=e139]: "Calendar embed + lead form land here next. For now: reach out directly."
+      - generic [ref=e140]:
+        - link "WhatsApp" [ref=e141] [cursor=pointer]:
+          - /url: https://wa.me/923475662750
+        - link "Email" [ref=e142] [cursor=pointer]:
+          - /url: mailto:aliabdullahva313@gmail.com
+  - contentinfo [ref=e143]:
+    - generic [ref=e144]:
+      - generic [ref=e145]:
+        - generic [ref=e146]:
+          - link "<Hx313 />" [ref=e147] [cursor=pointer]:
+            - /url: /
+          - paragraph [ref=e148]: Custom Flutter apps & SaaS platforms for founders in the US & UK. Idea to App Store, done right.
+        - navigation "Services" [ref=e149]:
+          - heading "Services" [level=4] [ref=e150]
+          - link "MVP development" [ref=e151] [cursor=pointer]:
+            - /url: /#services
+          - link "Cross-platform apps" [ref=e152] [cursor=pointer]:
+            - /url: /#services
+          - link "SaaS platforms" [ref=e153] [cursor=pointer]:
+            - /url: /#services
+          - link "POS & ordering systems" [ref=e154] [cursor=pointer]:
+            - /url: /saas
+        - navigation "Explore" [ref=e155]:
+          - heading "Explore" [level=4] [ref=e156]
+          - link "Work" [ref=e157] [cursor=pointer]:
+            - /url: /projects
+          - link "Principles" [ref=e158] [cursor=pointer]:
+            - /url: /#principles
+          - link "SaaS" [ref=e159] [cursor=pointer]:
+            - /url: /saas
+          - link "Book a call" [ref=e160] [cursor=pointer]:
+            - /url: /#book
+        - navigation "Connect" [ref=e161]:
+          - heading "Connect" [level=4] [ref=e162]
+          - link "GitHub" [ref=e163] [cursor=pointer]:
+            - /url: https://github.com/Hx-313
+          - link "LinkedIn" [ref=e164] [cursor=pointer]:
+            - /url: https://www.linkedin.com/in/hafiz-ali-abdullah-660429207
+          - link "WhatsApp" [ref=e165] [cursor=pointer]:
+            - /url: https://wa.me/923475662750
+          - link "Email" [ref=e166] [cursor=pointer]:
+            - /url: mailto:aliabdullahva313@gmail.com
+      - paragraph [ref=e167]: © 2026 Hafiz Ali Abdullah. Custom app & SaaS development. All rights reserved.

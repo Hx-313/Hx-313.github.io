@@ -1,0 +1,30 @@
+---
+// The "vitals" — how Abdullah works. Establishes trust right after the hero.
+const principles = [
+  { icon: '🎯', title: 'Fixed scope, fixed price', body: 'You approve an itemised quote before a single line of code. No runaway hourly bills, no scope-creep surprises.' },
+  { icon: '🪟', title: 'Weekly working demos', body: 'You see a real, running build every week — so you steer the product as it comes to life, never guessing.' },
+  { icon: '🔑', title: 'You own everything', body: 'Full source code, store listings and IP handed to you on delivery. NDA signed before anything sensitive.' },
+  { icon: '🕒', title: 'Real time-zone overlap', body: 'Hours that overlap US & UK business days, in clear English, talking directly to the developer — not a middleman.' },
+  { icon: '📱', title: 'Ships to the store', body: '5+ apps approved and live on both stores. I handle submission and review, so your launch actually goes live.' },
+  { icon: '🤝', title: 'In it past launch', body: 'I don’t vanish at handoff. Post-launch fixes and new features keep your product moving as it grows.' },
+];
+---
+<section id="principles" class="section">
+  <div class="container">
+    <div class="section-header center" data-reveal>
+      <span class="eyebrow">How I work</span>
+      <h2 class="h2">The principles behind every build</h2>
+      <p class="lead">The honest answers to what you're actually worried about when you hire a developer you haven't met in person.</p>
+    </div>
+    <div class="principles-grid">
+      {principles.map((p, i) => (
+        <article class="principle" data-reveal data-reveal-delay={(i % 4) + 1}>
+          <span class="num">0{i + 1}</span>
+          <span class="p-icon">{p.icon}</span>
+          <h3>{p.title}</h3>
+          <p>{p.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

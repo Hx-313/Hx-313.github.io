@@ -1,0 +1,58 @@
+---
+const { pathname } = Astro.url;
+const links = [
+  { href: '/#services', label: 'Services' },
+  { href: '/projects', label: 'Work' },
+  { href: '/#principles', label: 'Principles' },
+  { href: '/#faq', label: 'FAQ' },
+];
+---
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="brand" aria-label="Hafiz Ali Abdullah — home"><span>&lt;</span>Hx313<span> /&gt;</span></a>
+    <div class="nav-wrap" id="navWrap">
+      <nav class="nav" aria-label="Primary">
+        {links.map((l) => (
+          <a href={l.href} class:list={[{ active: pathname === l.href }]}>{l.label}</a>
+        ))}
+      </nav>
+      <div class="theme-switcher" role="group" aria-label="Accent colour">
+        <button class="theme-btn t-teal active" data-theme="teal" title="Neon Teal" aria-label="Neon teal"></button>
+        <button class="theme-btn t-purple" data-theme="purple" title="Cyber Purple" aria-label="Cyber purple"></button>
+        <button class="theme-btn t-orange" data-theme="orange" title="Ember Orange" aria-label="Ember orange"></button>
+      </div>
+      <a href="/#book" class="header-cta">Book a Call</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<script>
+  // Theme switcher (persisted)
+  const apply = (t: string) => {
+    document.documentElement.setAttribute('data-theme', t);
+    try { localStorage.setItem('theme', t); } catch (e) {}
+    document.querySelectorAll('.theme-btn').forEach((b) =>
+      b.classList.toggle('active', (b as HTMLElement).dataset.theme === t)
+    );
+  };
+  const saved = (() => { try { return localStorage.getItem('theme'); } catch (e) { return null; } })();
+  if (saved) apply(saved);
+  document.querySelectorAll('.theme-btn').forEach((b) =>
+    b.addEventListener('click', () => apply((b as HTMLElement).dataset.theme!))
+  );
+
+  // Mobile drawer
+  const burger = document.getElementById('burger');
+  const nav = document.getElementById('navWrap');
+  burger?.addEventListener('click', () => {
+    const open = nav?.classList.toggle('open');
+    burger.classList.toggle('open', !!open);
+    burger.setAttribute('aria-expanded', String(!!open));
+  });
+  nav?.querySelectorAll('a').forEach((a) =>
+    a.addEventListener('click', () => { nav.classList.remove('open'); burger?.classList.remove('open'); })
+  );
+</script>

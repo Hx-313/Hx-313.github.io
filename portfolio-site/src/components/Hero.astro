@@ -1,0 +1,182 @@
+---
+// Cinematic hero — a diagonal phone with app UI + holographic content bursting
+// out of the screen (Three.js island), framed by "designed interface" chrome:
+// a serif display headline, wide-tracked micro-labels, an "01" section counter,
+// and carousel/play controls. Aero + Dash (center-right guide) present the phone.
+import HeroCanvas from './HeroCanvas.jsx';
+---
+<section id="hero" class="hero-cine">
+  <!-- 3D centerpiece stage (fills the section, sits behind the chrome) -->
+  <div class="hero-stage">
+    <HeroCanvas client:load />
+  </div>
+  <div class="hero-vignette" aria-hidden="true"></div>
+
+  <!-- interface chrome: "01" counter (left) + carousel/play (right) -->
+  <div class="hero-chrome" aria-hidden="true">
+    <div class="counter"><span class="c-num">01</span><span class="c-line"></span><span class="c-label">The&nbsp;Studio</span></div>
+    <div class="carousel">
+      <span class="dot active"></span><span class="dot"></span><span class="dot"></span>
+      <button class="play" type="button" tabindex="-1" aria-label="Section indicator">
+        <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor" aria-hidden="true"><path d="M0 0l11 6-11 6z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- centered copy -->
+  <div class="hero-content container">
+    <p class="eyebrow-micro" data-reveal>Hafiz&nbsp;Ali&nbsp;Abdullah <span>·</span> Flutter&nbsp;&amp;&nbsp;SaaS&nbsp;Developer</p>
+
+    <h1 class="hero-display" data-reveal data-reveal-delay="1">
+      <span class="l1">Your idea,</span>
+      <span class="l2">shipped in <em>weeks.</em></span>
+    </h1>
+
+    <p class="hero-value" data-reveal data-reveal-delay="2">
+      Custom cross-platform <strong>Flutter apps</strong> and full <strong>SaaS platforms</strong> —
+      one codebase, both app stores, built by a developer who&rsquo;s already shipped 5+ live products.
+    </p>
+
+    <div class="hero-cta" data-reveal data-reveal-delay="3">
+      <a href="#book" class="btn btn-primary">Book a free call
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href="/projects" class="btn btn-ghost">See the work</a>
+    </div>
+
+    <p class="tagline-micro" data-reveal data-reveal-delay="4">App&nbsp;Store <span>·</span> Google&nbsp;Play <span>·</span> Full&nbsp;SaaS <span>·</span> US&nbsp;&amp;&nbsp;UK</p>
+  </div>
+
+  <a href="#principles" class="hero-scroll" aria-label="Scroll down">
+    <span class="s-word">Scroll</span><span class="s-line"></span>
+  </a>
+</section>
+
+<style>
+  .hero-cine {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-end;          /* copy sits in the clear lower-left */
+    justify-content: flex-start;
+    overflow: hidden;
+    padding: 120px 0 84px;
+    background: radial-gradient(120% 90% at 55% 35%, #0a1122 0%, #05070f 62%, #04060d 100%);
+  }
+
+  /* 3D stage fills the section */
+  .hero-stage { position: absolute; inset: 0; z-index: 1; }
+  .hero-stage :global(.hero-canvas) { position: absolute; inset: 0; }
+  .hero-stage :global(canvas) { width: 100% !important; height: 100% !important; }
+
+  /* vignette to seat the centerpiece + protect text legibility */
+  .hero-vignette {
+    position: absolute; inset: 0; z-index: 2; pointer-events: none;
+    background:
+      radial-gradient(90% 70% at 50% 42%, transparent 40%, rgba(4,6,13,0.55) 100%),
+      linear-gradient(180deg, rgba(4,6,13,0.5) 0%, transparent 22% 62%, rgba(4,6,13,0.92) 100%);
+  }
+
+  /* ---- interface chrome ---- */
+  .hero-chrome {
+    position: absolute; inset: 0; z-index: 4; pointer-events: none;
+    padding: clamp(96px, 12vh, 132px) clamp(20px, 4vw, 56px) 0;
+  }
+  .counter {
+    position: absolute; left: clamp(20px, 4vw, 56px); top: 42%;
+    display: flex; align-items: center; gap: 14px;
+    transform: rotate(180deg); writing-mode: vertical-rl;
+  }
+  .counter .c-num { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 500; color: var(--text-primary); letter-spacing: 1px; }
+  .counter .c-line { writing-mode: horizontal-tb; width: 1px; height: 70px; background: linear-gradient(var(--color-primary), transparent); }
+  .counter .c-label { font-size: 0.62rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); }
+  .carousel {
+    position: absolute; right: clamp(20px, 4vw, 56px); top: 42%;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+  }
+  .carousel .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.22); }
+  .carousel .dot.active { background: var(--color-primary); box-shadow: 0 0 10px var(--color-primary); }
+  .carousel .play {
+    margin-top: 6px; width: 34px; height: 34px; border-radius: 50%;
+    display: grid; place-items: center; color: var(--color-primary);
+    border: 1px solid rgba(var(--color-primary-rgb), 0.4); background: rgba(var(--color-primary-rgb), 0.06);
+  }
+
+  /* ---- copy (sits in the clear lower-left, aligned to the site gutter) ---- */
+  .hero-content { position: relative; z-index: 5; text-align: left; width: min(100% - 40px, var(--maxw)); margin-inline: auto; }
+  .hero-content > * { max-width: 480px; }
+  .eyebrow-micro, .tagline-micro {
+    font-size: clamp(0.62rem, 1.4vw, 0.72rem); font-weight: 700; letter-spacing: 3.5px;
+    text-transform: uppercase; color: var(--text-secondary);
+  }
+  .eyebrow-micro { margin-bottom: 24px; display: flex; align-items: center; gap: 4px; }
+  .eyebrow-micro span, .tagline-micro span { color: var(--color-primary); margin: 0 3px; }
+
+  .hero-display {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(2.9rem, 7vw, 5.5rem);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    color: var(--text-primary);
+    text-shadow: 0 2px 40px rgba(4,6,13,0.7);
+    margin-bottom: 26px;
+  }
+  .hero-display .l1 { display: block; color: rgba(248,250,252,0.66); }
+  .hero-display .l2 { display: block; }
+  .hero-display em {
+    font-style: italic;
+    color: var(--color-primary);
+    text-shadow: 0 0 34px rgba(var(--color-primary-rgb), 0.55);
+  }
+
+  .hero-value {
+    max-width: 480px; margin: 0 0 34px;
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.6vw, 1.12rem); line-height: 1.65; color: var(--text-secondary);
+    text-wrap: pretty;
+  }
+  .hero-value strong { color: var(--text-primary); font-weight: 700; }
+
+  .hero-cta { display: flex; gap: 14px; justify-content: flex-start; flex-wrap: wrap; margin-bottom: 30px; }
+  .tagline-micro { color: rgba(148, 163, 184, 0.85); }  /* >=4.5:1 on the dark stage */
+
+  /* chrome + scroll micro-interactions */
+  .carousel .play { transition: transform 0.3s var(--ease-spring), background 0.3s, color 0.3s; }
+  .carousel .play:hover { transform: scale(1.1); background: rgba(var(--color-primary-rgb), 0.14); }
+  .hero-scroll { transition: color 0.3s; }
+  .hero-scroll:hover { color: var(--color-primary); }
+  .hero-scroll:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 4px; border-radius: 8px; }
+
+  /* scroll cue */
+  .hero-scroll {
+    position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%);
+    z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 10px;
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted);
+  }
+  .hero-scroll .s-line { width: 1px; height: 46px; background: linear-gradient(var(--color-primary), transparent); animation: scrollPulse 2s var(--ease-spring) infinite; transform-origin: top; }
+  @keyframes scrollPulse { 0%,100% { transform: scaleY(0.5); opacity: 0.5; } 50% { transform: scaleY(1); opacity: 1; } }
+
+  @media (max-width: 900px) {
+    .counter, .carousel { display: none; }
+    /* phone recenters -> dim it to an ambient backdrop, center the copy on top */
+    .hero-stage { opacity: 0.5; }
+    .hero-vignette { background:
+      radial-gradient(80% 60% at 50% 44%, transparent 25%, rgba(4,6,13,0.75) 100%),
+      linear-gradient(180deg, rgba(4,6,13,0.6) 0%, transparent 30% 60%, rgba(4,6,13,0.95) 100%); }
+    .hero-cine { align-items: center; }
+    .hero-content { text-align: center; }
+    .hero-content > * { margin-inline: auto; }
+    .eyebrow-micro, .hero-cta { justify-content: center; }
+    .hero-value { font-size: 1rem; }
+  }
+  @media (max-width: 600px) {
+    .hero-cine { padding-top: 104px; }
+    .hero-display { font-size: clamp(2.5rem, 11vw, 3.4rem); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-scroll .s-line { animation: none; }
+  }
+</style>

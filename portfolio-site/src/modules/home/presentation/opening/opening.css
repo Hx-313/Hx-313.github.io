@@ -1,0 +1,175 @@
+.opening {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 44%, color-mix(in srgb, var(--color-hero-background) 92%, var(--color-glitch) 8%) 0%, var(--color-hero-background) 42%, var(--color-stage-edge) 100%);
+  color: var(--color-hero-text);
+  transition: opacity 900ms var(--ease-out), visibility 900ms var(--ease-out), background 500ms ease;
+}
+
+.opening-center {
+  position: relative;
+  z-index: 2;
+  width: min(90vw, 75rem);
+  text-align: center;
+}
+
+.opening-caption,
+.opening-skip {
+  color: var(--color-muted-foreground);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.opening-caption {
+  position: absolute;
+  bottom: clamp(2rem, 6vh, 4rem);
+  left: 50%;
+  z-index: 2;
+  margin: 0;
+  opacity: 0.7;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.opening-statement {
+  display: flex;
+  min-height: 1.1em;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  color: var(--color-hero-text);
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 5.6rem);
+  font-weight: 900;
+  letter-spacing: -0.075em;
+  line-height: 0.9;
+  text-transform: uppercase;
+  text-shadow: 0 0 2rem color-mix(in srgb, var(--color-glitch) 12%, transparent);
+}
+
+.opening-word {
+  display: inline-flex;
+  white-space: nowrap;
+}
+
+.opening-word--accent {
+  color: var(--color-glitch);
+}
+
+.opening-space {
+  display: inline-block;
+  width: 0.28em;
+}
+
+.opening-character {
+  display: inline-block;
+  min-width: 0.03em;
+  opacity: 0;
+  transform: translateY(0.18em) scale(0.985);
+}
+
+.opening-statement[data-rendering='true'] .opening-character:nth-child(5n) {
+  transform: translateX(0.01em) translateY(0.18em) scale(0.985);
+}
+
+.opening-cursor {
+  width: clamp(0.18rem, 0.5vw, 0.5rem);
+  height: 0.82em;
+  margin-left: 0.15em;
+  background: var(--color-glitch);
+  animation: cursor-pulse 700ms steps(2, end) infinite;
+}
+
+.opening-loader {
+  position: absolute;
+  bottom: clamp(6rem, 16vh, 10rem);
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  width: min(72vw, 22rem);
+  z-index: 2;
+  margin: 0;
+  transform: translateX(-50%);
+}
+
+.opening-loader__track {
+  flex: 1;
+  height: 0.2rem;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--color-hero-text) 8%, transparent);
+}
+
+.opening-loader__track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-loader);
+  transition: width 80ms linear;
+}
+
+.opening-loader__value {
+  min-width: 2.8rem;
+  color: var(--color-loader);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.opening-noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.045;
+  background-image: linear-gradient(var(--color-glitch) 1px, transparent 1px);
+  background-size: 100% 8px;
+  mask-image: linear-gradient(to bottom, transparent, black 35%, transparent 85%);
+  pointer-events: none;
+}
+
+.opening-noise::after {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 18%, var(--color-hero-background) 82%);
+  content: '';
+}
+
+.opening-skip {
+  position: absolute;
+  right: clamp(1rem, 4vw, 3rem);
+  bottom: clamp(1.5rem, 4vw, 3rem);
+  z-index: 3;
+  padding: 0.7rem 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-muted-foreground);
+  cursor: pointer;
+  transition: color 180ms ease;
+}
+
+.opening-skip:hover { color: var(--color-glitch); }
+.opening-skip span { color: var(--color-glitch); font-size: 1rem; letter-spacing: normal; }
+
+@keyframes cursor-pulse { 0%, 45% { opacity: 1; } 46%, 100% { opacity: 0; } }
+
+@media (max-width: 600px) {
+  .opening-center { width: min(92vw, 34rem); }
+  .opening-statement { font-size: clamp(2rem, 10vw, 4rem); letter-spacing: -0.06em; }
+  .opening-loader { bottom: 17vh; width: min(76vw, 20rem); }
+  .opening-caption { bottom: 6vh; font-size: 0.55rem; letter-spacing: 0.17em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .opening { transition: none; }
+  .opening-character { opacity: 1; transform: none; }
+  .opening-cursor { opacity: 1; }
+}
