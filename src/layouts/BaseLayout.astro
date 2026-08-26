@@ -4,6 +4,7 @@ import '../styles/mascots.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Mascots from '../components/Mascots.jsx';
+import { siteLinks, siteUrl } from '../core/constants.js';
 
 const {
   title = 'Hire a Flutter App & SaaS Developer | Hafiz Ali Abdullah',
@@ -13,7 +14,7 @@ const {
   jsonld = null,
 } = Astro.props;
 
-const site = Astro.site?.toString().replace(/\/$/, '') || 'https://YOURDOMAIN.com';
+const site = Astro.site?.toString().replace(/\/$/, '') || siteUrl;
 const canonical = `${site}${path}`;
 ---
 <!doctype html>
@@ -52,7 +53,7 @@ const canonical = `${site}${path}`;
       {
         '@type': 'Person', '@id': `${site}/#person`, name: 'Hafiz Ali Abdullah',
         jobTitle: 'Flutter App & SaaS Developer', url: `${site}/`,
-        sameAs: ['https://github.com/Hx-313', 'https://www.linkedin.com/in/hafiz-ali-abdullah-660429207'],
+        sameAs: [siteLinks.github, siteLinks.linkedin],
         knowsAbout: ['Flutter', 'Dart', 'iOS', 'Android', 'SaaS', 'Point of Sale', 'MVP Development'],
       },
       {

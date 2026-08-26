@@ -16,6 +16,14 @@
 - Support keyboard navigation, visible focus, semantic HTML, reduced motion, and no horizontal overflow.
 - Keep the hero headline dominant and use green as a scarce accent.
 
+## Sprint 1 alignment with portfolio-trends guidance
+
+- [ ] Preserve the dark-mode engineering atmosphere and a single recognizable green brand thread.
+- [ ] Keep micro-interactions purposeful: hover, focus, selection, and reveal states should make work discovery clearer without puzzle navigation.
+- [ ] Keep contact access visible in sticky navigation and expose live WOS destinations directly from the command center.
+- [ ] Use real product screenshots and the system map for tactile/retro-futurist depth; avoid decorative effects that compete with the work.
+- [ ] Keep the first viewport focused on positioning, capability, and a clear next action.
+
 ---
 
 ## Sprint roadmap

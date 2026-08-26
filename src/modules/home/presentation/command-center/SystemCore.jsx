@@ -1,4 +1,5 @@
 import { systemDomains } from '../../../../data/projects.js';
+import { wosLinks } from '../../../../core/constants.js';
 
 const positions = [
   { x: 18, y: 22 }, { x: 82, y: 22 }, { x: 18, y: 78 }, { x: 82, y: 78 },
@@ -10,10 +11,10 @@ export default function SystemCore({ project, highlightedDomains }) {
       <div className="system-core__topline"><span>Active system</span><span>WOS / 01</span></div>
       <div className="wos-core__map" role="img" aria-labelledby="wos-core-title wos-core-desc">
         <h2 id="wos-core-title">WOS <span>core</span></h2><p id="wos-core-desc">OnlineOrder.pk restaurant technology platform.</p>
-        <div className="wos-core__node wos-core__node--customer"><strong>Customer web</strong><small>Online ordering</small></div>
-        <div className="wos-core__node wos-core__node--admin"><strong>Admin panel</strong><small>Control center</small></div>
+        <a className="wos-core__node wos-core__node--customer" href={wosLinks.customerWebsite} target="_blank" rel="noopener noreferrer"><strong>Customer web</strong><small>Online ordering ↗</small></a>
+        <a className="wos-core__node wos-core__node--admin" href={wosLinks.adminPanel} target="_blank" rel="noopener noreferrer"><strong>Admin panel</strong><small>Control center ↗</small></a>
         <div className="wos-core__node wos-core__node--terminal"><strong>Order terminal</strong><small>Front of house</small></div>
-        <div className="wos-core__node wos-core__node--epos"><strong>ePOS</strong><small>Sales + inventory</small></div>
+        <a className="wos-core__node wos-core__node--epos" href={wosLinks.epos} target="_blank" rel="noopener noreferrer"><strong>ePOS</strong><small>Sales + inventory ↗</small></a>
         <div className="wos-core__node wos-core__node--kitchen"><strong>Kitchen / KDS</strong><small>Fulfilment</small></div>
         <i className="wos-core__line wos-core__line--one" /><i className="wos-core__line wos-core__line--two" /><i className="wos-core__line wos-core__line--three" /><i className="wos-core__line wos-core__line--four" /><i className="wos-core__line wos-core__line--five" />
       </div>

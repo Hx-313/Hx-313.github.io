@@ -27,6 +27,10 @@ Avoid blank or black intermediate frames, aggressive flash cuts, generic SaaS pr
 - Make capability legible within the first viewport.
 - Let atmosphere support typography and content rather than compete with it.
 - Keep the experience accessible, including a reduced-motion path.
+- Use the portfolio-trend guidance selectively: micro-interactions should clarify navigation and work discovery, never gate content behind a puzzle or novelty interaction.
+- Keep essential contact access persistent in the sticky header and make live project destinations obvious where they exist.
+- Preserve one recognizable brand color thread and the dark engineering atmosphere; do not dilute the identity with unrelated trend palettes.
+- Use the system map, real project imagery, and restrained surface texture as the tactile layer instead of adding decorative effects without meaning.
 
 ## Accessibility & Inclusion
 

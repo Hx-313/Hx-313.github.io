@@ -8,6 +8,19 @@ The experience uses an almost-black, green-undertoned visual language with mint-
 
 The visual hierarchy is: `A MINDSET BEYOND ORDINARY.` → `SYSTEM COMMAND CENTER` → `WOS — ONLINEORDER.PK ACTIVE SYSTEM` → connected product surfaces → project ecosystem → supporting status, activity, technologies, and proof metrics.
 
+## Sprint 1 trend alignment
+
+The Envato 2026 portfolio-trends guidance is adopted as a set of guardrails, not as a visual replacement. The current Sprint 1 direction already aligns with dark mode, color branding, immersive motion, and interactive work discovery. The implementation should therefore:
+
+- keep the racing-green / mint signal as the recognizable HX313 color thread;
+- use hover, focus, selection, and reveal states as small “gamified” cues while keeping every route and CTA direct;
+- keep the sticky contact CTA visible so essential information is not buried below the fold;
+- use real WOS screenshots and live destinations as the portfolio’s hybrid/product proof layer;
+- retain the system map and subtle grid/texture as purposeful retro-futurist atmosphere, without adding noisy decorative effects;
+- preserve the minimalist hierarchy: the work and positioning lead, while motion and atmosphere support them.
+
+The project explicitly does not adopt puzzle navigation, heavy 3D, trend-driven pastel palettes, or decorative texture that reduces contrast or performance.
+
 ## Experience structure
 
 - Fixed/sticky minimal navigation with HX313 mark, Work/Services/About anchors, System/Light/Dark theme control, and Let's Talk CTA.

@@ -1,4 +1,5 @@
 ---
+import { contactLinks, siteLinks } from '../core/constants.js';
 const year = new Date().getFullYear();
 ---
 <footer class="site-footer">
@@ -24,10 +25,10 @@ const year = new Date().getFullYear();
       </nav>
       <nav class="footer-col" aria-label="Connect">
         <h4>Connect</h4>
-        <a href="https://github.com/Hx-313" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://www.linkedin.com/in/hafiz-ali-abdullah-660429207" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://wa.me/923475662750" target="_blank" rel="noopener">WhatsApp</a>
-        <a href="mailto:aliabdullahva313@gmail.com">Email</a>
+        <a href={siteLinks.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href={siteLinks.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href={contactLinks.whatsapp} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        <a href={contactLinks.email}>Email</a>
       </nav>
     </div>
     <p class="copyright">&copy; {year} Hafiz Ali Abdullah. Custom app &amp; SaaS development. All rights reserved.</p>

@@ -1,5 +1,9 @@
 # Hafiz Ali Abdullah — Portfolio & SaaS Website — Project Brief / Handoff
 
+## Mandatory change-tracking instruction
+
+Before doing any work, every agent must read the root-level [`CHANGE.md`](CHANGE.md), review relevant prior entries, and follow its workflow. Every change made to this project must be recorded in `CHANGE.md` before the agent completes its task. This includes source code, styles, assets, configuration, dependencies, tests, and documentation. Do not delete historical entries; append a dated entry using the format defined in `CHANGE.md`.
+
 > This file is the single source of truth for the project. It captures every decision, preference,
 > and the current build state from the planning conversation, so work can continue in Claude Code
 > with full context. (Claude Code auto-loads `CLAUDE.md` as project memory — keep this at the repo root.)

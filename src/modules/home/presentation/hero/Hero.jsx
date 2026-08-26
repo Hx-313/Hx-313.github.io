@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { animate as animeAnimate } from 'animejs';
+import { contactLinks } from '../../../../core/constants.js';
 import HeroContent from './HeroContent.jsx';
 import HeroVisual from './HeroVisual.jsx';
 import './hero.css';
@@ -27,7 +28,7 @@ export default function Hero({ revealed, controller }) {
         <p className="hero-cta-rail__label">Explore the work when you’re ready</p>
         <div className="hero-actions">
           <a className="hero-button hero-button--primary" href="#work">Explore the work <span aria-hidden="true">↗</span></a>
-          <a className="hero-button hero-button--ghost" href="mailto:aliabdullahva313@gmail.com">Start a conversation</a>
+          <a className="hero-button hero-button--ghost" href={contactLinks.email}>Start a conversation</a>
         </div>
       </section>
     </>

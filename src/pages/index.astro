@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import Principles from '../components/Principles.astro';
+import { contactLinks } from '../core/constants.js';
 ---
 <BaseLayout
   title="Hire a Flutter App & SaaS Developer | Custom Apps for US & UK Startups"
@@ -19,5 +20,5 @@ import Principles from '../components/Principles.astro';
 
   <section id="saas" class="section"><div class="container"><div class="section-header center" data-reveal><span class="eyebrow">Flagship</span><h2 class="h2">onlineorder.pk SaaS — coming next</h2><p class="lead">The centerpiece: a complete multi-tier platform built end-to-end.</p></div></div></section>
 
-  <section id="book" class="section"><div class="container"><div class="section-header center" data-reveal><span class="eyebrow">Let's build it</span><h2 class="h2">Book your free strategy call 🚀</h2><p class="lead">Calendar embed + lead form land here next. For now: reach out directly.</p><div class="hero-actions" style="justify-content:center;margin-top:24px"><a href="https://wa.me/923475662750" target="_blank" rel="noopener" class="btn btn-primary">WhatsApp</a><a href="mailto:aliabdullahva313@gmail.com" class="btn btn-ghost">Email</a></div></div></div></section>
+  <section id="book" class="section"><div class="container"><div class="section-header center" data-reveal><span class="eyebrow">Let's build it</span><h2 class="h2">Book your free strategy call 🚀</h2><p class="lead">Calendar embed + lead form land here next. For now: reach out directly.</p><div class="hero-actions" style="justify-content:center;margin-top:24px"><a href={contactLinks.whatsapp} target="_blank" rel="noopener noreferrer" class="btn btn-primary">WhatsApp</a><a href={contactLinks.email} class="btn btn-ghost">Email</a></div></div></div></section>
 </BaseLayout>

@@ -4,6 +4,7 @@ import Hero from './hero/Hero.jsx';
 import ThemeToggle from '../../../shared/theme/ThemeToggle.jsx';
 import { useTheme } from '../../../shared/theme/useTheme.js';
 import { useCommandCenter } from '../../../hooks/useCommandCenter.js';
+import { contactLinks } from '../../../core/constants.js';
 import './home.css';
 
 export default function HomePage() {
@@ -35,7 +36,7 @@ export default function HomePage() {
           </nav>
           <div className="header-actions">
             <ThemeToggle theme={theme} onChange={setTheme} />
-            <a className="header-link" href="mailto:aliabdullahva313@gmail.com">Let’s talk <span aria-hidden="true">↗</span></a>
+            <a className="header-link" href={contactLinks.email}>Let’s talk <span aria-hidden="true">↗</span></a>
           </div>
         </header>
 

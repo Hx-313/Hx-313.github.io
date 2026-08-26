@@ -1,4 +1,5 @@
 import { assetPath } from '../shared/assetPath.js';
+import { wosLinks } from '../core/constants.js';
 
 export const projects = [
   {
@@ -7,10 +8,10 @@ export const projects = [
     image: assetPath('/assets/wos/epos-desktop.png'), metrics: { outlets: '24', products: '1,842', users: '3.2K+' },
     domains: ['saas', 'backend', 'cloud'], cta: 'View case study',
     surfaces: [
-      { label: 'Admin panel', image: assetPath('/assets/wos/epos-dark-mode-menu.jpeg') },
+      { label: 'Admin panel', image: assetPath('/assets/wos/epos-dark-mode-menu.jpeg'), href: wosLinks.adminPanel },
       { label: 'Order terminal', image: assetPath('/assets/wos/terminal-1.jpeg') },
-      { label: 'ePOS', image: assetPath('/assets/wos/epos-desktop.png') },
-      { label: 'Customer web', image: assetPath('/assets/wos/customer-web.png') },
+      { label: 'ePOS', image: assetPath('/assets/wos/epos-desktop.png'), href: wosLinks.epos },
+      { label: 'Customer web', image: assetPath('/assets/wos/customer-web.png'), href: wosLinks.customerWebsite },
     ],
   },
   { id: 'dietify', name: 'Dietify', category: 'Health', type: 'Health · Mobile App', status: 'shipped', image: assetPath('/assets/logos/dietify.png'), domains: ['mobile'], cta: 'Explore project' },
