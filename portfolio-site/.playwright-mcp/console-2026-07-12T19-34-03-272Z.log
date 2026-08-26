@@ -1,6 +1,0 @@
-[     534ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:4322/node_modules/.vite/deps/chunk-OY5C42Z6.js?v=0f6a001c:21608
-[   61426ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:4322/node_modules/.vite/deps/chunk-OY5C42Z6.js?v=0f6a001c:21608
-[23602672ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:4322/@vite/client:1695
-[23602740ms] [ERROR] WebSocket connection to 'ws://localhost:4322/' failed: Error in connection establishment: net::ERR_NETWORK_IO_SUSPENDED @ http://localhost:4322/@vite/client:1766
-[23628830ms] [ERROR] WebSocket connection to 'ws://localhost:4322/' failed: Error in connection establishment: net::ERR_NETWORK_IO_SUSPENDED @ http://localhost:4322/@vite/client:1766
-[23636536ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:4322/node_modules/.vite/deps/chunk-OY5C42Z6.js?v=0f6a001c:21608
