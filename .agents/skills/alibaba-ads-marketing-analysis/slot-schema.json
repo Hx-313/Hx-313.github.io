@@ -1,0 +1,17 @@
+{
+  "skill": "alibaba-ads-marketing-analysis",
+  "slots": [
+    {
+      "name": "time_range",
+      "label": "时间范围",
+      "required": true,
+      "default_source": "user_preferences.slot_defaults.default_time_range",
+      "fallback": "近7天"
+    }
+  ],
+  "default_action": {
+    "description": "当用户只说'看广告数据/广告效果'时的默认策略",
+    "rule": "直接分析用户偏好时间范围内的广告投放数据，给出整体效果评估",
+    "inject_prompt": "用户希望了解广告投放效果，请直接使用上方填充的 time_range 参数分析广告数据，包含花费、点击、转化等核心指标，无需追问具体广告计划。"
+  }
+}

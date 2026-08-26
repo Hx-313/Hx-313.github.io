@@ -1,0 +1,8 @@
+{
+  "name": "alibaba-logistics-assistant",
+  "version": "0.2.0",
+  "description": "国际站物流助手 Skill - 运费试算、物流线路查询等物流服务",
+  "aoneKit": {
+    "generated": true
+  }
+}

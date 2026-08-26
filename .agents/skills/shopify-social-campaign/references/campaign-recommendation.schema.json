@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://accio.example/schemas/shopify-growth/campaign-recommendation.schema.json",
+  "title": "Shopify Seven-Day Campaign Recommendation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "recommendation_id",
+    "shop_domain",
+    "product",
+    "decision",
+    "publish_readiness",
+    "reason_codes",
+    "blockers",
+    "warnings",
+    "recommended_plan",
+    "user_options",
+    "authorization_boundary",
+    "created_at",
+    "expires_at"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "recommendation_id": {
+      "type": "string",
+      "pattern": "^camprec_[a-f0-9]{16}$"
+    },
+    "shop_domain": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*\\.myshopify\\.com$"
+    },
+    "product": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["product_id", "title", "public_url"],
+      "properties": {
+        "product_id": {
+          "type": "string",
+          "pattern": "^gid://shopify/Product/[A-Za-z0-9_-]+$"
+        },
+        "title": { "type": "string", "minLength": 1 },
+        "public_url": { "type": ["string", "null"], "format": "uri" }
+      }
+    },
+    "decision": {
+      "type": "string",
+      "enum": ["recommended", "not_recommended", "unknown"]
+    },
+    "publish_readiness": {
+      "type": "string",
+      "enum": ["ready", "blocked", "not_applicable"]
+    },
+    "reason_codes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "pattern": "^[A-Z0-9_]+$" },
+      "uniqueItems": true
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "resolution"],
+        "properties": {
+          "code": { "type": "string", "pattern": "^[A-Z0-9_]+$" },
+          "resolution": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[A-Z0-9_]+$" },
+      "uniqueItems": true
+    },
+    "recommended_plan": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "objective",
+        "horizon_days",
+        "recommended_channel",
+        "recommended_post_count",
+        "estimated_review_minutes",
+        "content_slots"
+      ],
+      "properties": {
+        "name": { "const": "seven_day_product_campaign" },
+        "objective": { "const": "new_product_cold_start" },
+        "horizon_days": { "const": 7 },
+        "recommended_channel": { "const": "instagram" },
+        "recommended_post_count": { "type": "integer", "minimum": 1, "maximum": 4 },
+        "estimated_review_minutes": { "type": "integer", "minimum": 1, "maximum": 60 },
+        "content_slots": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["day", "content_pillar", "hypothesis"],
+            "properties": {
+              "day": { "type": "integer", "minimum": 1, "maximum": 7 },
+              "content_pillar": {
+                "type": "string",
+                "enum": ["use_case", "product_detail", "faq", "brand_trust"]
+              },
+              "hypothesis": { "type": "string", "pattern": "^[A-Z0-9_]+$" }
+            }
+          }
+        }
+      }
+    },
+    "user_options": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": ["start_draft", "customize", "retry", "skip", "mute_similar"]
+      },
+      "uniqueItems": true
+    },
+    "authorization_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "selection_creates_draft_only",
+        "publishing_requires_exact_content_approval",
+        "edits_invalidate_item_approval",
+        "automatic_publish_allowed"
+      ],
+      "properties": {
+        "selection_creates_draft_only": { "const": true },
+        "publishing_requires_exact_content_approval": { "const": true },
+        "edits_invalidate_item_approval": { "const": true },
+        "automatic_publish_allowed": { "const": false }
+      }
+    },
+    "created_at": { "type": "string", "format": "date-time" },
+    "expires_at": { "type": "string", "format": "date-time" }
+  }
+}

@@ -1,0 +1,9 @@
+<HOOK — first line stops the scroll, addresses a pain point. Use a verbatim quote from audience research when possible.>
+
+<BODY — 2–4 short lines explaining how the product solves that pain. Mention features / variants / what's included.>
+
+Shop now → <storefront URL>
+
+<#hashtag1 #hashtag2 #hashtag3 ... 15–20 mixed niche + broad hashtags. Write `#` directly, NEVER `%23`.>
+
+# Caption ends here. DO NOT add any agent attribution / promotional tagline (no @Accio_b2b, no #MyAccioWorks, no "wrote itself" line). Only add such a line if the user explicitly asks for it this turn.

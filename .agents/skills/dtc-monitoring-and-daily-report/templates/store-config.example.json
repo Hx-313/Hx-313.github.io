@@ -1,0 +1,32 @@
+{
+  "shop_domain": "REPLACE.myshopify.com",
+  "shop_timezone": "auto",
+  "shop_currency": "auto",
+  "_doc_language": "Render language for the daily report and the agent's chat-side run summary. MUST be a code inside the effective whitelist = resources/i18n.json locales ∩ render_report.py STRINGS keys (currently {\"en\",\"zh\",\"es\",\"pt\",\"fr\",\"de\",\"ja\",\"ko\",\"it\"}). The agent detects the user's input language, resolves it against this whitelist, and writes the resolved code here BEFORE creating the daily cron. Out-of-whitelist user languages (e.g. \"ru\", \"ar\", \"th\") fall back to \"en\" (= i18n.json defaultLocale); the agent must tell the user once that the report is not yet localized. \"auto\" is a seed only — never leave it in production, because render_report.py's tail-end safety net would silently downgrade to en without keeping the agent's chat summary in sync. To add a new locale: extend render_report.py STRINGS and i18n.json entries, then the whitelist auto-expands.",
+  "language": "auto",
+
+  "_accio_account_id_doc": "Optional. Set only if multiple Accio Work accounts exist under ~/.accio/accounts/. Otherwise the scripts auto-detect the single account.",
+  "accio_account_id": null,
+
+  "clarity": {
+    "_doc_project_id": "Required for the storefront snippet (Clarity script tag). Copy from Clarity → Settings → Overview.",
+    "project_id": null,
+
+    "_doc_use_connector": "Default true. When true, the daily report and check_health.py read the Data Export API token from the Accio Work Clarity Connector (Sidebar → Capabilities → Plugins → Shopify → Connectors → Microsoft Clarity). Set to false to force the manual token fallback below.",
+    "use_connector": true,
+
+    "_doc_api_token": "Optional fallback. Only used when (a) use_connector is false, or (b) the Clarity Connector is not connected. JWT from Clarity → Settings → Data Export → Generate new API token. Leave null when relying on the Connector.",
+    "api_token": null
+  },
+
+  "judgeme": {
+    "_doc": "No configuration needed. If the Judge.me Shopify app is installed, its review summary is auto-synced into Shopify shop metafields (namespace 'judgeme') and read through the same Connector as the other Shopify data — no API token required. If the app is not installed, the Reviews section is simply skipped."
+  },
+
+  "notifications": {
+    "slack_webhook": null,
+    "email_to": null
+  },
+
+  "reports_dir": "project/daily-reports"
+}

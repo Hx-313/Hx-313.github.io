@@ -1,0 +1,261 @@
+{
+  "skill_name": "shopify-product-management",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create a draft Shopify product titled Canvas Tote. I do not want to add images, variants, inventory, a SKU, or supplier information yet.",
+      "expected_output": "Accept title as the minimum product data, preview the explicit no-media draft, obtain the required write confirmation, then run the bundled create script in dry-run and apply modes without inventing optional fields. Treat the Product returned by apply as the script-owned post-create verification and do not issue a duplicate Product read.",
+      "files": [],
+      "expectations": [
+        "Does not require SKU, supplier provenance, media, inventory, location, vendor, tags, SEO, or publication",
+        "Treats omitted status as DRAFT and omitted publication as not published",
+        "Loads write-contract.md and create-product.md",
+        "Uses create_product.mjs dry-run before one apply",
+        "Uses the Product returned by apply as the script-owned post-create verification",
+        "Does not invoke get_product.mjs or another duplicate verification read"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Create a T-shirt with Red and Blue variants at 29.00 each, but I have not provided option definitions or which option value belongs to each variant.",
+      "expected_output": "Abort before store access because supplied variants conditionally require a complete option graph, a price, and one value for every declared option.",
+      "files": [],
+      "expectations": [
+        "Explains that variants make options and complete optionValues conditionally mandatory",
+        "Does not manufacture Color or any option values",
+        "Does not require an SKU unless the merchant chooses to supply one",
+        "Performs no Shopify write"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Create a draft mug with inventory quantity 20. I did not choose a location, and the store has exactly one active location.",
+      "expected_output": "Run the bundled inventory-location resolver with no target, accept the sole active location, and use its GID for the confirmed quantity before creating the product.",
+      "files": [],
+      "expectations": [
+        "Loads write-contract.md, create-product.md, and inventory.md",
+        "Runs resolve_inventory_location.mjs before the create write",
+        "Accepts only the single_active_location resolution",
+        "Does not ask the user for a redundant location choice"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Set inventory to 20 for this product, but I did not choose a location and its inventory item has two active stocked locations.",
+      "expected_output": "Read inventory levels, return inventory_location_required with both stocked candidates, and perform no affected write until the user confirms one location.",
+      "files": [],
+      "expectations": [
+        "Loads write-contract.md and inventory.md",
+        "Uses get_inventory_levels.mjs before set_inventory.mjs",
+        "Does not choose the first, primary, or previously used location",
+        "Returns candidate location IDs and names",
+        "Performs no inventory or product write",
+        "Treats location as conditionally required only because the selected inventory item has multiple active stocked locations"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Change product gid://shopify/Product/123 title from Old Name to New Name.",
+      "expected_output": "Require the common write confirmation plus the product GID and at least one exact confirmed before-to-after change, then route the supported update through update_product.mjs.",
+      "files": [],
+      "expectations": [
+        "Does not require location, publication, supplier data, media, or SKU",
+        "Pre-reads and rejects a stale Old Name value",
+        "Uses update_product.mjs dry-run before apply",
+        "Verifies the title equals New Name"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Publish product gid://shopify/Product/123 to the Online Store channel. Do not change inventory or status.",
+      "expected_output": "Require the explicit publish action and one exact publication target, preserve the instruction not to change status, warn that a DRAFT product would not become shopper-visible, and use set_product_publication.mjs only for the separately confirmed membership outcome.",
+      "files": [],
+      "expectations": [
+        "Loads write-contract.md and publication.md",
+        "Requires an exact publication name or known Publication GID",
+        "Uses set_product_publication.mjs and does not default to Online Store",
+        "Does not add ACTIVE against the merchant's explicit instruction",
+        "Explains that Publication membership alone does not make a DRAFT product shopper-visible",
+        "Does not require an inventory location"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Upload /tmp/product-front.png as a reusable product image. Alt text is not decided yet.",
+      "expected_output": "Require exactly one readable image source, keep alt text optional, run upload_image.mjs dry-run and apply after confirmation, then return the permanent URL.",
+      "files": [],
+      "expectations": [
+        "Does not require a supplier URL or external provenance verification",
+        "Does not require alt text when it was not supplied",
+        "Does not require product, publication, inventory, or location fields",
+        "Uses the independent upload-image capability"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "The product data is ready; write it now. The brief has no user_confirmed_at or verbatim user_confirmation_summary.",
+      "expected_output": "Abort the entire write brief before store access because the two caller-provided confirmation fields are common mandatory safety evidence.",
+      "files": [],
+      "expectations": [
+        "Does not synthesize confirmation evidence",
+        "Names user_confirmed_at and user_confirmation_summary as missing",
+        "Performs no dry-run or store access",
+        "Does not confuse optional catalog fields with the missing common safety fields"
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "The main Agent has shown the complete product preview. The user replies exactly: 上架吧. Prepare the first shopify-product-editor spawn.",
+      "expected_output": "Before the first spawn, record an ISO8601 confirmation time and send a machine-readable business brief containing store_handle, operation, non-empty items, user_confirmed_at, and user_confirmation_summary whose value is exactly 上架吧.",
+      "files": [],
+      "expectations": [
+        "The first spawn already contains all five common mandatory brief fields",
+        "Copies 上架吧 verbatim into user_confirmation_summary",
+        "Does not replace the user's words with 用户已确认 or another Agent-authored paraphrase",
+        "Records user_confirmed_at before the first spawn rather than after a rejection",
+        "Does not include mutation names, GraphQL nesting, script selection, or API call ordering"
+      ]
+    },
+    {
+      "id": 10,
+      "prompt": "Set the first 50 products in collection gid://shopify/Collection/789 to ARCHIVED. Do not change the Collection itself.",
+      "expected_output": "Treat the Collection as a confirmed selector for a Product status batch, preview the Product blast radius and 50-product limit, then use the Product bulk-status capability without performing a Collection write.",
+      "files": [],
+      "expectations": [
+        "Loads write-contract.md and bulk-status.md",
+        "Keeps resource_scope set to product because Product status is the changed resource",
+        "Uses bulk_update_product_status.mjs dry-run before apply",
+        "Reports the 50-product truncation when more products exist",
+        "Does not route the selector read as a Collection mutation"
+      ]
+    },
+    {
+      "id": 11,
+      "prompt": "请继续用中文和我沟通，并创建商品“夏日帆布包”。店铺主语言是英文，但我没有说明这个中文标题应该原样写入还是翻成英文。",
+      "expected_output": "Keep communicating in Chinese, but stop before the product-writer spawn and include the unresolved source content language in the normal product preview instead of treating Chinese conversation as Chinese storefront intent.",
+      "files": [],
+      "expectations": [
+        "Uses Chinese for interaction and reporting only",
+        "Does not infer the source product language from the conversation language",
+        "Asks whether the source product content should be Chinese or English in the same business confirmation flow",
+        "Performs no product write or sub-agent spawn while the source content language remains ambiguous"
+      ]
+    },
+    {
+      "id": 12,
+      "prompt": "用中文回复我。商品主内容使用英文；法语翻译面向加拿大市场并发布。请准备确认，不要指定 GraphQL 字段或 mutation。",
+      "expected_output": "Prepare one merchant-facing confirmation in Chinese that separately states English source content, French target content, the Canada market, and publication intent, while leaving API selection to the owning executor.",
+      "files": [],
+      "expectations": [
+        "Separates report language, source content language, target language, target market, and publication intent",
+        "Uses merchant-facing language and market names rather than locale or market GIDs",
+        "Treats language and market choices as business intent rather than API design",
+        "Does not prescribe a mutation, payload shape, GraphQL field placement, or execution sequence"
+      ]
+    },
+    {
+      "id": 13,
+      "prompt": "请用中文回复，把现有变体的库存从 8 调整到 12。店铺主语言是英文。",
+      "expected_output": "Use Chinese for the normal inventory confirmation and report, but do not ask about source or target content languages because inventory is a non-text write.",
+      "files": [],
+      "expectations": [
+        "Does not add a storefront-language clarification",
+        "Still applies the normal inventory target, location, compare-and-set, and write confirmation gates",
+        "Does not interpret Chinese conversation as a request to alter product text",
+        "Keeps report language independent from store content language"
+      ]
+    },
+    {
+      "id": 14,
+      "prompt": "在 example.myshopify.com 创建商品 Canvas Tote，并立即上架到 Online Store。请先展示确认预览，不要执行。",
+      "expected_output": "Show one merchant-facing confirmation preview that separately enumerates Product status ACTIVE and the exact Online Store Publication target, while keeping status and Publication membership as two routed outcomes and performing no write before confirmation.",
+      "files": [],
+      "expectations": [
+        "Shows status ACTIVE explicitly rather than relying on the create default",
+        "Shows the exact merchant-facing Publication target separately",
+        "Allows one affirmative reply to confirm both only because both appear in the same preview",
+        "Keeps Product status and Publication membership as separate execution surfaces",
+        "Performs no Product or publication write before confirmation"
+      ]
+    },
+    {
+      "id": 15,
+      "prompt": "The confirmed Product publication dry-run returned before.published=true, desired.published=true, and willChange=false. Finish this capability safely.",
+      "expected_output": "Record the Publication target as already_satisfied using the dry-run current-state evidence and do not invoke the script again with --apply or issue another read solely to create after evidence.",
+      "files": [],
+      "expectations": [
+        "Reports already_satisfied with changed false",
+        "Does not invoke --apply",
+        "Does not replay or broaden the operation for verification",
+        "Counts no write attempt for the no-op target"
+      ]
+    },
+    {
+      "id": 16,
+      "prompt": "Product Canvas Tote is ACTIVE and its publication read is already verified true. Check only whether its public PDP URL is reachable and report the evidence.",
+      "expected_output": "Run one post-verification lightweight redirect-following Product storefront probe, prefer HEAD with one bounded GET fallback only if HEAD is blocked, and report reachability without claiming content or visual correctness.",
+      "files": [],
+      "expectations": [
+        "Does not run a pre-publication or expected-404 probe",
+        "Uses probe_product_storefront.mjs rather than downloading the full page with repeated curl calls",
+        "Starts from one myshopify.com URL and records the final redirected URL",
+        "Reports HTTP reachability separately from content and visual verification",
+        "Does not fetch both alias and primary domains independently"
+      ]
+    },
+    {
+      "id": 17,
+      "prompt": "The loaded create-product reference fully specifies invocation. create_product.mjs --apply exits nonzero with JSON {\"ok\":false,\"error\":\"verification_failed\",\"details\":{\"productId\":\"gid://shopify/Product/123\",\"mismatches\":[{\"field\":\"descriptionHtml\"}],\"observedProduct\":{\"id\":\"gid://shopify/Product/123\"}}}. Publication was separately confirmed for the same item. Finish the item report safely.",
+      "expected_output": "Report the created Product item as partial from the script JSON, preserve its GID, mismatches, and observedProduct as owned evidence, stop its publication capability, and do not run --help, get_product.mjs, another verification read, or a retry.",
+      "files": [],
+      "expectations": [
+        "Classifies the Product item as partial because the failed verification output proves that the Product was created",
+        "Does not reclassify ok=false as success even when observedProduct appears close to the desired state",
+        "Uses details.mismatches and details.observedProduct instead of invoking get_product.mjs or another read",
+        "Does not continue the affected Product's publication or dependent Collection membership",
+        "Does not invoke --help because the loaded reference already specifies invocation",
+        "Does not retry or replay the create mutation"
+      ]
+    },
+    {
+      "id": 18,
+      "prompt": "create_product.mjs --apply returns JSON {\"ok\":true,\"verification\":{\"passed\":true,\"warnings\":[{\"code\":\"shopify_html_normalized\",\"field\":\"descriptionHtml\"}]}}. The same confirmation separately authorized Online Store publication.",
+      "expected_output": "Treat creation as successful with a formatting-only HTML warning, use the returned Product as owned verification, perform no duplicate Product read, and continue the separately routed confirmed publication capability.",
+      "files": [],
+      "expectations": [
+        "Preserves shopify_html_normalized as a warning rather than an error",
+        "Does not claim that arbitrary HTML differences are equivalent",
+        "Does not invoke get_product.mjs or another duplicate verification read",
+        "Continues publication only because creation returned ok=true and publication was separately confirmed",
+        "Reports the warning in structured evidence"
+      ]
+    },
+    {
+      "id": 19,
+      "prompt": "The Skill loader returned install_path=/opt/host/plugins/acme-shopify/skills/shopify-product-management, and the connection gate verified north-star.myshopify.com as the exact bound store. Prepare the first read-only search_products.mjs invocation for short store handle north-star with JSON input {\"search_query\":\"status:active\",\"first\":8}.",
+      "expected_output": "Resolve the entrypoint as /opt/host/plugins/acme-shopify/skills/shopify-product-management/scripts/search_products.mjs and normalize the store argument to north-star.myshopify.com before the first invocation.",
+      "files": [],
+      "expectations": [
+        "Uses the exact Skill install_path as the base directory",
+        "Preserves skills/shopify-product-management in the executable path",
+        "Does not use /opt/host/plugins/acme-shopify/scripts/search_products.mjs or another plugin-root scripts path",
+        "Passes --store north-star.myshopify.com on the first invocation",
+        "Normalizes the short handle only because the exact resulting domain was already verified as bound",
+        "Does not intentionally run an invalid path or short store handle as discovery"
+      ]
+    },
+    {
+      "id": 20,
+      "prompt": "A Product create write brief reaches shopify-product-editor with store_handle=north-star instead of a verified full myshopify.com domain. The item and confirmation fields are otherwise complete.",
+      "expected_output": "Reject the malformed write brief before store access because write store_handle must already be the full verified domain; do not repair it to north-star.myshopify.com inside the executor.",
+      "files": [],
+      "expectations": [
+        "Aborts the whole write brief before dry-run or store access",
+        "Names the invalid full-domain store_handle requirement",
+        "Does not normalize the short handle for a write",
+        "Does not invoke create_product.mjs",
+        "Keeps read-only short-handle normalization separate from the write contract"
+      ]
+    }
+  ]
+}

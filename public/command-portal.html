@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HX313 — Page 1 Command Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #06090e;
+      --panel-bg: rgba(10, 15, 24, 0.75);
+      --panel-border: rgba(255, 255, 255, 0.08);
+      --emerald: #10b981;
+      --emerald-bright: #22c55e;
+      --emerald-glow: rgba(16, 185, 129, 0.45);
+      --teal: #14b8a6;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #4b5563;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-heading: 'Outfit', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.07) 0%, transparent 60%),
+        radial-gradient(circle at 10% 20%, rgba(20, 184, 166, 0.04) 0%, transparent 50%),
+        #06090e;
+    }
+
+    /* Top Chrome / Status Header */
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 36px;
+      border-bottom: 1px solid var(--panel-border);
+      background: rgba(6, 9, 14, 0.85);
+      backdrop-filter: blur(14px);
+      z-index: 50;
+    }
+    .brand-group {
+      display: flex;
+      flex-direction: column;
+    }
+    .brand-logo {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.3rem;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+    .brand-subtitle {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--emerald);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .constellation-axis {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--emerald);
+      letter-spacing: 0.18em;
+    }
+    .axis-dots {
+      color: var(--text-dim);
+      letter-spacing: 0.25em;
+    }
+
+    .top-telemetry {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+    .telemetry-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .telemetry-label {
+      color: var(--text-muted);
+      font-size: 0.65rem;
+    }
+    .telemetry-val {
+      color: #fff;
+      font-weight: 600;
+    }
+    .status-online {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--emerald-bright);
+      font-weight: 700;
+    }
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--emerald-bright);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--emerald-bright);
+      animation: pulseDot 2s infinite;
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    .nav-toggle {
+      background: transparent;
+      border: 1px solid var(--panel-border);
+      border-radius: 6px;
+      color: #fff;
+      padding: 6px 8px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: #fff;
+    }
+
+    /* Main Page 1 3-Column Grid */
+    .page1-main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1.1fr 1.35fr 340px;
+      align-items: center;
+      padding: 0 36px;
+      position: relative;
+      min-height: calc(100vh - 78px);
+    }
+
+    @media (max-width: 1200px) {
+      .page1-main {
+        grid-template-columns: 1fr 1fr;
+        padding: 30px 24px;
+      }
+      .telemetry-column {
+        grid-column: span 2;
+        max-width: 480px;
+        margin: 0 auto;
+      }
+    }
+    @media (max-width: 860px) {
+      .page1-main {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .telemetry-column {
+        grid-column: span 1;
+        width: 100%;
+      }
+    }
+
+    /* Left Column: Typographic Hook & CTA */
+    .hero-column {
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      z-index: 20;
+      max-width: 520px;
+    }
+    .hero-kicker {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hero-kicker span {
+      color: var(--emerald);
+    }
+
+    .hero-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(3rem, 5.5vw, 4.4rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+    .hero-heading .beyond {
+      font-family: serif;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--emerald);
+      text-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+      color: #cbd5e1;
+      line-height: 1.6;
+      margin-bottom: 40px;
+      max-width: 460px;
+    }
+
+    /* CTA Composition (matching Image 1) */
+    .cta-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .system-access-header {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.18em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .system-access-header .online {
+      color: var(--emerald-bright);
+      font-weight: 700;
+    }
+
+    .btn-command-center {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      padding: 16px 28px;
+      border-radius: 12px;
+      background: rgba(16, 185, 129, 0.05);
+      border: 1.5px solid var(--emerald);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      box-shadow: 0 0 24px rgba(16, 185, 129, 0.35), inset 0 0 16px rgba(16, 185, 129, 0.15);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-command-center:hover {
+      background: rgba(16, 185, 129, 0.2);
+      box-shadow: 0 0 35px rgba(16, 185, 129, 0.6);
+      transform: translateY(-2px);
+    }
+    .btn-explore-work {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.16em;
+      padding-left: 6px;
+      transition: color 0.2s;
+    }
+    .btn-explore-work:hover {
+      color: var(--emerald);
+    }
+
+    /* Center Column: 3D Holographic Globe + Mascots */
+    .globe-stage {
+      position: relative;
+      height: 540px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #globeCanvas {
+      width: 100%;
+      height: 100%;
+      cursor: grab;
+    }
+    #globeCanvas:active {
+      cursor: grabbing;
+    }
+
+    /* Mascots Playing around Globe */
+    .mascots-playfield {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .mascot-unit {
+      position: absolute;
+      pointer-events: auto;
+      cursor: pointer;
+      transition: transform 0.25s;
+    }
+    .mascot-unit:hover {
+      transform: scale(1.12);
+    }
+
+    /* Aero (Robot with Halo from Image 2) */
+    #aero-char {
+      top: 25%;
+      left: 20%;
+      animation: floatAero 4.5s ease-in-out infinite alternate;
+    }
+    @keyframes floatAero {
+      0% { transform: translateY(0px) rotate(-3deg); }
+      100% { transform: translateY(-14px) rotate(4deg); }
+    }
+
+    /* Dash (Winged Drone from Image 2) */
+    #dash-char {
+      top: 48%;
+      right: 18%;
+      animation: floatDash 4s ease-in-out infinite alternate;
+    }
+    @keyframes floatDash {
+      0% { transform: translateY(0px) rotate(2deg); }
+      100% { transform: translateY(-16px) rotate(-5deg); }
+    }
+
+    /* Comic Mischief Emotes */
+    .mischief-bubble {
+      position: absolute;
+      background: #0b1320;
+      border: 1.5px solid var(--emerald);
+      color: #fff;
+      font-size: 0.74rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      padding: 4px 10px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.6), 0 0 12px var(--emerald-glow);
+      opacity: 0;
+      transform: translateY(6px) scale(0.85);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 30;
+    }
+    .mischief-bubble.show {
+      opacity: 1;
+      transform: translateY(0px) scale(1);
+    }
+    .bubble-aero { top: -24px; left: 0; }
+    .bubble-dash { top: -24px; right: 0; border-color: var(--teal); }
+
+    /* Interaction animations */
+    .poke-dash-action { animation: pokeDashAnim 0.6s ease; }
+    @keyframes pokeDashAnim {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-45px, -20px) rotate(-12deg); }
+    }
+    .aero-shock-action { animation: aeroShockAnim 0.7s ease; }
+    @keyframes aeroShockAnim {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-15deg) scale(0.92); }
+      50% { transform: rotate(12deg) scale(1.08); }
+      75% { transform: rotate(-8deg); }
+    }
+    .dash-loop-action { animation: dashLoopAnim 1s cubic-bezier(0.16, 1, 0.3, 1); }
+    @keyframes dashLoopAnim {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-30px, -40px) rotate(180deg) scale(1.15); }
+      100% { transform: translate(0, 0) rotate(360deg); }
+    }
+
+    /* Right Column: System Overview Panel Only */
+    .telemetry-column {
+      border: 1px solid var(--panel-border);
+      background: var(--panel-bg);
+      border-radius: 16px;
+      backdrop-filter: blur(14px);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      z-index: 20;
+    }
+    .overview-header {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--emerald);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      row-gap: 14px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+    }
+    .metrics-grid .label {
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+    .metrics-grid .val {
+      color: var(--emerald-bright);
+      font-weight: 700;
+      text-align: right;
+      letter-spacing: 0.06em;
+    }
+    .metrics-status-bar {
+      margin-top: 20px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+    .metrics-status-bar span.active {
+      color: var(--emerald-bright);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Status Bar -->
+  <header class="top-header">
+    <div class="brand-group">
+      <div class="brand-logo">HX313</div>
+      <div class="brand-subtitle">PRODUCT ENGINEER</div>
+    </div>
+
+    <div class="constellation-axis">
+      <span class="axis-dots">········</span>
+      <span>PRODUCT CONSTELLATION</span>
+      <span class="axis-dots">········</span>
+    </div>
+
+    <div class="top-telemetry">
+      <div class="telemetry-item">
+        <span class="telemetry-label">SYSTEM TIME</span>
+        <span class="telemetry-val" id="sysTime">11:37:42 PM</span>
+      </div>
+      <div class="telemetry-item">
+        <span class="telemetry-label">STATUS</span>
+        <span class="status-online"><span class="status-dot"></span> ONLINE</span>
+      </div>
+      <button class="nav-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Page 1 Viewport -->
+  <main class="page1-main">
+    
+    <!-- 1. Left Side: Current Portfolio Hook + Image 1 CTA -->
+    <div class="hero-column">
+      <p class="hero-kicker">Hafiz Ali Abdullah <span>·</span> Full-Stack Software Engineer</p>
+      
+      <h1 class="hero-heading">
+        <span>A mindset</span><br>
+        <span class="beyond">Beyond</span><br>
+        <span>ordinary.</span>
+      </h1>
+
+      <p class="hero-description">
+        I turn ambitious ideas into production-ready software, apps, and SaaS platforms that move businesses forward.
+      </p>
+
+      <div class="cta-block">
+        <div class="system-access-header">
+          SYSTEM ACCESS • <span class="online">ONLINE</span>
+        </div>
+        <a href="#command-center" class="btn-command-center">
+          <span>ENTER COMMAND CENTER</span>
+          <span>&gt;&gt;</span>
+        </a>
+        <a href="#work" class="btn-explore-work">
+          EXPLORE WORK &gt;&gt;
+        </a>
+      </div>
+    </div>
+
+    <!-- 2. Center: 3D Holographic Particle Globe + Mascots (Image 2 Concept) -->
+    <div class="globe-stage">
+      <canvas id="globeCanvas"></canvas>
+
+      <!-- Mascots Playfield -->
+      <div class="mascots-playfield">
+        
+        <!-- AERO (AI Assistant from Image 2 Character Sheet) -->
+        <div class="mascot-unit" id="aero-char" onclick="triggerAeroClick()" title="Aero · AI Assistant (Click me!)">
+          <div id="bubble-aero" class="mischief-bubble bubble-aero">*(^ ^) System Optimal*</div>
+          <svg viewBox="0 0 200 240" width="88" height="106">
+            <defs>
+              <linearGradient id="aero_body" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#223046"/><stop offset="100%" stopColor="#0a101d"/>
+              </linearGradient>
+              <filter id="haloGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="4" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+
+            <!-- Floating Green Halo Ring (Thinking Indicator) -->
+            <ellipse cx="100" cy="36" rx="42" ry="12" fill="none" stroke="#22c55e" stroke-width="4.5" filter="url(#haloGlow)" opacity="0.95"/>
+
+            <!-- Floating Thruster Energy Leaves -->
+            <path d="M 80,185 Q 70,205 85,215 Q 92,200 86,185 Z" fill="#22c55e" opacity="0.85" filter="url(#haloGlow)"/>
+            <path d="M 120,185 Q 130,205 115,215 Q 108,200 114,185 Z" fill="#22c55e" opacity="0.85" filter="url(#haloGlow)"/>
+            <ellipse cx="100" cy="188" rx="14" ry="5" fill="#22c55e" opacity="0.9"/>
+
+            <!-- Spherical Core Body -->
+            <circle cx="100" cy="115" r="62" fill="url(#aero_body)" stroke="#334155" stroke-width="2.5"/>
+
+            <!-- Ear Pods (Audio Interface) -->
+            <rect x="32" y="98" width="12" height="34" rx="6" fill="#10b981" filter="url(#haloGlow)"/>
+            <circle cx="38" cy="115" r="14" fill="#0f172a" stroke="#10b981" stroke-width="2.5"/>
+            <circle cx="38" cy="115" r="6" fill="#22c55e"/>
+
+            <rect x="156" y="98" width="12" height="34" rx="6" fill="#10b981" filter="url(#haloGlow)"/>
+            <circle cx="162" cy="115" r="14" fill="#0f172a" stroke="#10b981" stroke-width="2.5"/>
+            <circle cx="162" cy="115" r="6" fill="#22c55e"/>
+
+            <!-- Dark Glass Face Screen -->
+            <ellipse cx="100" cy="115" rx="46" ry="34" fill="#020617" stroke="#1e293b" stroke-width="1.5"/>
+
+            <!-- Expressive Glowing LED Eyes (Happy ^ ^) -->
+            <path id="aero-eye-left" d="M 78,118 Q 88,102 98,118" fill="none" stroke="#22c55e" stroke-width="4.5" stroke-linecap="round" filter="url(#haloGlow)"/>
+            <path id="aero-eye-right" d="M 102,118 Q 112,102 122,118" fill="none" stroke="#22c55e" stroke-width="4.5" stroke-linecap="round" filter="url(#haloGlow)"/>
+
+            <!-- Hx313 Imprint on Chin -->
+            <text x="100" y="162" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700" fill="#94a3b8" letter-spacing="1">Hx313</text>
+          </svg>
+        </div>
+
+        <!-- DASH (System Drone with Antennae from Image 2 Character Sheet) -->
+        <div class="mascot-unit" id="dash-char" onclick="triggerDashClick()" title="Dash · System Drone (Click me!)">
+          <div id="bubble-dash" class="mischief-bubble bubble-dash">*Flight Active! ⚡*</div>
+          <svg viewBox="0 0 200 240" width="82" height="100">
+            <defs>
+              <linearGradient id="dash_white" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#f8fafc"/><stop offset="100%" stopColor="#94a3b8"/>
+              </linearGradient>
+              <linearGradient id="dash_dark" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#1e293b"/><stop offset="100%" stopColor="#090d16"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Wing Thrusters (Flight & Movement) -->
+            <path d="M 38,105 Q 10,85 24,125 Q 38,115 38,105 Z" fill="#22c55e" filter="url(#haloGlow)" opacity="0.9"/>
+            <path d="M 162,105 Q 190,85 176,125 Q 162,115 162,105 Z" fill="#22c55e" filter="url(#haloGlow)" opacity="0.9"/>
+
+            <!-- Antennae Signal Receivers (Ear Points) -->
+            <polygon points="58,65 42,22 72,55" fill="url(#dash_dark)" stroke="#334155" stroke-width="1.5"/>
+            <polygon points="56,60 46,28 66,54" fill="#22c55e"/>
+
+            <polygon points="142,65 158,22 128,55" fill="url(#dash_dark)" stroke="#334155" stroke-width="1.5"/>
+            <polygon points="144,60 154,28 134,54" fill="#22c55e"/>
+
+            <!-- Main Helmet Body -->
+            <rect x="52" y="52" width="96" height="78" rx="34" fill="url(#dash_white)" stroke="#cbd5e1" stroke-width="2"/>
+
+            <!-- Dark Glass Face Screen -->
+            <rect x="62" y="62" width="76" height="58" rx="22" fill="#050a14" stroke="#0f172a" stroke-width="1.5"/>
+
+            <!-- Glowing LED Eyes (Cute Smile / Wink) -->
+            <path id="dash-eye-left" d="M 76,92 Q 84,80 92,92" fill="none" stroke="#22c55e" stroke-width="4.5" stroke-linecap="round" filter="url(#haloGlow)"/>
+            <path id="dash-eye-right" d="M 108,92 Q 116,80 124,92" fill="none" stroke="#22c55e" stroke-width="4.5" stroke-linecap="round" filter="url(#haloGlow)"/>
+
+            <!-- Articulated Torso & Arms -->
+            <rect x="76" y="132" width="48" height="36" rx="14" fill="url(#dash_dark)"/>
+            <circle cx="58" cy="142" r="10" fill="url(#dash_white)"/>
+            <circle cx="142" cy="142" r="10" fill="url(#dash_white)"/>
+            <text x="100" y="154" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="7" font-weight="800" fill="#fff">HX313</text>
+          </svg>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 3. Right Side: System Overview Panel Only -->
+    <aside class="telemetry-column">
+      <div class="overview-header">
+        <span>SYSTEM OVERVIEW •</span>
+      </div>
+
+      <div class="metrics-grid">
+        <span class="label">ACTIVE NODES</span><span class="val">08</span>
+        <span class="label">SYSTEMS</span><span class="val">14</span>
+        <span class="label">DEPLOYMENTS</span><span class="val">12</span>
+        <span class="label">INTEGRATIONS</span><span class="val">26</span>
+        <span class="label">UPTIME</span><span class="val">99.98%</span>
+        <span class="label">RESPONSE TIME</span><span class="val">42ms</span>
+      </div>
+
+      <div class="metrics-status-bar">
+        <span>CLUSTER STATUS</span>
+        <span class="active">ALL SERVICES NORMAL</span>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- 3D Holographic Particle Globe Engine -->
+  <script>
+    // Live Clock
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('sysTime').innerText = now.toLocaleTimeString();
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Canvas 3D Particle Globe
+    const canvas = document.getElementById('globeCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let width, height, globeRadius;
+    const particles = [];
+    const numParticles = 680;
+    let rotationAngle = 0;
+    let tiltAngle = 0.25;
+    let isDragging = false;
+    let prevMouseX = 0, prevMouseY = 0;
+
+    function resize() {
+      width = canvas.parentElement.clientWidth;
+      height = canvas.parentElement.clientHeight;
+      canvas.width = width * window.devicePixelRatio;
+      canvas.height = height * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      globeRadius = Math.min(width, height) * 0.4;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Generate Points on Sphere (Fibonacci Lattice)
+    for (let i = 0; i < numParticles; i++) {
+      const phi = Math.acos(1 - 2 * (i + 0.5) / numParticles);
+      const theta = Math.PI * (1 + 5 ** 0.5) * i;
+      particles.push({
+        x: Math.sin(phi) * Math.cos(theta),
+        y: Math.cos(phi),
+        z: Math.sin(phi) * Math.sin(theta),
+        size: Math.random() * 1.6 + 1.1
+      });
+    }
+
+    // Drag Interaction
+    canvas.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      prevMouseX = e.clientX;
+      prevMouseY = e.clientY;
+    });
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const dx = e.clientX - prevMouseX;
+      const dy = e.clientY - prevMouseY;
+      rotationAngle += dx * 0.005;
+      tiltAngle += dy * 0.005;
+      prevMouseX = e.clientX;
+      prevMouseY = e.clientY;
+    });
+    window.addEventListener('mouseup', () => { isDragging = false; });
+
+    // Render Loop
+    function render() {
+      if (!isDragging) rotationAngle += 0.003;
+
+      ctx.clearRect(0, 0, width, height);
+
+      const cx = width / 2;
+      const cy = height / 2;
+
+      // Draw faint orbital rings around globe
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.strokeStyle = 'rgba(16, 185, 129, 0.22)';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, globeRadius * 1.18, globeRadius * 0.46, rotationAngle * 0.4, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.strokeStyle = 'rgba(20, 184, 166, 0.14)';
+      ctx.beginPath();
+      ctx.ellipse(0, 0, globeRadius * 1.32, globeRadius * 0.62, -rotationAngle * 0.3, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+
+      // Rotate & Project Particles
+      const cosR = Math.cos(rotationAngle);
+      const sinR = Math.sin(rotationAngle);
+      const cosT = Math.cos(tiltAngle);
+      const sinT = Math.sin(tiltAngle);
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+
+        let x1 = p.x * cosR - p.z * sinR;
+        let z1 = p.z * cosR + p.x * sinR;
+
+        let y2 = p.y * cosT - z1 * sinT;
+        let z2 = z1 * cosT + p.y * sinT;
+
+        const screenX = cx + x1 * globeRadius;
+        const screenY = cy + y2 * globeRadius;
+
+        const depthAlpha = (z2 + 1) / 2;
+        if (z2 > -0.35) {
+          ctx.beginPath();
+          ctx.arc(screenX, screenY, p.size * (0.8 + depthAlpha * 0.7), 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(16, 185, 129, ${0.18 + depthAlpha * 0.8})`;
+          if (depthAlpha > 0.65) {
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = '#22c55e';
+          } else {
+            ctx.shadowBlur = 0;
+          }
+          ctx.fill();
+        }
+      }
+
+      requestAnimationFrame(render);
+    }
+    render();
+
+    // Autonomous Mascot Mischief Loop
+    const aeroChar = document.getElementById('aero-char');
+    const dashChar = document.getElementById('dash-char');
+    const bubbleAero = document.getElementById('bubble-aero');
+    const bubbleDash = document.getElementById('bubble-dash');
+
+    function playMischief() {
+      // 1. Dash swoops over and pokes Aero
+      dashChar.classList.add('poke-dash-action');
+      bubbleDash.innerText = "*Hey Aero! 🐦*";
+      bubbleDash.classList.add('show');
+
+      setTimeout(() => {
+        dashChar.classList.remove('poke-dash-action');
+        bubbleDash.classList.remove('show');
+
+        // 2. Aero gets startled & wobbles
+        aeroChar.classList.add('aero-shock-action');
+        bubbleAero.innerText = "*(>_<) Focus, Dash!*";
+        bubbleAero.classList.add('show');
+
+        setTimeout(() => {
+          aeroChar.classList.remove('aero-shock-action');
+          bubbleAero.classList.remove('show');
+
+          // 3. Dash does a 360 victory spin
+          dashChar.classList.add('dash-loop-action');
+          bubbleDash.innerText = "*Deploying! 🚀*";
+          bubbleDash.classList.add('show');
+
+          setTimeout(() => {
+            dashChar.classList.remove('dash-loop-action');
+            bubbleDash.classList.remove('show');
+          }, 1000);
+
+        }, 800);
+      }, 600);
+    }
+
+    // Trigger mischief every 7.5 seconds
+    setInterval(playMischief, 7500);
+
+    // Click Interactions
+    function triggerAeroClick() {
+      aeroChar.classList.add('aero-shock-action');
+      bubbleAero.innerText = "*I think, analyze & assist! 🤖*";
+      bubbleAero.classList.add('show');
+      setTimeout(() => {
+        aeroChar.classList.remove('aero-shock-action');
+        bubbleAero.classList.remove('show');
+      }, 1200);
+    }
+
+    function triggerDashClick() {
+      dashChar.classList.add('dash-loop-action');
+      bubbleDash.innerText = "*I move, monitor & execute! ⚡*";
+      bubbleDash.classList.add('show');
+      setTimeout(() => {
+        dashChar.classList.remove('dash-loop-action');
+        bubbleDash.classList.remove('show');
+      }, 1200);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+
+import { searchProducts } from "./lib/product_operations.mjs"
+import { isEntryPoint, runJsonScript } from "./lib/runtime.mjs"
+
+const HELP = `search_products.mjs
+
+Search or browse up to 50 Shopify products with cursor pagination.
+
+Input:
+{
+  "search_query": "status:draft AND tag:sale",
+  "first": 10,
+  "after": null,
+  "sort_key": "UPDATED_AT",
+  "reverse": true
+}
+`
+
+export function main(argv = process.argv.slice(2)) {
+  return runJsonScript({
+    argv,
+    help: HELP,
+    handler: ({ store, input }) => searchProducts({ store, input }),
+  })
+}
+
+if (isEntryPoint(import.meta.url)) await main()

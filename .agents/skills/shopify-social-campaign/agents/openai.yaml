@@ -1,0 +1,4 @@
+interface:
+  display_name: "Shopify Social Campaign"
+  short_description: "Plan and review safe Shopify social campaigns"
+  default_prompt: "Use $shopify-social-campaign to recommend a reviewable seven-day campaign for my newest public Shopify product."

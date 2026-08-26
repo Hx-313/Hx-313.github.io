@@ -28,4 +28,3 @@ assets/source/documents/
 # os
 .DS_Store
 Thumbs.db
-.node_modules

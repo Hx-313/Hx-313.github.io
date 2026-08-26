@@ -1,0 +1,20 @@
+{
+  "skill": "alibaba-image-generation",
+  "slots": [
+    {
+      "name": "image_source",
+      "label": "图片来源",
+      "required": true,
+      "default_source": null,
+      "fallback": null
+    },
+    {
+      "name": "action_type",
+      "label": "操作类型（去背景/白底图/场景图等）",
+      "required": true,
+      "default_source": null,
+      "fallback": null
+    }
+  ],
+  "default_action": null
+}

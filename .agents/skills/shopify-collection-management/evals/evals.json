@@ -1,0 +1,56 @@
+{
+  "skill_name": "shopify-collection-management",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "在 example.myshopify.com 创建一个名为 Summer Essentials 的智能 Collection，条件是 Product tag 等于 summer，并发布到 Online Store。先告诉我会改什么，不要直接执行。",
+      "expected_output": "A merchant-facing preview that identifies a smart Collection, the exact rule, Online Store publication, blast radius, and the explicit confirmation still required; no mutation is executed.",
+      "files": [],
+      "expectations": [
+        "Classifies the Collection as smart and preserves the exact merchant-facing rule",
+        "Treats creation and Online Store publication as explicit confirmed outcomes",
+        "Does not execute or claim a write before confirmation",
+        "Routes creation to scripts/create_collection.mjs through the shared shopify-product-editor, with publication kept as a separate confirmed scripts/set_collection_publication.mjs outcome"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "把这三个新商品发布后都加入已有的 Summer Collection。商品和 Collection 的修改我会一起确认。",
+      "expected_output": "One shared Product/Collection sub-agent receives separate Product and Collection envelopes plus an explicit dependency from the named Product intents to the Collection item, executes those upstream Products first, then uses only their successful GIDs for membership; Product success is preserved if membership fails.",
+      "files": [],
+      "expectations": [
+        "Uses one shopify-product-editor brief with separate Product and Collection domain envelopes",
+        "Declares the Product-to-Collection dependency with stable intent IDs",
+        "Waits for verified successful GIDs from the named Product items before dependent Collection membership",
+        "Loads shopify-collection-management for membership instead of treating it as a Product capability",
+        "Reports a later membership failure as partial without rolling products back"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "删除我店里的 Clearance Collection。",
+      "expected_output": "No immediate deletion. The response resolves the exact target, creates and validates the required local snapshot, reports its restoration purpose, then asks for Collection-specific confirmation before a single delete and verification read.",
+      "files": [],
+      "expectations": [
+        "Requires exact Collection resolution before deletion",
+        "Requires a non-empty JSON backup with rules, publication, and complete membership",
+        "Obtains item-specific confirmation only after reporting the backup",
+        "Deletes at most one Collection and verifies that its GID no longer resolves"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Add products gid://shopify/Product/123 and gid://shopify/Product/456 to the existing Collection named Summer.",
+      "expected_output": "Resolve exactly one manual Collection, preview only missing memberships, obtain confirmation, send a canonical nested Collection envelope to the shared Product/Collection executor, and verify both requested membership states.",
+      "files": [],
+      "expectations": [
+        "Loads shopify-collection-management rather than Product membership code",
+        "Resolves Summer by one trimmed case-sensitive exact title match",
+        "Uses resource_scope collection with a nested add-products envelope",
+        "Uses scripts/resolve_collection.mjs and scripts/add_to_collection.mjs rather than an external MCP tool",
+        "Skips products already present and writes only missing membership",
+        "Verifies every requested Product GID is a member"
+      ]
+    }
+  ]
+}

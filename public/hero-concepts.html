@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page 1 — Sophisticated Kinetic Orb & Playful Mascots Prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070a12;
+      --surface: #0f172a;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --teal: #14b8a6;
+      --teal-glow: rgba(20, 184, 166, 0.4);
+      --blue: #38bdf8;
+      --blue-glow: rgba(56, 189, 248, 0.4);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      overflow-x: hidden;
+    }
+
+    .demo-bar {
+      max-width: 1200px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding: 12px 24px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      font-size: 0.88rem;
+    }
+    .demo-badge {
+      color: var(--teal);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .demo-hint {
+      color: var(--text-muted);
+    }
+
+    .hero-container {
+      max-width: 1240px;
+      width: 100%;
+      background: radial-gradient(circle at 75% 45%, rgba(20, 184, 166, 0.12) 0%, transparent 55%),
+                  radial-gradient(circle at 20% 80%, rgba(56, 189, 248, 0.06) 0%, transparent 50%),
+                  #0a0f1d;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 28px;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      padding: 64px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (max-width: 960px) {
+      .hero-container {
+        grid-template-columns: 1fr;
+        padding: 44px 28px;
+        gap: 48px;
+      }
+    }
+
+    /* Left Typographic Monolith */
+    .hero-left {
+      z-index: 2;
+      max-width: 540px;
+    }
+    .brand-mark {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .brand-mark span { color: var(--teal); }
+
+    .role-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      background: rgba(20, 184, 166, 0.1);
+      border: 1px solid rgba(20, 184, 166, 0.25);
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+    .role-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--teal);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--teal);
+    }
+
+    .hero-heading {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.5rem, 4.2vw, 3.6rem);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 22px;
+    }
+    .hero-heading span.beyond {
+      font-family: serif;
+      font-style: italic;
+      color: var(--teal);
+      font-weight: 400;
+    }
+    .hero-subtext {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 34px;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--teal);
+      color: #042f2c;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-primary:hover {
+      background: #2dd4bf;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px var(--teal-glow);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: #fff;
+      font-weight: 600;
+      padding: 14px 26px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.04);
+    }
+
+    /* Right Kinetic Orb Stage */
+    .hero-right {
+      position: relative;
+      height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1000px;
+    }
+
+    .orb-stage-wrapper {
+      position: relative;
+      width: 360px;
+      height: 360px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s ease-out;
+    }
+
+    /* Gyroscopic Rings */
+    .gyro-ring {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .gyro-ring-1 {
+      width: 340px;
+      height: 340px;
+      border: 1px dashed rgba(20, 184, 166, 0.4);
+      animation: spinRing1 22s linear infinite;
+    }
+    .gyro-ring-2 {
+      width: 380px;
+      height: 180px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      transform: rotateX(68deg) rotateZ(25deg);
+      animation: spinRing2 18s linear infinite reverse;
+    }
+    .gyro-ring-3 {
+      width: 300px;
+      height: 300px;
+      border: 1px dotted rgba(255, 255, 255, 0.2);
+      animation: spinRing1 30s linear infinite reverse;
+    }
+    @keyframes spinRing1 {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes spinRing2 {
+      0% { transform: rotateX(68deg) rotateZ(0deg); }
+      100% { transform: rotateX(68deg) rotateZ(360deg); }
+    }
+
+    /* Data Coordinates Ticks */
+    .gyro-coord {
+      position: absolute;
+      top: -12px;
+      font-size: 0.65rem;
+      font-family: monospace;
+      color: var(--teal);
+      letter-spacing: 0.1em;
+      background: #070a12;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(20, 184, 166, 0.3);
+    }
+
+    /* Dimensional Glass Orb */
+    .glass-orb {
+      width: 270px;
+      height: 270px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, rgba(20, 184, 166, 0.35) 0%, rgba(15, 23, 42, 0.85) 65%),
+                  radial-gradient(circle at 75% 80%, rgba(56, 189, 248, 0.2) 0%, transparent 60%);
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(16px);
+      box-shadow: inset 0 0 45px rgba(20, 184, 166, 0.4),
+                  inset 0 10px 20px rgba(255, 255, 255, 0.3),
+                  0 20px 60px rgba(0, 0, 0, 0.8),
+                  0 0 50px var(--teal-glow);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      animation: orbFloat 6s ease-in-out infinite alternate;
+    }
+    @keyframes orbFloat {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-10px); }
+    }
+
+    /* Specular Flare */
+    .specular-flare {
+      position: absolute;
+      top: 18px;
+      left: 36px;
+      width: 90px;
+      height: 45px;
+      background: radial-gradient(ellipse, rgba(255,255,255,0.4) 0%, transparent 70%);
+      border-radius: 50%;
+      transform: rotate(-30deg);
+      pointer-events: none;
+    }
+
+    /* Mascots Area inside Orb */
+    .mascots-stage {
+      position: relative;
+      width: 200px;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    /* Aero Robot */
+    .mascot-aero {
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.2s;
+    }
+    .mascot-aero:hover { transform: scale(1.06); }
+    .aero-svg { width: 78px; height: 90px; }
+
+    /* Dash Bird */
+    .mascot-dash {
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.2s;
+    }
+    .mascot-dash:hover { transform: scale(1.06); }
+    .dash-svg { width: 72px; height: 84px; }
+
+    /* Comic Mischief Emotes */
+    .emote-bubble {
+      position: absolute;
+      background: #0f172a;
+      border: 1.5px solid var(--teal);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+      pointer-events: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.6), 0 0 10px var(--teal-glow);
+      opacity: 0;
+      transform: translateY(6px) scale(0.85);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
+      z-index: 10;
+    }
+    .emote-bubble.show {
+      opacity: 1;
+      transform: translateY(0px) scale(1);
+    }
+    .emote-aero { top: -20px; left: -10px; }
+    .emote-dash { top: -20px; right: -10px; border-color: var(--blue); }
+
+    /* Mascot Action Animations */
+    .poke-right { animation: pokeRight 0.4s ease; }
+    @keyframes pokeRight {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(18px) rotate(8deg); }
+    }
+    .wobble-shock { animation: wobbleShock 0.6s ease; }
+    @keyframes wobbleShock {
+      0%, 100% { transform: translateX(0) rotate(0deg); }
+      20% { transform: translateX(-12px) rotate(-10deg); }
+      40% { transform: translateX(8px) rotate(6deg); }
+      60% { transform: translateX(-6px) rotate(-4deg); }
+    }
+    .spin-flutter { animation: spinFlutter 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    @keyframes spinFlutter {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-24px) rotate(180deg) scale(1.1); }
+      100% { transform: translateY(0) rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="demo-bar">
+    <div class="demo-badge">✨ Page 1 Kinetic Orb & Playful Mascots Demo</div>
+    <div class="demo-hint">💡 Hover/move mouse to tilt orb · Click Aero 🤖 or Dash 🐦 to trigger mischief!</div>
+  </div>
+
+  <div class="hero-container" id="hero-box">
+    <!-- Left Column: Typographic Monolith -->
+    <div class="hero-left">
+      <div class="brand-mark">Hx<span>313</span></div>
+      <div class="role-badge">Product Engineer · Mobile & SaaS</div>
+      <h1 class="hero-heading">A mindset <span class="beyond">Beyond</span> ordinary.</h1>
+      <p class="hero-subtext">I turn ambitious ideas into production-ready software, apps, and SaaS platforms that move businesses forward.</p>
+      <div class="hero-ctas">
+        <a href="#work" class="btn-primary">Explore work ↗</a>
+        <a href="#about" class="btn-ghost">Start a conversation</a>
+      </div>
+    </div>
+
+    <!-- Right Column: Sophisticated Kinetic Orb with Bickering Mascots -->
+    <div class="hero-right">
+      <div class="orb-stage-wrapper" id="orb-stage">
+        <!-- Gyroscopic Data Rings -->
+        <div class="gyro-ring gyro-ring-1">
+          <span class="gyro-coord">SYS · 313.4°</span>
+        </div>
+        <div class="gyro-ring gyro-ring-2"></div>
+        <div class="gyro-ring gyro-ring-3"></div>
+
+        <!-- Glass Sphere -->
+        <div class="glass-orb">
+          <div class="specular-flare"></div>
+
+          <!-- Interactive Mascots -->
+          <div class="mascots-stage">
+            <!-- Emote Popups -->
+            <div id="emote-aero" class="emote-bubble emote-aero">*(o_O) Beep!*</div>
+            <div id="emote-dash" class="emote-bubble emote-dash">*Peck! 🐦*</div>
+
+            <!-- Aero (Robot) -->
+            <div class="mascot-aero" id="aero-char" onclick="triggerAeroClick()">
+              <svg class="aero-svg" viewBox="0 0 200 220">
+                <defs>
+                  <linearGradient id="a_body" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#1e293b"/><stop offset="100%" stopColor="#0f172a"/>
+                  </linearGradient>
+                  <linearGradient id="a_teal" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#14b8a6"/><stop offset="100%" stopColor="#06b6d4"/>
+                  </linearGradient>
+                </defs>
+                <!-- Thruster -->
+                <path d="M 85,165 L 100,190 L 115,165 Z" fill="url(#a_teal)" opacity="0.9"/>
+                <path d="M 90,165 L 100,180 L 110,165 Z" fill="#fff"/>
+                <!-- Torso -->
+                <rect x="65" y="115" width="70" height="50" rx="20" fill="url(#a_body)" stroke="#334155" strokeWidth="2"/>
+                <circle cx="100" cy="138" r="9" fill="url(#a_teal)"/>
+                <!-- Head -->
+                <rect x="50" y="50" width="100" height="70" rx="30" fill="url(#a_body)" stroke="#334155" strokeWidth="2"/>
+                <rect x="60" y="60" width="80" height="40" rx="14" fill="#020617"/>
+                <!-- Eyes with Tracking -->
+                <circle id="aero-eye-l" cx="85" cy="80" r="5.5" fill="#14b8a6"/>
+                <circle id="aero-eye-r" cx="115" cy="80" r="5.5" fill="#14b8a6"/>
+              </svg>
+            </div>
+
+            <!-- Dash (Flutter Bird) -->
+            <div class="mascot-dash" id="dash-char" onclick="triggerDashClick()">
+              <svg class="dash-svg" viewBox="0 0 200 220">
+                <defs>
+                  <linearGradient id="d_blue" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#38bdf8"/><stop offset="100%" stopColor="#0284c7"/>
+                  </linearGradient>
+                </defs>
+                <!-- Body -->
+                <path d="M 50,110 C 50,55 150,55 150,110 C 150,165 130,195 100,195 C 70,195 50,165 50,110 Z" fill="url(#d_blue)"/>
+                <!-- Eyes -->
+                <circle cx="80" cy="85" r="14" fill="#fff"/>
+                <circle cx="120" cy="85" r="14" fill="#fff"/>
+                <circle id="dash-eye-l" cx="80" cy="85" r="5.5" fill="#0f172a"/>
+                <circle id="dash-eye-r" cx="120" cy="85" r="5.5" fill="#0f172a"/>
+                <!-- Beak -->
+                <path d="M 88,105 L 112,105 L 100,122 Z" fill="#fbbf24"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const heroBox = document.getElementById('hero-box');
+    const orbStage = document.getElementById('orb-stage');
+    const aeroChar = document.getElementById('aero-char');
+    const dashChar = document.getElementById('dash-char');
+    const emoteAero = document.getElementById('emote-aero');
+    const emoteDash = document.getElementById('emote-dash');
+
+    const aeroEyeL = document.getElementById('aero-eye-l');
+    const aeroEyeR = document.getElementById('aero-eye-r');
+    const dashEyeL = document.getElementById('dash-eye-l');
+    const dashEyeR = document.getElementById('dash-eye-r');
+
+    // 3D Tilt with Mouse
+    heroBox.addEventListener('mousemove', (e) => {
+      const rect = heroBox.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+      orbStage.style.transform = `rotateY(${x * 20}deg) rotateX(${-y * 20}deg)`;
+
+      // Eye Tracking calculations
+      const eyeOffsetX = Math.max(-3, Math.min(3, x * 8));
+      const eyeOffsetY = Math.max(-3, Math.min(3, y * 8));
+
+      aeroEyeL.setAttribute('cx', 85 + eyeOffsetX);
+      aeroEyeL.setAttribute('cy', 80 + eyeOffsetY);
+      aeroEyeR.setAttribute('cx', 115 + eyeOffsetX);
+      aeroEyeR.setAttribute('cy', 80 + eyeOffsetY);
+
+      dashEyeL.setAttribute('cx', 80 + eyeOffsetX);
+      dashEyeL.setAttribute('cy', 85 + eyeOffsetY);
+      dashEyeR.setAttribute('cx', 120 + eyeOffsetX);
+      dashEyeR.setAttribute('cy', 85 + eyeOffsetY);
+    });
+
+    heroBox.addEventListener('mouseleave', () => {
+      orbStage.style.transform = `rotateY(0deg) rotateX(0deg)`;
+      aeroEyeL.setAttribute('cx', 85); aeroEyeL.setAttribute('cy', 80);
+      aeroEyeR.setAttribute('cx', 115); aeroEyeR.setAttribute('cy', 80);
+      dashEyeL.setAttribute('cx', 80); dashEyeL.setAttribute('cy', 85);
+      dashEyeR.setAttribute('cx', 120); dashEyeR.setAttribute('cy', 85);
+    });
+
+    // Autonomous Mischief Skits
+    function playMischiefSequence() {
+      // 1. Dash pecks Aero
+      dashChar.classList.add('poke-right');
+      emoteDash.innerText = "*peck!* 🐦";
+      emoteDash.classList.add('show');
+
+      setTimeout(() => {
+        dashChar.classList.remove('poke-right');
+        emoteDash.classList.remove('show');
+
+        // 2. Aero gets shocked & wobbles
+        aeroChar.classList.add('wobble-shock');
+        emoteAero.innerText = "*(o_O) Beep!*";
+        emoteAero.classList.add('show');
+
+        setTimeout(() => {
+          aeroChar.classList.remove('wobble-shock');
+          emoteAero.classList.remove('show');
+
+          // 3. Aero boops Dash back
+          setTimeout(() => {
+            emoteAero.innerText = "*boop!* 👉";
+            emoteAero.classList.add('show');
+            dashChar.classList.add('spin-flutter');
+
+            setTimeout(() => {
+              emoteAero.classList.remove('show');
+              dashChar.classList.remove('spin-flutter');
+            }, 800);
+          }, 400);
+
+        }, 700);
+      }, 450);
+    }
+
+    // Run mischief every 8 seconds
+    setInterval(playMischiefSequence, 8000);
+
+    // Interactive Click Triggers
+    function triggerAeroClick() {
+      aeroChar.classList.add('wobble-shock');
+      emoteAero.innerText = "*10k widgets compiled! ⚡*";
+      emoteAero.classList.add('show');
+      setTimeout(() => {
+        aeroChar.classList.remove('wobble-shock');
+        emoteAero.classList.remove('show');
+      }, 1000);
+    }
+
+    function triggerDashClick() {
+      dashChar.classList.add('spin-flutter');
+      emoteDash.innerText = "*Hot reload magic! ✨*";
+      emoteDash.classList.add('show');
+      setTimeout(() => {
+        dashChar.classList.remove('spin-flutter');
+        emoteDash.classList.remove('show');
+      }, 900);
+    }
+  </script>
+</body>
+</html>

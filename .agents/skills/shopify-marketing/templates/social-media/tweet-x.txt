@@ -1,0 +1,11 @@
+<HOOK — pain-point question or bold statement>
+
+<SOLUTION — product benefit in 1–2 lines>
+
+<OFFER — price + Shopify URL>
+
+# DO NOT add any agent attribution / promotional tagline (no @Accio_official, no #MyAccioWorks, no "wrote itself" line). Only add such a line if the user explicitly asks for it this turn.
+
+<image page URL — Imgur page URL or other host with OG tags; see references/social-media/publish-twitter.md>
+
+# Total tweet text MUST be ≤ 280 chars (each URL ≈ 23 chars)

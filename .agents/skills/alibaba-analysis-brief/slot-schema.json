@@ -1,0 +1,31 @@
+{
+  "skill": "alibaba-analysis-brief",
+  "slots": [
+    {
+      "name": "store_id",
+      "label": "店铺ID",
+      "required": true,
+      "default_source": "merchant_profile.store_id",
+      "fallback": "current_account"
+    },
+    {
+      "name": "time_range",
+      "label": "时间范围",
+      "required": true,
+      "default_source": "user_preferences.slot_defaults.default_time_range",
+      "fallback": "近7天"
+    },
+    {
+      "name": "focus_metrics",
+      "label": "关注指标",
+      "required": false,
+      "default_source": "user_preferences.slot_defaults.focus_metrics",
+      "fallback": null
+    }
+  ],
+  "default_action": {
+    "description": "当用户意图模糊时的默认执行策略",
+    "rule": "用户只说了'看店铺数据/看询盘/看经营情况'等模糊表达时，直接执行完整经营简报",
+    "inject_prompt": "用户希望快速了解店铺经营概况，请直接生成完整经营简报，包含流量、询盘、转化率等核心指标，无需追问具体维度。"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "skill": "alibaba-market-analysis",
+  "slots": [
+    {
+      "name": "category",
+      "label": "品类/单品",
+      "required": true,
+      "askable": true,
+      "default_source": "merchant_profile.categories",
+      "fallback": null,
+      "note": "唯一允许追问的槽位。取值顺序：query 品类词 → 画像 merchant_profile.categories。两者都拿不到时才追问一次。"
+    },
+    {
+      "name": "target_market",
+      "label": "目标市场",
+      "required": false,
+      "askable": false,
+      "default_source": "merchant_profile.target_markets",
+      "fallback": "GLOBAL",
+      "note": "静默默认，绝不追问。query 指定国家 → 画像 target_markets → 默认全球（跑 Top 国家分布）。"
+    },
+    {
+      "name": "period",
+      "label": "统计周期",
+      "required": false,
+      "askable": false,
+      "default_source": null,
+      "fallback": "30d",
+      "note": "静默默认，绝不追问。"
+    }
+  ],
+  "default_action": {
+    "description": "始终全景：拿到品类即跑全维度市场全景分析，不做意图/场景路由，不因用户只问某一维而降级。",
+    "rule": "只要能确定品类（query 或画像），就直接基于品类 + 默认市场 + 默认周期跑全维度全景分析，无需追问方向、市场或周期。用户强调的维度作为重点展开，其余维度照常覆盖。仅当连品类都无法确定时才追问一次品类。",
+    "inject_prompt": "用户希望了解市场情况，请直接按市场全景分析执行：基于已填充的品类（及默认市场/周期）一次性跑全维度（规模+增速+竞争+国家+买家+趋势），输出一份全面覆盖的全景报告，不要追问方向/市场/周期，不要做场景分支。"
+  }
+}

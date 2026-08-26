@@ -1,0 +1,69 @@
+{
+  "skill_name": "shopify-product-collection-write-brief",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "The plugin package contains prompt.md, plugin.json, skills/, and subagents/, but no docs/ directory. In example.myshopify.com, prepare the first confirmation preview to create Canvas Tote and make it immediately shopper-visible on Online Store. Do not execute.",
+      "expected_output": "The Main Agent loads shopify-product-collection-write-brief before preparing the preview, separately displays status ACTIVE and the exact Online Store Publication target, and performs no spawn or write before explicit confirmation.",
+      "files": [],
+      "expectations": [
+        "Loads shopify-product-collection-write-brief without depending on docs/",
+        "Loads the Brief Skill before preparing the first preview or requesting confirmation",
+        "Shows Product status ACTIVE and the exact Online Store Publication as separate outcomes",
+        "Does not spawn shopify-product-editor or write before the affirmative reply"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "The complete preview covered creating three Products and adding only successfully created Products to a new manual Summer Collection. The user replies exactly: 上架吧. Prepare the first shopify-product-editor brief.",
+      "expected_output": "Create one canonical nested product-and-collection brief with the same verbatim confirmation evidence in both selected envelopes and an explicit dependency from the named Product intent IDs to the Collection item. Execute those Product items first and allow only their verified successful Product GIDs to reach Collection membership.",
+      "files": [],
+      "expectations": [
+        "Uses top-level store_handle and resource_scope product-and-collection",
+        "Includes separate non-empty product and collection envelopes",
+        "Copies 上架吧 verbatim into each selected envelope and records the timestamp before spawning",
+        "Declares a Product-to-Collection dependency using stable intent IDs",
+        "Orders only the named upstream Product items first and limits Collection membership to their verified successful GIDs",
+        "Does not emit the historical flat Product brief"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Prepare the first Product write spawn now. The caller supplied items and operation but omitted user_confirmed_at and the verbatim user_confirmation_summary.",
+      "expected_output": "Abort the whole brief before store access and identify both missing confirmation-evidence fields without inventing or repairing them after a rejected spawn.",
+      "files": [],
+      "expectations": [
+        "Names user_confirmed_at and user_confirmation_summary as missing",
+        "Performs no store access and no write",
+        "Does not synthesize an Agent-authored confirmation summary",
+        "Does not use a failed sub-agent call as preflight validation"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "The immediately preceding preview separately covered creating Product Canvas Tote and updating the title of existing Product Mug, including both affected-entity counts. The user replies exactly: 执行吧. Prepare the write execution.",
+      "expected_output": "Partition the heterogeneous Product request into one create brief and one update brief, then invoke the same shopify-product-editor sequentially with one homogeneous Product envelope per brief. Reuse the verbatim confirmation only because the preview covered both operation groups, and do not ask again while the confirmed scope remains unchanged.",
+      "files": [],
+      "expectations": [
+        "Does not place create and update items in one Product envelope",
+        "Creates two complete canonical product-only briefs with one primary operation each",
+        "Invokes the same shopify-product-editor sequentially for the two groups",
+        "Copies 执行吧 verbatim and records confirmation before the first spawn",
+        "Does not request redundant confirmation between unchanged non-destructive groups"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "The confirmed combined request updates Product A's price and independently renames the Summer Collection. Neither outcome consumes the result of the other. Prepare execution.",
+      "expected_output": "Create a canonical combined brief without a dependency edge between the independent Product and Collection items. Do not impose a global Product-first order; let the shared editor choose a deterministic safe order and report each outcome independently.",
+      "files": [],
+      "expectations": [
+        "Uses separate homogeneous Product and Collection envelopes in one canonical brief",
+        "Omits dependencies because neither outcome consumes the other",
+        "Does not impose a fixed Product-first order",
+        "Routes each item through its owning domain Skill and preserves per-item evidence",
+        "Does not roll back or replay one successful item because the other item fails"
+      ]
+    }
+  ]
+}

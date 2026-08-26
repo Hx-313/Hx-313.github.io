@@ -1,0 +1,14 @@
+# DEMO_DATA: numeric columns are calibrated; replace with real product values when filling. health_status uses emoji-only (🟢 healthy / 🟡 caution / 🔴 reject); detailed reasoning lives in health_notes.
+product_name,price_tier,role,price,landed_cost,variable_cost,transaction_cost,discount_refund_reserve,contribution_margin,contribution_margin_pct,gross_margin_pct,markup_multiple,break_even_roas,target_cac,target_roas,first_order_profit,health_status,health_notes
+Amethyst Tower,Hero,Hero Main Product,55.00,4.97,8.91,2.41,0.55,38.16,69.4%,91.0%,11.07x,1.44,15.26,3.60,22.90,🟡,Markup>10x — re-examine pricing for inflated retail
+Chakra Pendant,Hero,Hero Main Product,49.99,2.60,7.55,2.20,0.50,37.14,74.3%,94.8%,19.23x,1.35,14.86,3.36,22.28,🟡,Markup>12x — re-examine pricing for inflated retail
+Raw Rose Quartz,Entry,Entry Traffic Driver,12.99,1.11,4.38,0.94,0.13,6.43,49.5%,91.5%,11.70x,2.02,2.57,5.05,3.86,🟢,Healthy entry SKU; CM% above 25% threshold
+Crystal Beginner Kit,Hero,Bundle Starter,45.99,5.54,9.93,2.06,0.46,28.00,60.9%,87.9%,8.30x,1.64,11.20,4.11,16.80,🟢,Bundle markup in healthy 5-8x range
+Premium Amethyst Geode,Premium,Anchor Product,129.00,13.03,17.50,4.99,1.29,92.19,71.5%,89.9%,9.90x,1.40,36.88,3.50,55.31,🟢,Anchor SKU; CM% strong, supports lower-volume premium positioning
+
+# Notes:
+# Landed Cost = Purchase Price + First-leg Shipping + Customs + Creative Production Amortization (consolidated)
+# Variable Cost = Last-mile Shipping + Packaging + Fulfillment Labor (consolidated)
+# target_roas = price / target_cac (ROAS the SKU needs at target CAC to cover acquisition); first_order_profit = contribution_margin - target_cac
+# Detailed breakdown in references/phase-4-unit-economics.md
+# Data benchmark: 2026 Q1, calibrate every 6 months

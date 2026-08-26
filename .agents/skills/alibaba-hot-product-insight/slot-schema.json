@@ -1,0 +1,24 @@
+{
+  "skill": "alibaba-hot-product-insight",
+  "slots": [
+    {
+      "name": "category",
+      "label": "品类",
+      "required": true,
+      "default_source": "merchant_profile.categories",
+      "fallback": null
+    },
+    {
+      "name": "market",
+      "label": "目标市场",
+      "required": false,
+      "default_source": "merchant_profile.target_markets",
+      "fallback": null
+    }
+  ],
+  "default_action": {
+    "description": "当用户只说'看热卖品/爆品趋势'时的默认策略",
+    "rule": "如果画像中有主营品类，直接基于该品类分析热销趋势",
+    "inject_prompt": "用户希望了解热销爆品趋势，请直接基于已填充的品类信息执行热销分析，无需追问具体品类方向。"
+  }
+}

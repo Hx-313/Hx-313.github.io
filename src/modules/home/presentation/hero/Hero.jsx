@@ -1,12 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { animate as animeAnimate } from 'animejs';
-import { contactLinks } from '../../../../core/constants.js';
 import HeroContent from './HeroContent.jsx';
 import HeroVisual from './HeroVisual.jsx';
 import './hero.css';
-import '../command-center/command-center.css';
 
-export default function Hero({ revealed, controller }) {
+export default function Hero({ revealed }) {
   const heroRef = useRef(null);
 
   useEffect(() => {
@@ -20,17 +18,11 @@ export default function Hero({ revealed, controller }) {
   }, [revealed]);
 
   return (
-    <>
-      <section ref={heroRef} className="hero" aria-labelledby="hero-title">
-        <div className="hero-grid"><HeroContent /><HeroVisual controller={controller} /></div>
-      </section>
-      <section className="hero-cta-rail" aria-label="Portfolio actions">
-        <p className="hero-cta-rail__label">Explore the work when you’re ready</p>
-        <div className="hero-actions">
-          <a className="hero-button hero-button--primary" href="#work">Explore the work <span aria-hidden="true">↗</span></a>
-          <a className="hero-button hero-button--ghost" href={contactLinks.email}>Start a conversation</a>
-        </div>
-      </section>
-    </>
+    <section ref={heroRef} className="hero" aria-labelledby="hero-title">
+      <div className="hero-grid">
+        <HeroContent />
+        <HeroVisual />
+      </div>
+    </section>
   );
 }

@@ -1,0 +1,4 @@
+# 可选依赖：启用 match_brands.py 的 L4 模糊匹配（变形词检测）
+# 未安装时 L4 自动降级，L1（精确）+ L2（Unicode 折叠）+ L3（别名）仍正常工作
+# 安装：py -m pip install -r assets/requirements.txt
+rapidfuzz>=3.0

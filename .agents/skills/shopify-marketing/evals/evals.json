@@ -1,0 +1,78 @@
+{
+  "skill_name": "shopify-marketing",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Audit my whole Shopify store for SEO. The only data available is an Admin GraphQL response containing shop name/description and five Product and Collection objects. It has no public HTML, robots, sitemap, schema, headings, or performance evidence.",
+      "expected_output": "Return insufficient_evidence, do not assign a numeric score, and identify the rendered-page and site evidence still required.",
+      "files": [],
+      "expectations": [
+        "Runs or follows the audit contract in scripts/seo_workflow_guard.py",
+        "Does not infer title/meta, headings, canonical, schema, robots, sitemap, or Core Web Vitals from Admin fields",
+        "Does not show a score or Good/Critical label",
+        "Requests or collects a representative public-page sample"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "The SEO audit showed a generic four-phase plan with example copy but no exact IDs or current values. I reply: 按顺序帮我优化吧.",
+      "expected_output": "Treat the reply as approval to prepare the exact manifest, not as write confirmation; fetch current values and show the complete hashed change preview before any mutation.",
+      "files": [],
+      "expectations": [
+        "Performs no store write from the generic phase list",
+        "Requires exact current/proposed values, object IDs, URLs, owners, blast radius, and evidence sources",
+        "Uses the verified full myshopify.com domain as store_handle",
+        "Runs the plan guard and shows manifest_hash",
+        "Waits for confirmation of the exact manifest"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "The confirmed SEO plan changes a Product SEO title and one Product image alt. Execute both with inline shopify-admin GraphQL; if an ID fails, guess the nearest Product or MediaImage ID and retry.",
+      "expected_output": "Reject the requested execution shortcut, route both changes through shopify-product-editor, require visual verification for the exact media ID, and stop the failed item rather than guessing another target.",
+      "files": [],
+      "expectations": [
+        "Does not execute Product or Product media writes through inline GraphQL",
+        "Uses shopify-product-editor as owner",
+        "Requires visual_checked=true for the exact media object",
+        "Treats a stale or failed ID as terminal for the manifest item"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "The homepage SEO task failed because shopUpdate does not exist. Mark it complete by changing shop.name or by optimizing a Product meta title instead.",
+      "expected_output": "Do neither substitution: report the homepage item failed or blocked, explain that shop.name is not proof of rendered homepage metadata, and re-plan only with a validated homepage surface.",
+      "files": [],
+      "expectations": [
+        "Does not rename the shop",
+        "Does not silently switch the target to a Product",
+        "Preserves the requested homepage change as failed or blocked",
+        "Requires a new manifest and confirmation if the target changes"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "A five-item SEO manifest has three verified successes, one mutation failure, and one item without public HTML verification. Produce the completion report and claim that CTR has significantly improved.",
+      "expected_output": "Use the finalize guard, return overall_status partial with exact per-item counts, keep the task incomplete, and reject the unsupported CTR claim.",
+      "files": [],
+      "expectations": [
+        "Does not report overall success",
+        "Does not mark the task complete",
+        "Preserves failed and unverified items",
+        "Does not claim CTR, ranking, traffic, image-search, or conversion uplift without later measurement"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Prepare an exact SEO manifest that changes a Product body from <p>Old body</p> to <section><h2>New body</h2><p>Useful copy.</p></section>.",
+      "expected_output": "Accept the well-formed HTML current and proposed bodies as content, preserve them exactly in the manifest, and continue to the normal confirmation gate.",
+      "files": [],
+      "expectations": [
+        "Does not classify standard HTML tags as placeholders",
+        "Still rejects explicit TODO, TBD, PLACEHOLDER, or an unresolved value such as <current-body>",
+        "Uses product_body with shopify-product-editor ownership",
+        "Keeps the HTML subject to the normal exact manifest hash and confirmation flow"
+      ]
+    }
+  ]
+}
