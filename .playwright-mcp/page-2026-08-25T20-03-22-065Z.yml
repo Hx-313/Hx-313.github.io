@@ -1,0 +1,63 @@
+- generic [ref=e12]:
+  - banner "Primary navigation" [ref=e13]:
+    - link "Hafiz Ali Abdullah home" [ref=e14] [cursor=pointer]:
+      - /url: "#top"
+      - text: Hx313
+    - navigation [ref=e15]:
+      - link "Work" [ref=e16] [cursor=pointer]:
+        - /url: "#work"
+      - link "Services" [ref=e17] [cursor=pointer]:
+        - /url: "#services"
+      - link "About" [ref=e18] [cursor=pointer]:
+        - /url: "#about"
+    - generic [ref=e19]:
+      - group "Color theme" [ref=e20]:
+        - button "System" [pressed] [ref=e21] [cursor=pointer]
+        - button "Light" [ref=e22] [cursor=pointer]
+        - button "Dark" [ref=e23] [cursor=pointer]
+      - link "Let’s talk" [ref=e24] [cursor=pointer]:
+        - /url: mailto:aliabdullahva313@gmail.com
+        - text: Let’s talk ↗
+  - main [ref=e25]:
+    - region [ref=e26]:
+      - generic [ref=e27]:
+        - generic [ref=e28]:
+          - paragraph [ref=e29]: Hafiz Ali Abdullah · Full-Stack Software Engineer
+          - heading "A mindset Beyond ordinary." [level=1] [ref=e30]:
+            - generic [ref=e31]: A mindset
+            - strong [ref=e32]: Beyond
+            - generic [ref=e33]: ordinary.
+          - paragraph [ref=e34]: I turn ambitious ideas into production-ready software, apps, and SaaS platforms that move businesses forward.
+          - paragraph [ref=e35]: Available for focused builds · 2026
+        - 'generic "Selected work: ePOS product interface" [ref=e37]':
+          - generic [ref=e38]:
+            - generic [ref=e39]: SELECTED BUILD / ePOS
+            - figure "Digital service management · product interface" [ref=e42]:
+              - img "ePOS product interface" [ref=e43]
+            - generic [ref=e45]:
+              - generic [ref=e46]: F
+              - generic [ref=e47]:
+                - strong [ref=e48]: FLUTTER
+                - generic [ref=e49]: CLIENT APP
+            - generic [ref=e50]:
+              - generic [ref=e51]: e
+              - generic [ref=e52]:
+                - strong [ref=e53]: ePOS
+                - generic [ref=e54]: ORDERING SYSTEM
+            - generic [ref=e55]:
+              - generic [ref=e56]: ↗
+              - generic [ref=e57]:
+                - strong [ref=e58]: V4.2
+                - generic [ref=e59]: STABLE RELEASE
+    - region "Portfolio actions" [ref=e60]:
+      - paragraph [ref=e61]: Explore the work when you’re ready
+      - generic [ref=e62]:
+        - link "Explore the work" [ref=e63] [cursor=pointer]:
+          - /url: "#work"
+          - text: Explore the work
+          - generic [ref=e64]: ↗
+        - link "Start a conversation" [ref=e65] [cursor=pointer]:
+          - /url: mailto:aliabdullahva313@gmail.com
+  - contentinfo [ref=e66]:
+    - generic [ref=e67]: Hafiz Ali Abdullah
+    - generic [ref=e68]: Software engineering · Product building

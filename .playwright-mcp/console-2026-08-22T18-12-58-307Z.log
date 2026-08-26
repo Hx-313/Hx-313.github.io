@@ -1,0 +1,4 @@
+[     208ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://127.0.0.1:5173/node_modules/.vite/deps/chunk-TSRML2OT.js?v=47bb0f9d:21608
+[     375ms] [WARNING] No target found. Make sure the element you're trying to animate is accessible before creating your animation. @ http://127.0.0.1:5173/node_modules/.vite/deps/animejs.js?v=2ec97e72:2596
+[     377ms] [WARNING] No target found. Make sure the element you're trying to animate is accessible before creating your animation. @ http://127.0.0.1:5173/node_modules/.vite/deps/animejs.js?v=2ec97e72:2596
+[     388ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:5173/favicon.ico:0

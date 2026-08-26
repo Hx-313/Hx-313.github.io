@@ -1,0 +1,3 @@
+[     631ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://127.0.0.1:5173/node_modules/.vite/deps/chunk-TSRML2OT.js?v=592969c8:21608
+[     821ms] [WARNING] No target found. Make sure the element you're trying to animate is accessible before creating your animation. @ http://127.0.0.1:5173/node_modules/.vite/deps/animejs.js?v=592969c8:2596
+[     827ms] [WARNING] No target found. Make sure the element you're trying to animate is accessible before creating your animation. @ http://127.0.0.1:5173/node_modules/.vite/deps/animejs.js?v=592969c8:2596

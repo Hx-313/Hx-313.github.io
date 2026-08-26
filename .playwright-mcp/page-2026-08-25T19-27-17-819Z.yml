@@ -1,0 +1,71 @@
+- generic [ref=f4e12]:
+  - banner "Primary navigation" [ref=f4e13]:
+    - link "Hafiz Ali Abdullah home" [ref=f4e14] [cursor=pointer]:
+      - /url: "#top"
+      - text: Hx313
+    - navigation [ref=f4e15]:
+      - link "Work" [ref=f4e16] [cursor=pointer]:
+        - /url: "#work"
+      - link "Services" [ref=f4e17] [cursor=pointer]:
+        - /url: "#services"
+      - link "About" [ref=f4e18] [cursor=pointer]:
+        - /url: "#about"
+    - generic [ref=f4e19]:
+      - group "Color theme" [ref=f4e20]:
+        - button "System" [pressed] [ref=f4e21] [cursor=pointer]
+        - button "Light" [ref=f4e22] [cursor=pointer]
+        - button "Dark" [ref=f4e23] [cursor=pointer]
+      - link "Let’s talk" [ref=f4e24] [cursor=pointer]:
+        - /url: mailto:aliabdullahva313@gmail.com
+        - text: Let’s talk ↗
+  - main [ref=f4e25]:
+    - region [ref=f4e26]:
+      - generic [ref=f4e27]:
+        - generic [ref=f4e28]:
+          - paragraph [ref=f4e29]: Hafiz Ali Abdullah · Full-Stack Software Engineer
+          - heading "A mindset Beyond ordinary." [level=1] [ref=f4e30]:
+            - generic [ref=f4e31]: A mindset
+            - strong [ref=f4e32]: Beyond
+            - generic [ref=f4e33]: ordinary.
+          - paragraph [ref=f4e34]: I turn ambitious ideas into production-ready software, apps, and SaaS platforms that move businesses forward.
+          - generic [ref=f4e35]:
+            - link "Explore the work" [ref=f4e36] [cursor=pointer]:
+              - /url: "#work"
+              - text: Explore the work
+              - generic [ref=f4e37]: ↗
+            - link "Start a conversation" [ref=f4e38] [cursor=pointer]:
+              - /url: mailto:aliabdullahva313@gmail.com
+          - paragraph [ref=f4e39]: Available for focused builds · 2026
+        - 'generic "Selected work: ePOS product system" [ref=f4e41]':
+          - generic [ref=f4e42]:
+            - generic [ref=f4e43]:
+              - generic [ref=f4e44]: SELECTED WORK / 01
+              - generic [ref=f4e45]: ACTIVE BUILD
+            - generic [ref=f4e47]:
+              - paragraph [ref=f4e48]: PRODUCT SYSTEMS
+              - heading [level=2] [ref=f4e49]:
+                - text: ePOS
+                - generic [ref=f4e50]: for realmomentum.
+              - paragraph [ref=f4e52]: A focused operating system for teams that need every order, handoff, and decision to move cleanly.
+            - generic "Product sequence" [ref=f4e53]:
+              - generic [ref=f4e54]:
+                - generic [ref=f4e55]: "01"
+                - strong [ref=f4e56]: Shape
+                - generic [ref=f4e57]: Clarify the move
+              - generic [ref=f4e58]:
+                - generic [ref=f4e59]: "02"
+                - strong [ref=f4e60]: Build
+                - generic [ref=f4e61]: Make it usable
+              - generic [ref=f4e62]:
+                - generic [ref=f4e63]: "03"
+                - strong [ref=f4e64]: Ship
+                - generic [ref=f4e65]: Keep it moving
+            - generic [ref=f4e66]:
+              - generic [ref=f4e67]: Flutter · SaaS · 2026
+              - generic [ref=f4e68]: CASE STUDY ↗
+          - generic [ref=f4e69]:
+            - generic [ref=f4e70]: "01"
+            - generic [ref=f4e71]: "04"
+  - contentinfo [ref=f4e72]:
+    - generic [ref=f4e73]: Hafiz Ali Abdullah
+    - generic [ref=f4e74]: Software engineering · Product building

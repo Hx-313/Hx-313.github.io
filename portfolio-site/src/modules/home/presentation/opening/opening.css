@@ -6,9 +6,28 @@
   place-items: center;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 50% 44%, color-mix(in srgb, var(--color-hero-background) 92%, var(--color-glitch) 8%) 0%, var(--color-hero-background) 42%, var(--color-stage-edge) 100%);
+    radial-gradient(circle at 50% 46%, color-mix(in srgb, var(--color-glitch) 16%, transparent), transparent 24rem),
+    radial-gradient(ellipse at 50% 44%, color-mix(in srgb, var(--color-hero-background) 94%, var(--color-glitch) 6%) 0%, var(--color-hero-background) 48%, var(--color-stage-edge) 100%);
   color: var(--color-hero-text);
-  transition: opacity 900ms var(--ease-out), visibility 900ms var(--ease-out), background 500ms ease;
+  transition: opacity 260ms var(--ease-out), transform 260ms var(--ease-out), visibility 260ms var(--ease-out);
+}
+
+.opening--blackout {
+  opacity: 0;
+  transform: translateY(-0.35rem) scale(1.018);
+  pointer-events: none;
+}
+
+.opening--blackout .opening-center {
+  opacity: 0;
+  transform: scale(0.985);
+  transition: opacity 220ms var(--ease-out), transform 260ms var(--ease-out);
+}
+
+.opening--blackout .opening-noise {
+  opacity: 0;
+  transform: scale(0.72);
+  transition: opacity 260ms var(--ease-out), transform 260ms var(--ease-out);
 }
 
 .opening-center {
@@ -16,6 +35,7 @@
   z-index: 2;
   width: min(90vw, 75rem);
   text-align: center;
+  transition: opacity 180ms ease, transform 180ms ease;
 }
 
 .opening-caption,
@@ -130,10 +150,13 @@
   position: absolute;
   inset: 0;
   opacity: 0.045;
-  background-image: linear-gradient(var(--color-glitch) 1px, transparent 1px);
-  background-size: 100% 8px;
+  background-image:
+    radial-gradient(circle at 18% 24%, var(--color-glitch) 0 0.7px, transparent 0.9px),
+    radial-gradient(circle at 76% 68%, var(--color-glitch) 0 0.6px, transparent 0.9px);
+  background-size: 17px 19px, 23px 21px;
   mask-image: linear-gradient(to bottom, transparent, black 35%, transparent 85%);
   pointer-events: none;
+  transition: opacity 260ms var(--ease-out), transform 260ms var(--ease-out);
 }
 
 .opening-noise::after {
@@ -169,7 +192,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .opening { transition: none; }
+  .opening, .opening--blackout .opening-center, .opening--blackout .opening-noise { transition: none; }
+  .opening--blackout { opacity: 0; transform: none; }
   .opening-character { opacity: 1; transform: none; }
   .opening-cursor { opacity: 1; }
 }

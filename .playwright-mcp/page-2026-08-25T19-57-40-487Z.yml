@@ -1,0 +1,66 @@
+- generic [ref=f6e3]:
+  - region "Portfolio introduction" [ref=f6e4]:
+    - generic "Loading 2%" [ref=f6e7]: 2%
+    - paragraph [ref=f6e10]: Thinking · building · moving forward
+    - button "Skip intro" [ref=f6e11] [cursor=pointer]: Skip intro ↗
+  - generic:
+    - banner:
+      - link:
+        - /url: "#top"
+        - text: Hx313
+      - navigation:
+        - link:
+          - /url: "#work"
+          - text: Work
+        - link:
+          - /url: "#services"
+          - text: Services
+        - link:
+          - /url: "#about"
+          - text: About
+      - generic:
+        - group:
+          - button [pressed]: System
+          - button: Light
+          - button: Dark
+        - link:
+          - /url: mailto:aliabdullahva313@gmail.com
+          - text: Let’s talk ↗
+    - main:
+      - region:
+        - generic:
+          - generic:
+            - paragraph: Hafiz Ali Abdullah · Full-Stack Software Engineer
+            - heading [level=1]:
+              - generic: A mindset
+              - strong: Beyond
+              - generic: ordinary.
+            - paragraph: I turn ambitious ideas into production-ready software, apps, and SaaS platforms that move businesses forward.
+            - paragraph: Available for focused builds · 2026
+          - generic:
+            - generic:
+              - generic: SELECTED BUILD / ePOS
+              - figure:
+                - generic: Digital service management · product interface
+              - generic:
+                - strong: FLUTTER
+                - generic: CLIENT APP
+              - generic:
+                - strong: ePOS
+                - generic: ORDERING SYSTEM
+              - generic:
+                - strong: V4.2
+                - generic: STABLE RELEASE
+      - region:
+        - paragraph: Explore the work when you’re ready
+        - generic:
+          - link:
+            - /url: "#work"
+            - text: Explore the work
+            - generic: ↗
+          - link:
+            - /url: mailto:aliabdullahva313@gmail.com
+            - text: Start a conversation
+    - contentinfo:
+      - generic: Hafiz Ali Abdullah
+      - generic: Software engineering · Product building

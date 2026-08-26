@@ -1,0 +1,96 @@
+- generic [ref=f1e12]:
+  - banner "Primary navigation" [ref=f1e13]:
+    - link "Hafiz Ali Abdullah home" [ref=f1e14] [cursor=pointer]:
+      - /url: "#top"
+      - text: Hx313
+    - navigation [ref=f1e15]:
+      - link "Work" [ref=f1e16] [cursor=pointer]:
+        - /url: "#work"
+      - link "Services" [ref=f1e17] [cursor=pointer]:
+        - /url: "#services"
+      - link "About" [ref=f1e18] [cursor=pointer]:
+        - /url: "#about"
+    - generic [ref=f1e19]:
+      - group "Color theme" [ref=f1e20]:
+        - button "System" [pressed] [ref=f1e21] [cursor=pointer]
+        - button "Light" [ref=f1e22] [cursor=pointer]
+        - button "Dark" [ref=f1e23] [cursor=pointer]
+      - link "Let’s talk" [ref=f1e24] [cursor=pointer]:
+        - /url: mailto:aliabdullahva313@gmail.com
+        - text: Let’s talk ↗
+  - main [ref=f1e25]:
+    - region [ref=f1e26]:
+      - generic [ref=f1e27]:
+        - generic [ref=f1e28]:
+          - paragraph [ref=f1e29]: Hafiz Ali Abdullah · Full-Stack Software Engineer
+          - heading "A mindset Beyond ordinary." [level=1] [ref=f1e30]:
+            - generic [ref=f1e31]: A mindset
+            - strong [ref=f1e32]: Beyond
+            - generic [ref=f1e33]: ordinary.
+          - paragraph [ref=f1e34]: I turn ambitious ideas into production-ready software, apps, and SaaS platforms that move businesses forward.
+          - paragraph [ref=f1e35]: Available for focused builds · 2026
+        - generic "Product constellation showing Hafiz's shipped applications" [ref=f1e37]:
+          - generic [ref=f1e38]:
+            - generic [ref=f1e39]:
+              - generic [ref=f1e43]: PRODUCT NETWORK / 08
+              - generic [ref=f1e44]: HX313 · BUILD FIELD
+            - generic "HX313 product system core" [ref=f1e53]:
+              - generic [ref=f1e54]: HX313
+              - text: PRODUCT SYSTEM
+            - generic "Project artifacts" [ref=f1e55]:
+              - button "ePOS, Operations, Selected build" [pressed] [ref=f1e56] [cursor=pointer]:
+                - generic [ref=f1e58]:
+                  - strong [ref=f1e59]: ePOS
+                  - generic [ref=f1e60]: Operations · Flutter · SaaS
+                - generic [ref=f1e61]: Selected build
+              - button "Dietify, Health, Shipped" [ref=f1e63] [cursor=pointer]:
+                - generic [ref=f1e65]:
+                  - strong [ref=f1e66]: Dietify
+                  - generic [ref=f1e67]: Health · Mobile app
+                - generic [ref=f1e68]: Shipped
+              - button "eBill Checker, Utilities, Shipped" [ref=f1e70] [cursor=pointer]:
+                - generic [ref=f1e72]:
+                  - strong [ref=f1e73]: eBill Checker
+                  - generic [ref=f1e74]: Utilities · Mobile app
+                - generic [ref=f1e75]: Shipped
+              - button "Noor-ul-Quran, Learning, Shipped" [ref=f1e77] [cursor=pointer]:
+                - generic [ref=f1e79]:
+                  - strong [ref=f1e80]: Noor-ul-Quran
+                  - generic [ref=f1e81]: Learning · Mobile app
+                - generic [ref=f1e82]: Shipped
+              - button "QR Scanner, Utility, Shipped" [ref=f1e84] [cursor=pointer]:
+                - generic [ref=f1e86]:
+                  - strong [ref=f1e87]: QR Scanner
+                  - generic [ref=f1e88]: Utility · Mobile app
+                - generic [ref=f1e89]: Shipped
+              - button "ReadMate, Reading, Shipped" [ref=f1e91] [cursor=pointer]:
+                - generic [ref=f1e93]:
+                  - strong [ref=f1e94]: ReadMate
+                  - generic [ref=f1e95]: Reading · Mobile app
+                - generic [ref=f1e96]: Shipped
+              - button "Speak & Translate, Language, Shipped" [ref=f1e98] [cursor=pointer]:
+                - generic [ref=f1e100]:
+                  - strong [ref=f1e101]: Speak & Translate
+                  - generic [ref=f1e102]: Language · AI voice
+                - generic [ref=f1e103]: Shipped
+              - button "Pet Care, Care, Shipped" [ref=f1e105] [cursor=pointer]:
+                - generic [ref=f1e107]:
+                  - strong [ref=f1e108]: Pet Care
+                  - generic [ref=f1e109]: Care · Mobile app
+                - generic [ref=f1e110]: Shipped
+            - generic [ref=f1e112]:
+              - generic [ref=f1e113]: SELECTED BUILD
+              - strong [ref=f1e114]: ePOS
+              - generic [ref=f1e115]: Operations · Flutter · SaaS
+    - region "Portfolio actions" [ref=f1e117]:
+      - paragraph [ref=f1e118]: Explore the work when you’re ready
+      - generic [ref=f1e119]:
+        - link "Explore the work" [ref=f1e120] [cursor=pointer]:
+          - /url: "#work"
+          - text: Explore the work
+          - generic [ref=f1e121]: ↗
+        - link "Start a conversation" [ref=f1e122] [cursor=pointer]:
+          - /url: mailto:aliabdullahva313@gmail.com
+  - contentinfo [ref=f1e123]:
+    - generic [ref=f1e124]: Hafiz Ali Abdullah
+    - generic [ref=f1e125]: Software engineering · Product building

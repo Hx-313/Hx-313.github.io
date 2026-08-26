@@ -1,0 +1,95 @@
+- generic [ref=e3]:
+  - region "Portfolio introduction":
+    - generic:
+      - generic:
+        - generic:
+          - generic: M
+          - generic: O
+          - generic: M
+          - generic: E
+          - generic: "N"
+          - generic: T
+          - generic: U
+          - generic: M
+        - generic:
+          - generic: "N"
+          - generic: E
+          - generic: E
+          - generic: D
+          - generic: S
+        - generic:
+          - generic: C
+          - generic: O
+          - generic: "N"
+          - generic: V
+          - generic: I
+          - generic: C
+          - generic: T
+          - generic: I
+          - generic: O
+          - generic: "N"
+          - generic: .
+    - paragraph: Thinking · building · moving forward
+    - button "Skip intro": Skip intro ↗
+  - generic [ref=e12]:
+    - banner "Primary navigation" [ref=e13]:
+      - link "Hafiz Ali Abdullah home" [ref=e14] [cursor=pointer]:
+        - /url: "#top"
+        - text: Hx313
+      - navigation [ref=e15]:
+        - link "Work" [ref=e16] [cursor=pointer]:
+          - /url: "#work"
+        - link "Services" [ref=e17] [cursor=pointer]:
+          - /url: "#services"
+        - link "About" [ref=e18] [cursor=pointer]:
+          - /url: "#about"
+      - generic [ref=e19]:
+        - group "Color theme" [ref=e20]:
+          - button "System" [pressed] [ref=e21] [cursor=pointer]
+          - button "Light" [ref=e22] [cursor=pointer]
+          - button "Dark" [ref=e23] [cursor=pointer]
+        - link "Let’s talk" [ref=e24] [cursor=pointer]:
+          - /url: mailto:aliabdullahva313@gmail.com
+          - text: Let’s talk ↗
+    - main [ref=e25]:
+      - region [ref=e26]:
+        - generic [ref=e27]:
+          - generic [ref=e28]:
+            - paragraph [ref=e29]: Hafiz Ali Abdullah · Full-Stack Software Engineer
+            - heading "A mindset Beyond ordinary." [level=1] [ref=e30]:
+              - generic [ref=e31]: A mindset
+              - strong [ref=e32]: Beyond
+              - generic [ref=e33]: ordinary.
+            - paragraph [ref=e34]: I turn ambitious ideas into production-ready software, apps, and SaaS platforms that move businesses forward.
+            - generic [ref=e35]:
+              - link "Explore the work" [ref=e36] [cursor=pointer]:
+                - /url: "#work"
+                - text: Explore the work
+                - generic [ref=e37]: ↗
+              - link "Start a conversation" [ref=e38] [cursor=pointer]:
+                - /url: mailto:aliabdullahva313@gmail.com
+            - paragraph [ref=e39]: Available for focused builds · 2026
+          - generic "Product interface visual" [ref=e41]:
+            - generic [ref=e42]:
+              - generic [ref=e43]:
+                - generic [ref=e44]: LIVE PRODUCT SYSTEM
+                - generic [ref=e45]: 01 / 04
+              - generic [ref=e46]:
+                - generic [ref=e47]:
+                  - generic [ref=e48]: ORDER FLOW
+                  - generic [ref=e49]: LIVE
+                - strong [ref=e51]: Simple ideas.Serious momentum.
+                - generic [ref=e61]:
+                  - generic [ref=e62]: BUILD
+                  - generic [ref=e63]: SHIP
+                  - generic [ref=e64]: GROW
+              - generic [ref=e65]:
+                - generic [ref=e66]: Flutter
+                - generic [ref=e67]: SaaS
+                - generic [ref=e68]: "2026"
+            - generic [ref=e69]:
+              - generic [ref=e70]: "01"
+              - generic [ref=e71]: Built for the next move.
+    - contentinfo [ref=e72]:
+      - generic [ref=e73]: Hafiz Ali Abdullah
+      - generic [ref=e74]: Software engineering · Product building

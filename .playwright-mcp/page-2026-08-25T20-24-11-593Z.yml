@@ -1,0 +1,105 @@
+- generic [ref=f2e3]:
+  - region "Portfolio introduction" [ref=f2e4]:
+    - generic "Loading 2%" [ref=f2e7]: 2%
+    - paragraph [ref=f2e11]: Thinking · building · moving forward
+    - button "Skip intro" [ref=f2e12] [cursor=pointer]: Skip intro ↗
+  - generic:
+    - banner:
+      - link:
+        - /url: "#top"
+        - text: Hx313
+      - navigation:
+        - link:
+          - /url: "#work"
+          - text: Work
+        - link:
+          - /url: "#services"
+          - text: Services
+        - link:
+          - /url: "#about"
+          - text: About
+      - generic:
+        - group:
+          - button [pressed]: System
+          - button: Light
+          - button: Dark
+        - link:
+          - /url: mailto:aliabdullahva313@gmail.com
+          - text: Let’s talk ↗
+    - main:
+      - region:
+        - generic:
+          - generic:
+            - paragraph: Hafiz Ali Abdullah · Full-Stack Software Engineer
+            - heading [level=1]:
+              - generic: A mindset
+              - strong: Beyond
+              - generic: ordinary.
+            - paragraph: I turn ambitious ideas into production-ready software, apps, and SaaS platforms that move businesses forward.
+            - paragraph: Available for focused builds · 2026
+          - generic:
+            - generic:
+              - generic:
+                - generic: PRODUCT NETWORK / 08
+                - generic: HX313 · BUILD FIELD
+              - generic:
+                - generic: HX313
+                - generic: PRODUCT SYSTEM
+              - generic:
+                - button [pressed]:
+                  - generic:
+                    - strong: ePOS
+                    - generic: Operations · Flutter · SaaS
+                  - generic: Selected build
+                - button:
+                  - generic:
+                    - strong: Dietify
+                    - generic: Health · Mobile app
+                  - generic: Shipped
+                - button:
+                  - generic:
+                    - strong: eBill Checker
+                    - generic: Utilities · Mobile app
+                  - generic: Shipped
+                - button:
+                  - generic:
+                    - strong: Noor-ul-Quran
+                    - generic: Learning · Mobile app
+                  - generic: Shipped
+                - button:
+                  - generic:
+                    - strong: QR Scanner
+                    - generic: Utility · Mobile app
+                  - generic: Shipped
+                - button:
+                  - generic:
+                    - strong: ReadMate
+                    - generic: Reading · Mobile app
+                  - generic: Shipped
+                - button:
+                  - generic:
+                    - strong: Speak & Translate
+                    - generic: Language · AI voice
+                  - generic: Shipped
+                - button:
+                  - generic:
+                    - strong: Pet Care
+                    - generic: Care · Mobile app
+                  - generic: Shipped
+              - generic:
+                - generic: SELECTED BUILD
+                - strong: ePOS
+                - generic: Operations · Flutter · SaaS
+      - region:
+        - paragraph: Explore the work when you’re ready
+        - generic:
+          - link:
+            - /url: "#work"
+            - text: Explore the work
+            - generic: ↗
+          - link:
+            - /url: mailto:aliabdullahva313@gmail.com
+            - text: Start a conversation
+    - contentinfo:
+      - generic: Hafiz Ali Abdullah
+      - generic: Software engineering · Product building

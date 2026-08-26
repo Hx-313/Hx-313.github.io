@@ -7,7 +7,7 @@ const statements = [
   'PRODUCTS NEED MOMENTUM.',
   'MOMENTUM NEEDS CONVICTION.',
 ];
-export default function OpeningExperience({ onComplete, theme }) {
+export default function OpeningExperience({ isRevealing, onComplete, theme }) {
   const [statementIndex, setStatementIndex] = useState(0);
   const [visibleCharacters, setVisibleCharacters] = useState(0);
   const [isHolding, setIsHolding] = useState(false);
@@ -17,6 +17,13 @@ export default function OpeningExperience({ onComplete, theme }) {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const openingRef = useRef(null);
   const statementRef = useRef(null);
+  const hasCompletedRef = useRef(false);
+
+  function completeOpening() {
+    if (hasCompletedRef.current) return;
+    hasCompletedRef.current = true;
+    onComplete();
+  }
 
   useEffect(() => {
     const characters = statementRef.current?.querySelectorAll('.opening-character');
@@ -32,7 +39,7 @@ export default function OpeningExperience({ onComplete, theme }) {
   }, [isHolding, isTransitioning, visibleCharacters]);
 
   useEffect(() => {
-    if (!isHolding || isTransitioning || !statementRef.current) return undefined;
+    if (!isHolding || isTransitioning || statementIndex === statements.length - 1 || !statementRef.current) return undefined;
     const animation = animeAnimate(statementRef.current, {
       opacity: [1, 0],
       scale: [1, 1.04],
@@ -42,7 +49,7 @@ export default function OpeningExperience({ onComplete, theme }) {
       ease: 'in(3)',
     });
     return () => animation.pause();
-  }, [isHolding, isTransitioning]);
+  }, [isHolding, isTransitioning, statementIndex]);
 
   useEffect(() => {
     if (hasStarted || isReduced || !openingRef.current) return undefined;
@@ -63,7 +70,7 @@ export default function OpeningExperience({ onComplete, theme }) {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     setIsReduced(reduced);
     if (reduced) {
-      onComplete();
+      completeOpening();
       return undefined;
     }
 
@@ -87,20 +94,13 @@ export default function OpeningExperience({ onComplete, theme }) {
       holdTimer = window.setTimeout(() => {
         if (statementIndex === statements.length - 1) {
           setIsTransitioning(true);
-          animeAnimate(openingRef.current, {
-            opacity: [1, 0],
-            scale: [1, 0.99],
-            filter: ['blur(0px)', 'blur(3px)'],
-            duration: 850,
-            ease: 'out(3)',
-            complete: onComplete,
-          });
+          completeOpening();
           return;
         }
         setIsHolding(false);
         setVisibleCharacters(0);
         setStatementIndex((index) => index + 1);
-      }, 1450);
+      }, statementIndex === statements.length - 1 ? 120 : 820);
     }
 
     return () => {
@@ -133,21 +133,21 @@ export default function OpeningExperience({ onComplete, theme }) {
   });
 
   function skipOpening() {
-    onComplete();
+    completeOpening();
   }
 
   return (
-    <section ref={openingRef} className={`opening ${isHolding ? 'opening--holding' : ''} ${isTransitioning ? 'opening--transitioning' : ''} theme-${theme}`} aria-label="Portfolio introduction">
-      <div className="opening-noise" aria-hidden="true" />
-      <div className="opening-center" aria-live="polite" aria-atomic="true">
+    <section ref={openingRef} className={`opening ${isHolding ? 'opening--holding' : ''} ${isTransitioning ? 'opening--transitioning' : ''} ${isRevealing ? 'opening--blackout' : ''} theme-${theme}`} aria-label="Portfolio introduction">
+      <div className="opening-noise" data-opening-light aria-hidden="true" />
+      <div className="opening-center" data-opening-light aria-live="polite" aria-atomic="true">
         <div key={statementIndex} ref={statementRef} className="opening-statement" data-rendering={!isHolding}>
           {renderedWords}
           {!isHolding && hasStarted && <span className="opening-cursor" aria-hidden="true" />}
         </div>
       </div>
       {!hasStarted && <div className="opening-loader" aria-label={`Loading ${loadingProgress}%`}><div className="opening-loader__track"><span style={{ width: `${loadingProgress}%` }} /></div><span className="opening-loader__value">{loadingProgress}%</span></div>}
-      <p className="opening-caption">Thinking · building · moving forward</p>
-      <button className="opening-skip" type="button" onClick={skipOpening}>Skip intro <span aria-hidden="true">↗</span></button>
+      <p className="opening-caption" data-opening-light>Thinking · building · moving forward</p>
+      <button className="opening-skip" data-opening-light type="button" onClick={skipOpening}>Skip intro <span aria-hidden="true">↗</span></button>
     </section>
   );
 }
