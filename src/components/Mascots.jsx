@@ -1,268 +1,417 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
+import AeroMascot from './mascots/AeroMascot.jsx';
+import DashMascot from './mascots/DashMascot.jsx';
 
-/*
-  Aero (robot) + Dash (bird) — the guide & conversation system.
-  - Scroll-driven "beats": each page section maps to a beat.
-  - A beat can hold several lines that auto-advance, so the two mascots
-    perform little skits — sometimes to the visitor, sometimes to each other
-    (Dash plays the customer, Aero vouches for Abdullah) — each ending on a CTA.
-  - Eye-tracking, random blinking, and click-to-play mischief are preserved.
+/**
+ * FREE-ROAMING AUTONOMOUS MASCOTS SYSTEM — AERO & DASH
+ * - Full page / viewport free-flight navigation across all spots.
+ * - Contextual commentary triggered by spot / section coordinates.
+ * - Random collision detection triggering hilarious arguments, bickering, recoils & games.
+ * - Interactive dragging, clicking, and mode toggle (Free Roam 🚀 vs Docked ⚓).
+ * - Full accessibility and prefers-reduced-motion fallback.
+ */
 
-  To add/adjust dialogue for a section, edit BEATS below (key = section id).
-*/
-
-const BEATS = {
-  hero: {
-    pos: 'center-right',
-    lines: [
-      { who: 'aero', text: "Hey there! 👋 I'm Aero. This is Dash. We'll show you around Abdullah's studio." },
-      { who: 'dash', text: "Psst… Aero. This visitor probably needs an app built. 👀" },
-      { who: 'aero', text: "Then they're in the right place. Abdullah ships real apps in <strong>weeks</strong>. Scroll on — I'll prove it. 🚀" },
-    ],
-    cta: { label: "Book a call →", href: '#book' },
-  },
-  principles: {
-    pos: 'bottom-right',
-    lines: [
-      { who: 'dash', text: "Okay but is he actually reliable? I've been ghosted by devs before… 😩" },
-      { who: 'aero', text: "Not here. Fixed scope, weekly demos, you own the code. These are the rules he works by. ✅" },
-    ],
-    cta: { label: "See the work →", href: '#work' },
-  },
-  services: {
-    pos: 'bottom-left',
-    lines: [
-      { who: 'aero', text: "Whatever you need — an MVP, a cross-platform app, or a full SaaS — it's on the menu." },
-      { who: 'dash', text: "One codebase, both app stores. That's half the cost right there. 💙" },
-    ],
-    cta: { label: "Start your project →", href: '#book' },
-  },
-  work: {
-    pos: 'bottom-right',
-    lines: [
-      { who: 'dash', text: "Proof time! Every one of these is live on the App Store & Google Play. Tap one. 📱" },
-    ],
-    cta: { label: "Talk to Abdullah →", href: '#book' },
-  },
-  saas: {
-    pos: 'bottom-left',
-    lines: [
-      { who: 'dash', text: "Wait — he built a whole ordering SaaS? Website, POS, dispatch app… by himself? 🤯" },
-      { who: 'aero', text: "End to end. So whatever *you're* imagining — yeah, he can build that too. 🌐" },
-    ],
-    cta: { label: "Tell him your idea →", href: '#book' },
-  },
-  book: {
-    pos: 'bottom-right',
-    lines: [
-      { who: 'aero', text: "This is the part where it gets real. Grab a free call — no pressure, no jargon." },
-      { who: 'dash', text: "Go on. I'll wait right here. 🐦" },
-    ],
-    cta: { label: "Book the call ↑", href: '#book' },
-  },
+const SPOT_COMMENTARY = {
+  top: [
+    { who: 'aero', text: "Top-level viewport scanned. Navigation matrix nominal. 🌐", expr: 'analyzing' },
+    { who: 'dash', text: "High altitude! I can see all the production systems from up here! ⚡", expr: 'excited' },
+    { who: 'aero', text: "Systems online: Product Engineer ready to deploy. 🚀", expr: 'happy' },
+    { who: 'dash', text: "Full throttle! Let's check out the rest of the site! 💨", expr: 'winking' },
+  ],
+  principles: [
+    { who: 'dash', text: "Principle check: 100% weekly live demos & zero ghosting! 📡", expr: 'focused' },
+    { who: 'aero', text: "Engineering discipline verified. Fixed scope, clean code. ✅", expr: 'thinking' },
+    { who: 'dash', text: "You own every single line of code! That's how we roll! 💙", expr: 'happy' },
+  ],
+  services: [
+    { who: 'aero', text: "Architecting MVPs, cross-platform apps & distributed SaaS. 🤖", expr: 'analyzing' },
+    { who: 'dash', text: "Single Flutter codebase for iOS and Android = Half the cost! 📱", expr: 'excited' },
+    { who: 'aero', text: "60 FPS rendering pipeline verified on both app stores. ✨", expr: 'happy' },
+  ],
+  work: [
+    { who: 'dash', text: "Live app telemetry: onlineorder.pk, POS, Dispatch & Courier! 🍔", expr: 'executing' },
+    { who: 'aero', text: "Real-time websocket sync & fault-tolerant offline storage. 🌐", expr: 'thinking' },
+    { who: 'dash', text: "Every app here is published and battle-tested! Tap one! 📱", expr: 'winking' },
+  ],
+  bottom: [
+    { who: 'aero', text: "Strategy consultation station reached. No jargon, just results.", expr: 'happy' },
+    { who: 'dash', text: "Let's build something epic! Book a call with Abdullah! 🚀", expr: 'excited' },
+  ],
 };
 
-const AERO_MISCHIEF = [
-  { a: 'm-poke-right', d: 'm-wobble', who: 'aero', text: "*pokes Dash* Wake up, birdie — we've got a visitor! 👉🐦" },
-  { a: 'm-spin', d: 'm-jump-back', who: 'aero', text: "Watch this spin move! 🌀 …okay, I'm dizzy now." },
-  { a: 'm-dance', d: 'm-flap', who: 'aero', text: "🎵 Hot reload, hot reload, watch my code just overload! 🎵" },
-  { a: 'm-bounce', d: 'm-wave', who: 'aero', text: "I compiled 10,000 widgets before breakfast. Just sayin'. 🤖⚡" },
-];
-const DASH_MISCHIEF = [
-  { d: 'm-poke-left', a: 'm-wobble', who: 'dash', text: "*pecks Aero* Beep boop yourself, tin can! 🐦💥" },
-  { d: 'm-flap', a: 'm-jump-back', who: 'dash', text: "FLUTTER FLUTTER FLUTTER! 💙 I do what I want." },
-  { d: 'm-spin', a: 'm-wave', who: 'dash', text: "Fun fact: setState(() {}) is basically magic. Fight me. ✨" },
-  { d: 'm-dance', a: 'm-wobble', who: 'dash', text: "🎵 Build, run, hot reload — that's how Flutter rolls! 🎵" },
+const ARGUMENT_SKITS = [
+  {
+    title: "Airspace Violation",
+    sound: "*CRASH! BOOP!*",
+    lines: [
+      { who: 'dash', text: "Whoa! Watch the airspace, Aero! I'm flying here! ⚡💨", aExpr: 'surprised', dExpr: 'alert', aAnim: 'm-wobble', dAnim: 'm-jump-back' },
+      { who: 'aero', text: "(>_<) Dash! You were doing 200 knots in a no-fly zone!", aExpr: 'confused', dExpr: 'winking', aAnim: 'm-poke-right', dAnim: 'm-wobble' },
+      { who: 'dash', text: "Continuous deployment waits for no one! Speed is a feature! 🚀", aExpr: 'thinking', dExpr: 'excited', aAnim: '', dAnim: 'm-spin' },
+      { who: 'aero', text: "Stability is king! Next time, check your radar telemetry! 🤖", aExpr: 'happy', dExpr: 'happy', aAnim: 'm-dance', dAnim: '' },
+    ]
+  },
+  {
+    title: "Hot Reload Madness",
+    sound: "*CLANG! BZZT!*",
+    lines: [
+      { who: 'aero', text: "Dash, did you just trigger 42 hot reloads in 3 seconds?! (o_O)", aExpr: 'confused', dExpr: 'excited', aAnim: 'm-wobble', dAnim: 'm-flap' },
+      { who: 'dash', text: "Every keystroke deserves immediate visual feedback! It feels faster! ✨", aExpr: 'analyzing', dExpr: 'winking', aAnim: '', dAnim: 'm-dance' },
+      { who: 'aero', text: "You almost melted the compiler cache, you speed demon!", aExpr: 'surprised', dExpr: 'executing', aAnim: 'm-poke-right', dAnim: 'm-bounce' },
+      { who: 'dash', text: "Zero compile lag, 100% adrenaline! That's Flutter power! ⚡", aExpr: 'happy', dExpr: 'happy', aAnim: '', dAnim: 'm-spin' },
+    ]
+  },
+  {
+    title: "Code Review Showdown",
+    sound: "*BUMP! SPARK!*",
+    lines: [
+      { who: 'dash', text: "Hey! Why did you comment on my pull request with 'needs more tests'?! 😤", aExpr: 'thinking', dExpr: 'focused', aAnim: 'm-jump-back', dAnim: 'm-poke-left' },
+      { who: 'aero', text: "Because 99.8% test coverage is the minimum standard, little drone. 🤖", aExpr: 'happy', dExpr: 'confused', aAnim: 'm-dance', dAnim: 'm-wobble' },
+      { who: 'dash', text: "My tests passed in production in my head! 🐦⚡", aExpr: 'surprised', dExpr: 'excited', aAnim: '', dAnim: 'm-flap' },
+      { who: 'aero', text: "That is NOT how CI/CD pipelines work, Dash! Refactoring now... ✨", aExpr: 'analyzing', dExpr: 'happy', aAnim: '', dAnim: '' },
+    ]
+  },
+  {
+    title: "Tag & Chase Game",
+    sound: "*TAG! BOOP!*",
+    lines: [
+      { who: 'dash', text: "*boops Aero's halo* Tag! You're it, slow-orb! Catch me if you can! 👉🐦", aExpr: 'surprised', dExpr: 'winking', aAnim: 'm-wobble', dAnim: 'm-spin' },
+      { who: 'aero', text: "Activating dual ion thruster override! Initiating pursuit! 🛸💨", aExpr: 'excited', dExpr: 'excited', aAnim: 'm-bounce', dAnim: 'm-jump-back' },
+      { who: 'dash', text: "Thrusters at maximum! Doing a 360 loop around the viewport! 🌀", aExpr: 'analyzing', dExpr: 'executing', aAnim: 'm-dance', dAnim: 'm-flap' },
+      { who: 'aero', text: "Target locked! Gotcha! Telemetry calibrated. 🤖✨", aExpr: 'happy', dExpr: 'happy', aAnim: 'm-poke-right', dAnim: 'm-wobble' },
+    ]
+  },
+  {
+    title: "Architecture Debate",
+    sound: "*SMACK! CRACKLE!*",
+    lines: [
+      { who: 'dash', text: "Microservices! 500 serverless functions for a todo list! ⚡", aExpr: 'confused', dExpr: 'excited', aAnim: 'm-wobble', dAnim: 'm-bounce' },
+      { who: 'aero', text: "Modular monolith with clean domain boundaries & fast deploys! 🤖", aExpr: 'thinking', dExpr: 'focused', aAnim: 'm-dance', dAnim: '' },
+      { who: 'dash', text: "Okay okay, but we agree Flutter + Dart is the best mobile framework? 💙", aExpr: 'happy', dExpr: 'winking', aAnim: '', dAnim: 'm-flap' },
+      { who: 'aero', text: "Unanimous consensus. Ship the build! 🚀", aExpr: 'happy', dExpr: 'happy', aAnim: 'm-spin', dAnim: 'm-spin' },
+    ]
+  }
 ];
 
 export default function Mascots() {
-  const guideRef = useRef(null);
-  const aeroRef = useRef(null);
-  const dashRef = useRef(null);
-  const eyeL = useRef(null);
-  const eyeR = useRef(null);
-  const dEyeL = useRef(null);
-  const dEyeR = useRef(null);
-  const lineTimer = useRef(null);
-  const playing = useRef(false);
-
-  const [beatKey, setBeatKey] = useState('hero');
-  const [lineIdx, setLineIdx] = useState(0);
+  // Free roam state
+  const [isRoam, setIsRoam] = useState(true);
   const [minimized, setMinimized] = useState(false);
-  const [banter, setBanter] = useState(null); // transient mischief line
 
-  const beat = BEATS[beatKey] || BEATS.hero;
-  const current = banter || beat.lines[Math.min(lineIdx, beat.lines.length - 1)];
-  const pos = beat.pos === 'center-right' ? '' : beat.pos === 'bottom-left' ? 'bottom-left' : 'bottom-right';
+  // Positions (in % of viewport for responsive roaming)
+  const [aeroPos, setAeroPos] = useState({ x: 75, y: 35 });
+  const [dashPos, setDashPos] = useState({ x: 82, y: 55 });
 
-  /* ---- scroll: pick the active beat ---- */
-  useEffect(() => {
-    const ids = Object.keys(BEATS);
-    const targets = ids.map((id) => document.getElementById(id)).filter(Boolean);
-    if (!targets.length) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (minimized) return;
-        entries.forEach((e) => {
-          if (e.isIntersecting && BEATS[e.target.id]) {
-            setBeatKey(e.target.id);
-            setBanter(null);
-          }
-        });
-      },
-      { rootMargin: '-42% 0px -42% 0px', threshold: 0 }
-    );
-    targets.forEach((t) => io.observe(t));
-    return () => io.disconnect();
-  }, [minimized]);
+  // Current Animations & Expressions
+  const [aeroAnim, setAeroAnim] = useState('');
+  const [dashAnim, setDashAnim] = useState('');
+  const [aeroExpr, setAeroExpr] = useState('happy');
+  const [dashExpr, setDashExpr] = useState('happy');
 
-  /* ---- auto-advance the lines within a beat (the "skit") ---- */
-  useEffect(() => {
-    setLineIdx(0);
-    clearInterval(lineTimer.current);
-    if (banter) return;
-    if (beat.lines.length > 1) {
-      lineTimer.current = setInterval(() => {
-        setLineIdx((i) => {
-          if (i >= beat.lines.length - 1) { clearInterval(lineTimer.current); return i; }
-          return i + 1;
-        });
-      }, 3600);
+  // Speech bubbles
+  const [aeroBubble, setAeroBubble] = useState(null);
+  const [dashBubble, setDashBubble] = useState(null);
+
+  // Collision Spark
+  const [collisionEffect, setCollisionEffect] = useState(null);
+  const isBickering = useRef(false);
+  const roamTimer = useRef(null);
+  const collisionTimer = useRef(null);
+
+  // Dragging states
+  const draggingRef = useRef(null); // 'aero' | 'dash' | null
+
+  // Generate random target waypoint across whole viewport
+  const getRandomWaypoint = useCallback((current, isDash = false) => {
+    // Keep within safe screen boundaries
+    const minX = 8, maxX = 84;
+    const minY = 10, maxY = 82;
+
+    let newX = minX + Math.random() * (maxX - minX);
+    let newY = minY + Math.random() * (maxY - minY);
+
+    // Give Dash faster, larger jumps; Aero gentler floats
+    if (!isDash) {
+      newX = Math.max(minX, Math.min(maxX, current.x + (Math.random() * 30 - 15)));
+      newY = Math.max(minY, Math.min(maxY, current.y + (Math.random() * 30 - 15)));
     }
-    return () => clearInterval(lineTimer.current);
-  }, [beatKey, banter]);
 
-  /* ---- eye tracking ---- */
-  useEffect(() => {
-    const move = (e) => {
-      if (minimized) return;
-      const g = guideRef.current;
-      if (!g) return;
-      const r = g.getBoundingClientRect();
-      const ang = Math.atan2(e.clientY - (r.top + r.height / 2), e.clientX - (r.left + r.width / 2));
-      const d = window.innerWidth <= 768 ? 2 : 4;
-      const x = Math.cos(ang) * d, y = Math.sin(ang) * d;
-      [eyeL, eyeR].forEach((ref) => ref.current && (ref.current.style.transform = `translate(${x}px,${y}px)`));
-      [dEyeL, dEyeR].forEach((ref) => ref.current && (ref.current.style.transform = `translate(${x * 0.8}px,${y * 0.8}px)`));
-    };
-    window.addEventListener('mousemove', move);
-    return () => window.removeEventListener('mousemove', move);
-  }, [minimized]);
+    return { x: newX, y: newY };
+  }, []);
 
-  /* ---- random blink ---- */
-  useEffect(() => {
-    const blink = () => {
-      [eyeL, eyeR, dEyeL, dEyeR].forEach((ref) => {
-        if (!ref.current) return;
-        const t = ref.current.style.transform;
-        ref.current.style.transform = 'scaleY(0.1)';
-        setTimeout(() => { if (ref.current) ref.current.style.transform = t || ''; }, 150);
-      });
-    };
-    const iv = setInterval(() => { if (!minimized) blink(); }, 4200);
-    return () => clearInterval(iv);
-  }, [minimized]);
+  // Spot commentary evaluator based on mascot altitude/zone
+  const triggerSpotCommentary = useCallback((pos, isDash) => {
+    if (isBickering.current || Math.random() > 0.45) return;
 
-  /* ---- click mischief ---- */
-  const playMischief = (initiator) => {
-    if (minimized) { setMinimized(false); return; }
-    if (playing.current) return;
-    playing.current = true;
-    const pool = initiator === 'aero' ? AERO_MISCHIEF : DASH_MISCHIEF;
-    const act = pool[Math.floor(Math.random() * pool.length)];
-    aeroRef.current && aeroRef.current.classList.add(act.a);
-    setTimeout(() => dashRef.current && dashRef.current.classList.add(act.d), 140);
-    setBanter({ who: act.who, text: act.text });
+    let zone = 'services';
+    if (pos.y < 25) zone = 'top';
+    else if (pos.y < 45) zone = 'principles';
+    else if (pos.y < 68) zone = 'work';
+    else zone = 'bottom';
+
+    const pool = SPOT_COMMENTARY[zone] || SPOT_COMMENTARY.services;
+    const item = pool[Math.floor(Math.random() * pool.length)];
+
+    if (item.who === 'aero' && !isDash) {
+      setAeroBubble(item.text);
+      setAeroExpr(item.expr || 'happy');
+      setTimeout(() => setAeroBubble(null), 3800);
+    } else if (item.who === 'dash' && isDash) {
+      setDashBubble(item.text);
+      setDashExpr(item.expr || 'happy');
+      setTimeout(() => setDashBubble(null), 3800);
+    }
+  }, []);
+
+  // Trigger Collision & Argument Skit
+  const triggerCollision = useCallback((forced = false) => {
+    if (isBickering.current && !forced) return;
+    isBickering.current = true;
+
+    // 1. Intercept towards each other
+    const midX = (aeroPos.x + dashPos.x) / 2 || 50;
+    const midY = (aeroPos.y + dashPos.y) / 2 || 50;
+
+    setAeroPos({ x: midX - 4, y: midY });
+    setDashPos({ x: midX + 4, y: midY });
+
+    // 2. Trigger collision impact sound & spark
+    const skit = ARGUMENT_SKITS[Math.floor(Math.random() * ARGUMENT_SKITS.length)];
+    
     setTimeout(() => {
-      aeroRef.current && (aeroRef.current.className = 'avatar aero');
-      dashRef.current && (dashRef.current.className = 'avatar dash');
-      playing.current = false;
-      setBanter(null);
-    }, 1300);
+      setCollisionEffect({ x: midX, y: midY, text: skit.sound });
+      
+      // Elastic Bounce apart
+      setAeroPos({ x: Math.max(10, midX - 14), y: midY - 6 });
+      setDashPos({ x: Math.min(85, midX + 14), y: midY + 6 });
+
+      // Play multi-line argument skit
+      let lineIndex = 0;
+      const playNextLine = () => {
+        if (lineIndex >= skit.lines.length) {
+          // Finish argument skit
+          setTimeout(() => {
+            setAeroBubble(null);
+            setDashBubble(null);
+            setAeroAnim('');
+            setDashAnim('');
+            setAeroExpr('happy');
+            setDashExpr('happy');
+            setCollisionEffect(null);
+            isBickering.current = false;
+          }, 1500);
+          return;
+        }
+
+        const line = skit.lines[lineIndex];
+        setAeroExpr(line.aExpr);
+        setDashExpr(line.dExpr);
+        setAeroAnim(line.aAnim);
+        setDashAnim(line.dAnim);
+
+        if (line.who === 'aero') {
+          setAeroBubble(line.text);
+          setDashBubble(null);
+        } else {
+          setDashBubble(line.text);
+          setAeroBubble(null);
+        }
+
+        lineIndex++;
+        setTimeout(playNextLine, 2800);
+      };
+
+      playNextLine();
+    }, 450);
+  }, [aeroPos, dashPos]);
+
+  // Main Autonomous Free-Roam Flight Loop
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mediaQuery.matches || !isRoam || minimized) return undefined;
+
+    // Flight Step Interval (every 3.8s)
+    roamTimer.current = setInterval(() => {
+      if (isBickering.current) return;
+
+      // Aero flies smoothly
+      setAeroPos((prev) => {
+        const next = getRandomWaypoint(prev, false);
+        triggerSpotCommentary(next, false);
+        return next;
+      });
+
+      // Dash darts quickly
+      setTimeout(() => {
+        if (isBickering.current) return;
+        setDashPos((prev) => {
+          const next = getRandomWaypoint(prev, true);
+          triggerSpotCommentary(next, true);
+          return next;
+        });
+      }, 700);
+
+    }, 4200);
+
+    // Random Collision Interval (every 14s)
+    collisionTimer.current = setInterval(() => {
+      if (!isBickering.current && Math.random() > 0.25) {
+        triggerCollision();
+      }
+    }, 14000);
+
+    return () => {
+      clearInterval(roamTimer.current);
+      clearInterval(collisionTimer.current);
+    };
+  }, [isRoam, minimized, getRandomWaypoint, triggerSpotCommentary, triggerCollision]);
+
+  // Manual Drag Handling
+  const handlePointerDown = (mascot, e) => {
+    if (isBickering.current) return;
+    draggingRef.current = mascot;
+
+    const handlePointerMove = (moveEvent) => {
+      const xPct = Math.max(5, Math.min(90, (moveEvent.clientX / window.innerWidth) * 100));
+      const yPct = Math.max(8, Math.min(88, (moveEvent.clientY / window.innerHeight) * 100));
+
+      if (draggingRef.current === 'aero') {
+        setAeroPos({ x: xPct, y: yPct });
+      } else if (draggingRef.current === 'dash') {
+        setDashPos({ x: xPct, y: yPct });
+      }
+    };
+
+    const handlePointerUp = () => {
+      draggingRef.current = null;
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerup', handlePointerUp);
+    };
+
+    window.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointerup', handlePointerUp);
   };
 
-  return (
-    <div className={`guide${minimized ? ' min' : ''}`} data-pos={pos} ref={guideRef}>
-      <div className="avatars">
-        {/* ---------------- AERO ---------------- */}
-        <svg ref={aeroRef} onClick={() => playMischief('aero')} className="avatar aero"
-          viewBox="0 0 200 220" width="96" height="106" role="img" aria-label="Aero, robot guide">
-          <defs>
-            <filter id="ng" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="3" result="b" />
-              <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
-            </filter>
-            <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#1e293b" /><stop offset="100%" stopColor="#0f172a" />
-            </linearGradient>
-            <linearGradient id="nt" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="var(--color-primary)" /><stop offset="100%" stopColor="var(--color-accent)" />
-            </linearGradient>
-            <linearGradient id="vg" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#0d1527" /><stop offset="100%" stopColor="#020617" />
-            </linearGradient>
-          </defs>
-          <path className="thruster" d="M 85,165 L 100,190 L 115,165 Z" fill="url(#nt)" opacity="0.8" filter="url(#ng)" />
-          <path d="M 90,165 L 100,180 L 110,165 Z" fill="#fff" opacity="0.9" />
-          <rect x="35" y="70" width="12" height="30" rx="6" fill="var(--color-secondary)" filter="url(#ng)" />
-          <line x1="47" y1="85" x2="55" y2="85" stroke="var(--color-secondary)" strokeWidth="3" />
-          <rect x="153" y="70" width="12" height="30" rx="6" fill="var(--color-secondary)" filter="url(#ng)" />
-          <line x1="153" y1="85" x2="145" y2="85" stroke="var(--color-secondary)" strokeWidth="3" />
-          <path d="M 47,75 A 53,53 0 0,1 153,75" fill="none" stroke="var(--color-secondary)" strokeWidth="4" />
-          <rect x="65" y="115" width="70" height="50" rx="20" fill="url(#bg)" stroke="#1e293b" strokeWidth="2" />
-          <circle cx="100" cy="138" r="10" fill="url(#nt)" filter="url(#ng)" />
-          <circle cx="100" cy="138" r="4" fill="#fff" />
-          <circle cx="45" cy="135" r="10" fill="url(#bg)" stroke="var(--color-primary)" strokeWidth="2" />
-          <circle cx="155" cy="135" r="10" fill="url(#bg)" stroke="var(--color-primary)" strokeWidth="2" />
-          <rect x="50" y="50" width="100" height="70" rx="30" fill="url(#bg)" stroke="#1e293b" strokeWidth="2" />
-          <rect x="60" y="60" width="80" height="40" rx="15" fill="url(#vg)" stroke="#1e293b" strokeWidth="1" />
-          <circle cx="85" cy="80" r="12" fill="#020617" />
-          <circle ref={eyeL} className="eye" cx="85" cy="80" r="5" fill="var(--color-primary)" filter="url(#ng)" />
-          <circle cx="83" cy="78" r="2" fill="#fff" />
-          <circle cx="115" cy="80" r="12" fill="#020617" />
-          <circle ref={eyeR} className="eye" cx="115" cy="80" r="5" fill="var(--color-primary)" filter="url(#ng)" />
-          <circle cx="113" cy="78" r="2" fill="#fff" />
-        </svg>
+  // Click Mascot Direct Reaction
+  const handleAeroClick = () => {
+    if (isBickering.current) return;
+    setAeroAnim('m-spin');
+    setAeroExpr('analyzing');
+    setAeroBubble('*Halo spinning! Neural core running at 100% throughput! 🤖*');
+    setTimeout(() => {
+      setAeroAnim('');
+      setAeroBubble(null);
+      setAeroExpr('happy');
+    }, 2000);
+  };
 
-        {/* ---------------- DASH ---------------- */}
-        <svg ref={dashRef} onClick={() => playMischief('dash')} className="avatar dash"
-          viewBox="0 0 200 220" width="90" height="100" role="img" aria-label="Dash, mascot">
-          <defs>
-            <linearGradient id="db" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#38bdf8" /><stop offset="100%" stopColor="#0284c7" />
-            </linearGradient>
-            <linearGradient id="dl" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#bae6fd" /><stop offset="100%" stopColor="#7dd3fc" />
-            </linearGradient>
-            <filter id="ds" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="8" stdDeviation="6" floodColor="#0ea5e9" floodOpacity="0.3" />
-            </filter>
-          </defs>
-          <path d="M 50,110 C 50,55 150,55 150,110 C 150,165 130,195 100,195 C 70,195 50,165 50,110 Z" fill="url(#db)" filter="url(#ds)" />
-          <path d="M 65,120 C 65,85 135,85 135,120 C 135,160 120,185 100,185 C 80,185 65,160 65,120 Z" fill="url(#dl)" />
-          <path d="M 50,110 Q 15,135 30,170 Q 45,145 55,135" fill="url(#db)" />
-          <path d="M 150,110 Q 185,135 170,170 Q 155,145 145,135" fill="url(#db)" />
-          <path d="M 55,85 L 145,85" stroke="#0ea5e9" strokeWidth="6" fill="none" />
-          <circle cx="80" cy="85" r="18" fill="#fff" stroke="#0ea5e9" strokeWidth="5" />
-          <circle cx="120" cy="85" r="18" fill="#fff" stroke="#0ea5e9" strokeWidth="5" />
-          <circle ref={dEyeL} className="eye" cx="80" cy="85" r="6" fill="#0f172a" />
-          <circle cx="78" cy="83" r="2" fill="#fff" />
-          <circle ref={dEyeR} className="eye" cx="120" cy="85" r="6" fill="#0f172a" />
-          <circle cx="118" cy="83" r="2" fill="#fff" />
-          <path d="M 88,105 L 112,105 L 100,122 Z" fill="#fbbf24" stroke="#d97706" strokeWidth="2" strokeLinejoin="round" />
-          <path d="M 95,55 Q 100,35 110,48 Q 105,40 115,55" fill="none" stroke="url(#dl)" strokeWidth="5" strokeLinecap="round" />
-        </svg>
+  const handleDashClick = () => {
+    if (isBickering.current) return;
+    setDashAnim('m-bounce');
+    setDashExpr('executing');
+    setDashBubble('*Thrusters max power! Ready to ship production code! ⚡*');
+    setTimeout(() => {
+      setDashAnim('');
+      setDashBubble(null);
+      setDashExpr('happy');
+    }, 2000);
+  };
+
+  if (minimized) {
+    return (
+      <div className="mascots-minimized-launcher" onClick={() => setMinimized(false)} title="Restore Aero & Dash mascots">
+        <div className="mini-icon">🤖⚡</div>
+        <span className="mini-label">Mascots</span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mascots-roam-universe" aria-label="Aero and Dash interactive mascots">
+      {/* Collision Impact Spark Burst */}
+      {collisionEffect && (
+        <div
+          className="collision-spark-burst"
+          style={{ left: `${collisionEffect.x}%`, top: `${collisionEffect.y}%` }}
+        >
+          <div className="spark-ring"></div>
+          <div className="spark-text">{collisionEffect.text}</div>
+        </div>
+      )}
+
+      {/* ================= AERO FREE-FLIGHT RIG ================= */}
+      <div
+        className={`roam-mascot-pod pod-aero ${aeroAnim} ${isRoam ? 'free-roam-active' : 'docked-mode'}`}
+        style={{
+          left: isRoam ? `${aeroPos.x}%` : 'auto',
+          top: isRoam ? `${aeroPos.y}%` : 'auto',
+          right: isRoam ? 'auto' : '110px',
+          bottom: isRoam ? 'auto' : '24px',
+        }}
+        onPointerDown={(e) => handlePointerDown('aero', e)}
+        onClick={handleAeroClick}
+        role="button"
+        tabIndex={0}
+        aria-label="Aero AI Assistant mascot"
+        title="Aero · AI Assistant (Drag anywhere or click to interact)"
+      >
+        <AeroMascot
+          expression={aeroExpr}
+          size={96}
+          bubble={aeroBubble}
+          isFloating={!isBickering.current}
+        />
       </div>
 
-      {/* ---------------- BUBBLE ---------------- */}
-      <div className="bubble">
-        <div className={`speaker ${current.who}`}>{current.who === 'aero' ? 'Aero' : 'Dash'}</div>
-        <div className="text" dangerouslySetInnerHTML={{ __html: current.text }} />
-        <div className="controls">
-          <button className="skip" onClick={() => setMinimized(true)}>Skip</button>
-          <a className="next" href={beat.cta.href}>{beat.cta.label}</a>
-        </div>
-        <div className="arrow" />
+      {/* ================= DASH FREE-FLIGHT RIG ================= */}
+      <div
+        className={`roam-mascot-pod pod-dash ${dashAnim} ${isRoam ? 'free-roam-active' : 'docked-mode'}`}
+        style={{
+          left: isRoam ? `${dashPos.x}%` : 'auto',
+          top: isRoam ? `${dashPos.y}%` : 'auto',
+          right: isRoam ? 'auto' : '24px',
+          bottom: isRoam ? 'auto' : '24px',
+        }}
+        onPointerDown={(e) => handlePointerDown('dash', e)}
+        onClick={handleDashClick}
+        role="button"
+        tabIndex={0}
+        aria-label="Dash System Drone mascot"
+        title="Dash · System Drone (Drag anywhere or click to interact)"
+      >
+        <DashMascot
+          expression={dashExpr}
+          size={92}
+          bubble={dashBubble}
+          isFloating={!isBickering.current}
+        />
+      </div>
+
+      {/* ================= CYBER FLIGHT CONTROLLER BAR ================= */}
+      <div className="mascot-flight-controller" role="toolbar" aria-label="Mascot flight controls">
+        <button
+          className={`ctrl-btn ${isRoam ? 'active' : ''}`}
+          onClick={() => setIsRoam(!isRoam)}
+          title={isRoam ? "Dock mascots to corner" : "Enable full-page free flight"}
+        >
+          <span>{isRoam ? '🚀 Free-Fly: ON' : '⚓ Docked'}</span>
+        </button>
+
+        <button
+          className="ctrl-btn mischief-trigger-btn"
+          onClick={() => triggerCollision(true)}
+          title="Force Aero & Dash to collide and start an argument!"
+        >
+          <span>⚡ Bicker / Play!</span>
+        </button>
+
+        <button
+          className="ctrl-btn-close"
+          onClick={() => setMinimized(true)}
+          title="Minimize mascots"
+          aria-label="Minimize mascots"
+        >
+          ✕
+        </button>
       </div>
     </div>
   );

@@ -17,135 +17,13 @@
   pointer-events: auto;
 }
 
-.site-header, .site-footer {
+.site-footer {
   z-index: 10;
   display: flex;
   align-items: center;
-  width: min(100% - 3rem, var(--max-width));
+  width: min(100% - 3rem, 1480px);
   margin: 0 auto;
 }
-
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 30;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1.5rem;
-  min-height: 5rem;
-  padding: 0.75rem 0;
-  background: rgba(6, 9, 14, 0.85);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--color-border);
-  isolation: isolate;
-}
-
-.header-brand-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.site-mark {
-  white-space: nowrap;
-  color: var(--color-foreground);
-  font-size: 1.25rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-decoration: none;
-}
-
-.site-mark span { color: #10b981; }
-
-.header-role-sub {
-  font-family: var(--font-mono, monospace);
-  font-size: 0.62rem;
-  color: #10b981;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  font-weight: 700;
-}
-
-.header-constellation-track {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-mono, monospace);
-  font-size: 0.7rem;
-  color: #10b981;
-  letter-spacing: 0.16em;
-}
-
-.track-dots {
-  color: rgba(255, 255, 255, 0.2);
-  letter-spacing: 0.2em;
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.header-telemetry-badge {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-mono, monospace);
-  font-size: 0.72rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--color-border);
-  padding: 4px 10px;
-  border-radius: 6px;
-}
-
-.telemetry-lbl { color: var(--color-muted-foreground); font-size: 0.62rem; }
-.telemetry-val { color: #fff; font-weight: 600; }
-
-.header-status-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-mono, monospace);
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: #22c55e;
-}
-
-.status-live-dot {
-  width: 6px;
-  height: 6px;
-  background: #22c55e;
-  border-radius: 50%;
-  box-shadow: 0 0 8px #22c55e;
-  animation: pulseDot 2s infinite;
-}
-
-@keyframes pulseDot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.8); }
-}
-
-.header-link {
-  white-space: nowrap;
-  padding: 0.6rem 0.9rem;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  color: var(--color-foreground);
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-decoration: none;
-  letter-spacing: 0.08em;
-  transition: all 0.2s;
-}
-
-.header-link:hover {
-  border-color: #10b981;
-  color: #10b981;
-}
-
-.header-link span { color: #10b981; }
 
 .command-center-portal-section {
   padding: 4rem 0 6rem;
@@ -206,16 +84,6 @@
 }
 
 @media (max-width: 800px) {
-  .site-header {
-    flex-wrap: wrap;
-    gap: 0.75rem;
-  }
-  .header-constellation-track {
-    display: none;
-  }
-  .header-telemetry-badge {
-    display: none;
-  }
   .site-footer {
     flex-direction: column;
     gap: 1rem;

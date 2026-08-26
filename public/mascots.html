@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HX313 · Aero & Dash Mascot System Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #030712;
+      --card-bg: rgba(11, 19, 32, 0.75);
+      --card-border: rgba(30, 41, 59, 0.8);
+      --neon-green: #00FF66;
+      --neon-emerald: #10B981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --font-display: 'Outfit', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --glow-shadow: 0 0 25px rgba(0, 255, 102, 0.35);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(circle at 50% 20%, rgba(0, 255, 102, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 10% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .container {
+      max-width: 1360px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    /* Top Brand Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-logo .badge {
+      font-family: var(--font-mono);
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .brand-logo .badge span {
+      color: var(--neon-green);
+      text-shadow: 0 0 12px var(--neon-green);
+    }
+
+    .brand-logo .sub {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .header-tagline {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--neon-green);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--neon-green);
+      box-shadow: 0 0 10px var(--neon-green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    /* Hero Crew Introduction */
+    .crew-hero {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 3rem;
+      align-items: center;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 1.5rem;
+      padding: 3rem;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+
+    @media (max-width: 960px) {
+      .crew-hero { grid-template-columns: 1fr; }
+    }
+
+    .hero-text h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 4vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .hero-text h1 span {
+      color: var(--neon-green);
+      text-shadow: 0 0 25px rgba(0,255,102,0.4);
+    }
+
+    .hero-text p.mission {
+      font-size: 1.05rem;
+      color: #cbd5e1;
+      line-height: 1.6;
+      margin-bottom: 1.8rem;
+    }
+
+    .tag-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .pill {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(0, 255, 102, 0.3);
+      background: rgba(0, 255, 102, 0.05);
+      color: var(--neon-green);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 10px 22px;
+      background: rgba(0, 255, 102, 0.15);
+      color: #fff;
+      border: 1.5px solid var(--neon-green);
+      border-radius: 10px;
+      text-decoration: none;
+      box-shadow: 0 0 15px rgba(0, 255, 102, 0.25);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background: rgba(0, 255, 102, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(0, 255, 102, 0.5);
+    }
+
+    /* Live Mascot Stage */
+    .mascot-stage-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 380px;
+      background: radial-gradient(circle at 50% 50%, rgba(0, 255, 102, 0.1) 0%, rgba(2, 6, 23, 0.6) 70%);
+      border: 1px solid rgba(0, 255, 102, 0.2);
+      border-radius: 1.25rem;
+      overflow: hidden;
+    }
+
+    .mascots-duo-container {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .mascot-interactive-card {
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      text-align: center;
+    }
+
+    .mascot-interactive-card:hover {
+      transform: scale(1.08);
+    }
+
+    .speech-bubble-preview {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #020617;
+      border: 1.5px solid var(--neon-green);
+      padding: 6px 14px;
+      border-radius: 14px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+      box-shadow: 0 0 15px rgba(0, 255, 102, 0.4);
+      z-index: 20;
+    }
+
+    /* 2-Column Character Deep Dive */
+    .characters-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 900px) {
+      .characters-grid { grid-template-columns: 1fr; }
+    }
+
+    .character-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 1.25rem;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .char-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .char-title h2 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .char-title .role {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--neon-green);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .char-quote {
+      font-family: serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: #94a3b8;
+      border-left: 2px solid var(--neon-green);
+      padding-left: 1rem;
+    }
+
+    /* Expression Matrix */
+    .section-title {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--neon-green);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .expressions-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .expr-chip {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 5px 12px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .expr-chip:hover, .expr-chip.active {
+      background: rgba(0, 255, 102, 0.15);
+      border-color: var(--neon-green);
+      color: #fff;
+      box-shadow: 0 0 10px rgba(0, 255, 102, 0.3);
+    }
+
+    /* Signature Elements List */
+    .elements-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .element-item {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 0.85rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .element-item .name {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.2rem;
+    }
+
+    .element-item .desc {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* Color Palette */
+    .palette-row {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .color-swatch {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+
+    /* Vector Downloads Row */
+    .downloads-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 1.25rem;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .downloads-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .dl-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      transition: all 0.2s ease;
+    }
+
+    .dl-btn:hover {
+      background: rgba(0, 255, 102, 0.1);
+      border-color: var(--neon-green);
+      color: var(--neon-green);
+      transform: translateY(-2px);
+    }
+
+    /* Mascot Floats */
+    .float-anim {
+      animation: gentleFloat 4s ease-in-out infinite alternate;
+    }
+    .float-anim-alt {
+      animation: gentleFloatAlt 3.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes gentleFloat {
+      0% { transform: translateY(0px) rotate(-2deg); }
+      100% { transform: translateY(-14px) rotate(3deg); }
+    }
+
+    @keyframes gentleFloatAlt {
+      0% { transform: translateY(0px) rotate(2deg); }
+      100% { transform: translateY(-16px) rotate(-4deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Brand Header -->
+    <header>
+      <div class="brand-logo">
+        <div class="badge">HX<span>313</span></div>
+        <div class="sub">Product Engineer · System Mascots</div>
+      </div>
+      <div class="header-tagline">
+        <div class="status-dot"></div>
+        THINK • BUILD • DEPLOY
+      </div>
+    </header>
+
+    <!-- Crew Hero Section -->
+    <section class="crew-hero">
+      <div class="hero-text">
+        <div class="section-title">MEET THE CREW</div>
+        <h1>Your system <span>companions.</span></h1>
+        <p class="mission">
+          <strong>Aero thinks. Dash moves.</strong> Together they keep the system running, the ideas flowing, and the products on track.
+        </p>
+        <div class="tag-pills">
+          <span class="pill">🤖 AERO · AI Assistant</span>
+          <span class="pill">⚡ DASH · System Drone</span>
+          <span class="pill">✨ HX313 Brand Rigs</span>
+          <span class="pill">🎮 18 Expressive Modes</span>
+        </div>
+        <div class="btn-group">
+          <a href="/" class="btn-primary">← Back to Portfolio</a>
+          <a href="/assets/mascots/mascots-crew.svg" target="_blank" class="btn-primary">View Vector Duo</a>
+        </div>
+      </div>
+
+      <!-- Live Interactive Stage -->
+      <div class="mascot-stage-wrapper">
+        <div class="mascots-duo-container">
+          <!-- AERO LIVE RIG -->
+          <div class="mascot-interactive-card float-anim" id="aeroRig" onclick="triggerAeroClick()">
+            <div class="speech-bubble-preview" id="aeroBubble">"I think, analyze & assist."</div>
+            <img src="/assets/mascots/aero.svg" alt="Aero mascot" width="160" height="190" id="aeroSvgImg">
+          </div>
+
+          <!-- DASH LIVE RIG -->
+          <div class="mascot-interactive-card float-anim-alt" id="dashRig" onclick="triggerDashClick()">
+            <div class="speech-bubble-preview" id="dashBubble" style="border-color: #10b981;">"I move, monitor & execute."</div>
+            <img src="/assets/mascots/dash.svg" alt="Dash mascot" width="155" height="185" id="dashSvgImg">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Character Deep Dive -->
+    <div class="characters-grid">
+      <!-- 1. AERO -->
+      <div class="character-card">
+        <div class="char-header">
+          <div class="char-title">
+            <div class="role">AI ASSISTANT</div>
+            <h2>AERO</h2>
+          </div>
+          <span class="pill">Calm · Smart · Helpful · Curious</span>
+        </div>
+
+        <p class="char-quote">"I think, analyze and assist."</p>
+
+        <div>
+          <div class="section-title">9 FACE EXPRESSIONS (EMOTION ENGINE)</div>
+          <div class="expressions-chips">
+            <button class="expr-chip active" onclick="setAeroExpression('Happy')">Happy</button>
+            <button class="expr-chip" onclick="setAeroExpression('Thinking')">Thinking</button>
+            <button class="expr-chip" onclick="setAeroExpression('Excited')">Excited</button>
+            <button class="expr-chip" onclick="setAeroExpression('Analyzing')">Analyzing</button>
+            <button class="expr-chip" onclick="setAeroExpression('Confused')">Confused</button>
+            <button class="expr-chip" onclick="setAeroExpression('Winking')">Winking</button>
+            <button class="expr-chip" onclick="setAeroExpression('Loading')">Loading</button>
+            <button class="expr-chip" onclick="setAeroExpression('Surprised')">Surprised</button>
+            <button class="expr-chip" onclick="setAeroExpression('Sleep')">Sleep</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-title">SIGNATURE ELEMENTS</div>
+          <div class="elements-list">
+            <div class="element-item">
+              <div class="name">Halo Ring</div>
+              <div class="desc">Thinking Indicator (Green Neon)</div>
+            </div>
+            <div class="element-item">
+              <div class="name">Ear Pods</div>
+              <div class="desc">Audio interface with fin wings</div>
+            </div>
+            <div class="element-item">
+              <div class="name">Face Screen</div>
+              <div class="desc">Convex emotion engine OLED</div>
+            </div>
+            <div class="element-item">
+              <div class="name">Core Body</div>
+              <div class="desc">AI processor sphere with Hx313</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. DASH -->
+      <div class="character-card">
+        <div class="char-header">
+          <div class="char-title">
+            <div class="role">SYSTEM DRONE</div>
+            <h2>DASH</h2>
+          </div>
+          <span class="pill">Energetic · Fast · Focused · Reliable</span>
+        </div>
+
+        <p class="char-quote">"I move, monitor and execute."</p>
+
+        <div>
+          <div class="section-title">9 FACE EXPRESSIONS (EXPRESSION ENGINE)</div>
+          <div class="expressions-chips">
+            <button class="expr-chip active" onclick="setDashExpression('Happy')">Happy</button>
+            <button class="expr-chip" onclick="setDashExpression('Winking')">Winking</button>
+            <button class="expr-chip" onclick="setDashExpression('Excited')">Excited</button>
+            <button class="expr-chip" onclick="setDashExpression('Focused')">Focused</button>
+            <button class="expr-chip" onclick="setDashExpression('Scanning')">Scanning</button>
+            <button class="expr-chip" onclick="setDashExpression('Confused')">Confused</button>
+            <button class="expr-chip" onclick="setDashExpression('Executing')">Executing</button>
+            <button class="expr-chip" onclick="setDashExpression('Alert')">Alert</button>
+            <button class="expr-chip" onclick="setDashExpression('Sleep')">Sleep</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-title">SIGNATURE ELEMENTS</div>
+          <div class="elements-list">
+            <div class="element-item">
+              <div class="name">Antennae</div>
+              <div class="desc">Dual cyber signal receivers</div>
+            </div>
+            <div class="element-item">
+              <div class="name">Face Screen</div>
+              <div class="desc">Glossy rounded visor display</div>
+            </div>
+            <div class="element-item">
+              <div class="name">Thrusters</div>
+              <div class="desc">Flight & movement plasma trails</div>
+            </div>
+            <div class="element-item">
+              <div class="name">Armor Chassis</div>
+              <div class="desc">White ceramic & HX313 chest badge</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Free Flight & Collision Argument Simulator -->
+    <div class="downloads-card" style="border-color: rgba(0,255,102,0.35);">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <div class="section-title">FREE-FLIGHT & COLLISION ARGUMENT SIMULATOR</div>
+          <p style="font-size: 0.85rem; color: #94a3b8;">Simulate real-time airspace collisions, playful bickering, and witty dialogues between Aero and Dash.</p>
+        </div>
+        <button class="btn-primary" onclick="simulateRandomCollision()">⚡ Trigger Random Collision & Argument</button>
+      </div>
+
+      <div id="simCollisionLog" style="background: rgba(2,6,23,0.85); border: 1px solid rgba(0,255,102,0.2); border-radius: 12px; padding: 1.25rem; font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.6; min-height: 90px; color: #cbd5e1; display: flex; flex-direction: column; justify-content: center;">
+        <span style="color: #64748b;">[Airspace Telemetry: Both mascots are free-roaming across the page. Click button above to force a collision!]</span>
+      </div>
+    </div>
+
+    <!-- Color & Glow System + Vector Downloads -->
+    <div class="downloads-card">
+      <div class="section-title">SYSTEM COLOR & GLOW PALETTE</div>
+      <div class="palette-row">
+        <div class="color-swatch" style="background: #00FF66;" title="#00FF66 Neon Green Energy"></div>
+        <div class="color-swatch" style="background: #10B981;" title="#10B981 Emerald Thrusters"></div>
+        <div class="color-swatch" style="background: #22C55E;" title="#22C55E Halo Indicator"></div>
+        <div class="color-swatch" style="background: #FFFFFF;" title="#FFFFFF White Ceramic Armor"></div>
+        <div class="color-swatch" style="background: #1E293B;" title="#1E293B Slate Chassis Joint"></div>
+        <div class="color-swatch" style="background: #020617;" title="#020617 Dark Convex Screen"></div>
+      </div>
+
+      <div class="section-title" style="margin-top: 1rem;">EXPORT VECTOR ASSETS</div>
+      <div class="downloads-grid">
+        <a href="/assets/mascots/aero.svg" download="aero.svg" class="dl-btn">
+          <span>Aero Vector Asset</span>
+          <span>↓ .SVG</span>
+        </a>
+        <a href="/assets/mascots/dash.svg" download="dash.svg" class="dl-btn">
+          <span>Dash Vector Asset</span>
+          <span>↓ .SVG</span>
+        </a>
+        <a href="/assets/mascots/mascots-crew.svg" download="mascots-crew.svg" class="dl-btn">
+          <span>Aero & Dash Duo</span>
+          <span>↓ .SVG</span>
+        </a>
+        <a href="/assets/mascots/aero-expressions.svg" download="aero-expressions.svg" class="dl-btn">
+          <span>Aero 9-Expressions</span>
+          <span>↓ .SVG</span>
+        </a>
+        <a href="/assets/mascots/dash-expressions.svg" download="dash-expressions.svg" class="dl-btn">
+          <span>Dash 9-Expressions</span>
+          <span>↓ .SVG</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function triggerAeroClick() {
+      const bubble = document.getElementById('aeroBubble');
+      const lines = [
+        '"I think, analyze and assist! 🤖"',
+        '"Neural core synchronized. 100% throughput."',
+        '"System telemetry nominal. Let\'s build!"',
+        '"Aero online. What are we shipping today?"'
+      ];
+      const randomLine = lines[Math.floor(Math.random() * lines.length)];
+      bubble.textContent = randomLine;
+      bubble.style.transform = 'translateX(-50%) scale(1.1)';
+      setTimeout(() => { bubble.style.transform = 'translateX(-50%) scale(1)'; }, 200);
+    }
+
+    function triggerDashClick() {
+      const bubble = document.getElementById('dashBubble');
+      const lines = [
+        '"I move, monitor and execute! ⚡"',
+        '"Deployment completed! All tests green. 🚀"',
+        '"Jet thrusters ignited! Full speed ahead."',
+        '"CI/CD build passed in 12ms. Ready!"'
+      ];
+      const randomLine = lines[Math.floor(Math.random() * lines.length)];
+      bubble.textContent = randomLine;
+      bubble.style.transform = 'translateX(-50%) scale(1.1)';
+      setTimeout(() => { bubble.style.transform = 'translateX(-50%) scale(1)'; }, 200);
+    }
+
+    function setAeroExpression(name) {
+      document.querySelectorAll('.character-card:first-child .expr-chip').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent === name);
+      });
+      const bubble = document.getElementById('aeroBubble');
+      bubble.textContent = `Aero: [Mode: ${name}]`;
+    }
+
+    function setDashExpression(name) {
+      document.querySelectorAll('.character-card:last-child .expr-chip').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent === name);
+      });
+      const bubble = document.getElementById('dashBubble');
+      bubble.textContent = `Dash: [Mode: ${name}]`;
+    }
+
+    const SIM_SKITS = [
+      {
+        title: "Airspace Violation",
+        sound: "*CRASH! BOOP!*",
+        lines: [
+          "⚡ Dash: 'Whoa! Watch the airspace, Aero! I am flying at 200 knots! 💨'",
+          "🤖 Aero: '(>_<) Dash! This is a restricted staging environment!'",
+          "⚡ Dash: 'Continuous deployment waits for no one! Speed is a feature! 🚀'",
+          "🤖 Aero: 'Stability is king! Next time, check your telemetry radar!'"
+        ]
+      },
+      {
+        title: "Hot Reload Overdrive",
+        sound: "*CLANG! BZZT!*",
+        lines: [
+          "🤖 Aero: 'Dash, did you just trigger 42 hot reloads in 3 seconds?! (o_O)'",
+          "⚡ Dash: 'Every keystroke deserves immediate visual feedback! ✨'",
+          "🤖 Aero: 'You almost melted the compiler cache, you speed demon!'",
+          "⚡ Dash: 'Zero compile lag, 100% adrenaline! That is Flutter power! ⚡'"
+        ]
+      },
+      {
+        title: "Code Review Showdown",
+        sound: "*SMACK! SPARK!*",
+        lines: [
+          "⚡ Dash: 'Hey! Why did you comment with \"needs more tests\" on my PR?! 😤'",
+          "🤖 Aero: 'Because 99.8% test coverage is the minimum engineering standard. 🤖'",
+          "⚡ Dash: 'My code passed in production in my head! 🐦⚡'",
+          "🤖 Aero: 'That is not how CI/CD works, Dash! Refactoring now... ✨'"
+        ]
+      },
+      {
+        title: "Tag & Chase Game",
+        sound: "*TAG! BOOP!*",
+        lines: [
+          "⚡ Dash: '*boops Aero* Tag! You are it, slow-orb! Catch me if you can! 👉🐦'",
+          "🤖 Aero: 'Activating ion thruster override! Initiating pursuit! 🛸💨'",
+          "⚡ Dash: 'Thrusters at maximum! Doing a 360 loop across the viewport! 🌀'",
+          "🤖 Aero: 'Target locked! Gotcha! Telemetry calibrated. 🤖✨'"
+        ]
+      }
+    ];
+
+    function simulateRandomCollision() {
+      const log = document.getElementById('simCollisionLog');
+      const skit = SIM_SKITS[Math.floor(Math.random() * SIM_SKITS.length)];
+      
+      const aeroRig = document.getElementById('aeroRig');
+      const dashRig = document.getElementById('dashRig');
+      
+      // Bump animation
+      aeroRig.style.transform = 'translate(-25px, -15px) scale(0.95)';
+      dashRig.style.transform = 'translate(25px, 15px) scale(1.1)';
+      
+      log.innerHTML = `<div style="color: #00FF66; font-weight: 800; margin-bottom: 6px;">💥 COLLISION DETECTED: ${skit.sound} [${skit.title}]</div>`;
+      
+      skit.lines.forEach((line, idx) => {
+        setTimeout(() => {
+          log.innerHTML += `<div style="margin-top: 4px; animation: fadeIn 0.3s ease;">${line}</div>`;
+        }, (idx + 1) * 600);
+      });
+
+      setTimeout(() => {
+        aeroRig.style.transform = '';
+        dashRig.style.transform = '';
+      }, 800);
+    }
+  </script>
+</body>
+</html>
