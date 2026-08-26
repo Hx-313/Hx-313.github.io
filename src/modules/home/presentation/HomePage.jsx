@@ -1,12 +1,15 @@
 import { useCallback, useEffect, useState } from 'react';
 import OpeningExperience from './opening/OpeningExperience.jsx';
+import CosmicBackground from './CosmicBackground.jsx';
 import SiteHeader from './header/SiteHeader.jsx';
 import Hero from './hero/Hero.jsx';
 import CommandCenter from './command-center/CommandCenter.jsx';
+import Mascots from '../../../components/Mascots.jsx';
 import { useTheme } from '../../../shared/theme/useTheme.js';
 import { useCommandCenter } from '../../../hooks/useCommandCenter.js';
 import './home.css';
 import './command-center/command-center.css';
+import '../../../styles/mascots.css';
 
 export default function HomePage() {
   const [isRevealed, setIsRevealed] = useState(false);
@@ -17,22 +20,24 @@ export default function HomePage() {
 
   useEffect(() => {
     if (!isRevealed) return undefined;
-    const dismissalTimer = window.setTimeout(() => setIsOpeningDismissed(true), 280);
+    const dismissalTimer = window.setTimeout(() => setIsOpeningDismissed(true), 750);
     return () => window.clearTimeout(dismissalTimer);
   }, [isRevealed]);
 
   return (
     <div className="home-page">
+      <CosmicBackground />
       {!isOpeningDismissed && <OpeningExperience isRevealing={isRevealed} onComplete={completeOpening} theme={theme} />}
       <div className={`site-experience ${isRevealed ? 'is-revealed' : ''}`} aria-hidden={!isRevealed} inert={isRevealed ? undefined : ''}>
         <SiteHeader theme={theme} setTheme={setTheme} />
 
         <main id="top">
-          {/* Page 1: Clean Entry Portal */}
+          {/* Page 1: Clean Entry Portal (Mascots bound strictly to Page 1) */}
           <Hero revealed={isRevealed} />
 
           {/* Page 2: Dedicated Command Center & System Proof */}
           <section id="command-center" className="command-center-portal-section" aria-label="System Command Center">
+            <Mascots stage="page2" showController={false} />
             <CommandCenter controller={commandCenter} />
           </section>
         </main>

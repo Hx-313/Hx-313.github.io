@@ -1,19 +1,31 @@
 .home-page {
   min-height: 100dvh;
   overflow-x: clip;
-  background: radial-gradient(circle at 70% 30%, rgb(6 150 104 / 0.1), transparent 34rem), var(--color-background);
+  background:
+    radial-gradient(circle at 75% 15%, rgba(16, 185, 129, 0.12) 0%, transparent 40rem),
+    radial-gradient(circle at 15% 45%, rgba(14, 116, 144, 0.1) 0%, transparent 35rem),
+    radial-gradient(circle at 50% 85%, rgba(6, 78, 59, 0.15) 0%, transparent 45rem),
+    var(--color-background);
   color: var(--color-foreground);
   transition: background-color 350ms ease, color 350ms ease;
 }
 
 .site-experience {
   opacity: 0;
+  transform: scale(0.94) translateY(32px);
+  filter: blur(8px);
   pointer-events: none;
-  transition: opacity 420ms var(--ease-out);
+  transition:
+    opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 900ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 900ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity, filter;
 }
 
 .site-experience.is-revealed {
   opacity: 1;
+  transform: scale(1) translateY(0);
+  filter: blur(0px);
   pointer-events: auto;
 }
 
@@ -26,9 +38,18 @@
 }
 
 .command-center-portal-section {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   padding: 4rem 0 6rem;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   background: radial-gradient(circle at 50% 10%, rgba(16, 185, 129, 0.05) 0%, transparent 60%), #06090e;
+  transition: background 350ms ease, border-color 350ms ease;
+}
+
+:root[data-theme='light'] .command-center-portal-section {
+  background: radial-gradient(circle at 50% 10%, rgba(4, 120, 87, 0.06) 0%, transparent 60%), #eef4f0;
+  border-top: 1px solid rgba(0, 59, 47, 0.12);
 }
 
 .site-footer {
@@ -48,11 +69,11 @@
 }
 
 .footer-left strong {
-  color: #fff;
+  color: var(--color-foreground);
 }
 
 .footer-right a {
-  color: #10b981;
+  color: var(--color-accent, #10b981);
   text-decoration: none;
   font-weight: 600;
 }
@@ -63,6 +84,12 @@
   padding: 0.2rem;
   border: 1px solid var(--color-border);
   border-radius: 99px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+:root[data-theme='light'] .theme-toggle {
+  background: rgba(0, 59, 47, 0.05);
+  border-color: rgba(0, 59, 47, 0.15);
 }
 
 .theme-toggle button {
@@ -76,11 +103,22 @@
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  transition: all 180ms ease;
+}
+
+:root[data-theme='light'] .theme-toggle button {
+  color: #52635d;
 }
 
 .theme-toggle button.is-active {
   background: var(--color-foreground);
   color: var(--color-background);
+}
+
+:root[data-theme='light'] .theme-toggle button.is-active {
+  background: #047857;
+  color: #ffffff;
+  box-shadow: 0 1px 4px rgba(4, 120, 87, 0.3);
 }
 
 @media (max-width: 800px) {

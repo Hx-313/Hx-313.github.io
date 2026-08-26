@@ -22,6 +22,8 @@ export const DASH_EXPRESSIONS = [
   'executing',
   'alert',
   'sleep',
+  'hit',
+  'dizzy',
 ];
 
 export default function DashMascot({
@@ -111,6 +113,26 @@ export default function DashMascot({
             <text x="135" y="154" textAnchor="middle" fill="#00FF66" fontSize="16" fontFamily="monospace" fontWeight="900">!</text>
             <circle cx="185" cy="148" r="14" fill="none" stroke="#00FF66" strokeWidth="4" />
             <text x="185" y="154" textAnchor="middle" fill="#00FF66" fontSize="16" fontFamily="monospace" fontWeight="900">!</text>
+          </g>
+        );
+      case 'hit':
+        return (
+          <g transform={transform}>
+            {/* Impact >< eyes */}
+            <path d="M 120,138 L 138,150 L 120,162" fill="none" stroke="#00FF66" strokeWidth="5.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M 150,138 L 132,150 L 150,162" fill="none" stroke="#00FF66" strokeWidth="5.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M 170,138 L 188,150 L 170,162" fill="none" stroke="#00FF66" strokeWidth="5.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M 200,138 L 182,150 L 200,162" fill="none" stroke="#00FF66" strokeWidth="5.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M 152,174 Q 160,166 168,174" fill="none" stroke="#00FF66" strokeWidth="3" strokeLinecap="round" />
+          </g>
+        );
+      case 'dizzy':
+        return (
+          <g transform={transform}>
+            {/* Hypnotic Spiral Visor Eyes @_@ */}
+            <path d="M 135,148 m -14,0 a 14,14 0 1,0 28,0 a 10,10 0 1,0 -20,0 a 6,6 0 1,0 12,0 a 3,3 0 1,0 -6,0" fill="none" stroke="#00FF66" strokeWidth="2.8" strokeLinecap="round" className="animate-spin" style={{ transformOrigin: '135px 148px' }} />
+            <path d="M 185,148 m -14,0 a 14,14 0 1,0 28,0 a 10,10 0 1,0 -20,0 a 6,6 0 1,0 12,0 a 3,3 0 1,0 -6,0" fill="none" stroke="#00FF66" strokeWidth="2.8" strokeLinecap="round" className="animate-spin" style={{ transformOrigin: '185px 148px' }} />
+            <path d="M 148,174 Q 154,168 160,174 Q 166,180 172,174" fill="none" stroke="#00FF66" strokeWidth="3" strokeLinecap="round" />
           </g>
         );
       case 'sleep':

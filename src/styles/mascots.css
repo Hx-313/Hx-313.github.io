@@ -4,21 +4,21 @@
    ========================================================================== */
 
 .mascots-roam-universe {
-  position: fixed;
+  position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 999;
+  z-index: 25;
   overflow: hidden;
 }
 
 /* Free Roaming Mascot Pods */
 .roam-mascot-pod {
-  position: fixed;
+  position: absolute;
   pointer-events: auto;
   cursor: grab;
   user-select: none;
   touch-action: none;
-  z-index: 1000;
+  z-index: 30;
   transition: left 2.8s cubic-bezier(0.25, 1, 0.5, 1), 
               top 2.8s cubic-bezier(0.25, 1, 0.5, 1),
               transform 0.4s ease;
@@ -64,10 +64,10 @@
 
 /* Collision Spark Effect */
 .collision-spark-burst {
-  position: fixed;
+  position: absolute;
   transform: translate(-50%, -50%);
   pointer-events: none;
-  z-index: 1050;
+  z-index: 45;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -183,6 +183,30 @@
   box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px rgba(0, 255, 102, 0.15);
 }
 
+.page-badge-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #00FF66;
+  background: rgba(0, 255, 102, 0.08);
+  border: 1px solid rgba(0, 255, 102, 0.25);
+  padding: 4px 9px;
+  border-radius: 12px;
+  letter-spacing: 0.5px;
+}
+
+.page-badge-indicator .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00FF66;
+  box-shadow: 0 0 6px #00FF66;
+  animation: pulse 2s infinite;
+}
+
 .ctrl-btn {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -273,6 +297,73 @@
   font-size: 0.76rem;
   font-weight: 700;
   color: #00FF66;
+}
+
+/* Light Theme Overrides for Mascot Controls */
+:root[data-theme='light'] .mascot-flight-controller {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(0, 59, 47, 0.18);
+  box-shadow: 0 8px 24px rgba(0, 59, 47, 0.12);
+}
+
+:root[data-theme='light'] .page-badge-indicator {
+  background: rgba(4, 120, 87, 0.08);
+  border: 1px solid rgba(4, 120, 87, 0.25);
+  color: #047857;
+}
+
+:root[data-theme='light'] .page-badge-indicator .dot {
+  background: #047857;
+  box-shadow: 0 0 6px #047857;
+}
+
+:root[data-theme='light'] .ctrl-btn {
+  background: rgba(0, 59, 47, 0.05);
+  border: 1px solid rgba(0, 59, 47, 0.12);
+  color: #40534c;
+}
+
+:root[data-theme='light'] .ctrl-btn:hover {
+  background: rgba(4, 120, 87, 0.12);
+  border-color: #047857;
+  color: #047857;
+  box-shadow: 0 0 10px rgba(4, 120, 87, 0.2);
+}
+
+:root[data-theme='light'] .ctrl-btn.active {
+  background: #047857;
+  border-color: #047857;
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(4, 120, 87, 0.35);
+}
+
+:root[data-theme='light'] .mischief-trigger-btn {
+  background: rgba(4, 120, 87, 0.08);
+  border-color: rgba(4, 120, 87, 0.3);
+  color: #047857;
+}
+
+:root[data-theme='light'] .mischief-trigger-btn:hover {
+  background: #047857;
+  color: #ffffff;
+}
+
+:root[data-theme='light'] .ctrl-btn-close {
+  color: #40534c;
+}
+
+:root[data-theme='light'] .ctrl-btn-close:hover {
+  color: #047857;
+}
+
+:root[data-theme='light'] .mascots-minimized-launcher {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(4, 120, 87, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 59, 47, 0.12);
+}
+
+:root[data-theme='light'] .mini-label {
+  color: #047857;
 }
 
 /* Mobile Adjustments */

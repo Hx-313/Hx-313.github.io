@@ -205,11 +205,17 @@
       margin-bottom: 24px;
     }
     .hero-heading .beyond {
-      font-family: serif;
-      font-style: italic;
-      font-weight: 400;
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-style: normal;
+      letter-spacing: -0.04em;
+      background: linear-gradient(135deg, #10b981 0%, #34d399 45%, #6ee7b7 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
       color: var(--emerald);
-      text-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
+      filter: drop-shadow(0 0 24px rgba(16, 185, 129, 0.6)) drop-shadow(0 0 48px rgba(16, 185, 129, 0.3));
     }
 
     .hero-description {

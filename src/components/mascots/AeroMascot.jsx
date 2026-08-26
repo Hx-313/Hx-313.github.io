@@ -1,15 +1,15 @@
 import React from 'react';
 
 /**
- * AERO: The AI Assistant Mascot
+ * AERO: The AI Assistant Mascot Robot
  * "I think, analyze and assist."
  * Personality: Calm, Smart, Helpful, Curious
  * Signature elements:
- * - Halo Ring (Thinking indicator)
- * - Ear Pods (Audio interface) with leaf fin wings
- * - Face Screen (Emotion engine) with neon emerald LED matrix
- * - Core Body (AI processor sphere with Hx313 branding)
- * - Floating energy rings
+ * - Floating Holographic Halo (Thinking & AI telemetry indicator)
+ * - Cybernetic Ear Pods with communication beacons & aero fins
+ * - High-tech Emotion Display Visor (Emerald LED matrix)
+ * - Brushed Titanium / Obsidian Core Sphere with Hx313 insignia
+ * - Ion Plasma Anti-Gravity Thruster Rings
  */
 
 export const AERO_EXPRESSIONS = [
@@ -22,6 +22,8 @@ export const AERO_EXPRESSIONS = [
   'loading',
   'surprised',
   'sleep',
+  'hit',
+  'dizzy',
 ];
 
 export default function AeroMascot({
@@ -41,93 +43,116 @@ export default function AeroMascot({
       case 'thinking':
         return (
           <g transform={transform}>
-            <circle cx="138" cy="168" r="7" fill="#00FF66" />
-            <circle cx="178" cy="158" r="9" fill="#00FF66" />
-            <path d="M 130,154 Q 142,150 150,156" stroke="#00FF66" strokeWidth="3" fill="none" />
-            <path d="M 168,144 Q 180,140 192,148" stroke="#00FF66" strokeWidth="3" fill="none" />
-            <circle cx="188" cy="188" r="2.5" fill="#00FF66" opacity="0.8" />
-            <circle cx="196" cy="180" r="3.5" fill="#00FF66" opacity="0.9" />
+            <circle cx="136" cy="166" r="8" fill="#10b981" filter="url(#aeroGlow)" />
+            <circle cx="184" cy="154" r="10" fill="#10b981" filter="url(#aeroGlow)" />
+            <path d="M 128,150 Q 140,144 150,152" stroke="#10b981" strokeWidth="3.5" strokeLinecap="round" fill="none" />
+            <path d="M 174,138 Q 188,132 200,142" stroke="#10b981" strokeWidth="3.5" strokeLinecap="round" fill="none" />
+            <circle cx="194" cy="186" r="3" fill="#10b981" opacity="0.8" />
+            <circle cx="204" cy="176" r="4.5" fill="#10b981" opacity="0.9" />
           </g>
         );
       case 'excited':
         return (
           <g transform={transform}>
-            {/* Bright wide smiling eyes */}
-            <path d="M 122,172 Q 140,142 158,172" fill="none" stroke="#00FF66" strokeWidth="7" strokeLinecap="round" />
-            <path d="M 162,172 Q 180,142 198,172" fill="none" stroke="#00FF66" strokeWidth="7" strokeLinecap="round" />
-            <path d="M 124,172 Q 140,145 156,172" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" />
-            <path d="M 164,172 Q 180,145 196,172" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" />
-            {/* Open mouth */}
-            <path d="M 150,188 Q 160,202 170,188 Z" fill="#00FF66" />
+            {/* Wide smiling glowing cyber arcs */}
+            <path d="M 120,172 Q 140,138 160,172" fill="none" stroke="#10b981" strokeWidth="8" strokeLinecap="round" filter="url(#aeroGlow)" />
+            <path d="M 160,172 Q 180,138 200,172" fill="none" stroke="#10b981" strokeWidth="8" strokeLinecap="round" filter="url(#aeroGlow)" />
+            <path d="M 122,172 Q 140,142 158,172" fill="none" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" />
+            <path d="M 162,172 Q 180,142 198,172" fill="none" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" />
+            {/* Open glowing mouth */}
+            <path d="M 148,188 Q 160,206 172,188 Z" fill="#10b981" filter="url(#aeroGlow)" />
           </g>
         );
       case 'analyzing':
         return (
           <g transform={transform}>
-            {/* Reticles & Scanlines */}
-            <line x1="120" y1="168" x2="155" y2="168" stroke="#00FF66" strokeWidth="5" strokeLinecap="round" />
-            <line x1="165" y1="168" x2="200" y2="168" stroke="#00FF66" strokeWidth="5" strokeLinecap="round" />
-            <circle cx="138" cy="168" r="3" fill="#ffffff" />
-            <circle cx="182" cy="168" r="3" fill="#ffffff" />
-            <rect x="115" y="156" width="90" height="24" rx="4" fill="none" stroke="#00FF66" strokeWidth="1" strokeDasharray="6 3" opacity="0.6" />
+            {/* Reticles, crosshairs & HUD scanlines */}
+            <line x1="116" y1="168" x2="154" y2="168" stroke="#10b981" strokeWidth="6" strokeLinecap="round" filter="url(#aeroGlow)" />
+            <line x1="166" y1="168" x2="204" y2="168" stroke="#10b981" strokeWidth="6" strokeLinecap="round" filter="url(#aeroGlow)" />
+            <circle cx="135" cy="168" r="3.5" fill="#ffffff" />
+            <circle cx="185" cy="168" r="3.5" fill="#ffffff" />
+            <rect x="110" y="152" width="100" height="32" rx="6" fill="none" stroke="#10b981" strokeWidth="1.5" strokeDasharray="8 4" opacity="0.75" />
+            <text x="160" y="196" fill="#10b981" fontSize="9" fontFamily="monospace" fontWeight="bold" textAnchor="middle" letterSpacing="1">SCANNING</text>
           </g>
         );
       case 'confused':
         return (
           <g transform={transform}>
-            <circle cx="135" cy="166" r="8" fill="#00FF66" />
-            <circle cx="133" cy="164" r="3" fill="#ffffff" />
-            <path d="M 168,172 Q 182,158 196,172" fill="none" stroke="#00FF66" strokeWidth="6" strokeLinecap="round" />
-            <path d="M 150,192 Q 158,187 166,194" fill="none" stroke="#00FF66" strokeWidth="3" strokeLinecap="round" />
+            <circle cx="134" cy="165" r="9" fill="#10b981" filter="url(#aeroGlow)" />
+            <circle cx="132" cy="163" r="3.5" fill="#ffffff" />
+            <path d="M 166,174 Q 182,156 198,174" fill="none" stroke="#10b981" strokeWidth="7" strokeLinecap="round" filter="url(#aeroGlow)" />
+            <path d="M 148,194 Q 160,188 172,196" fill="none" stroke="#10b981" strokeWidth="4" strokeLinecap="round" />
           </g>
         );
       case 'winking':
         return (
           <g transform={transform}>
             {/* Left Eye Open */}
-            <path d="M 125,172 Q 140,150 155,172" fill="none" stroke="#00FF66" strokeWidth="6.5" strokeLinecap="round" />
-            {/* Right Eye Winking > */}
-            <path d="M 166,162 L 180,172 L 194,162" fill="none" stroke="#00FF66" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M 152,192 Q 160,199 168,192" fill="none" stroke="#00FF66" strokeWidth="3.5" strokeLinecap="round" />
+            <path d="M 124,172 Q 140,146 156,172" fill="none" stroke="#10b981" strokeWidth="7.5" strokeLinecap="round" filter="url(#aeroGlow)" />
+            <path d="M 126,172 Q 140,150 154,172" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" />
+            {/* Right Eye Winking Chevron */}
+            <path d="M 168,162 L 182,172 L 196,162" fill="none" stroke="#10b981" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" filter="url(#aeroGlow)" />
+            <path d="M 150,192 Q 160,200 170,192" fill="none" stroke="#10b981" strokeWidth="4" strokeLinecap="round" />
           </g>
         );
       case 'loading':
         return (
           <g transform={transform}>
-            <circle cx="140" cy="168" r="10" fill="none" stroke="#00FF66" strokeWidth="4" strokeDasharray="35 15" className="animate-spin-slow" />
-            <circle cx="180" cy="168" r="10" fill="none" stroke="#00FF66" strokeWidth="4" strokeDasharray="35 15" className="animate-spin-slow" />
-            <circle cx="140" cy="168" r="3" fill="#00FF66" />
-            <circle cx="180" cy="168" r="3" fill="#00FF66" />
+            <circle cx="138" cy="168" r="11" fill="none" stroke="#10b981" strokeWidth="4.5" strokeDasharray="38 18" className="animate-spin" />
+            <circle cx="182" cy="168" r="11" fill="none" stroke="#10b981" strokeWidth="4.5" strokeDasharray="38 18" className="animate-spin" />
+            <circle cx="138" cy="168" r="3.5" fill="#10b981" filter="url(#aeroGlow)" />
+            <circle cx="182" cy="168" r="3.5" fill="#10b981" filter="url(#aeroGlow)" />
           </g>
         );
       case 'surprised':
         return (
           <g transform={transform}>
-            <circle cx="136" cy="165" r="12" fill="none" stroke="#00FF66" strokeWidth="5" />
-            <circle cx="136" cy="165" r="5" fill="#00FF66" />
-            <circle cx="184" cy="165" r="12" fill="none" stroke="#00FF66" strokeWidth="5" />
-            <circle cx="184" cy="165" r="5" fill="#00FF66" />
-            <circle cx="160" cy="192" r="5" fill="#00FF66" />
+            <circle cx="134" cy="164" r="14" fill="none" stroke="#10b981" strokeWidth="6" filter="url(#aeroGlow)" />
+            <circle cx="134" cy="164" r="5.5" fill="#ffffff" />
+            <circle cx="186" cy="164" r="14" fill="none" stroke="#10b981" strokeWidth="6" filter="url(#aeroGlow)" />
+            <circle cx="186" cy="164" r="5.5" fill="#ffffff" />
+            <circle cx="160" cy="194" r="6" fill="#10b981" filter="url(#aeroGlow)" />
+          </g>
+        );
+      case 'hit':
+        return (
+          <g transform={transform}>
+            {/* Impact >< eyes */}
+            <path d="M 124,158 L 140,172 L 124,184" fill="none" stroke="#10b981" strokeWidth="6.5" strokeLinecap="round" strokeLinejoin="round" filter="url(#aeroGlow)" />
+            <path d="M 152,158 L 136,172 L 152,184" fill="none" stroke="#10b981" strokeWidth="6.5" strokeLinecap="round" strokeLinejoin="round" filter="url(#aeroGlow)" />
+            <path d="M 172,158 L 188,172 L 172,184" fill="none" stroke="#10b981" strokeWidth="6.5" strokeLinecap="round" strokeLinejoin="round" filter="url(#aeroGlow)" />
+            <path d="M 200,158 L 184,172 L 200,184" fill="none" stroke="#10b981" strokeWidth="6.5" strokeLinecap="round" strokeLinejoin="round" filter="url(#aeroGlow)" />
+            <path d="M 148,198 Q 160,190 172,198" fill="none" stroke="#10b981" strokeWidth="4" strokeLinecap="round" />
+          </g>
+        );
+      case 'dizzy':
+        return (
+          <g transform={transform}>
+            {/* Hypnotic Spiral Eyes @_@ */}
+            <path d="M 136,168 m -16,0 a 16,16 0 1,0 32,0 a 12,12 0 1,0 -24,0 a 8,8 0 1,0 16,0 a 4,4 0 1,0 -8,0" fill="none" stroke="#10b981" strokeWidth="3" strokeLinecap="round" filter="url(#aeroGlow)" className="animate-spin" style={{ transformOrigin: '136px 168px' }} />
+            <path d="M 184,168 m -16,0 a 16,16 0 1,0 32,0 a 12,12 0 1,0 -24,0 a 8,8 0 1,0 16,0 a 4,4 0 1,0 -8,0" fill="none" stroke="#10b981" strokeWidth="3" strokeLinecap="round" filter="url(#aeroGlow)" className="animate-spin" style={{ transformOrigin: '184px 168px' }} />
+            {/* Wobbly wavy dizzy mouth */}
+            <path d="M 144,196 Q 152,190 160,196 Q 168,202 176,196" fill="none" stroke="#10b981" strokeWidth="3.5" strokeLinecap="round" />
           </g>
         );
       case 'sleep':
         return (
           <g transform={transform}>
-            <path d="M 125,168 L 155,168" stroke="#00FF66" strokeWidth="5" strokeLinecap="round" />
-            <path d="M 165,168 L 195,168" stroke="#00FF66" strokeWidth="5" strokeLinecap="round" />
-            <text x="195" y="150" fill="#00FF66" fontSize="12" fontFamily="monospace" fontWeight="bold">z</text>
-            <text x="206" y="140" fill="#00FF66" fontSize="10" fontFamily="monospace" fontWeight="bold">z</text>
+            <path d="M 124,168 L 156,168" stroke="#10b981" strokeWidth="6" strokeLinecap="round" opacity="0.7" />
+            <path d="M 164,168 L 196,168" stroke="#10b981" strokeWidth="6" strokeLinecap="round" opacity="0.7" />
+            <text x="196" y="148" fill="#10b981" fontSize="13" fontFamily="monospace" fontWeight="bold" filter="url(#aeroGlow)">z</text>
+            <text x="210" y="136" fill="#10b981" fontSize="10" fontFamily="monospace" fontWeight="bold" filter="url(#aeroGlow)">z</text>
           </g>
         );
       case 'happy':
       default:
         return (
           <g transform={transform}>
-            <path d="M 125,172 Q 140,150 155,172" fill="none" stroke="#00FF66" strokeWidth="6.5" strokeLinecap="round" />
-            <path d="M 165,172 Q 180,150 195,172" fill="none" stroke="#00FF66" strokeWidth="6.5" strokeLinecap="round" />
-            <path d="M 126,172 Q 140,152 154,172" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" opacity="0.9" />
-            <path d="M 166,172 Q 180,152 194,172" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" opacity="0.9" />
-            <path d="M 152,192 Q 160,199 168,192" fill="none" stroke="#00FF66" strokeWidth="3.5" strokeLinecap="round" />
+            <path d="M 124,172 Q 140,146 156,172" fill="none" stroke="#10b981" strokeWidth="7.5" strokeLinecap="round" filter="url(#aeroGlow)" />
+            <path d="M 164,172 Q 180,146 196,172" fill="none" stroke="#10b981" strokeWidth="7.5" strokeLinecap="round" filter="url(#aeroGlow)" />
+            <path d="M 126,172 Q 140,150 154,172" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" opacity="0.95" />
+            <path d="M 166,172 Q 180,150 194,172" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" opacity="0.95" />
+            <path d="M 150,192 Q 160,200 170,192" fill="none" stroke="#10b981" strokeWidth="4" strokeLinecap="round" />
           </g>
         );
     }
@@ -161,84 +186,124 @@ export default function AeroMascot({
         className="transition-transform duration-300 hover:scale-105"
       >
         <defs>
-          <filter id="aeroCompGlow" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="5" result="blur1" />
-            <feGaussianBlur stdDeviation="12" result="blur2" />
+          {/* Intense Cyber Glow Filter */}
+          <filter id="aeroGlow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="4" result="blur1" />
+            <feGaussianBlur stdDeviation="10" result="blur2" />
             <feMerge>
               <feMergeNode in="blur2" />
               <feMergeNode in="blur1" />
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
-          <radialGradient id="aeroSphereGradC" cx="38%" cy="32%" r="65%">
-            <stop offset="0%" stopColor="#475569" />
-            <stop offset="35%" stopColor="#1e293b" />
-            <stop offset="75%" stopColor="#0f172a" />
+
+          {/* Premium Brushed Titanium / Obsidian Shading */}
+          <radialGradient id="aeroBodyGrad" cx="35%" cy="30%" r="70%">
+            <stop offset="0%" stopColor="#64748b" />
+            <stop offset="25%" stopColor="#334155" />
+            <stop offset="65%" stopColor="#0f172a" />
             <stop offset="100%" stopColor="#020617" />
           </radialGradient>
-          <radialGradient id="aeroHighlightC" cx="30%" cy="25%" r="45%">
-            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.45" />
-            <stop offset="40%" stopColor="#94a3b8" stopOpacity="0.15" />
+
+          {/* Visor Deep Curved Glass */}
+          <radialGradient id="aeroVisorGrad" cx="50%" cy="35%" r="65%">
+            <stop offset="0%" stopColor="#0a1520" />
+            <stop offset="70%" stopColor="#030712" />
+            <stop offset="100%" stopColor="#000000" />
+          </radialGradient>
+
+          {/* Metallic Highlight Reflection */}
+          <radialGradient id="aeroHighlightGrad" cx="32%" cy="24%" r="48%">
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.55" />
+            <stop offset="35%" stopColor="#cbd5e1" stopOpacity="0.18" />
             <stop offset="100%" stopColor="#000000" stopOpacity="0" />
           </radialGradient>
-          <linearGradient id="aeroHaloGradC" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#00FF66" />
-            <stop offset="50%" stopColor="#22c55e" />
-            <stop offset="100%" stopColor="#10b981" />
+
+          {/* Halo Ring Gradient */}
+          <linearGradient id="aeroHaloGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#10b981" />
+            <stop offset="50%" stopColor="#34d399" />
+            <stop offset="100%" stopColor="#059669" />
+          </linearGradient>
+
+          {/* Ear Pod Metal */}
+          <linearGradient id="aeroEarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#475569" />
+            <stop offset="50%" stopColor="#1e293b" />
+            <stop offset="100%" stopColor="#0f172a" />
           </linearGradient>
         </defs>
 
-        {/* Lower Energy Rings */}
-        <g opacity="0.8" filter="url(#aeroCompGlow)">
-          <ellipse cx="160" cy="312" rx="68" ry="16" stroke="#00FF66" strokeWidth="2.5" strokeDasharray="18 6" opacity="0.6" />
-          <ellipse cx="160" cy="328" rx="46" ry="10" stroke="#22c55e" strokeWidth="2" opacity="0.8" />
+        {/* 1. Orbiting Ion Plasma Energy Rings (Base) */}
+        <g opacity="0.85" filter="url(#aeroGlow)">
+          <ellipse cx="160" cy="315" rx="72" ry="18" stroke="#10b981" strokeWidth="2.5" strokeDasharray="16 8" opacity="0.65" />
+          <ellipse cx="160" cy="332" rx="48" ry="11" stroke="#34d399" strokeWidth="2" opacity="0.9" />
         </g>
 
-        {/* Floating Thruster Leaves */}
-        <g filter="url(#aeroCompGlow)">
-          <path d="M 125,260 Q 105,295 132,310 Q 142,285 133,260 Z" fill="#00FF66" opacity="0.9" />
-          <path d="M 195,260 Q 215,295 188,310 Q 178,285 187,260 Z" fill="#00FF66" opacity="0.9" />
-          <ellipse cx="160" cy="265" rx="20" ry="6" fill="#00FF66" opacity="0.95" />
+        {/* 2. Ion Plasma Thruster Plumes */}
+        <g filter="url(#aeroGlow)">
+          <path d="M 122,258 Q 102,298 130,314 Q 140,286 132,258 Z" fill="#10b981" opacity="0.9" />
+          <path d="M 198,258 Q 218,298 190,314 Q 180,286 188,258 Z" fill="#10b981" opacity="0.9" />
+          <ellipse cx="160" cy="268" rx="24" ry="7" fill="#34d399" opacity="0.95" />
         </g>
 
-        {/* Floating Halo Ring (Thinking Indicator) */}
-        <g transform="translate(0, -10)" filter="url(#aeroCompGlow)">
-          <ellipse cx="160" cy="68" rx="72" ry="20" fill="none" stroke="url(#aeroHaloGradC)" strokeWidth="6.5" />
-          <ellipse cx="160" cy="68" rx="72" ry="20" fill="none" stroke="#ffffff" strokeWidth="1.5" opacity="0.85" />
+        {/* 3. Floating Holographic Halo Ring (AI Indicator) */}
+        <g transform="translate(0, -12)" filter="url(#aeroGlow)">
+          <ellipse cx="160" cy="64" rx="76" ry="22" fill="none" stroke="url(#aeroHaloGrad)" strokeWidth="7" />
+          <ellipse cx="160" cy="64" rx="76" ry="22" fill="none" stroke="#ffffff" strokeWidth="1.8" opacity="0.9" />
+          {/* Orbital Satellite Nodes on Halo */}
+          <circle cx="86" cy="64" r="4.5" fill="#ffffff" />
+          <circle cx="234" cy="64" r="4.5" fill="#ffffff" />
         </g>
 
-        {/* Left Ear Pod */}
+        {/* 4. Left Cyber Ear Pod & Winglet */}
         <g>
-          <path d="M 52,145 Q 18,110 32,175 Q 52,160 52,145 Z" fill="#00FF66" opacity="0.85" filter="url(#aeroCompGlow)" />
-          <rect x="42" y="145" width="18" height="50" rx="9" fill="#047857" stroke="#00FF66" strokeWidth="1.5" />
-          <circle cx="51" cy="170" r="20" fill="#0b1320" stroke="#00FF66" strokeWidth="3" />
-          <circle cx="51" cy="170" r="5" fill="#00FF66" filter="url(#aeroCompGlow)" />
+          {/* Aero Fin */}
+          <path d="M 48,142 Q 12,106 28,174 Q 48,158 48,142 Z" fill="#10b981" opacity="0.9" filter="url(#aeroGlow)" />
+          {/* Pod Base */}
+          <rect x="38" y="142" width="20" height="54" rx="10" fill="url(#aeroEarGrad)" stroke="#10b981" strokeWidth="1.5" />
+          {/* Communication Beacon */}
+          <circle cx="48" cy="169" r="22" fill="#0b1320" stroke="#10b981" strokeWidth="3" />
+          <circle cx="48" cy="169" r="6" fill="#10b981" filter="url(#aeroGlow)" />
+          <circle cx="48" cy="169" r="2" fill="#ffffff" />
         </g>
 
-        {/* Right Ear Pod */}
+        {/* 5. Right Cyber Ear Pod & Winglet */}
         <g>
-          <path d="M 268,145 Q 302,110 288,175 Q 268,160 268,145 Z" fill="#00FF66" opacity="0.85" filter="url(#aeroCompGlow)" />
-          <rect x="260" y="145" width="18" height="50" rx="9" fill="#047857" stroke="#00FF66" strokeWidth="1.5" />
-          <circle cx="269" cy="170" r="20" fill="#0b1320" stroke="#00FF66" strokeWidth="3" />
-          <circle cx="269" cy="170" r="5" fill="#00FF66" filter="url(#aeroCompGlow)" />
+          {/* Aero Fin */}
+          <path d="M 272,142 Q 308,106 292,174 Q 272,158 272,142 Z" fill="#10b981" opacity="0.9" filter="url(#aeroGlow)" />
+          {/* Pod Base */}
+          <rect x="262" y="142" width="20" height="54" rx="10" fill="url(#aeroEarGrad)" stroke="#10b981" strokeWidth="1.5" />
+          {/* Communication Beacon */}
+          <circle cx="272" cy="169" r="22" fill="#0b1320" stroke="#10b981" strokeWidth="3" />
+          <circle cx="272" cy="169" r="6" fill="#10b981" filter="url(#aeroGlow)" />
+          <circle cx="272" cy="169" r="2" fill="#ffffff" />
         </g>
 
-        {/* Core Sphere */}
-        <circle cx="160" cy="175" r="95" fill="url(#aeroSphereGradC)" stroke="#334155" strokeWidth="3.5" />
-        <circle cx="160" cy="175" r="95" fill="url(#aeroHighlightC)" />
+        {/* 6. Titanium Core Chassis Sphere */}
+        <circle cx="160" cy="176" r="98" fill="url(#aeroBodyGrad)" stroke="#334155" strokeWidth="3.5" />
+        <circle cx="160" cy="176" r="98" fill="url(#aeroHighlightGrad)" />
 
-        {/* Dark Screen Face */}
-        <ellipse cx="160" cy="172" rx="72" ry="54" fill="#020617" stroke="#1e293b" strokeWidth="2.5" />
-        <path d="M 108,140 Q 160,126 212,140" stroke="#475569" strokeWidth="2" strokeLinecap="round" opacity="0.4" fill="none" />
+        {/* Outer Bevel Ring Accent */}
+        <circle cx="160" cy="176" r="95" fill="none" stroke="#10b981" strokeWidth="1" strokeDasharray="40 10" opacity="0.4" />
 
-        {/* Dynamic Expressions */}
-        <g filter="url(#aeroCompGlow)">
+        {/* 7. Glossy Visor Display Face */}
+        <ellipse cx="160" cy="172" rx="76" ry="56" fill="url(#aeroVisorGrad)" stroke="#1e293b" strokeWidth="3" />
+        {/* Visor Glare Arc */}
+        <path d="M 104,138 Q 160,122 216,138" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" opacity="0.45" fill="none" />
+
+        {/* 8. Dynamic Emotive Eyes & Face Elements */}
+        <g filter="url(#aeroGlow)">
           {renderEyes()}
         </g>
 
-        {/* Hx313 Chin Branding */}
-        <g transform="translate(160, 245)">
-          <text x="0" y="0" textAnchor="middle" fontFamily="'JetBrains Mono', monospace" fontSize="12" fontWeight="800" fill="#94a3b8" letterSpacing="2">Hx313</text>
+        {/* 9. Hx313 Cyber Insignia & Status Indicator (Chin) */}
+        <g transform="translate(160, 248)">
+          <rect x="-38" y="-12" width="76" height="18" rx="5" fill="#0b1320" stroke="rgba(16, 185, 129, 0.4)" strokeWidth="1" />
+          <circle cx="-28" cy="-3" r="2.5" fill="#10b981" filter="url(#aeroGlow)" />
+          <text x="4" y="0" textAnchor="middle" fontFamily="'JetBrains Mono', monospace" fontSize="10" fontWeight="800" fill="#94a3b8" letterSpacing="1.5">
+            Hx<tspan fill="#10b981">313</tspan>
+          </text>
         </g>
       </svg>
     </div>

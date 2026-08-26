@@ -1,153 +1,350 @@
-import { useEffect, useRef, useState } from 'react';
-import { animate as animeAnimate } from 'animejs';
+import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
+import { animate, stagger } from 'animejs';
 import './opening.css';
 
-const statements = [
+const STATEMENTS = [
   'IDEAS NEED STRUCTURE.',
   'PRODUCTS NEED MOMENTUM.',
   'MOMENTUM NEEDS CONVICTION.',
 ];
+
 export default function OpeningExperience({ isRevealing, onComplete, theme }) {
   const [statementIndex, setStatementIndex] = useState(0);
-  const [visibleCharacters, setVisibleCharacters] = useState(0);
-  const [isHolding, setIsHolding] = useState(false);
-  const [isReduced, setIsReduced] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const openingRef = useRef(null);
+  const starCanvasRef = useRef(null);
   const statementRef = useRef(null);
   const hasCompletedRef = useRef(false);
+  const activeAnimationRef = useRef(null);
 
-  function completeOpening() {
+  // Generate celestial starfield coordinates
+  const backgroundStars = useMemo(() => {
+    const stars = [];
+    for (let i = 0; i < 50; i++) {
+      stars.push({
+        id: i,
+        x: (i * 19 + 7) % 100,
+        y: (i * 23 + 13) % 100,
+        size: (i % 3) * 0.8 + 1,
+        opacity: (i % 5) * 0.15 + 0.35,
+        duration: (i % 4) + 2.5,
+        delay: (i % 3) * 0.7,
+      });
+    }
+    return stars;
+  }, []);
+
+  const completeOpening = useCallback(() => {
     if (hasCompletedRef.current) return;
     hasCompletedRef.current = true;
-    onComplete();
-  }
+    setIsTransitioning(true);
 
+    if (activeAnimationRef.current) {
+      try {
+        activeAnimationRef.current.pause?.();
+      } catch (e) {
+        // ignore
+      }
+    }
+
+    // Forward fly-through and warp cruise out
+    if (statementRef.current) {
+      animate(statementRef.current, {
+        scale: [1, 1.35],
+        translateY: [0, 50],
+        opacity: [1, 0],
+        filter: ['blur(0px)', 'blur(10px)'],
+        duration: 650,
+        ease: 'inQuad',
+      });
+    }
+
+    if (openingRef.current) {
+      animate(openingRef.current, {
+        opacity: [1, 0],
+        scale: [1, 1.05],
+        duration: 750,
+        ease: 'inOutQuad',
+        onComplete: () => {
+          onComplete();
+        },
+      });
+    }
+
+    // Trigger station arrival handoff halfway through warp cruise for seamless continuity
+    const handoffTimer = setTimeout(() => {
+      onComplete();
+    }, 320);
+
+    return () => clearTimeout(handoffTimer);
+  }, [onComplete]);
+
+  // Smooth zero-g space particle canvas with hyperspace warp acceleration
   useEffect(() => {
-    const characters = statementRef.current?.querySelectorAll('.opening-character');
-    const lastCharacter = characters?.[characters.length - 1];
-    if (!lastCharacter || isHolding || isTransitioning) return undefined;
-    const animation = animeAnimate(lastCharacter, {
-      opacity: [0, 1],
-      translateY: [8, 0],
-      duration: 220,
-      ease: 'out(3)',
-    });
-    return () => animation.pause();
-  }, [isHolding, isTransitioning, visibleCharacters]);
+    const canvas = starCanvasRef.current;
+    if (!canvas) return undefined;
+    const ctx = canvas.getContext('2d');
+    let animationFrameId;
 
-  useEffect(() => {
-    if (!isHolding || isTransitioning || statementIndex === statements.length - 1 || !statementRef.current) return undefined;
-    const animation = animeAnimate(statementRef.current, {
-      opacity: [1, 0],
-      scale: [1, 1.04],
-      translateY: [0, -10],
-      delay: 480,
-      duration: 820,
-      ease: 'in(3)',
-    });
-    return () => animation.pause();
-  }, [isHolding, isTransitioning, statementIndex]);
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
 
-  useEffect(() => {
-    if (hasStarted || isReduced || !openingRef.current) return undefined;
-    const bars = openingRef.current.querySelectorAll('.opening-loader__bar');
-    const animation = animeAnimate(bars, {
-      opacity: [0.25, 1],
-      scaleY: [0.45, 1],
-      delay: (_, index) => index * 140,
-      duration: 620,
-      ease: 'inOut(2)',
-      loop: true,
-      direction: 'alternate',
-    });
-    return () => animation.pause();
-  }, [hasStarted, isReduced]);
+    const particles = Array.from({ length: 85 }, (_, i) => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      radius: Math.random() * 1.6 + 0.6,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3 - 0.15, // gentle upward zero-g drift
+      speed: 1,
+      color: i % 3 === 0 ? '#10b981' : '#ffffff',
+      alpha: Math.random() * 0.5 + 0.25,
+    }));
 
+    const render = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const isWarping = isTransitioning;
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        if (isWarping) {
+          p.speed = p.speed * 1.07 + 0.45;
+          p.y -= (p.speed * 3.8 + 2.5);
+          p.x += p.vx * 1.8;
+        } else {
+          p.x += p.vx;
+          p.y += p.vy;
+        }
+
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+
+        ctx.beginPath();
+        if (isWarping) {
+          // Forward hyperspace vector streaks
+          const tail = Math.min(75, p.speed * 4.5);
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p.x, p.y + tail);
+          ctx.strokeStyle = p.color;
+          ctx.lineWidth = p.radius * 1.5;
+          ctx.globalAlpha = Math.min(0.9, p.alpha * 1.8);
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = p.color;
+          ctx.stroke();
+        } else {
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.globalAlpha = p.alpha;
+          ctx.shadowBlur = 6;
+          ctx.shadowColor = p.color;
+          ctx.fill();
+        }
+      }
+
+      ctx.globalAlpha = 1;
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [isTransitioning]);
+
+  // Initial loader progression with calibrated cinematic pacing
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    setIsReduced(reduced);
     if (reduced) {
       completeOpening();
       return undefined;
     }
 
-    if (!hasStarted) {
-      if (loadingProgress < 100) {
-        const progressTimer = window.setTimeout(() => setLoadingProgress((value) => Math.min(100, value + 2)), 28);
-        return () => window.clearTimeout(progressTimer);
-      }
-      const loadingPause = window.setTimeout(() => setHasStarted(true), 420);
-      return () => window.clearTimeout(loadingPause);
-    }
+    if (hasStarted) return undefined;
 
-    let characterTimer;
-    let holdTimer;
-    const line = statements[statementIndex];
-
-    if (visibleCharacters < line.length) {
-      characterTimer = window.setTimeout(() => setVisibleCharacters((count) => count + 1), 76);
-    } else {
-      setIsHolding(true);
-      holdTimer = window.setTimeout(() => {
-        if (statementIndex === statements.length - 1) {
-          setIsTransitioning(true);
-          completeOpening();
-          return;
-        }
-        setIsHolding(false);
-        setVisibleCharacters(0);
-        setStatementIndex((index) => index + 1);
-      }, statementIndex === statements.length - 1 ? 120 : 820);
-    }
+    const progressObj = { val: 0 };
+    const loaderAnim = animate(progressObj, {
+      val: 100,
+      duration: 2600,
+      ease: 'inOutCubic',
+      onRender: () => {
+        setLoadingProgress(Math.round(progressObj.val));
+      },
+      onComplete: () => {
+        // Hold at 100% for clear user recognition, then dissolve into statement chamber
+        const startTimer = setTimeout(() => {
+          setHasStarted(true);
+        }, 450);
+        return () => clearTimeout(startTimer);
+      },
+    });
 
     return () => {
-      window.clearTimeout(characterTimer);
-      window.clearTimeout(holdTimer);
+      try {
+        loaderAnim.pause?.();
+      } catch (e) {
+        // ignore
+      }
     };
-  }, [hasStarted, loadingProgress, onComplete, statementIndex, visibleCharacters]);
+  }, [hasStarted, completeOpening]);
 
-  const statement = statements[statementIndex];
-  const activeText = isReduced || !hasStarted ? '' : statement.slice(0, visibleCharacters);
-  const words = statement.split(' ');
-  let wordStart = 0;
+  // Anime.js Statement orchestration: gentle enter -> readable hold -> smooth exit
+  useEffect(() => {
+    if (!hasStarted || hasCompletedRef.current) return undefined;
 
-  const renderedWords = words.map((word, wordIndex) => {
-    const visibleCount = Math.max(0, Math.min(word.length, visibleCharacters - wordStart));
-    const visibleWord = activeText ? word.slice(0, visibleCount) : '';
-    const currentWordStart = wordStart;
-    wordStart += word.length + 1;
+    const container = statementRef.current;
+    if (!container) return undefined;
 
-    return (
-      <span key={`${statementIndex}-word-${wordIndex}`} className={`opening-word ${wordIndex === words.length - 1 ? 'opening-word--accent' : ''}`}>
-        {visibleWord.split('').map((character, characterIndex) => (
-          <span key={`${currentWordStart}-${characterIndex}`} className="opening-character" style={{ '--character-index': currentWordStart + characterIndex }}>
-            {character}
-          </span>
-        ))}
-        {visibleCharacters > currentWordStart + word.length && wordIndex < words.length - 1 && <span className="opening-space">&nbsp;</span>}
-      </span>
-    );
-  });
+    const wordEls = container.querySelectorAll('.space-word');
+    if (!wordEls || wordEls.length === 0) return undefined;
 
-  function skipOpening() {
-    completeOpening();
-  }
+    // Reset initial style states cleanly before entering
+    wordEls.forEach((el) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px) scale(0.96)';
+    });
+
+    // 1. Gentle staggered entry animation
+    const enterAnim = animate(wordEls, {
+      opacity: [0, 1],
+      translateY: [24, 0],
+      scale: [0.96, 1],
+      duration: 850,
+      delay: stagger(110),
+      ease: 'outCubic',
+    });
+    activeAnimationRef.current = enterAnim;
+
+    // 2. Hold for readable absorption (~1650ms) then perform gentle exit
+    const holdTimer = setTimeout(() => {
+      const exitAnim = animate(wordEls, {
+        opacity: [1, 0],
+        translateY: [0, -16],
+        scale: [1, 0.98],
+        duration: 550,
+        delay: stagger(60, { from: 'last' }),
+        ease: 'inOutQuad',
+        onComplete: () => {
+          if (hasCompletedRef.current) return;
+          if (statementIndex < STATEMENTS.length - 1) {
+            setStatementIndex((prev) => prev + 1);
+          } else {
+            completeOpening();
+          }
+        },
+      });
+      activeAnimationRef.current = exitAnim;
+    }, 2500); // 850ms enter + ~1650ms hold = 2500ms total per statement
+
+    return () => {
+      clearTimeout(holdTimer);
+      try {
+        enterAnim?.pause?.();
+      } catch (e) {
+        // ignore
+      }
+    };
+  }, [hasStarted, statementIndex, completeOpening]);
+
+  const loaderStatusText = useMemo(() => {
+    if (loadingProgress < 30) return 'INITIALIZING ZERO-G PROTOCOL';
+    if (loadingProgress < 65) return 'ALIGNING CELESTIAL VECTORS';
+    if (loadingProgress < 95) return 'CALIBRATING INTERSTELLAR DRIVE';
+    return 'SYSTEM READY // ONLINE';
+  }, [loadingProgress]);
+
+  const currentStatement = STATEMENTS[statementIndex] || STATEMENTS[0];
+  const words = currentStatement.split(' ');
 
   return (
-    <section ref={openingRef} className={`opening ${isHolding ? 'opening--holding' : ''} ${isTransitioning ? 'opening--transitioning' : ''} ${isRevealing ? 'opening--blackout' : ''} theme-${theme}`} aria-label="Portfolio introduction">
-      <div className="opening-noise" data-opening-light aria-hidden="true" />
-      <div className="opening-center" data-opening-light aria-live="polite" aria-atomic="true">
-        <div key={statementIndex} ref={statementRef} className="opening-statement" data-rendering={!isHolding}>
-          {renderedWords}
-          {!isHolding && hasStarted && <span className="opening-cursor" aria-hidden="true" />}
-        </div>
+    <section
+      ref={openingRef}
+      className={`opening ${isTransitioning || isRevealing ? 'opening--blackout' : ''} theme-${theme}`}
+      aria-label="Portfolio space introduction"
+    >
+      {/* 1. Starfield Canvas */}
+      <canvas ref={starCanvasRef} className="space-star-canvas" aria-hidden="true" />
+
+      {/* 2. Ambient Celestial Glow & Stars */}
+      <div className="space-nebula-glow" aria-hidden="true" />
+      <div className="space-celestial-field" aria-hidden="true">
+        {backgroundStars.map((s) => (
+          <span
+            key={s.id}
+            className="celestial-star"
+            style={{
+              left: `${s.x}%`,
+              top: `${s.y}%`,
+              width: `${s.size}px`,
+              height: `${s.size}px`,
+              opacity: s.opacity,
+              animationDuration: `${s.duration}s`,
+              animationDelay: `${s.delay}s`,
+            }}
+          />
+        ))}
       </div>
-      {!hasStarted && <div className="opening-loader" aria-label={`Loading ${loadingProgress}%`}><div className="opening-loader__track"><span style={{ width: `${loadingProgress}%` }} /></div><span className="opening-loader__value">{loadingProgress}%</span></div>}
-      <p className="opening-caption" data-opening-light>Thinking · building · moving forward</p>
-      <button className="opening-skip" data-opening-light type="button" onClick={skipOpening}>Skip intro <span aria-hidden="true">↗</span></button>
+
+      {/* 2.5 Hyperspace Warp Horizon Shockwave */}
+      {isTransitioning && <div className="space-warp-shockwave" aria-hidden="true" />}
+
+      {/* 3. Floating Zero-G Space Object Chamber */}
+      <div className="opening-center" aria-live="polite" aria-atomic="true">
+        {hasStarted && (
+          <div ref={statementRef} className="space-statement">
+            {/* Gentle 3D Space Orbital Rings around statement */}
+            <div className="space-orbit-ring" aria-hidden="true" />
+
+            <div className="space-statement-content">
+              {words.map((word, wIdx) => {
+                const isLast = wIdx === words.length - 1;
+                return (
+                  <span
+                    key={`${statementIndex}-${word}-${wIdx}`}
+                    className={`space-word ${isLast ? 'space-word--accent' : ''}`}
+                  >
+                    {word}&nbsp;
+                  </span>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* 4. Orbital Progress Gauge */}
+      {!hasStarted && (
+        <div className="space-loader-panel" aria-label={`Orbital Initialization ${loadingProgress}%`}>
+          <div className="space-loader-header">
+            <span className="space-loader-dot" aria-hidden="true" />
+            <span className="space-loader-title">SYSTEM INITIALIZATION // SPACE PROTOCOL</span>
+          </div>
+          <div className="space-loader-bar">
+            <div className="space-loader-fill" style={{ width: `${loadingProgress}%` }} />
+          </div>
+          <div className="space-loader-footer">
+            <span>{loaderStatusText}</span>
+            <span className="space-loader-val">{loadingProgress}%</span>
+          </div>
+        </div>
+      )}
+
+      {/* 5. Footer HUD & Skip Button */}
+      <div className="opening-footer-hud">
+        <p className="space-caption">HAFIZ ALI ABDULLAH · ARCHITECTING SPACE & SYSTEMS · 2026</p>
+        <button className="space-skip-btn" type="button" onClick={completeOpening}>
+          <span>SKIP TO COMMAND</span>
+          <span className="skip-arrow" aria-hidden="true">&gt;&gt;</span>
+        </button>
+      </div>
     </section>
   );
 }

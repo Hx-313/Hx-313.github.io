@@ -1,29 +1,16 @@
 import { useEffect, useState } from 'react';
 
-const STORAGE_KEY = 'portfolio-theme';
-const THEMES = ['system', 'light', 'dark'];
-
-function readStoredTheme() {
-  try {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    return THEMES.includes(stored) ? stored : 'system';
-  } catch {
-    return 'system';
-  }
-}
-
 export function useTheme() {
-  const [theme, setTheme] = useState(() => (typeof window === 'undefined' ? 'system' : readStoredTheme()));
+  const [theme] = useState('dark');
 
   useEffect(() => {
-    document.documentElement.dataset.theme = theme;
+    document.documentElement.dataset.theme = 'dark';
     try {
-      if (theme === 'system') window.localStorage.removeItem(STORAGE_KEY);
-      else window.localStorage.setItem(STORAGE_KEY, theme);
+      window.localStorage.setItem('portfolio-theme', 'dark');
     } catch {
       // A blocked storage API should not prevent the theme from applying.
     }
-  }, [theme]);
+  }, []);
 
-  return { theme, setTheme };
+  return { theme, setTheme: () => {} };
 }
