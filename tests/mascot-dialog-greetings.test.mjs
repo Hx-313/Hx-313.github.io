@@ -11,6 +11,7 @@ test('AeroMascot supports rich bubble payload, action chips, and bottom/top orie
   assert.ok(content.includes('bubble-audio-wave'), 'AeroMascot includes animated audio wave indicator');
   assert.ok(content.includes('bubble-close-btn'), 'AeroMascot includes message dismiss button');
   assert.ok(content.includes('renderBubbleText'), 'AeroMascot supports rich text bold highlights');
+  assert.doesNotMatch(content, /translate\(\$\{x\}px, \$\{y\}px\)/, 'AeroMascot uses valid SVG transform coordinates');
 });
 
 test('DashMascot supports rich bubble payload, action chips, and bottom/top orientation', () => {
@@ -21,6 +22,7 @@ test('DashMascot supports rich bubble payload, action chips, and bottom/top orie
   assert.ok(content.includes('bubble-audio-wave'), 'DashMascot includes animated audio wave indicator');
   assert.ok(content.includes('bubble-close-btn'), 'DashMascot includes message dismiss button');
   assert.ok(content.includes('renderBubbleText'), 'DashMascot supports rich text bold highlights');
+  assert.doesNotMatch(content, /translate\(\$\{x\}px, \$\{y\}px\)/, 'DashMascot uses valid SVG transform coordinates');
 });
 
 test('Mascots component has non-conflicting hero positions and warm interactive greetings', () => {

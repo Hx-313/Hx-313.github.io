@@ -102,6 +102,26 @@ Documentation-only changes, configuration changes, dependency changes, source ch
 - Files: `src/modules/home/presentation/hero/hero.css`, `src/styles/mascots.css`, `src/components/mascots/AeroMascot.jsx`, `src/components/mascots/DashMascot.jsx`, `src/components/Mascots.jsx`, `tests/mascot-dialog-greetings.test.mjs`, `tests/mascot-roam.test.mjs`, `CHANGE.md`
 - Verification: Added comprehensive unit tests in `tests/mascot-dialog-greetings.test.mjs` verifying dialog sizing, bubble orientation, action chips, and greeting flows. Executed `node --test` with all 14 unit tests passing. Ran `npm run build` with 109 modules transforming and compiling cleanly in 7.73s with 0 errors.
 
+## 2026-08-30 — Add client scroll story before command-center proof
 
+- Summary: Added a five-beat, client-led scroll narrative between the hero and System Command Center. The sequence moves from idea and operational friction through systems thinking and Hafiz's introduction, then makes the command center the evidence destination. Hero CTAs and header navigation follow this path with native scrolling, central-beat progress tracking, responsive mobile markers, accessible theme controls, and a static reduced-motion treatment. Restored functional light/dark/system theme state, corrected the mobile drawer viewport sizing, and removed invalid SVG transform units that produced browser console errors.
+- Files: `src/modules/home/presentation/client-story/storyData.js`, `src/modules/home/presentation/client-story/ClientStory.jsx`, `src/modules/home/presentation/client-story/client-story.css`, `src/modules/home/presentation/HomePage.jsx`, `src/modules/home/presentation/hero/HeroContent.jsx`, `src/modules/home/presentation/header/SiteHeader.jsx`, `src/modules/home/presentation/header/header.css`, `src/shared/theme/tokens.css`, `src/shared/theme/global.css`, `src/shared/theme/useTheme.js`, `src/components/mascots/AeroMascot.jsx`, `src/components/mascots/DashMascot.jsx`, `tests/client-scroll-story.test.mjs`, `tests/hero-content.test.mjs`, `tests/site-header.test.mjs`, `tests/theme-hook.test.mjs`, `tests/mascot-dialog-greetings.test.mjs`, `tests/system-command-center.py`, `CHANGE.md`
+- Verification: `npm run build` passed with 113 modules transformed; Vite retained its bundle-size advisory. Thirteen affected Node assertions passed when executed directly. Bundled Playwright with installed Chrome passed at 1440×900, 768×1024 with reduced motion, and 390×844, covering progress tracking, proof navigation, project selection, theme switching, mobile drawer behavior, horizontal overflow, and console errors. The prescribed Python smoke entry point could not run because Python Playwright is not installed. The full legacy Node sweep retains the unrelated documented `tests/holographic-globe.test.mjs` source-shape failure (`Uses canvas reference`).
 
+## 2026-08-30 — Refine client story into a single-stage scroll sequence
 
+- Summary: Replaced the multi-screen progress rail and numbered markers with one sticky visual stage. Each beat now swaps a centered title for a centered statement as native scrolling advances, keeping the narrative focused on the requested two-part message sequence and removing the retired `01/3 idea` headers.
+- Files: `src/modules/home/presentation/client-story/ClientStory.jsx`, `src/modules/home/presentation/client-story/client-story.css`, `tests/client-scroll-story.test.mjs`, `tests/system-command-center.py`, `docs/superpowers/specs/2026-08-30-client-scroll-story-design.md`, `docs/superpowers/plans/2026-08-30-client-scroll-story.md`, `CHANGE.md`
+- Verification: Direct affected Node assertions, bundled Playwright desktop/mobile/reduced-motion checks, `npm run build`, and the Impeccable detector pass. The prescribed Python smoke entry point remains unavailable without Python Playwright; the unrelated legacy holographic-globe source-shape failure remains documented.
+
+## 2026-08-30 — Make client story progression deliberate and visually continuous
+
+- Summary: Added a non-passive wheel guard that advances the story by one phase per gesture, even when the input delta is large, with a short transition lockout to prevent skipped frames. Unified the story background with the home page’s shared radial gradient stack and theme background tokens.
+- Files: `src/modules/home/presentation/client-story/ClientStory.jsx`, `src/modules/home/presentation/client-story/client-story.css`, `tests/client-scroll-story.test.mjs`, `CHANGE.md`
+- Verification: Client-story assertions, `npm run build`, Impeccable detector, and bundled Playwright responsive checks passed.
+
+## 2026-08-30 — Keep story boundary scrolling natural
+
+- Summary: Let the first upward gesture and final downward gesture pass through the client story’s phase guard, so entering and exiting the sequence remains normal, smooth, and consistent with the rest of the page.
+- Files: `src/modules/home/presentation/client-story/ClientStory.jsx`, `tests/client-scroll-story.test.mjs`, `CHANGE.md`
+- Verification: Client-story assertions passed after adding explicit first/last phase boundary coverage.

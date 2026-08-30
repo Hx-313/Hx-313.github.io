@@ -14,6 +14,8 @@ test('HeroContent contains exact approved hook and Image 1 CTA', () => {
   assert.ok(content.includes('I turn ambitious ideas into production-ready software, apps, and SaaS platforms that move businesses forward.'), 'Includes pitch');
   assert.ok(content.includes('SYSTEM ACCESS'), 'Includes SYSTEM ACCESS label');
   assert.ok(content.includes('ONLINE'), 'Includes ONLINE indicator');
-  assert.ok(content.includes('ENTER COMMAND CENTER'), 'Includes ENTER COMMAND CENTER CTA');
-  assert.ok(content.includes('EXPLORE WORK'), 'Includes EXPLORE WORK secondary link');
+  assert.ok(content.includes('START WITH THE PROBLEM'), 'Includes client-story CTA label');
+  assert.ok(content.includes('href="#client-story"'), 'Primary CTA targets client story');
+  assert.ok(content.includes('SEE THE EVIDENCE'), 'Includes proof CTA label');
+  assert.ok(content.includes('href="#command-center"'), 'Secondary CTA targets command center');
 });

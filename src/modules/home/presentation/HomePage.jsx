@@ -3,6 +3,7 @@ import OpeningExperience from './opening/OpeningExperience.jsx';
 import CosmicBackground from './CosmicBackground.jsx';
 import SiteHeader from './header/SiteHeader.jsx';
 import Hero from './hero/Hero.jsx';
+import ClientStory from './client-story/ClientStory.jsx';
 import CommandCenter from './command-center/CommandCenter.jsx';
 import Mascots from '../../../components/Mascots.jsx';
 import { useTheme } from '../../../shared/theme/useTheme.js';
@@ -34,6 +35,8 @@ export default function HomePage() {
         <main id="top">
           {/* Page 1: Clean Entry Portal (Mascots bound strictly to Page 1) */}
           <Hero revealed={isRevealed} />
+
+          <ClientStory />
 
           {/* Page 2: Dedicated Command Center & System Proof */}
           <section id="command-center" className="command-center-portal-section" aria-label="System Command Center">

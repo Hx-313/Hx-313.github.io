@@ -26,6 +26,13 @@
   --radius-sm: 0.45rem;
   --radius-lg: 1.25rem;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --story-surface: color-mix(in srgb, var(--color-background) 88%, var(--color-surface-raised));
+  --story-foreground: var(--color-foreground);
+  --story-muted: var(--color-muted-foreground);
+  --story-accent: var(--color-accent);
+  --story-border: var(--color-border);
+  --story-rail-muted: color-mix(in srgb, var(--color-muted-foreground) 72%, transparent);
+  --story-space: clamp(4rem, 11vw, 10rem);
 }
 
 :root[data-theme='light'] {
@@ -43,6 +50,7 @@
   --color-glitch: #059669;
   --color-glitch-highlight: #047857;
   --color-loader: #d97706;
+  --story-surface: color-mix(in srgb, var(--color-background) 94%, var(--color-accent));
 }
 
 :root[data-theme='dark'] {
@@ -61,6 +69,7 @@
   --color-glitch: var(--color-lime);
   --color-glitch-highlight: var(--color-emerald);
   --color-loader: #f2c14e;
+  --story-surface: color-mix(in srgb, var(--color-background) 88%, var(--color-surface-raised));
 }
 
 @media (prefers-color-scheme: light) {

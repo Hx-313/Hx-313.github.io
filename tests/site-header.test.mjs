@@ -11,9 +11,11 @@ test('SiteHeader component contains tactical navigation, live telemetry, socials
 
   // Navigation Items
   assert.match(jsx, /Overview/, 'should contain Overview nav item');
+  assert.match(jsx, /The Problem/, 'should contain client-story nav item');
   assert.match(jsx, /Command Center/, 'should contain Command Center nav item');
-  assert.match(jsx, /Active Builds/, 'should contain Active Builds nav item');
   assert.match(jsx, /Contact/, 'should contain Contact nav item');
+  assert.match(jsx, /client-story/, 'should observe the client story anchor');
+  assert.match(jsx, /prefers-reduced-motion/, 'should avoid smooth scrolling for reduced-motion users');
 
   // Telemetry & Status
   assert.match(jsx, /SYS TIME|Live System Time/, 'should contain system time telemetry');
@@ -37,6 +39,7 @@ test('SiteHeader includes accessible mobile drawer and responsive toggles', () =
   assert.match(jsx, /aria-expanded=\{isMobileOpen\}/, 'should bind aria-expanded to drawer state');
   assert.match(jsx, /aria-controls="mobile-nav-drawer"/, 'should link burger button to mobile drawer');
   assert.match(jsx, /mobile-nav-drawer/, 'should define mobile nav drawer');
+  assert.match(jsx, /mobile-theme-controls/, 'should keep theme controls available inside the mobile drawer');
   assert.match(jsx, /Escape/, 'should handle Escape key to close drawer');
 });
 
@@ -48,4 +51,5 @@ test('header.css defines sticky styling, frosted backdrop, light theme tokens, a
   assert.match(css, /:root\[data-theme='light'\]\s+\.site-header/, 'must have light theme styling');
   assert.match(css, /@media\s*\(max-width:\s*980px\)/, 'must contain responsive mobile breakpoint');
   assert.match(css, /\.mobile-nav-drawer/, 'must contain mobile drawer styles');
+  assert.match(css, /height:\s*100dvh/, 'mobile drawer must span the viewport height');
 });

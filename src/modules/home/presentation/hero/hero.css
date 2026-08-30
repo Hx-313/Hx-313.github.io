@@ -9,6 +9,91 @@
   align-items: center;
 }
 
+/* First-visit Dash handoff: the projection is a shared stage with the hero,
+   so the globe and telemetry remain legible underneath it. */
+.hero-mascots-hidden { opacity: 0; pointer-events: none; }
+.guide-intro {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  overflow: hidden;
+  pointer-events: none;
+  font-family: var(--font-mono, monospace);
+}
+.guide-intro-skip {
+  position: absolute;
+  right: clamp(1rem, 4vw, 3rem);
+  bottom: 1.5rem;
+  z-index: 8;
+  pointer-events: auto;
+  border: 1px solid rgba(16,185,129,.38);
+  background: rgba(3,10,16,.72);
+  color: #6ee7b7;
+  padding: .65rem .85rem;
+  font: 700 .68rem/1 var(--font-mono, monospace);
+  letter-spacing: .14em;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+.guide-intro-skip:hover, .guide-intro-skip:focus-visible { color: #fff; background: rgba(16,185,129,.18); border-color: #34d399; outline: none; }
+.guide-dash-flight {
+  position: absolute;
+  left: 61%;
+  top: 59%;
+  z-index: 5;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 16px 25px rgba(0,0,0,.7));
+  transition: left 760ms cubic-bezier(.16,1,.3,1), top 760ms cubic-bezier(.16,1,.3,1), transform 760ms cubic-bezier(.16,1,.3,1), filter 500ms ease;
+}
+.guide-intro--launch .guide-dash-flight { left: 68%; top: 44%; transform: translate(-50%,-50%) rotate(-10deg) scale(1.18); }
+.guide-intro--arrive .guide-dash-flight, .guide-intro--core .guide-dash-flight, .guide-intro--projection .guide-dash-flight, .guide-intro--ready .guide-dash-flight { left: 75%; top: 52%; transform: translate(-50%,-50%) rotate(-2deg) scale(1.38); }
+.guide-intro--closing .guide-dash-flight { left: 63%; top: 60%; transform: translate(-50%,-50%) rotate(3deg) scale(.9); opacity: .55; }
+.guide-thruster-trail { position: absolute; left: 35%; bottom: -4%; width: 30%; height: 46%; background: linear-gradient(180deg, rgba(52,211,153,.85), transparent); filter: blur(10px); opacity: 0; transform: rotate(12deg); }
+.guide-intro--launch .guide-thruster-trail, .guide-intro--arrive .guide-thruster-trail { opacity: .72; animation: guideThruster 420ms ease-in-out infinite alternate; }
+@keyframes guideThruster { to { transform: rotate(12deg) scaleY(1.35); opacity: .32; } }
+.guide-speech { position: absolute; left: 63%; top: 18%; z-index: 6; width: 14rem; padding: .75rem .9rem; color: #d1fae5; background: rgba(5,15,21,.8); border: 1px solid rgba(52,211,153,.35); opacity: 0; transform: translateY(8px); transition: opacity 260ms ease, transform 260ms ease; }
+.guide-speech::after { content: ''; position: absolute; bottom: -7px; left: 22%; width: 12px; height: 12px; background: rgba(5,15,21,.8); border-right: 1px solid rgba(52,211,153,.35); border-bottom: 1px solid rgba(52,211,153,.35); transform: rotate(45deg); }
+.guide-intro--arrive .guide-speech, .guide-intro--core .guide-speech { opacity: 1; transform: translateY(0); }
+.guide-speech-label { display: block; color: #34d399; font-size: .56rem; letter-spacing: .12em; margin-bottom: .5rem; }
+.guide-speech > span:last-child { display: block; font: 600 .85rem/1.35 var(--font-display, sans-serif); }
+.guide-projection { position: absolute; left: 50%; top: 50%; width: 82px; height: 66px; padding: 0; overflow: hidden; opacity: 0; transform: translate(-50%,-50%) scale(.5); transform-origin: 72% 50%; background: rgba(4,17,22,.88); border: 1px solid rgba(52,211,153,.8); box-shadow: 0 0 18px rgba(16,185,129,.25), inset 0 0 24px rgba(0,242,254,.06); color: #d1fae5; transition: width 820ms cubic-bezier(.16,1,.3,1), height 820ms cubic-bezier(.16,1,.3,1), left 820ms cubic-bezier(.16,1,.3,1), top 820ms cubic-bezier(.16,1,.3,1), opacity 280ms ease, transform 820ms cubic-bezier(.16,1,.3,1), border-radius 820ms ease;
+}
+.guide-intro--core .guide-projection { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+.guide-intro--projection-visible .guide-projection { left: 50%; top: 50%; width: min(92vw, 1120px); height: min(78vh, 570px); padding: clamp(1rem, 3vw, 2.1rem); transform: translate(-50%,-50%) scale(1); border-radius: 5px; pointer-events: auto; }
+.guide-intro--closing .guide-projection { width: 82px; height: 66px; padding: 0; opacity: 0; transform: translate(-50%,-50%) scale(.5); pointer-events: none; }
+.guide-projection-scan { position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent 0 7px, rgba(52,211,153,.035) 8px); pointer-events: none; }
+.guide-projection-header, .guide-projection-footer { position: relative; display: flex; justify-content: space-between; gap: 1rem; color: #34d399; font-size: .62rem; letter-spacing: .12em; }
+.guide-projection-header { padding-bottom: .9rem; border-bottom: 1px solid rgba(52,211,153,.2); }
+.guide-projection-status { color: rgba(203,213,225,.62); }
+.guide-projection-copy { position: relative; margin: clamp(1.7rem, 5vh, 3.6rem) 0 1.8rem; }
+.guide-eyebrow { margin: 0 0 .7rem; color: #34d399; font-size: .62rem; letter-spacing: .2em; }
+.guide-projection-copy h2 { margin: 0 0 .8rem; font: 800 clamp(2rem, 4vw, 4rem)/1 var(--font-display, sans-serif); color: #fff; letter-spacing: -.04em; }
+.guide-projection-copy > p:last-child { margin: 0; color: #a7b7c8; font: 400 clamp(.85rem, 1.3vw, 1.05rem)/1.5 var(--font-display, sans-serif); }
+.guide-options { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; }
+.guide-option { min-height: 142px; display: flex; flex-direction: column; align-items: flex-start; gap: .55rem; padding: 1rem; text-align: left; color: #9fb2c3; background: rgba(2,12,18,.65); border: 1px solid rgba(52,211,153,.18); cursor: pointer; transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease; }
+.guide-option:hover, .guide-option:focus-visible, .guide-option.is-selected { transform: translateY(-3px); color: #ecfdf5; background: rgba(16,185,129,.1); border-color: rgba(52,211,153,.85); box-shadow: 0 0 22px rgba(16,185,129,.14), inset 0 0 15px rgba(16,185,129,.06); outline: none; }
+.guide-option-top { display: flex; justify-content: space-between; width: 100%; color: #34d399; font-size: .7rem; }
+.guide-option strong { color: #f0fdf4; font: 700 .78rem/1.25 var(--font-mono, monospace); letter-spacing: .07em; }
+.guide-option > span:last-child { font: 400 .75rem/1.45 var(--font-display, sans-serif); color: #8da1b2; }
+.guide-projection-footer { position: absolute; bottom: 1.2rem; left: clamp(1rem, 3vw, 2.1rem); right: clamp(1rem, 3vw, 2.1rem); color: #8da1b2; }
+.guide-footer-line { height: 1px; flex: 1; margin: .45rem 0 0 1rem; background: linear-gradient(90deg, rgba(52,211,153,.55), transparent); }
+@media (max-width: 800px) {
+  .guide-dash-flight { left: 68%; top: 58%; }
+  .guide-intro--launch .guide-dash-flight { left: 72%; top: 47%; }
+  .guide-intro--arrive .guide-dash-flight, .guide-intro--core .guide-dash-flight, .guide-intro--projection .guide-dash-flight, .guide-intro--ready .guide-dash-flight { left: 72%; top: 70%; transform: translate(-50%,-50%) scale(1.02); }
+  .guide-speech { left: 47%; top: 30%; width: 12rem; }
+  .guide-intro--projection-visible .guide-projection { width: calc(100% - 1.5rem); height: min(78vh, 640px); padding: 1rem; }
+  .guide-projection-copy { margin: 1.5rem 0 1.15rem; }
+  .guide-options { grid-template-columns: 1fr; gap: .55rem; }
+  .guide-option { min-height: 0; padding: .75rem; }
+  .guide-option > span:last-child { display: none; }
+  .guide-projection-footer { bottom: .75rem; }
+  .desktop-only { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .guide-dash-flight, .guide-projection, .guide-speech, .guide-option { transition-duration: 1ms; animation: none !important; }
+}
+
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(320px, 1.05fr) minmax(0, 1.95fr);

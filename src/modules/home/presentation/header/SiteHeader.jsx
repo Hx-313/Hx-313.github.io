@@ -1,15 +1,16 @@
 import { useEffect, useState, useCallback } from 'react';
 import { contactLinks, siteLinks } from '../../../../core/constants.js';
+import ThemeToggle from '../../../../shared/theme/ThemeToggle.jsx';
 import './header.css';
 
 const NAV_ITEMS = [
   { id: 'top', label: 'Overview', href: '#top' },
+  { id: 'client-story', label: 'The Problem', href: '#client-story' },
   { id: 'command-center', label: 'Command Center', href: '#command-center' },
-  { id: 'work', label: 'Active Builds', href: '#command-center' },
   { id: 'contact', label: 'Contact', href: contactLinks.email },
 ];
 
-export default function SiteHeader() {
+export default function SiteHeader({ theme, setTheme }) {
   const [sysTime, setSysTime] = useState('');
   const [activeSection, setActiveSection] = useState('top');
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -29,11 +30,11 @@ export default function SiteHeader() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
-      const commandCenterEl = document.getElementById('command-center');
-      if (commandCenterEl) {
-        const rect = commandCenterEl.getBoundingClientRect();
-        if (rect.top <= window.innerHeight * 0.4) {
-          setActiveSection('command-center');
+      const sectionIds = ['command-center', 'client-story'];
+      for (const id of sectionIds) {
+        const section = document.getElementById(id);
+        if (section && section.getBoundingClientRect().top <= window.innerHeight * 0.4) {
+          setActiveSection(id);
           return;
         }
       }
@@ -75,7 +76,8 @@ export default function SiteHeader() {
       setActiveSection(id);
       const target = document.querySelector(href);
       if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
       }
     } else {
       setIsMobileOpen(false);
@@ -121,6 +123,8 @@ export default function SiteHeader() {
 
         {/* Right: Clean, Minimal Actions (Let's Talk CTA & Mobile Menu) */}
         <div className="header-actions">
+          <ThemeToggle theme={theme} onChange={setTheme} />
+
           {/* Primary CTA */}
           <a
             className="header-cta-btn"
@@ -166,7 +170,7 @@ export default function SiteHeader() {
               aria-label="Close navigation"
               onClick={() => setIsMobileOpen(false)}
             >
-              ✕
+              <span aria-hidden="true">×</span>
             </button>
           </div>
 
@@ -187,6 +191,10 @@ export default function SiteHeader() {
           </nav>
 
           <div className="mobile-drawer-footer">
+            <div className="mobile-theme-controls">
+              <ThemeToggle theme={theme} onChange={setTheme} />
+            </div>
+
             <div className="mobile-telemetry-row" title="Live System Time">
               <span className="lbl">SYS TIME</span>
               <span className="val">{sysTime || '12:00:00 AM'}</span>

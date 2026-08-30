@@ -1,0 +1,40 @@
+export const storyBeats = Object.freeze([
+  {
+    id: 'idea',
+    number: '01',
+    label: 'Idea',
+    title: 'You have the idea.',
+    statement: 'But how does it become a real product?',
+  },
+  {
+    id: 'friction',
+    number: '02',
+    label: 'Friction',
+    title: 'Your business is growing.',
+    statement: "Your systems aren't.",
+    detail: 'Spreadsheets · manual work · disconnected tools · duplicated effort',
+  },
+  {
+    id: 'system',
+    number: '03',
+    label: 'System',
+    title: "You don't need another app.",
+    statement: 'You need the right system.',
+  },
+  {
+    id: 'builder',
+    number: '04',
+    label: 'Builder',
+    title: "That's where I come in.",
+    statement: "I'm Hafiz.",
+    detail: 'I turn ideas, workflows, and complex requirements into production-ready digital products and connected systems.',
+  },
+  {
+    id: 'proof',
+    number: '05',
+    label: 'Proof',
+    title: 'Ideas are easy to talk about.',
+    statement: 'Execution leaves evidence.',
+    ctaLabel: 'Enter Command Center',
+  },
+]);

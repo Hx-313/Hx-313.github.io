@@ -68,7 +68,7 @@ export default function AeroMascot({
   };
   const renderEyes = () => {
     const { x, y } = eyeOffset;
-    const transform = `translate(${x}px, ${y}px)`;
+    const transform = `translate(${x}, ${y})`;
 
     switch (expression) {
       case 'thinking':

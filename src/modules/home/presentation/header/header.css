@@ -214,6 +214,8 @@
   z-index: 1000;
   display: flex;
   justify-content: flex-end;
+  width: 100vw;
+  height: 100dvh;
   pointer-events: none;
   opacity: 0;
   transition: opacity 260ms ease;
@@ -327,6 +329,15 @@
   gap: 1rem;
   padding-top: 1.5rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mobile-theme-controls .theme-toggle {
+  width: 100%;
+}
+
+.mobile-theme-controls .theme-toggle button {
+  flex: 1;
+  min-height: 36px;
 }
 
 .mobile-telemetry-row {
@@ -535,8 +546,11 @@
   .site-mark {
     font-size: 1.25rem;
   }
-  .header-cta-btn {
-    padding: 0.45rem 0.95rem;
-    font-size: 0.78rem;
+  .header-actions {
+    gap: 0;
+  }
+  .header-actions > .theme-toggle,
+  .header-actions > .header-cta-btn {
+    display: none;
   }
 }
