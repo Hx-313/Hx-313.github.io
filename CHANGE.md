@@ -84,7 +84,23 @@ Documentation-only changes, configuration changes, dependency changes, source ch
 - Files: `src/modules/home/presentation/header/SiteHeader.jsx`, `src/modules/home/presentation/header/header.css`, `CHANGE.md`
 - Verification: Ran `node --test tests/*.test.mjs` with all 17 unit tests passing. Ran `npm run build` with 109 modules cleanly compiling in 1.27s without errors.
 
+## 2026-08-30 — Remove retired Astro implementation
 
+- Summary: Removed the inactive Astro application, Astro-only configuration, legacy hero canvas and stylesheet, and Astro dependencies. Regenerated the dependency lockfile for the active React/Vite stack and replaced the stale Astro handoff with a concise React/Vite project guide. Existing user changes to the mascot and opening experience were preserved.
+- Files: `astro.config.mjs`, `tsconfig.json`, `src/layouts/BaseLayout.astro`, `src/components/Header.astro`, `src/components/Footer.astro`, `src/components/Hero.astro`, `src/components/HeroCanvas.jsx`, `src/components/Principles.astro`, `src/pages/index.astro`, `src/pages/mascots.astro`, `src/pages/projects/index.astro`, `src/styles/global.css`, `package.json`, `package-lock.json`, `CLAUDE.md`, `CHANGE.md`
+- Verification: `npm run build` passed with 109 modules transformed. Repository and installed-package scans found no active Astro references or top-level Astro packages. Nine assertions passed before the existing `HolographicGlobe` source-shape assertion failed; remaining isolated Node test invocations were blocked by the Windows sandbox with `spawn EPERM`. A clean `npm ci` was also blocked by a locked Rollup binary, after which `npm install --ignore-scripts` restored and pruned the dependency tree successfully with zero reported vulnerabilities.
+
+## 2026-08-30 — Plan client scroll story before command-center proof
+
+- Summary: Documented the approved five-beat client scroll narrative and a test-first implementation plan. The planned experience moves from idea and operational friction through systems thinking and Hafiz's introduction, then makes the System Command Center the proof destination.
+- Files: `docs/superpowers/specs/2026-08-30-client-scroll-story-design.md`, `docs/superpowers/plans/2026-08-30-client-scroll-story.md`, `CHANGE.md`
+- Verification: Reviewed the narrative, motion, accessibility, responsive, token, component-boundary, and test requirements against the active React/Vite structure. No application code was changed.
+
+## 2026-08-30 — Fix mascot dialog sizing and implement interactive warm greetings
+
+- Summary: Resolved conflicting legacy CSS in `hero.css` that was forcing mascot speech bubbles into crushed pill shapes and causing text overflow. Upgraded `mascots.css`, `AeroMascot.jsx`, and `DashMascot.jsx` with high-readability glassmorphism dialog geometry, viewport-aware top/bottom bubble flipping, live audio wave pulsing indicators, close buttons, and quick-reply action chips (`Who is Abdullah?`, `Shipped Apps`, `Do a Flip!`, `Command Center`). Relocated initial hero mascot coordinates and roaming waypoints to the right-stage visual arena to eliminate overlap with the left hero headline. Implemented a warm, engaging opening welcome sequence with interactive quick-action responses for visitor engagement.
+- Files: `src/modules/home/presentation/hero/hero.css`, `src/styles/mascots.css`, `src/components/mascots/AeroMascot.jsx`, `src/components/mascots/DashMascot.jsx`, `src/components/Mascots.jsx`, `tests/mascot-dialog-greetings.test.mjs`, `tests/mascot-roam.test.mjs`, `CHANGE.md`
+- Verification: Added comprehensive unit tests in `tests/mascot-dialog-greetings.test.mjs` verifying dialog sizing, bubble orientation, action chips, and greeting flows. Executed `node --test` with all 14 unit tests passing. Ran `npm run build` with 109 modules transforming and compiling cleanly in 7.73s with 0 errors.
 
 
 

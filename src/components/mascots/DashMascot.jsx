@@ -35,7 +35,38 @@ export default function DashMascot({
   eyeOffset = { x: 0, y: 0 },
   isFloating = true,
   armPose = 'point', // 'point', 'wave', 'idle'
+  bubblePosition = 'auto',
+  onChipClick,
+  onBubbleClose,
 }) {
+  const bubbleText = typeof bubble === 'string' ? bubble : bubble?.text;
+  const bubbleChips = typeof bubble === 'object' ? bubble?.chips : null;
+  const isBottom = typeof bubble === 'object' && bubble?.isBottom !== undefined ? bubble.isBottom : bubblePosition === 'bottom';
+  const handleChip = (chip) => {
+    if (typeof bubble === 'object' && bubble?.onChipClick) {
+      bubble.onChipClick(chip);
+    } else if (onChipClick) {
+      onChipClick(chip);
+    }
+  };
+  const handleClose = () => {
+    if (typeof bubble === 'object' && bubble?.onClose) {
+      bubble.onClose();
+    } else if (onBubbleClose) {
+      onBubbleClose();
+    }
+  };
+
+  const renderBubbleText = (text) => {
+    if (!text) return null;
+    const parts = text.split(/(\*\*[^*]+\*\*)/g);
+    return parts.map((part, idx) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return <strong key={idx}>{part.slice(2, -2)}</strong>;
+      }
+      return part;
+    });
+  };
   const renderEyes = () => {
     const { x, y } = eyeOffset;
     const transform = `translate(${x}px, ${y}px)`;
@@ -171,8 +202,55 @@ export default function DashMascot({
       }}
     >
       {bubble && (
-        <div className="mischief-bubble bubble-dash show absolute -top-8 left-1/2 -translate-x-1/2 z-30 pointer-events-none">
-          {bubble}
+        <div
+          className={`mischief-bubble bubble-dash show ${isBottom ? 'bubble--bottom' : 'bubble--top'}`}
+          role="status"
+          aria-live="polite"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="bubble-speaker-header">
+            <div className="bubble-speaker-info">
+              <span className="bubble-speaker-name">⚡ DASH</span>
+              <span className="bubble-speaker-badge">SYSTEM DRONE</span>
+              <span className="bubble-audio-wave" aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </span>
+            </div>
+            {handleClose && (
+              <button
+                type="button"
+                className="bubble-close-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleClose();
+                }}
+                aria-label="Dismiss message"
+                title="Dismiss message"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+          <div className="bubble-text">{renderBubbleText(bubbleText)}</div>
+          {bubbleChips && bubbleChips.length > 0 && (
+            <div className="bubble-chips-container">
+              {bubbleChips.map((chip, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  className="bubble-chip-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleChip(chip);
+                  }}
+                >
+                  {chip.label}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       )}
 

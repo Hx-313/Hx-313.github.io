@@ -160,7 +160,7 @@ export default function OpeningExperience({ isRevealing, onComplete, theme }) {
     };
   }, [isTransitioning]);
 
-  // Initial loader progression with calibrated cinematic pacing
+  // Initial loader progression with calibrated snappy pacing
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduced) {
@@ -173,16 +173,16 @@ export default function OpeningExperience({ isRevealing, onComplete, theme }) {
     const progressObj = { val: 0 };
     const loaderAnim = animate(progressObj, {
       val: 100,
-      duration: 2600,
-      ease: 'inOutCubic',
+      duration: 1300,
+      ease: 'outCubic',
       onRender: () => {
         setLoadingProgress(Math.round(progressObj.val));
       },
       onComplete: () => {
-        // Hold at 100% for clear user recognition, then dissolve into statement chamber
+        // Quick 150ms hold at 100% then dissolve into statement chamber
         const startTimer = setTimeout(() => {
           setHasStarted(true);
-        }, 450);
+        }, 150);
         return () => clearTimeout(startTimer);
       },
     });
@@ -196,7 +196,7 @@ export default function OpeningExperience({ isRevealing, onComplete, theme }) {
     };
   }, [hasStarted, completeOpening]);
 
-  // Anime.js Statement orchestration: gentle enter -> readable hold -> smooth exit
+  // Anime.js Statement orchestration: gentle snappy enter -> readable hold -> smooth exit
   useEffect(() => {
     if (!hasStarted || hasCompletedRef.current) return undefined;
 
@@ -209,28 +209,28 @@ export default function OpeningExperience({ isRevealing, onComplete, theme }) {
     // Reset initial style states cleanly before entering
     wordEls.forEach((el) => {
       el.style.opacity = '0';
-      el.style.transform = 'translateY(24px) scale(0.96)';
+      el.style.transform = 'translateY(18px) scale(0.97)';
     });
 
-    // 1. Gentle staggered entry animation
+    // 1. Snappy staggered entry animation
     const enterAnim = animate(wordEls, {
       opacity: [0, 1],
-      translateY: [24, 0],
-      scale: [0.96, 1],
-      duration: 850,
-      delay: stagger(110),
+      translateY: [18, 0],
+      scale: [0.97, 1],
+      duration: 450,
+      delay: stagger(70),
       ease: 'outCubic',
     });
     activeAnimationRef.current = enterAnim;
 
-    // 2. Hold for readable absorption (~1650ms) then perform gentle exit
+    // 2. Clean readable hold (~1200ms) then perform smooth exit
     const holdTimer = setTimeout(() => {
       const exitAnim = animate(wordEls, {
         opacity: [1, 0],
-        translateY: [0, -16],
+        translateY: [0, -14],
         scale: [1, 0.98],
-        duration: 550,
-        delay: stagger(60, { from: 'last' }),
+        duration: 350,
+        delay: stagger(40, { from: 'last' }),
         ease: 'inOutQuad',
         onComplete: () => {
           if (hasCompletedRef.current) return;
@@ -242,7 +242,7 @@ export default function OpeningExperience({ isRevealing, onComplete, theme }) {
         },
       });
       activeAnimationRef.current = exitAnim;
-    }, 2500); // 850ms enter + ~1650ms hold = 2500ms total per statement
+    }, 1950); // 450ms enter + 1200ms hold + 300ms exit = ~1950ms per statement
 
     return () => {
       clearTimeout(holdTimer);

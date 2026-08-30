@@ -16,15 +16,15 @@ export default function Hero({ revealed }) {
     if (content && content.length > 0) {
       content.forEach((el) => {
         el.style.opacity = '0';
-        el.style.transform = 'translateY(28px) scale(0.97)';
+        el.style.transform = 'translateY(18px) scale(0.98)';
       });
 
       const anim = animate(content, {
         opacity: [0, 1],
-        translateY: [28, 0],
-        scale: [0.97, 1],
-        duration: 900,
-        delay: stagger(110, { start: 100 }),
+        translateY: [18, 0],
+        scale: [0.98, 1],
+        duration: 550,
+        delay: stagger(60, { start: 40 }),
         ease: 'outCubic',
       });
 
@@ -41,7 +41,7 @@ export default function Hero({ revealed }) {
 
   return (
     <section ref={heroRef} className="hero" aria-labelledby="hero-title">
-      <Mascots stage="page1" showController={true} />
+      <Mascots stage="page1" showController={true} active={revealed} />
       <div className="hero-grid">
         <HeroContent />
         <HeroVisual />

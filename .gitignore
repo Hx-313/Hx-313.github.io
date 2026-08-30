@@ -28,3 +28,6 @@ assets/source/documents/
 # os
 .DS_Store
 Thumbs.db
+CLAUDE.md
+docs/
+*.md
