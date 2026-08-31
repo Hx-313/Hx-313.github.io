@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import OpeningExperience from './opening/OpeningExperience.jsx';
 import CosmicBackground from './CosmicBackground.jsx';
 import SiteHeader from './header/SiteHeader.jsx';
@@ -13,28 +13,30 @@ import './command-center/command-center.css';
 import '../../../styles/mascots.css';
 
 export default function HomePage() {
-  const [isRevealed, setIsRevealed] = useState(false);
-  const [isOpeningDismissed, setIsOpeningDismissed] = useState(false);
+  const [experienceState, setExperienceState] = useState('intro');
   const { theme, setTheme } = useTheme();
   const commandCenter = useCommandCenter();
-  const completeOpening = useCallback(() => setIsRevealed(true), []);
-
-  useEffect(() => {
-    if (!isRevealed) return undefined;
-    const dismissalTimer = window.setTimeout(() => setIsOpeningDismissed(true), 750);
-    return () => window.clearTimeout(dismissalTimer);
-  }, [isRevealed]);
+  const startHandoff = useCallback(() => {
+    setExperienceState((state) => (state === 'intro' ? 'handoff' : state));
+  }, []);
+  const completeOpening = useCallback(() => setExperienceState('ready'), []);
+  const isSiteVisible = experienceState !== 'intro';
+  const isSiteReady = experienceState === 'ready';
 
   return (
     <div className="home-page">
       <CosmicBackground />
-      {!isOpeningDismissed && <OpeningExperience isRevealing={isRevealed} onComplete={completeOpening} theme={theme} />}
-      <div className={`site-experience ${isRevealed ? 'is-revealed' : ''}`} aria-hidden={!isRevealed} inert={isRevealed ? undefined : ''}>
+      {!isSiteReady && <OpeningExperience onHandoff={startHandoff} onComplete={completeOpening} />}
+      <div
+        className={`site-experience is-${experienceState}`}
+        aria-hidden={isSiteReady ? 'false' : 'true'}
+        inert={isSiteReady ? undefined : ''}
+      >
         <SiteHeader theme={theme} setTheme={setTheme} />
 
         <main id="top">
           {/* Page 1: Clean Entry Portal (Mascots bound strictly to Page 1) */}
-          <Hero revealed={isRevealed} />
+          <Hero revealed={isSiteVisible} />
 
           <ClientStory />
 

@@ -27,6 +27,7 @@ function createPointTexture() {
 export default function HolographicGlobe() {
   const containerRef = useRef(null);
   const canvasContainerRef = useRef(null);
+  const canvasRef = useRef(null);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -369,6 +370,7 @@ export default function HolographicGlobe() {
     };
 
     const domEl = renderer.domElement;
+    canvasRef.current = domEl;
     domEl.addEventListener('mousedown', onPointerDown);
     window.addEventListener('mousemove', onPointerMove);
     window.addEventListener('mouseup', onPointerUp);
@@ -495,6 +497,7 @@ export default function HolographicGlobe() {
       if (domEl.parentNode) {
         domEl.parentNode.removeChild(domEl);
       }
+      canvasRef.current = null;
     };
   }, []);
 

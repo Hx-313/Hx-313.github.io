@@ -345,7 +345,7 @@ export default function DashMascot({
           </g>
 
           {/* Right Arm */}
-          <g>
+          <g data-opening-arm="dash" className="dash-presenting-arm">
             <circle cx="218" cy="240" r="12" fill="url(#dashWhiteArmorC)" stroke="#94a3b8" strokeWidth="1.5" />
             <path d="M 222,245 L 248,258 Q 258,265 252,275 L 228,258 Z" fill="url(#dashDarkArmorC)" />
             <circle cx="254" cy="270" r="7" fill="#020617" />

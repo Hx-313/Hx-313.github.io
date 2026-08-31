@@ -12,21 +12,25 @@
 
 .site-experience {
   opacity: 0;
-  transform: scale(0.94) translateY(32px);
+  transform: translate3d(0, 8vh, 0) scale(0.965);
   filter: blur(8px);
   pointer-events: none;
-  transition:
-    opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 900ms cubic-bezier(0.16, 1, 0.3, 1),
-    filter 900ms cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity, filter;
 }
 
-.site-experience.is-revealed {
+.site-experience.is-handoff {
+  opacity: 0.82;
+  transform: translate3d(0, 2vh, 0) scale(0.988);
+  filter: blur(2px);
+  transition: opacity 1.3s var(--ease-out), transform 1.3s var(--ease-out), filter 1.3s var(--ease-out);
+}
+
+.site-experience.is-ready {
   opacity: 1;
-  transform: scale(1) translateY(0);
-  filter: blur(0px);
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: none;
   pointer-events: auto;
+  transition: opacity 320ms var(--ease-out), transform 320ms var(--ease-out), filter 320ms var(--ease-out);
 }
 
 .site-footer {
@@ -126,5 +130,19 @@
     flex-direction: column;
     gap: 1rem;
     text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-experience,
+  .site-experience.is-handoff,
+  .site-experience.is-ready {
+    transition-duration: 160ms;
+  }
+
+  .site-experience.is-handoff,
+  .site-experience.is-ready {
+    transform: none;
+    filter: none;
   }
 }

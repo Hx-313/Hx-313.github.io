@@ -347,7 +347,7 @@ export default function AeroMascot({
         </g>
 
         {/* 5. Right Cyber Ear Pod & Winglet */}
-        <g>
+        <g data-opening-arm="aero" className="aero-presenting-field">
           {/* Aero Fin */}
           <path d="M 272,142 Q 308,106 292,174 Q 272,158 272,142 Z" fill="#10b981" opacity="0.9" filter="url(#aeroGlow)" />
           {/* Pod Base */}

@@ -1,14 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { animate, stagger } from 'animejs';
 import HeroContent from './HeroContent.jsx';
 import HeroVisual from './HeroVisual.jsx';
 import Mascots from '../../../../components/Mascots.jsx';
-import CinematicGuideIntro, { GUIDE_INTRO_SEEN_KEY } from './CinematicGuideIntro.jsx';
 import './hero.css';
 
 export default function Hero({ revealed }) {
   const heroRef = useRef(null);
-  const [guideComplete, setGuideComplete] = useState(() => window.sessionStorage.getItem(GUIDE_INTRO_SEEN_KEY) === '1');
 
   useEffect(() => {
     if (!revealed || !heroRef.current) return undefined;
@@ -43,8 +41,7 @@ export default function Hero({ revealed }) {
 
   return (
     <section ref={heroRef} className="hero" aria-labelledby="hero-title">
-      {revealed && !guideComplete && <CinematicGuideIntro onComplete={() => setGuideComplete(true)} />}
-      <div className={guideComplete ? '' : 'hero-mascots-hidden'}><Mascots stage="page1" showController={true} active={revealed && guideComplete} /></div>
+      <Mascots stage="page1" showController={true} active={revealed} />
       <div className="hero-grid">
         <HeroContent />
         <HeroVisual />
