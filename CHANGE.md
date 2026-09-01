@@ -150,4 +150,11 @@ Documentation-only changes, configuration changes, dependency changes, source ch
 - Files: `src/modules/home/presentation/hero/HolographicGlobe.jsx`, `src/modules/home/presentation/opening/OpeningNetworkGlobe.jsx`, `src/modules/home/presentation/opening/OpeningExperience.jsx`, `src/modules/home/presentation/opening/opening.css`, `CHANGE.md`
 - Verification: Ran `node --test tests/*.test.mjs` with all 42 unit tests passing cleanly. Ran `npm run build` with 117 modules compiled cleanly in 4.81s with zero errors.
 
+## 2026-09-01 — Configure Vercel deployment preset and build output
+
+- Summary: Created `vercel.json` to explicitly configure the Vite framework preset, `npm run build` command, `dist` output directory, and SPA rewrite routing. This resolves the Vercel deployment issue where the raw root directory was served statically instead of compiling Vite bundles, which previously caused `text/jsx` MIME type rejection on `/src/main.jsx` and 404 on `/%BASE_URL%favicon.svg`.
+- Files: `vercel.json`, `CHANGE.md`
+- Verification: `npm run build` passed cleanly with 117 modules transformed; `node --test tests/*.test.mjs` passed (42/42).
+
+
 
