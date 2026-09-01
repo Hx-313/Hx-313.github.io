@@ -54,7 +54,7 @@ def main() -> None:
 
         expect(opening).to_be_visible(timeout=2_000)
         expect(experience).to_have_attribute("aria-hidden", "true")
-        expect(experience).to_have_class("site-experience is-handoff", timeout=9_500)
+        expect(experience).to_have_class("site-experience is-handoff", timeout=11_600)
         expect(opening).to_be_visible()
         assert_rendered_layers(page)
         assert_ready(page, opening, experience)

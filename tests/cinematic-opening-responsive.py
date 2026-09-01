@@ -82,7 +82,7 @@ def main() -> None:
         page.set_viewport_size({"width": 390, "height": 844})
         page.goto(base_url, wait_until="networkidle")
         expect(page.locator(".opening")).to_be_visible(timeout=2_000)
-        page.wait_for_timeout(5_300)
+        page.wait_for_timeout(6_700)
         assert_mobile_projection_is_safe(page)
         assert_no_horizontal_overflow(page)
 

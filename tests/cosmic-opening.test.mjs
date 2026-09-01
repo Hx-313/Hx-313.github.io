@@ -10,6 +10,7 @@ const aeroJsxPath = path.resolve('src/components/mascots/AeroMascot.jsx');
 const projectionPath = path.resolve('src/modules/home/presentation/opening/OpeningProjection.jsx');
 const sequencePath = path.resolve('src/modules/home/presentation/opening/openingSequence.js');
 const dashPath = path.resolve('src/components/mascots/DashMascot.jsx');
+const homePagePath = path.resolve('src/modules/home/presentation/HomePage.jsx');
 
 test('OpeningExperience contains connected-globe sequence led by Dash with Aero support', () => {
   const jsx = fs.readFileSync(openingJsxPath, 'utf8');
@@ -140,14 +141,15 @@ test('opening-only mascot wrappers contain focus and reduced motion keeps them i
   assert.match(css, /\.opening\[data-motion='reduced'\] \.opening-mascot\s*\{[^}]*z-index:\s*var\(--layer-mascot\)/s);
 });
 
-test('mascots keep a padded left and right lane with softened travel timing', () => {
+test('mascots keep a padded left and right lane with a measured entrance', () => {
   const jsx = fs.readFileSync(openingJsxPath, 'utf8');
   const css = fs.readFileSync(openingCssPath, 'utf8');
 
   assert.match(css, /\.opening-mascot--aero\s*\{\s*left:\s*20%/);
   assert.match(css, /\.opening-mascot--dash\s*\{\s*left:\s*80%/);
   assert.match(jsx, /createTimeline\(\{ defaults: \{ ease: 'outCubic' \} \}\)/);
-  assert.match(jsx, /duration: 1_520, delay: stagger\(120\)/);
+  assert.match(jsx, /duration: 2_100, delay: stagger\(140\)/);
+  assert.match(jsx, /duration: 400 \}, OPENING_BEATS\[0\]\.start/);
 });
 
 test('mobile projections remain absolute and share a viewport-aligned start edge', () => {
@@ -157,4 +159,11 @@ test('mobile projections remain absolute and share a viewport-aligned start edge
   assert.match(css, /@media \(max-width: 600px\)[\s\S]*?\.opening-projector\s*\{[^}]*position:\s*absolute[^}]*top:\s*135%[^}]*width:\s*90vw/s);
   assert.match(css, /\.opening-projector--aero\s*\{[^}]*left:\s*calc\(-17vw \+ 50%\)/s);
   assert.match(css, /\.opening-projector--dash\s*\{[^}]*left:\s*calc\(-64vw \+ 50%\)/s);
+});
+
+test('the intro always starts at the top instead of restoring a prior slide position', () => {
+  const homePage = fs.readFileSync(homePagePath, 'utf8');
+
+  assert.match(homePage, /window\.history\.scrollRestoration\s*=\s*'manual'/);
+  assert.match(homePage, /window\.scrollTo\(\{ top: 0, left: 0, behavior: 'auto' \}\)/);
 });

@@ -9,6 +9,10 @@
 .system-core { position: relative; min-height: 25rem; overflow: hidden; border: 1px solid rgb(121 242 154 / .22); border-radius: .7rem; background: radial-gradient(circle at center, rgb(23 79 45 / .3), transparent 58%), linear-gradient(rgb(9 27 18 / .76), rgb(8 21 15 / .86)); color: var(--color-lime); }
 .system-core::before { position: absolute; inset: 0; opacity: .15; background-image: linear-gradient(rgb(121 242 154 / .18) 1px, transparent 1px), linear-gradient(90deg, rgb(121 242 154 / .18) 1px, transparent 1px); background-size: 2.2rem 2.2rem; content: ''; mask-image: radial-gradient(circle, black, transparent 80%); }
 .system-core__topline { position: absolute; inset: 1rem 1rem auto; z-index: 2; color: var(--color-muted-foreground); font-size: .5rem; }
+.system-core__globe { position: absolute; inset: 2.2rem .5rem .5rem; z-index: 1; }
+.system-core--shared-globe .holographic-stage-wrapper { min-height: 100%; }
+.system-core--shared-globe .radar-corner-brackets { display: none; }
+.system-core--shared-globe .radar-glow-aura { transform: scale(.82); }
 .system-core__map { position: absolute; inset: 12% 8% 7%; width: 84%; height: 81%; overflow: visible; }
 .system-core__grid-ring { fill: none; stroke: currentColor; stroke-width: .18; opacity: .32; stroke-dasharray: 1.2 1.8; transform-origin: 50% 50%; animation: core-spin 34s linear infinite; }
 .system-core__grid-ring--inner { opacity: .6; stroke-dasharray: 1 .9; animation-direction: reverse; animation-duration: 24s; }

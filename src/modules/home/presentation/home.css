@@ -43,6 +43,7 @@
 
 .command-center-portal-section {
   position: relative;
+  scroll-margin-top: 5rem;
   overflow: hidden;
   isolation: isolate;
   padding: 4rem 0 6rem;

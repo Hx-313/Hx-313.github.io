@@ -125,3 +125,29 @@ Documentation-only changes, configuration changes, dependency changes, source ch
 - Summary: Let the first upward gesture and final downward gesture pass through the client story’s phase guard, so entering and exiting the sequence remains normal, smooth, and consistent with the rest of the page.
 - Files: `src/modules/home/presentation/client-story/ClientStory.jsx`, `tests/client-scroll-story.test.mjs`, `CHANGE.md`
 - Verification: Client-story assertions passed after adding explicit first/last phase boundary coverage.
+
+## 2026-09-01 — Add app-engineering-guardrails agent skill and standards
+
+- Summary: Created the `.agents/skills/app-engineering-guardrails` skill and supporting reference specifications codifying the 6 core development principles: strict clean architecture across Presentation/Hooks/Data/Core/Shared, zero hardcoded strings/links centralized in `src/core/constants.js` and data modules, non-destructive design iterations that refine rather than rewrite, surgical scope containment avoiding unintended refactors, zero hallucination with pre-verification before action, and mandatory `CHANGE.md` change logging.
+- Files: `.agents/skills/app-engineering-guardrails/SKILL.md`, `.agents/skills/app-engineering-guardrails/references/clean-architecture.md`, `.agents/skills/app-engineering-guardrails/references/constants-and-data.md`, `.agents/skills/app-engineering-guardrails/references/design-iteration-rules.md`, `.agents/skills/app-engineering-guardrails/references/change-log-protocol.md`, `CHANGE.md`
+- Verification: Ran `npm run build` with 117 modules compiled cleanly. Executed `node --test tests/*.test.mjs` with all 39 unit tests passing.
+
+## 2026-09-01 — Pace the cinematic globe and mascot opening
+
+- Summary: Retimed the existing Aero and Dash opening so the globe leads for 0.4 seconds, the crew rises gradually from beneath it, and each of the three hook statements gets a calm two-second projection/dialog beat. Softened the thrust, scan, and particle loops, added a clear speaker transmission label, and retained skip and reduced-motion lifecycles.
+- Files: `src/modules/home/presentation/opening/openingSequence.js`, `src/modules/home/presentation/opening/OpeningExperience.jsx`, `src/modules/home/presentation/opening/OpeningProjection.jsx`, `src/modules/home/presentation/opening/opening.css`, `tests/opening-sequence.test.mjs`, `tests/cosmic-opening.test.mjs`, `tests/cinematic-opening-responsive.py`, `tests/cinematic-hero-cut-through.py`, `CHANGE.md`
+- Verification: `node --test tests/opening-sequence.test.mjs tests/cosmic-opening.test.mjs` passed (15/15) when run with the required process-spawn permission. `npm run build` passed (117 modules transformed). The existing Python Playwright responsive check could not start because its environment does not have the `playwright` package installed.
+
+## 2026-09-01 — Unify hero and command-center globe behavior
+
+- Summary: Replaced the separate command-center WOS core diagram with the exact shared Three.js holographic globe used in the hero. Normalized the globe animation against frame time, pauses detailed WebGL work while each instance is off-screen, caps render resolution for smoother motion, prevents browser scroll restoration from revealing a partially advanced slide after the intro, and gives the command-center anchor clearance below the sticky header.
+- Files: `src/modules/home/presentation/hero/HolographicGlobe.jsx`, `src/modules/home/presentation/command-center/SystemCore.jsx`, `src/modules/home/presentation/command-center/command-center.css`, `src/modules/home/presentation/hero/hero.css`, `src/modules/home/presentation/HomePage.jsx`, `src/modules/home/presentation/home.css`, `tests/holographic-globe.test.mjs`, `tests/cosmic-opening.test.mjs`, `CHANGE.md`
+- Verification: Focused Node tests passed (18/18): `node --test tests/holographic-globe.test.mjs tests/cosmic-opening.test.mjs tests/opening-sequence.test.mjs`. `npm run build` passed with 117 modules transformed. Browser verification confirmed a top-of-page intro handoff, an exact hero boundary at the next section, a command-center anchor position of 80px below a 72.7px sticky header, and the shared dashboard globe canvas with no legacy WOS map.
+
+## 2026-09-01 — Unify intro with dashboard 3D holographic cyber globe & active boot animation
+
+- Summary: Aligned the intro experience to render the 3D Holographic Cyber Mesh Globe (Fibonacci lattice, glowing emerald/cyan starlight points, geodesic lines, plasma core shader, gyroscopic gimbal rings, and radar sweep) with immediate 60fps WebGL animation from frame 0 during the system initialization phase, alongside the animated progress bar loader HUD before mascots hop into view. Preserved the 3D cyber holographic globe in the hero overview and command center with complete drag/inertia physics.
+- Files: `src/modules/home/presentation/hero/HolographicGlobe.jsx`, `src/modules/home/presentation/opening/OpeningNetworkGlobe.jsx`, `src/modules/home/presentation/opening/OpeningExperience.jsx`, `src/modules/home/presentation/opening/opening.css`, `CHANGE.md`
+- Verification: Ran `node --test tests/*.test.mjs` with all 42 unit tests passing cleanly. Ran `npm run build` with 117 modules compiled cleanly in 4.81s with zero errors.
+
+

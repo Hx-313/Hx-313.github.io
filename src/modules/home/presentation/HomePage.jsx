@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import OpeningExperience from './opening/OpeningExperience.jsx';
 import CosmicBackground from './CosmicBackground.jsx';
 import SiteHeader from './header/SiteHeader.jsx';
@@ -22,6 +22,16 @@ export default function HomePage() {
   const completeOpening = useCallback(() => setExperienceState('ready'), []);
   const isSiteVisible = experienceState !== 'intro';
   const isSiteReady = experienceState === 'ready';
+
+  useEffect(() => {
+    const previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = 'manual';
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+
+    return () => {
+      window.history.scrollRestoration = previousScrollRestoration;
+    };
+  }, []);
 
   return (
     <div className="home-page">

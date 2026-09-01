@@ -1,4 +1,4 @@
-export const OPENING_DURATION = 10_000;
+export const OPENING_DURATION = 12_400;
 
 export const OPENING_STATEMENTS = Object.freeze([
   Object.freeze({ id: 'statement-one', speaker: 'dash', label: 'DASH', text: 'IDEAS NEED STRUCTURE.', lead: 'IDEAS NEED', accent: 'STRUCTURE.' }),
@@ -7,14 +7,14 @@ export const OPENING_STATEMENTS = Object.freeze([
 ]);
 
 export const OPENING_BEATS = Object.freeze([
-  Object.freeze({ id: 'globe-intro', start: 0, end: 1_200, speaker: null }),
-  Object.freeze({ id: 'mascots-emerging', start: 1_200, end: 2_600, speaker: null }),
-  Object.freeze({ id: 'mascots-focused', start: 2_600, end: 3_600, speaker: null }),
-  Object.freeze({ id: 'dash-statement-one', start: 3_600, end: 5_000, speaker: 'dash' }),
-  Object.freeze({ id: 'aero-statement-two', start: 5_000, end: 6_400, speaker: 'aero' }),
-  Object.freeze({ id: 'dash-statement-three', start: 6_400, end: 7_800, speaker: 'dash' }),
-  Object.freeze({ id: 'duo-focus', start: 7_800, end: 8_700, speaker: null }),
-  Object.freeze({ id: 'transitioning-to-home', start: 8_700, end: 10_000, speaker: null }),
+  Object.freeze({ id: 'globe-intro', start: 0, end: 400, speaker: null }),
+  Object.freeze({ id: 'mascots-emerging', start: 400, end: 2_700, speaker: null }),
+  Object.freeze({ id: 'mascots-focused', start: 2_700, end: 3_900, speaker: null }),
+  Object.freeze({ id: 'dash-statement-one', start: 3_900, end: 5_900, speaker: 'dash' }),
+  Object.freeze({ id: 'aero-statement-two', start: 5_900, end: 7_900, speaker: 'aero' }),
+  Object.freeze({ id: 'dash-statement-three', start: 7_900, end: 9_900, speaker: 'dash' }),
+  Object.freeze({ id: 'duo-focus', start: 9_900, end: 10_800, speaker: null }),
+  Object.freeze({ id: 'transitioning-to-home', start: 10_800, end: 12_400, speaker: null }),
 ]);
 
 export function getOpeningBeatAt(time) {

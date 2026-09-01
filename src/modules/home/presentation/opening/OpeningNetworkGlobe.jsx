@@ -1,3 +1,5 @@
+import HolographicGlobe from '../hero/HolographicGlobe.jsx';
+
 const ROUTES = [
   'M212 287 Q350 120 520 246',
   'M241 331 Q410 205 590 315',
@@ -14,7 +16,12 @@ const NODES = [
 export default function OpeningNetworkGlobe() {
   return (
     <div className="opening-network-globe" data-opening-globe aria-hidden="true">
-      <svg viewBox="0 0 800 800" role="img" aria-label="Connected global software network">
+      {/* 3D Kinetic Holographic Globe (WebGL active from frame 0) */}
+      <div className="opening-3d-globe-layer">
+        <HolographicGlobe className="holographic-stage-wrapper--opening" />
+      </div>
+
+      <svg viewBox="0 0 800 800" role="img" aria-label="Connected global software network" className="opening-svg-overlay">
         <defs>
           <radialGradient id="earthOcean" cx="42%" cy="35%" r="65%">
             <stop offset="0" stopColor="#0d3540" />
@@ -49,9 +56,9 @@ export default function OpeningNetworkGlobe() {
 
         <g className="opening-globe-rotor" data-globe-rotation>
           <circle className="opening-earth-halo" cx="400" cy="380" r="324" filter="url(#earthGlow)" />
-          <circle cx="400" cy="380" r="316" fill="url(#earthOcean)" stroke="#6dece4" strokeOpacity=".58" strokeWidth="2" />
+          <circle cx="400" cy="380" r="316" fill="url(#earthOcean)" stroke="#6dece4" strokeOpacity=".58" strokeWidth="2" opacity="0.12" />
 
-          <g clipPath="url(#earthClip)" className="opening-earth-grid" data-globe-grid transform="translate(400 380) scale(1.18) translate(-400 -380)">
+          <g clipPath="url(#earthClip)" className="opening-earth-grid" data-globe-grid transform="translate(400 380) scale(1.18) translate(-400 -380)" opacity="0.45">
             <ellipse cx="400" cy="380" rx="260" ry="58" />
             <ellipse cx="400" cy="380" rx="265" ry="124" />
             <ellipse cx="400" cy="380" rx="268" ry="198" />
@@ -60,7 +67,7 @@ export default function OpeningNetworkGlobe() {
             <path d="M132 380 H668 M400 112 V648" />
           </g>
 
-          <g clipPath="url(#earthClip)" className="opening-continents" data-globe-continents transform="translate(400 380) scale(1.18) translate(-400 -380)">
+          <g clipPath="url(#earthClip)" className="opening-continents" data-globe-continents transform="translate(400 380) scale(1.18) translate(-400 -380)" opacity="0.35">
             <path d="M172 236 L208 190 278 170 334 205 320 238 286 255 271 299 235 314 210 291 184 280Z" />
             <path d="M276 322 L320 348 335 405 310 470 286 528 262 493 269 432 250 378Z" />
             <path d="M389 208 L426 186 468 198 476 226 442 241 410 234Z" />
@@ -74,7 +81,7 @@ export default function OpeningNetworkGlobe() {
             <circle className="opening-network-core" data-globe-core cx="405" cy="352" r="34" />
             <circle className="opening-network-core opening-network-core--inner" cx="405" cy="352" r="18" />
           </g>
-          <circle cx="400" cy="380" r="316" fill="url(#earthAtmosphere)" />
+          <circle cx="400" cy="380" r="316" fill="url(#earthAtmosphere)" opacity="0.4" />
         </g>
 
         <g className="opening-orbit-nodes" filter="url(#nodeGlow)">

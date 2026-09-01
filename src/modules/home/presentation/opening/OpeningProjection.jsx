@@ -23,6 +23,7 @@ export default function OpeningProjection({ mascot, statement, mobile = false })
         <span className="opening-projection-scan" />
         <span className="opening-projection-mark opening-projection-mark--start" />
         <span className="opening-projection-mark opening-projection-mark--end" />
+        <span className="opening-projection-speaker">{statement.label} · TRANSMISSION</span>
         <p className="opening-projection-copy" data-opening-copy>
           <span>{statement.lead}</span>
           <strong>{statement.accent}</strong>

@@ -24,7 +24,7 @@ function createPointTexture() {
   return texture;
 }
 
-export default function HolographicGlobe() {
+export default function HolographicGlobe({ className = '' }) {
   const containerRef = useRef(null);
   const canvasContainerRef = useRef(null);
   const canvasRef = useRef(null);
@@ -36,6 +36,8 @@ export default function HolographicGlobe() {
 
     let disposed = false;
     let animId = null;
+    let idleTimerId = null;
+    let isInViewport = true;
 
     // Accessibility check
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -49,7 +51,7 @@ export default function HolographicGlobe() {
       alpha: true,
       powerPreference: 'high-performance',
     });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.25;
 
@@ -79,7 +81,7 @@ export default function HolographicGlobe() {
     const pointTex = createPointTexture();
 
     // -------------------------------------------------------------
-    // 1. BACKGROUND NEW ELEMENT: 3D HOLOGRAPHIC RADAR & CELESTIAL GRID
+    // 1. BACKGROUND: 3D HOLOGRAPHIC RADAR & CELESTIAL GRID
     // -------------------------------------------------------------
     const backdropGroup = new THREE.Group();
     backdropGroup.position.z = -1.2;
@@ -110,7 +112,7 @@ export default function HolographicGlobe() {
     const crosshairs = new THREE.LineSegments(crosshairGeo, crosshairMat);
     backdropGroup.add(crosshairs);
 
-    // Ambient Floating Deep-Space Stardust (360 particles in background)
+    // Ambient Floating Deep-Space Stardust (360 particles)
     const dustCount = 360;
     const dustGeo = new THREE.BufferGeometry();
     const dustPos = new Float32Array(dustCount * 3);
@@ -133,7 +135,7 @@ export default function HolographicGlobe() {
     backdropGroup.add(dustParticles);
 
     // -------------------------------------------------------------
-    // 2. THE ENHANCED HOLOGRAPHIC GLOBE SPHERE (Fibonacci Lattice)
+    // 2. THE 3D HOLOGRAPHIC FIBONACCI POINT-MESH SPHERE (Image 2)
     // -------------------------------------------------------------
     const sphereRadius = 1.75;
     const numPoints = 1200;
@@ -161,7 +163,6 @@ export default function HolographicGlobe() {
 
       spherePoints.push(new THREE.Vector3(x, y, z));
 
-      // Color variation: poles are cyan/mint, equator is vibrant emerald
       const latRatio = Math.abs(y / sphereRadius);
       let col;
       if (latRatio > 0.75) {
@@ -194,7 +195,7 @@ export default function HolographicGlobe() {
     globeRoot.add(globePointsMesh);
 
     // -------------------------------------------------------------
-    // 3. 3D GEODESIC CONSTELLATION MESH (Connecting Nearest Nodes)
+    // 3. 3D GEODESIC CONSTELLATION MESH
     // -------------------------------------------------------------
     const lineIndices = [];
     const maxDist = 0.42;
@@ -223,7 +224,7 @@ export default function HolographicGlobe() {
     globeRoot.add(globeLinesMesh);
 
     // -------------------------------------------------------------
-    // 4. INNER VOLUMETRIC QUANTUM PLASMA CORE (Atmospheric Fresnel)
+    // 4. INNER VOLUMETRIC QUANTUM PLASMA CORE (Fresnel Atmosphere)
     // -------------------------------------------------------------
     const coreGeo = new THREE.SphereGeometry(sphereRadius * 0.92, 36, 36);
     const coreMat = new THREE.ShaderMaterial({
@@ -284,7 +285,7 @@ export default function HolographicGlobe() {
     globeRoot.add(longRing1);
 
     // -------------------------------------------------------------
-    // 5. GYROSCOPIC HOLOGRAPHIC GIMBAL RINGS & TELEMETRY NODES
+    // 5. GYROSCOPIC GIMBAL RINGS & TELEMETRY NODES
     // -------------------------------------------------------------
     const gimbalGroup = new THREE.Group();
     globeRoot.add(gimbalGroup);
@@ -392,6 +393,11 @@ export default function HolographicGlobe() {
     const ro = new ResizeObserver(handleResize);
     ro.observe(canvasContainer);
 
+    const visibilityObserver = new IntersectionObserver(([entry]) => {
+      isInViewport = entry.isIntersecting;
+    }, { threshold: 0.01 });
+    visibilityObserver.observe(container);
+
     // -------------------------------------------------------------
     // 7. RENDER ANIMATION LOOP
     // -------------------------------------------------------------
@@ -399,11 +405,19 @@ export default function HolographicGlobe() {
 
     const render = () => {
       if (disposed) return;
-      const elapsedTime = clock.getElapsedTime();
+      if (!isInViewport || document.hidden) {
+        idleTimerId = window.setTimeout(render, 250);
+        return;
+      }
+
+      const delta = Math.min(clock.getDelta(), 0.05);
+      const elapsedTime = clock.elapsedTime;
+      const smoothing = 1 - ((1 - 0.05) ** (delta * 60));
+      const inertia = 1 - ((1 - 0.028) ** (delta * 60));
 
       // Smooth pointer parallax
-      pointerSmoothX += (pointerTargetX - pointerSmoothX) * 0.05;
-      pointerSmoothY += (pointerTargetY - pointerSmoothY) * 0.05;
+      pointerSmoothX += (pointerTargetX - pointerSmoothX) * smoothing;
+      pointerSmoothY += (pointerTargetY - pointerSmoothY) * smoothing;
 
       universe.rotation.y = pointerSmoothX * 0.22;
       universe.rotation.x = -pointerSmoothY * 0.16;
@@ -411,10 +425,10 @@ export default function HolographicGlobe() {
       // Natural drag inertia damping
       if (!isDragging) {
         if (!prefersReducedMotion) {
-          globeRoot.rotation.y += rotVelY;
-          globeRoot.rotation.x += rotVelX;
-          rotVelY = THREE.MathUtils.lerp(rotVelY, 0.0028, 0.028);
-          rotVelX = THREE.MathUtils.lerp(rotVelX, 0, 0.028);
+          globeRoot.rotation.y += rotVelY * delta * 60;
+          globeRoot.rotation.x += rotVelX * delta * 60;
+          rotVelY = THREE.MathUtils.lerp(rotVelY, 0.0028, inertia);
+          rotVelX = THREE.MathUtils.lerp(rotVelX, 0, inertia);
         }
       }
 
@@ -454,7 +468,9 @@ export default function HolographicGlobe() {
     return () => {
       disposed = true;
       if (animId) cancelAnimationFrame(animId);
+      if (idleTimerId) window.clearTimeout(idleTimerId);
       ro.disconnect();
+      visibilityObserver.disconnect();
       mediaQuery.removeEventListener('change', onMotionChange);
 
       domEl.removeEventListener('mousedown', onPointerDown);
@@ -502,7 +518,7 @@ export default function HolographicGlobe() {
   }, []);
 
   return (
-    <div ref={containerRef} className="holographic-stage-wrapper" aria-label="3D Holographic Kinetic Sphere System Core">
+    <div ref={containerRef} className={`holographic-stage-wrapper ${className}`.trim()} aria-label="3D Holographic Kinetic Sphere System Core">
       {/* 3D WebGL Canvas */}
       <div ref={canvasContainerRef} className="holographic-globe-canvas-mount" />
 
