@@ -156,5 +156,12 @@ Documentation-only changes, configuration changes, dependency changes, source ch
 - Files: `vercel.json`, `CHANGE.md`
 - Verification: `npm run build` passed cleanly with 117 modules transformed; `node --test tests/*.test.mjs` passed (42/42).
 
+## 2026-09-01 — Add .nojekyll and document GitHub Pages Actions deployment source
+
+- Summary: Added `public/.nojekyll` to prevent Jekyll processing on GitHub Pages assets. Documented the required GitHub Pages setting change from "Deploy from a branch" (which serves raw unbuilt root files resulting in text/jsx MIME errors) to "GitHub Actions" (which runs `.github/workflows/deploy.yml` and publishes the compiled `dist/` bundle).
+- Files: `public/.nojekyll`, `CHANGE.md`
+- Verification: `npm run build` verified that `dist/.nojekyll` is generated properly; all 42 Node unit tests passed.
+
+
 
 
