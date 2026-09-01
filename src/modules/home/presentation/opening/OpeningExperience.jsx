@@ -111,14 +111,19 @@ export default function OpeningExperience({ onHandoff = noop, onComplete = noop 
       .call(() => setBootProgress(100), OPENING_BEATS[0].start + 300)
       .add(bootHud, { opacity: [1, 0], y: [0, -12], duration: 450 }, OPENING_BEATS[1].start)
       .add([dash, aero], {
-        opacity: [0, 0.78], y: ['48vh', '11vh'], scale: [0.5, 0.86], duration: 2_100, delay: stagger(140),
+        opacity: [0, 0.78],
+        x: (_, index) => (index === 0 ? ['-28vw', 0] : ['28vw', 0]),
+        y: ['16vh', '11vh'],
+        scale: [0.38, 0.86],
+        filter: ['blur(8px) brightness(.7)', 'blur(0px) brightness(1)'],
+        duration: 2_100, delay: stagger(140),
       }, OPENING_BEATS[1].start)
       .call(() => root.classList.add('opening--mascots-front'), OPENING_BEATS[2].start)
       .add(globe, { scale: [1, 0.76], y: [0, '-6vh'], opacity: [1, 0.54], duration: 1_200 }, OPENING_BEATS[2].start)
       .add([dash, aero], { y: ['11vh', 0], scale: [0.86, 1], opacity: [0.78, 1], duration: 1_200 }, OPENING_BEATS[2].start)
       .call(() => setLiveStatement(OPENING_STATEMENTS[0]), OPENING_BEATS[3].start)
-      .add(aero, { scale: 0.86, opacity: 0.62, filter: 'blur(1px) brightness(.8)', duration: 600 }, OPENING_BEATS[3].start)
-      .add(dash, { x: '-6vw', scale: 1.05, opacity: 1, filter: 'blur(0px) brightness(1.1)', duration: 600 }, OPENING_BEATS[3].start)
+      .add(aero, { scale: 0.86, opacity: 0.48, x: '-2vw', filter: 'blur(2px) brightness(.7)', duration: 600 }, OPENING_BEATS[3].start)
+      .add(dash, { x: '-4vw', scale: 1.06, opacity: 1, filter: 'blur(0px) brightness(1.15) drop-shadow(0 0 24px rgba(25, 230, 140, .45))', duration: 600 }, OPENING_BEATS[3].start)
       .add(dashArm, { rotate: [-4, -28], duration: 620 }, 4_080)
       .add(dashProjectionTargets, { opacity: [0, 1], scale: [0.78, 1], duration: 700 }, 4_160)
       .add(dashProjectionCopy, {
@@ -126,8 +131,8 @@ export default function OpeningExperience({ onHandoff = noop, onComplete = noop 
       }, 4_460)
       .add(dashProjectionTargets, { opacity: [1, 0], scale: [1, 0.9], duration: 380 }, 5_520)
       .call(() => setLiveStatement(OPENING_STATEMENTS[1]), OPENING_BEATS[4].start)
-      .add(dash, { scale: 0.86, opacity: 0.62, filter: 'blur(1px) brightness(.8)', duration: 600 }, OPENING_BEATS[4].start)
-      .add(aero, { x: '6vw', scale: 1.04, opacity: 1, filter: 'blur(0px) brightness(1.1)', duration: 600 }, OPENING_BEATS[4].start)
+      .add(dash, { scale: 0.86, opacity: 0.48, x: '2vw', filter: 'blur(2px) brightness(.7)', duration: 600 }, OPENING_BEATS[4].start)
+      .add(aero, { x: '4vw', scale: 1.06, opacity: 1, filter: 'blur(0px) brightness(1.15) drop-shadow(0 0 24px rgba(98, 232, 232, .45))', duration: 600 }, OPENING_BEATS[4].start)
       .add(aeroArm, { rotate: [0, -14], duration: 620 }, 6_080)
       .add(aeroProjectionTargets, { opacity: [0, 1], scaleX: [0.78, 1], duration: 700 }, 6_160)
       .add(aeroProjectionCopy, {
@@ -136,8 +141,8 @@ export default function OpeningExperience({ onHandoff = noop, onComplete = noop 
       .add(aeroProjectionTargets, { opacity: [1, 0], scaleX: [1, 0.9], duration: 380 }, 7_520)
       .call(() => setLiveStatement(OPENING_STATEMENTS[2]), OPENING_BEATS[5].start)
       .add(root.querySelector('[data-globe-core]'), { scale: [1, 1.3, 1], opacity: [0.5, 0.82, 0.5], duration: 800 }, OPENING_BEATS[5].start)
-      .add(aero, { scale: 0.86, opacity: 0.62, filter: 'blur(1px) brightness(.8)', duration: 600 }, OPENING_BEATS[5].start)
-      .add(dash, { scale: 1.06, opacity: 1, filter: 'blur(0px) brightness(1.12)', duration: 600 }, OPENING_BEATS[5].start)
+      .add(aero, { scale: 0.86, opacity: 0.48, x: '-1vw', filter: 'blur(2px) brightness(.7)', duration: 600 }, OPENING_BEATS[5].start)
+      .add(dash, { x: '-3vw', scale: 1.06, opacity: 1, filter: 'blur(0px) brightness(1.15) drop-shadow(0 0 24px rgba(25, 230, 140, .45))', duration: 600 }, OPENING_BEATS[5].start)
       .add(dashProjectionTargets, { opacity: [0, 1], scale: [0.78, 1.04], duration: 700 }, 8_160)
       .add(dashProjectionCopy, {
         opacity: [0, 1], y: [8, 0], delay: stagger(120), duration: 380,

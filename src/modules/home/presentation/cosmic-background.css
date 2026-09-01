@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Cosmic Page 1 Background System
+   Cosmic Page Background System (Unified Global Ambience)
    ========================================================================== */
 
 .cosmic-page-background {
@@ -17,13 +17,27 @@
   isolation: isolate;
 }
 
+/* Subtle Tactical Aerospace Micro-Grid Texture */
+.cosmic-tactical-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(16, 185, 129, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 185, 129, 0.035) 1px, transparent 1px);
+  background-size: 3.5rem 3.5rem;
+  mask-image: radial-gradient(circle at 50% 40%, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at 50% 40%, black 30%, transparent 80%);
+  opacity: 0.85;
+  z-index: 1;
+}
+
 .cosmic-canvas {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
 }
 
 .cosmic-nebula-glow {
@@ -32,15 +46,31 @@
   height: 85vw;
   max-width: 1100px;
   max-height: 1100px;
-  top: 10%;
+  top: 8%;
   left: 50%;
   transform: translateX(-50%);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.16) 0%, rgba(6, 78, 59, 0.08) 50%, transparent 70%);
-  filter: blur(70px);
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, rgba(6, 78, 59, 0.08) 50%, transparent 70%);
+  filter: blur(80px);
   z-index: 1;
   pointer-events: none;
   animation: nebulaPulsePage 9s ease-in-out infinite alternate;
+}
+
+.cosmic-secondary-aura {
+  position: absolute;
+  width: 60vw;
+  height: 60vw;
+  max-width: 800px;
+  max-height: 800px;
+  bottom: 12%;
+  right: 5%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(14, 116, 144, 0.12) 0%, rgba(6, 78, 59, 0.05) 55%, transparent 70%);
+  filter: blur(90px);
+  z-index: 1;
+  pointer-events: none;
+  animation: nebulaSecondaryPulse 12s ease-in-out infinite alternate;
 }
 
 @keyframes nebulaPulsePage {
@@ -48,10 +78,15 @@
   100% { transform: translateX(-50%) scale(1.08) rotate(90deg); opacity: 0.95; }
 }
 
+@keyframes nebulaSecondaryPulse {
+  0% { transform: scale(0.95); opacity: 0.5; }
+  100% { transform: scale(1.12); opacity: 0.85; }
+}
+
 .cosmic-celestial-field {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 3;
   pointer-events: none;
 }
 
@@ -77,6 +112,12 @@
     #f4f7f4;
 }
 
+:root[data-theme='light'] .cosmic-tactical-grid {
+  background-image:
+    linear-gradient(rgba(4, 120, 87, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(4, 120, 87, 0.04) 1px, transparent 1px);
+}
+
 :root[data-theme='light'] .cosmic-star {
   background: #069668;
   box-shadow: 0 0 4px #069668;
@@ -84,7 +125,7 @@
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-  .cosmic-nebula-glow, .cosmic-star {
+  .cosmic-nebula-glow, .cosmic-secondary-aura, .cosmic-star {
     animation: none !important;
   }
 }

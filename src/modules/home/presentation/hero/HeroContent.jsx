@@ -20,13 +20,13 @@ export default function HeroContent() {
           SYSTEM ACCESS <span className="access-dot" aria-hidden="true">•</span> <span className="access-online">ONLINE</span>
         </div>
         
-        <a className="btn-command-center" href="#client-story">
-          <span>START WITH THE PROBLEM</span>
+        <a className="btn-command-center" href="#problem">
+          <span>EXPLORE THE SYSTEM</span>
           <span className="btn-arrow" aria-hidden="true">&gt;&gt;</span>
         </a>
 
-        <a className="btn-explore-work" href="#command-center">
-          <span>SEE THE EVIDENCE</span>
+        <a className="btn-explore-work" href="#systems">
+          <span>VIEW SYSTEMS</span>
           <span className="btn-arrow" aria-hidden="true">&gt;&gt;</span>
         </a>
       </div>

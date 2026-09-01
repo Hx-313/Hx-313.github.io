@@ -7,7 +7,7 @@ export default function CosmicBackground() {
   // Generate celestial stars
   const backgroundStars = useMemo(() => {
     const stars = [];
-    for (let i = 0; i < 65; i++) {
+    for (let i = 0; i < 72; i++) {
       stars.push({
         id: i,
         x: (i * 17 + 5) % 100,
@@ -21,53 +21,80 @@ export default function CosmicBackground() {
     return stars;
   }, []);
 
-  // Smooth zero-g space particle canvas for Page 1
+  // Smooth zero-g space particle canvas spanning the entire viewport
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return undefined;
     const ctx = canvas.getContext('2d');
+    if (!ctx) return undefined;
+
     let animationFrameId;
+    let mouseX = 0;
+    let mouseY = 0;
+    let targetMouseX = 0;
+    let targetMouseY = 0;
 
     const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      canvas.width = Math.round(window.innerWidth * dpr);
+      canvas.height = Math.round(window.innerHeight * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     resize();
     window.addEventListener('resize', resize);
 
-    const particles = Array.from({ length: 80 }, (_, i) => ({
+    const onMouseMove = (e) => {
+      targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+      targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+    };
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+
+    const numParticles = 95;
+    const particles = Array.from({ length: numParticles }, (_, i) => ({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
-      radius: Math.random() * 1.6 + 0.6,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3 - 0.15, // gentle upward zero-g drift
-      color: i % 3 === 0 ? '#10b981' : '#ffffff',
-      alpha: Math.random() * 0.5 + 0.25,
+      radius: Math.random() * 1.5 + 0.5,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: -(Math.random() * 0.25 + 0.08), // calm upward zero-g drift
+      color: i % 4 === 0 ? '#10b981' : i % 7 === 0 ? '#00f2fe' : '#ffffff',
+      alpha: Math.random() * 0.45 + 0.2,
+      pulseSpeed: Math.random() * 0.02 + 0.008,
+      pulsePhase: Math.random() * Math.PI * 2,
     }));
 
     const render = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      // Smooth mouse parallax lerp
+      mouseX += (targetMouseX - mouseX) * 0.04;
+      mouseY += (targetMouseY - mouseY) * 0.04;
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
+        p.pulsePhase += p.pulseSpeed;
+        const currentAlpha = p.alpha * (0.7 + 0.3 * Math.sin(p.pulsePhase));
 
-        if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
-        if (p.y < 0) p.y = canvas.height;
-        if (p.y > canvas.height) p.y = 0;
+        p.x += p.vx + mouseX * 0.15;
+        p.y += p.vy + mouseY * 0.15;
+
+        if (p.x < -10) p.x = w + 10;
+        if (p.x > w + 10) p.x = -10;
+        if (p.y < -10) p.y = h + 10;
+        if (p.y > h + 10) p.y = -10;
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
-        ctx.globalAlpha = p.alpha;
-        ctx.shadowBlur = 6;
+        ctx.globalAlpha = currentAlpha;
+        ctx.shadowBlur = p.color === '#ffffff' ? 4 : 8;
         ctx.shadowColor = p.color;
         ctx.fill();
       }
 
       ctx.globalAlpha = 1;
+      ctx.shadowBlur = 0;
       animationFrameId = requestAnimationFrame(render);
     };
 
@@ -75,19 +102,26 @@ export default function CosmicBackground() {
 
     return () => {
       window.removeEventListener('resize', resize);
+      window.removeEventListener('mousemove', onMouseMove);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
   return (
     <div className="cosmic-page-background" aria-hidden="true">
-      {/* 1. Starfield Canvas */}
+      {/* 1. Tactical Micro-Grid Mesh Layer */}
+      <div className="cosmic-tactical-grid" />
+
+      {/* 2. Interactive Starfield Canvas */}
       <canvas ref={canvasRef} className="cosmic-canvas" />
 
-      {/* 2. Ambient Cosmic Nebula Glow */}
+      {/* 3. Ambient Cosmic Nebula Glow */}
       <div className="cosmic-nebula-glow" />
 
-      {/* 3. Twinkling Celestial Starfield */}
+      {/* 4. Deep Space Ambient Aura 2 */}
+      <div className="cosmic-secondary-aura" />
+
+      {/* 5. Twinkling Celestial Starfield */}
       <div className="cosmic-celestial-field">
         {backgroundStars.map((s) => (
           <span

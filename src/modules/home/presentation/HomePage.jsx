@@ -4,6 +4,7 @@ import CosmicBackground from './CosmicBackground.jsx';
 import SiteHeader from './header/SiteHeader.jsx';
 import Hero from './hero/Hero.jsx';
 import ClientStory from './client-story/ClientStory.jsx';
+import HowIBuild from './how-i-build/HowIBuild.jsx';
 import CommandCenter from './command-center/CommandCenter.jsx';
 import Mascots from '../../../components/Mascots.jsx';
 import { useTheme } from '../../../shared/theme/useTheme.js';
@@ -50,8 +51,11 @@ export default function HomePage() {
 
           <ClientStory />
 
+          <HowIBuild />
+
           {/* Page 2: Dedicated Command Center & System Proof */}
-          <section id="command-center" className="command-center-portal-section" aria-label="System Command Center">
+          <section id="command-center" className="command-center-portal-section" aria-label="System Command Center" data-section="systems">
+            <span id="systems" className="section-anchor-compat" aria-hidden="true" />
             <Mascots stage="page2" showController={false} />
             <CommandCenter controller={commandCenter} />
           </section>

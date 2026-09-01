@@ -13,12 +13,12 @@ import DashMascot from './mascots/DashMascot.jsx';
 
 const PAGE_ZONES = {
   page1: [
-    { x: 68, y: 16, label: 'Globe Sky' },
-    { x: 84, y: 48, label: 'Telemetry Orbit' },
-    { x: 52, y: 16, label: 'Upper Central Sky' },
-    { x: 50, y: 68, label: 'Lower Core Orbit' },
-    { x: 78, y: 72, label: 'South East Sky' },
-    { x: 86, y: 22, label: 'East High Orbit' },
+    { x: 38, y: 48, label: 'Globe Left Equator' },
+    { x: 68, y: 48, label: 'Globe Right Equator' },
+    { x: 40, y: 26, label: 'Globe North-West Sky' },
+    { x: 66, y: 26, label: 'Globe North-East Sky' },
+    { x: 38, y: 64, label: 'Globe South-West Sky' },
+    { x: 68, y: 64, label: 'Globe South-East Sky' },
   ],
   page2: [
     { x: 22, y: 30, label: 'Active Build' },
@@ -33,39 +33,39 @@ const PAGE_ZONES = {
 export const HERO_GREETINGS = {
   page1: [
     {
-      who: 'aero',
-      text: "👋 Greetings! Welcome to **Hafiz Ali Abdullah's** station. I'm **Aero** — your AI Architecture & Systems guide!",
-      expr: 'happy',
-      anim: 'm-dance',
+      who: 'dash',
+      text: "⚡ Greetings! Welcome to **Hafiz Ali Abdullah's** station! I'm **Dash** — lead system drone & Flutter specialist!",
+      expr: 'excited',
+      anim: 'm-bounce',
       delay: 600,
       duration: 5000,
       chips: [
-        { label: '💡 Who is Abdullah?', action: 'who' },
+        { label: '📱 Shipped Apps', action: 'apps' },
         { label: '🚀 What do you build?', action: 'build' },
       ],
     },
     {
-      who: 'dash',
-      text: "⚡ And I'm **Dash**! System Drone & Flutter specialist! We build high-speed apps, scalable SaaS & monitor live telemetry!",
-      expr: 'excited',
-      anim: 'm-bounce',
+      who: 'aero',
+      text: "🤖 And I'm **Aero** — your AI architecture & systems guide! We build high-speed apps, scalable SaaS & real-time telemetry.",
+      expr: 'happy',
+      anim: 'm-dance',
       delay: 6000,
       duration: 5000,
       chips: [
-        { label: '📱 Shipped Apps', action: 'apps' },
-        { label: '⚡ Do a Flip!', action: 'flip' },
+        { label: '💡 Who is Abdullah?', action: 'who' },
+        { label: '📊 System Architecture', action: 'stack' },
       ],
     },
     {
-      who: 'aero',
-      text: "✨ Feel free to explore our 3D Command Center, click either of us to chat, or drag us anywhere in zero-g!",
+      who: 'dash',
+      text: "✨ Feel free to explore our 3D globe & command center, click either of us to chat, or drag us around in zero-g!",
       expr: 'winking',
-      anim: 'm-poke-right',
+      anim: 'm-spin',
       delay: 11400,
       duration: 5200,
       chips: [
         { label: '🎯 Command Center', action: 'command_center' },
-        { label: '💬 Say Hello!', action: 'hello' },
+        { label: '⚡ Do a Flip!', action: 'flip' },
       ],
     },
   ],
@@ -115,8 +115,8 @@ export default function Mascots({ stage = 'page1', showController = true, active
   const activePage = stage;
 
   // Stationed in right visual stage framing globe & telemetry (away from left hero typography)
-  const defaultAero = stage === 'page1' ? { x: 68, y: 16 } : { x: 22, y: 28 };
-  const defaultDash = stage === 'page1' ? { x: 82, y: 52 } : { x: 78, y: 42 };
+  const defaultAero = stage === 'page1' ? { x: 38, y: 48 } : { x: 22, y: 28 };
+  const defaultDash = stage === 'page1' ? { x: 68, y: 48 } : { x: 78, y: 42 };
 
   const [aeroPos, setAeroPos] = useState(defaultAero);
   const [dashPos, setDashPos] = useState(defaultDash);
@@ -446,8 +446,8 @@ export default function Mascots({ stage = 'page1', showController = true, active
     const jitterY = Math.random() * 6 - 3;
 
     return {
-      x: Math.max(stage === 'page1' ? 48 : 12, Math.min(88, targetZone.x + jitterX)),
-      y: Math.max(12, Math.min(78, targetZone.y + jitterY)),
+      x: Math.max(stage === 'page1' ? 36 : 12, Math.min(stage === 'page1' ? 70 : 88, targetZone.x + jitterX)),
+      y: Math.max(stage === 'page1' ? 22 : 12, Math.min(stage === 'page1' ? 70 : 78, targetZone.y + jitterY)),
     };
   }, [activePage, stage]);
 

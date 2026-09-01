@@ -1,13 +1,9 @@
 .home-page {
   min-height: 100dvh;
   overflow-x: clip;
-  background:
-    radial-gradient(circle at 75% 15%, rgba(16, 185, 129, 0.12) 0%, transparent 40rem),
-    radial-gradient(circle at 15% 45%, rgba(14, 116, 144, 0.1) 0%, transparent 35rem),
-    radial-gradient(circle at 50% 85%, rgba(6, 78, 59, 0.15) 0%, transparent 45rem),
-    var(--color-background);
+  background: transparent;
   color: var(--color-foreground);
-  transition: background-color 350ms ease, color 350ms ease;
+  transition: color 350ms ease;
 }
 
 .site-experience {
@@ -47,14 +43,14 @@
   overflow: hidden;
   isolation: isolate;
   padding: 4rem 0 6rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  background: radial-gradient(circle at 50% 10%, rgba(16, 185, 129, 0.05) 0%, transparent 60%), #06090e;
-  transition: background 350ms ease, border-color 350ms ease;
+  border-top: 1px solid rgba(16, 185, 129, 0.12);
+  background: transparent;
+  transition: border-color 350ms ease;
 }
 
 :root[data-theme='light'] .command-center-portal-section {
-  background: radial-gradient(circle at 50% 10%, rgba(4, 120, 87, 0.06) 0%, transparent 60%), #eef4f0;
-  border-top: 1px solid rgba(0, 59, 47, 0.12);
+  background: transparent;
+  border-top: 1px solid rgba(0, 59, 47, 0.1);
 }
 
 .site-footer {

@@ -11,13 +11,16 @@ test('SiteHeader component contains tactical navigation, live telemetry, socials
 
   // Navigation Items
   assert.match(jsx, /Overview/, 'should contain Overview nav item');
-  assert.match(jsx, /The Problem/, 'should contain client-story nav item');
-  assert.match(jsx, /Command Center/, 'should contain Command Center nav item');
+  assert.match(jsx, /01 Problem/, 'should contain problem chapter nav item');
+  assert.match(jsx, /02 Build/, 'should contain build chapter nav item');
+  assert.match(jsx, /03 Systems/, 'should contain systems chapter nav item');
   assert.match(jsx, /Contact/, 'should contain Contact nav item');
-  assert.match(jsx, /client-story/, 'should observe the client story anchor');
+  assert.match(jsx, /aria-current=\{isActive \? 'location' : undefined\}/, 'should set aria-current="location" for active section');
+  assert.match(jsx, /IntersectionObserver/, 'should use IntersectionObserver for performant scroll-spying');
   assert.match(jsx, /prefers-reduced-motion/, 'should avoid smooth scrolling for reduced-motion users');
 
   // Telemetry & Status
+  assert.match(jsx, /ithx-logo\.png|site-brand-logo-img/, 'should render official itHX brand logo image');
   assert.match(jsx, /SYS TIME|Live System Time/, 'should contain system time telemetry');
   assert.match(jsx, /SYS: ONLINE|status-live-dot/, 'should contain online status beacon');
 
@@ -53,3 +56,4 @@ test('header.css defines sticky styling, frosted backdrop, light theme tokens, a
   assert.match(css, /\.mobile-nav-drawer/, 'must contain mobile drawer styles');
   assert.match(css, /height:\s*100dvh/, 'mobile drawer must span the viewport height');
 });
+

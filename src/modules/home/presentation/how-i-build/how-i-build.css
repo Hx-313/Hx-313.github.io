@@ -1,0 +1,730 @@
+/* Chapter 02: HOW I BUILD Section Styling - Minimalist Console Architecture */
+.how-i-build-section {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  padding: 5.5rem 0 6.5rem;
+  scroll-margin-top: var(--header-offset, 4.5rem);
+  background: transparent;
+  color: var(--color-foreground);
+  overflow: clip;
+}
+
+.how-i-build__container {
+  width: min(100% - 3rem, 1200px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+/* ==========================================================================
+   1. EDITORIAL HEADER LOCKUP
+   ========================================================================== */
+.how-i-build__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.chapter-marker-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.35rem 0.95rem;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  background: rgba(4, 18, 14, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 2px;
+}
+
+:root[data-theme='light'] .chapter-marker-pill {
+  background: rgba(240, 246, 242, 0.9);
+  border-color: rgba(4, 120, 87, 0.25);
+}
+
+.pill-chapter {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--story-accent);
+}
+
+.pill-divider {
+  width: 1px;
+  height: 10px;
+  background: rgba(16, 185, 129, 0.35);
+}
+
+.pill-tagline {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--story-muted);
+  text-transform: uppercase;
+}
+
+.how-i-build__hook-headline {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4.4vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.how-i-build__hook-headline span {
+  color: var(--color-foreground);
+}
+
+.how-i-build__hook-headline .accent-statement {
+  color: var(--story-accent);
+}
+
+.how-i-build__subtext {
+  margin: 0;
+  max-width: 680px;
+  color: var(--story-muted);
+  font-size: clamp(0.92rem, 1.2vw, 1.05rem);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+/* ==========================================================================
+   2. UNIFIED ARCHITECTURAL CONSOLE CARD
+   ========================================================================== */
+.how-i-build__console-card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(5, 20, 16, 0.75);
+  border: 1px solid rgba(16, 185, 129, 0.22);
+  border-radius: 6px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+:root[data-theme='light'] .how-i-build__console-card {
+  background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(4, 120, 87, 0.18);
+  box-shadow: 0 1rem 3rem rgba(4, 120, 87, 0.08);
+}
+
+/* Console Header Tabs */
+.console-controls-header {
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid rgba(16, 185, 129, 0.15);
+  background: rgba(3, 14, 11, 0.6);
+}
+
+:root[data-theme='light'] .console-controls-header {
+  background: rgba(246, 250, 247, 0.95);
+  border-bottom-color: rgba(4, 120, 87, 0.12);
+}
+
+.discipline-tablist-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.discipline-tab-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--story-muted);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  border-radius: 3px;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease,
+    transform 150ms var(--ease-out);
+}
+
+:root[data-theme='light'] .discipline-tab-btn {
+  color: #4b5563;
+}
+
+.discipline-tab-btn:hover,
+.discipline-tab-btn:focus-visible {
+  color: var(--color-foreground);
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+.discipline-tab-btn:focus-visible {
+  outline: 2px solid var(--story-accent);
+  outline-offset: 2px;
+}
+
+.discipline-tab-btn.is-active-tab {
+  background: rgba(16, 185, 129, 0.16);
+  border-color: var(--story-accent);
+  color: var(--color-foreground);
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.12);
+}
+
+:root[data-theme='light'] .discipline-tab-btn.is-active-tab {
+  background: rgba(4, 120, 87, 0.1);
+  border-color: #047857;
+  color: #047857;
+}
+
+.tab-num-tag {
+  font-size: 0.7rem;
+  color: var(--story-accent);
+}
+
+.tab-pulse-beacon {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--story-accent);
+  box-shadow: 0 0 6px var(--story-accent);
+}
+
+/* Split Console Body */
+.console-split-body {
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) minmax(440px, 1.4fr);
+  min-height: 480px;
+}
+
+/* Left Column: Active Discipline Reasoning Panel */
+.discipline-reasoning-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2.25rem;
+  border-right: 1px solid rgba(16, 185, 129, 0.15);
+  background: rgba(4, 16, 13, 0.4);
+}
+
+:root[data-theme='light'] .discipline-reasoning-panel {
+  background: rgba(250, 252, 250, 0.7);
+  border-right-color: rgba(4, 120, 87, 0.12);
+}
+
+.discipline-reasoning-panel:focus-visible {
+  outline: 2px solid var(--story-accent);
+  outline-offset: -2px;
+}
+
+.panel-badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.panel-number-pill {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--story-accent);
+}
+
+.panel-focus-tag {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--story-muted);
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 2px;
+}
+
+.panel-lead-headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.8vw, 1.6rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--color-foreground);
+}
+
+.panel-stack-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.stack-label,
+.summary-label {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--story-accent);
+  text-transform: uppercase;
+}
+
+.stack-chips-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.tech-chip {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--color-foreground);
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  padding: 0.25rem 0.65rem;
+  border-radius: 3px;
+}
+
+:root[data-theme='light'] .tech-chip {
+  background: rgba(4, 120, 87, 0.06);
+  border-color: rgba(4, 120, 87, 0.2);
+  color: #111827;
+}
+
+.panel-summary-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.1rem 1.25rem;
+  background: rgba(6, 24, 19, 0.6);
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  border-radius: 4px;
+}
+
+:root[data-theme='light'] .panel-summary-box {
+  background: #ffffff;
+  border-color: rgba(4, 120, 87, 0.14);
+}
+
+.summary-text {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--story-muted);
+}
+
+/* Right Column: Living Blueprint View */
+.console-blueprint-view {
+  padding: 1.75rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.system-blueprint-canvas {
+  position: relative;
+  width: 100%;
+}
+
+.blueprint-stack {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Blueprint Tiers */
+.blueprint-tier {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border-radius: 4px;
+  background: rgba(6, 22, 17, 0.4);
+  border: 1px solid rgba(16, 185, 129, 0.12);
+  transition: border-color 300ms ease, background-color 300ms ease;
+}
+
+:root[data-theme='light'] .blueprint-tier {
+  background: rgba(246, 250, 247, 0.7);
+  border-color: rgba(4, 120, 87, 0.1);
+}
+
+.blueprint-tier.is-tier-focused {
+  border-color: rgba(16, 185, 129, 0.35);
+  background: rgba(6, 26, 20, 0.65);
+}
+
+:root[data-theme='light'] .blueprint-tier.is-tier-focused {
+  background: rgba(236, 246, 239, 0.9);
+  border-color: rgba(4, 120, 87, 0.28);
+}
+
+.tier-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.tier-title-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--story-accent);
+}
+
+.tier-number {
+  color: var(--story-muted);
+}
+
+.tier-meta-tags {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.tier-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--story-muted);
+  text-transform: uppercase;
+}
+
+.tier-active-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--color-lime, #79f29a);
+  letter-spacing: 0.08em;
+}
+
+/* Nodes Layout */
+.tier-nodes-layout {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.65rem;
+  position: relative;
+  z-index: 2;
+}
+
+.blueprint-node {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.75rem 0.85rem;
+  background: rgba(4, 18, 14, 0.7);
+  border: 1px solid rgba(16, 185, 129, 0.14);
+  border-radius: 3px;
+  transition:
+    opacity 300ms var(--ease-out),
+    border-color 300ms var(--ease-out),
+    background-color 300ms var(--ease-out),
+    transform 300ms var(--ease-out),
+    box-shadow 300ms var(--ease-out);
+}
+
+:root[data-theme='light'] .blueprint-node {
+  background: #ffffff;
+  border-color: rgba(4, 120, 87, 0.12);
+}
+
+/* Focus Opacities */
+.blueprint-node.is-active {
+  opacity: 1;
+  border-color: var(--story-accent);
+  background: rgba(16, 185, 129, 0.14);
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.18);
+  transform: translateY(-2px);
+}
+
+:root[data-theme='light'] .blueprint-node.is-active {
+  background: rgba(4, 120, 87, 0.08);
+  border-color: #047857;
+  box-shadow: 0 4px 12px rgba(4, 120, 87, 0.12);
+}
+
+.blueprint-node.is-related {
+  opacity: 0.65;
+  border-color: rgba(16, 185, 129, 0.28);
+}
+
+.blueprint-node.is-unrelated {
+  opacity: 0.28;
+}
+
+.node-head {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.node-status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--story-muted);
+}
+
+.is-active .node-status-dot {
+  background: var(--story-accent);
+  box-shadow: 0 0 6px var(--story-accent);
+}
+
+.node-title {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--color-foreground);
+}
+
+.node-detail-text {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  line-height: 1.4;
+  color: var(--story-muted);
+}
+
+.is-active .node-detail-text {
+  color: var(--color-foreground);
+}
+
+/* Bus Divider */
+.tier-bus-line {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.bus-track {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.2), transparent);
+}
+
+.bus-pill-label {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--story-accent);
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  background: rgba(3, 14, 11, 0.85);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 2px;
+}
+
+:root[data-theme='light'] .bus-pill-label {
+  background: #ffffff;
+  border-color: rgba(4, 120, 87, 0.2);
+}
+
+/* Console Footer: Engineering Priorities */
+.console-priorities-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 0.85rem 1.75rem;
+  border-top: 1px solid rgba(16, 185, 129, 0.15);
+  background: rgba(3, 14, 11, 0.6);
+}
+
+:root[data-theme='light'] .console-priorities-footer {
+  background: rgba(246, 250, 247, 0.95);
+  border-top-color: rgba(4, 120, 87, 0.12);
+}
+
+.priorities-tag {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--story-accent);
+  text-transform: uppercase;
+}
+
+.priorities-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.priority-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-foreground);
+}
+
+.priority-bullet {
+  color: var(--story-accent);
+}
+
+/* ==========================================================================
+   3. CHAPTER BRIDGE BANNER
+   ========================================================================= */
+.chapter-bridge-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 1.5rem 2rem;
+  border: 1px solid rgba(16, 185, 129, 0.22);
+  background: rgba(4, 18, 14, 0.6);
+  border-radius: 4px;
+}
+
+:root[data-theme='light'] .chapter-bridge-banner {
+  background: rgba(240, 246, 242, 0.85);
+  border-color: rgba(4, 120, 87, 0.2);
+}
+
+.bridge-lead {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: clamp(0.82rem, 1.2vw, 0.95rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-foreground);
+  text-transform: uppercase;
+}
+
+.bridge-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 44px;
+  padding: 0.7rem 1.25rem;
+  border: 1px solid var(--story-accent);
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--story-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease,
+    transform 200ms var(--ease-out);
+}
+
+.bridge-cta-btn:hover {
+  background: var(--story-accent);
+  color: var(--color-accent-foreground);
+  transform: translateY(-2px);
+}
+
+.bridge-cta-btn:focus-visible {
+  outline: 2px solid var(--story-accent);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 960px) {
+  .console-split-body {
+    grid-template-columns: 1fr;
+  }
+
+  .discipline-reasoning-panel {
+    border-right: none;
+    border-bottom: 1px solid rgba(16, 185, 129, 0.15);
+    padding: 1.75rem;
+  }
+
+  .console-blueprint-view {
+    padding: 1.75rem;
+  }
+
+  .discipline-tablist-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .how-i-build-section {
+    padding: 4rem 0 5rem;
+  }
+
+  .how-i-build__container {
+    width: min(100% - 2rem, 100%);
+    gap: 2.5rem;
+  }
+
+  .discipline-tablist-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .tier-nodes-layout {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .discipline-reasoning-panel,
+  .console-blueprint-view {
+    padding: 1.25rem 1rem;
+  }
+
+  .console-priorities-footer,
+  .chapter-bridge-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.25rem 1rem;
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .blueprint-node,
+  .discipline-tab-btn,
+  .bridge-cta-btn,
+  .node-status-dot {
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .bus-pulse-dot {
+    animation: none !important;
+    display: none !important;
+  }
+}

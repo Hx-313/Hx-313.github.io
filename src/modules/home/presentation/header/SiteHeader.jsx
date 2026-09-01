@@ -5,8 +5,9 @@ import './header.css';
 
 const NAV_ITEMS = [
   { id: 'top', label: 'Overview', href: '#top' },
-  { id: 'client-story', label: 'The Problem', href: '#client-story' },
-  { id: 'command-center', label: 'Command Center', href: '#command-center' },
+  { id: 'problem', label: '01 Problem', href: '#problem' },
+  { id: 'how-i-build', label: '02 Build', href: '#how-i-build' },
+  { id: 'systems', label: '03 Systems', href: '#systems' },
   { id: 'contact', label: 'Contact', href: contactLinks.email },
 ];
 
@@ -27,23 +28,61 @@ export default function SiteHeader({ theme, setTheme }) {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScrollScrolled = () => {
       setIsScrolled(window.scrollY > 20);
-
-      const sectionIds = ['command-center', 'client-story'];
-      for (const id of sectionIds) {
-        const section = document.getElementById(id);
-        if (section && section.getBoundingClientRect().top <= window.innerHeight * 0.4) {
-          setActiveSection(id);
-          return;
-        }
-      }
-      setActiveSection('top');
     };
+    window.addEventListener('scroll', handleScrollScrolled, { passive: true });
+    handleScrollScrolled();
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    const sections = [
+      { id: 'top', element: document.getElementById('top') },
+      { id: 'problem', element: document.getElementById('problem') || document.getElementById('client-story') },
+      { id: 'how-i-build', element: document.getElementById('how-i-build') },
+      { id: 'systems', element: document.getElementById('systems') || document.getElementById('command-center') },
+    ];
+
+    if (!('IntersectionObserver' in window)) {
+      const handleScrollFallback = () => {
+        for (const s of [...sections].reverse()) {
+          if (s.element && s.element.getBoundingClientRect().top <= window.innerHeight * 0.4) {
+            setActiveSection(s.id);
+            return;
+          }
+        }
+        setActiveSection('top');
+      };
+      window.addEventListener('scroll', handleScrollFallback, { passive: true });
+      handleScrollFallback();
+      return () => {
+        window.removeEventListener('scroll', handleScrollScrolled);
+        window.removeEventListener('scroll', handleScrollFallback);
+      };
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntries = entries.filter((e) => e.isIntersecting);
+        if (visibleEntries.length > 0) {
+          const matched = sections.find((s) => s.element === visibleEntries[0].target);
+          if (matched) {
+            setActiveSection(matched.id);
+          }
+        }
+      },
+      {
+        rootMargin: '-15% 0px -55% 0px',
+        threshold: [0, 0.2],
+      }
+    );
+
+    sections.forEach((s) => {
+      if (s.element) observer.observe(s.element);
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScrollScrolled);
+      observer.disconnect();
+    };
   }, []);
 
   // Close mobile menu on Escape key
@@ -87,15 +126,21 @@ export default function SiteHeader({ theme, setTheme }) {
   return (
     <header className={`site-header ${isScrolled ? 'is-scrolled' : ''}`} aria-label="Primary navigation">
       <div className="header-inner">
-        {/* Left: Clean Brand + Minimal Available Indicator */}
+        {/* Left: Clean Brand Logo + Minimal Available Indicator */}
         <div className="header-brand-wrap">
           <a
-            className="site-mark"
+            className="site-mark site-mark--logo"
             href="#top"
-            aria-label="Hafiz Ali Abdullah home"
+            aria-label="itHX - Hafiz Ali Abdullah"
             onClick={(e) => handleNavClick(e, '#top', 'top')}
           >
-            Hx<span>313</span>
+            <img
+              src="/brand/ithx-logo.png"
+              alt="itHX Logo"
+              className="site-brand-logo-img"
+              width="96"
+              height="28"
+            />
             <span className="status-live-dot" title="Available for hire" aria-hidden="true" />
           </a>
         </div>
@@ -110,7 +155,7 @@ export default function SiteHeader({ theme, setTheme }) {
                   <a
                     href={item.href}
                     className={`nav-link ${isActive ? 'is-active' : ''}`}
-                    aria-current={isActive ? 'page' : undefined}
+                    aria-current={isActive ? 'location' : undefined}
                     onClick={(e) => handleNavClick(e, item.href, item.id)}
                   >
                     <span className="nav-label">{item.label}</span>

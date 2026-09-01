@@ -158,9 +158,41 @@ Documentation-only changes, configuration changes, dependency changes, source ch
 
 ## 2026-09-01 — Add .nojekyll and document GitHub Pages Actions deployment source
 
-- Summary: Added `public/.nojekyll` to prevent Jekyll processing on GitHub Pages assets. Documented the required GitHub Pages setting change from "Deploy from a branch" (which serves raw unbuilt root files resulting in text/jsx MIME errors) to "GitHub Actions" (which runs `.github/workflows/deploy.yml` and publishes the compiled `dist/` bundle).
-- Files: `public/.nojekyll`, `CHANGE.md`
-- Verification: `npm run build` verified that `dist/.nojekyll` is generated properly; all 42 Node unit tests passed.
+## 2026-09-02 — Unify background across all sections with elevated cosmic cyber ambience
+
+- Summary: Established 100% background consistency across the entire portfolio site (Hero Overview, Client Story / Screen Hooks, and Command Center). Replaced disconnected section backgrounds with a unified global `CosmicBackground` system featuring an interactive zero-gravity particle canvas with cursor parallax, a subtle tactical aerospace micro-grid texture, and breathing multi-layer cosmic nebulae. Made `.home-page`, `.client-story`, and `.command-center-portal-section` transparent, and upgraded command center panels with frosted glassmorphic styling.
+- Files: `src/modules/home/presentation/CosmicBackground.jsx`, `src/modules/home/presentation/cosmic-background.css`, `src/modules/home/presentation/home.css`, `src/modules/home/presentation/client-story/client-story.css`, `src/modules/home/presentation/command-center/command-center.css`, `CHANGE.md`
+## 2026-09-02 — Smooth mascot intro emergence behind globe & cinematic focus transitions
+
+- Summary: Implemented smooth physical zero-gravity arc emergence for Aero and Dash directly from behind the central holographic globe (`x: [±28vw, 0]`, `y: [16vh, 11vh]`, `scale: [0.38, 0.86]`, `filter: blur(8px) -> blur(0px)`). Enhanced focus transitions during dialogue statements so the active speaker fluidly glides forward into glowing crisp focus while the inactive speaker and background softly recede with calibrated depth-of-field blur and subtle brightness easing.
+## 2026-09-02 — Position Aero & Dash centered on globe flanks & set Dash as opening/closing lead
+
+- Summary: Updated mascot vertical and horizontal alignment across the intro experience (`top: 50%` with Aero on the left at `left: 20%` and Dash on the right at `left: 80%` flanking the central globe equator). Configured Dash as the lead protagonist across both the intro and dashboard hero greetings (`HERO_GREETINGS.page1`), with Dash opening the introductory transmissions, Aero delivering secondary AI analytical support, and Dash delivering the closing transmission and handoff.
+- Files: `src/modules/home/presentation/opening/opening.css`, `src/components/Mascots.jsx`, `CHANGE.md`
+- Verification: Ran `node --test tests/*.test.mjs` with all 42 unit tests passing cleanly. Ran `npm run build` with 117 modules compiling cleanly in 6.12s with zero errors.
+
+## 2026-09-02 — Bulky single-step scroll hooks transitions with momentum suppression & dramatic value reveals
+
+- Summary: Implemented a discrete 3-tier kinetic gesture engine for the Client Story / Diagnostic Hooks section (`#problem` / `ClientStory.jsx`). Replaced fragile continuous scroll interpolation with an intent-based delta accumulator (`DELTA_THRESHOLD = 45px`), a dynamic momentum lockout (`LOCKOUT_DURATION = 680ms`), and an inertial velocity decay filter (`DECAY_TIMEOUT = 140ms`) so every scroll gesture advances strictly by 1 phase with zero multi-phase skipping. Preserved smooth native page scrolling when entering from the Hero/Dashboard (Phase 0 scrolling up) and exiting to the Command Center (Phase 5 scrolling down). Added touch swipe, keyboard arrows, and interactive phase dots navigation. Elevated visual motion with dramatic 3D scale and depth-of-field blur transitions, radiant emerald/cyan phosphor text glow on core value statements, staggered diagnostic card entrances, and an integrated tactical phase progress HUD (`[ 01 // 06 ]` with 6 interactive telemetry nodes).
+- Files: `src/modules/home/presentation/client-story/storyData.js`, `src/modules/home/presentation/client-story/ClientStory.jsx`, `src/modules/home/presentation/client-story/client-story.css`, `tests/client-scroll-story.test.mjs`, `docs/superpowers/specs/2026-09-02-bulky-scroll-hooks-transition-design.md`, `docs/superpowers/plans/2026-09-02-bulky-scroll-hooks-transition.md`, `CHANGE.md`
+- Verification: Ran `node --test tests/*.test.mjs` with all 52 unit tests passing cleanly. Ran `npm run build` transforming 123 modules and compiling cleanly in 5.99s with zero errors.
+
+## 2026-09-02 — Build Chapter 02: HOW I BUILD (System Delivery Model)
+
+- Summary: Built Chapter 02 (`#how-i-build` / `HowIBuild.jsx`) as an interactive engineering system delivery model. Structured into 3 clear visual beats: Beat 1 (Philosophy & Hook: "A SYSTEM ISN'T ONE PIECE OF SOFTWARE. / IT'S HOW THE PIECES WORK TOGETHER."), Beat 2 (3-Tier Blueprint: Experience, Domain & Data, Operations & Intelligence with explicit data buses and engineering priorities), and Beat 3 (Interactive WAI-ARIA tabs for BUILD, ARCHITECT, CONNECT, AUTOMATE with automatic keyboard activation, roving tabindex, live node focus opacity (100% active, 55% related, 25-30% unrelated without disappearing elements), single travelling data bus pulse with JS reduced-motion guard, and narrative bridge to Chapter 03 `#systems`). Integrated with SiteHeader navigation, full light/dark theme tokens, and complete responsive mobile vertical cards.
+- Files: `src/modules/home/presentation/how-i-build/howIBuildData.js`, `src/modules/home/presentation/how-i-build/HowIBuild.jsx`, `src/modules/home/presentation/how-i-build/SystemBlueprint.jsx`, `src/modules/home/presentation/how-i-build/DisciplineControllers.jsx`, `src/modules/home/presentation/how-i-build/DataBusOverlay.jsx`, `src/modules/home/presentation/how-i-build/how-i-build.css`, `src/modules/home/presentation/HomePage.jsx`, `src/modules/home/presentation/header/SiteHeader.jsx`, `package.json`, `tests/how-i-build-data.test.mjs`, `tests/how-i-build-interaction.test.mjs`, `tests/site-header.test.mjs`, `docs/superpowers/specs/2026-09-02-how-i-build-design.md`, `docs/superpowers/plans/2026-09-02-how-i-build.md`, `CHANGE.md`
+- Verification: Executed `npm test` (`node --test tests/*.test.mjs`) with all 52 unit and integration tests passing. Executed `npm run build` with 123 modules transformed and built cleanly with 0 errors.
+
+## 2026-09-02 — Elevate Chapter 02 to Minimalist Console with Anime.js & deploy official itHX Logo
+
+- Summary: Addressed visual data overload in Chapter 02 by replacing the static 12-box wireframe grid with a unified, high-end Minimalist Architectural Console following `minimalist-ui`, `impeccable`, and `ui-ux-pro-max` principles. Consolidated the top editorial lockup into a clean, impactful header. Placed the tactile discipline tablist (`BUILD`, `ARCHITECT`, `CONNECT`, `AUTOMATE`) at the top of the console with a split layout: left column displays deep-dive discipline focus, stack chips, and architectural philosophy; right column displays an adaptive living system map where the active layer expands into rich bento cards with status indicators while context layers remain clean, compact, and minimalist. Added smooth Anime.js spring/stagger transitions between discipline switches with full `prefers-reduced-motion` compliance. Integrated the official metallic `itHX` 3D brand logo into `public/brand/ithx-logo.png` and deployed it across the top navigation bar (`SiteHeader.jsx`, `header.css`) with emerald cyber drop-shadow.
+- Files: `public/brand/ithx-logo.png`, `src/modules/home/presentation/header/SiteHeader.jsx`, `src/modules/home/presentation/header/header.css`, `src/modules/home/presentation/how-i-build/HowIBuild.jsx`, `src/modules/home/presentation/how-i-build/SystemBlueprint.jsx`, `src/modules/home/presentation/how-i-build/DisciplineControllers.jsx`, `src/modules/home/presentation/how-i-build/how-i-build.css`, `tests/how-i-build-interaction.test.mjs`, `tests/site-header.test.mjs`, `CHANGE.md`
+- Verification: Ran `npm test` with 52/52 tests passing. Ran `npm run build` with 123 modules compiled cleanly with 0 errors.
+
+
+
+
+
 
 
 

@@ -220,7 +220,7 @@
 .opening-mascot {
   position: absolute;
   z-index: var(--layer-hidden-mascot);
-  top: 58%;
+  top: 50%;
   width: clamp(148px, 14vw, 194px);
   opacity: 0;
   transform: translate(-50%, -50%);
