@@ -15,6 +15,7 @@ import '../../../styles/mascots.css';
 
 export default function HomePage() {
   const [experienceState, setExperienceState] = useState('intro');
+  const [isTransitionSettled, setIsTransitionSettled] = useState(false);
   const { theme, setTheme } = useTheme();
   const commandCenter = useCommandCenter();
   const startHandoff = useCallback(() => {
@@ -23,6 +24,20 @@ export default function HomePage() {
   const completeOpening = useCallback(() => setExperienceState('ready'), []);
   const isSiteVisible = experienceState !== 'intro';
   const isSiteReady = experienceState === 'ready';
+
+  useEffect(() => {
+    if (!isSiteReady) {
+      setIsTransitionSettled(false);
+      return undefined;
+    }
+
+    // Wait for the .site-experience.is-ready transition (320ms) to settle completely
+    const timer = setTimeout(() => {
+      setIsTransitionSettled(true);
+    }, 360);
+
+    return () => clearTimeout(timer);
+  }, [isSiteReady]);
 
   useEffect(() => {
     const previousScrollRestoration = window.history.scrollRestoration;
@@ -47,7 +62,7 @@ export default function HomePage() {
 
         <main id="top">
           {/* Page 1: Clean Entry Portal (Mascots bound strictly to Page 1) */}
-          <Hero revealed={isSiteVisible} />
+          <Hero revealed={isSiteVisible} settled={isTransitionSettled} />
 
           <ClientStory />
 
@@ -56,7 +71,7 @@ export default function HomePage() {
           {/* Page 2: Dedicated Command Center & System Proof */}
           <section id="command-center" className="command-center-portal-section" aria-label="System Command Center" data-section="systems">
             <span id="systems" className="section-anchor-compat" aria-hidden="true" />
-            <Mascots stage="page2" showController={false} />
+            <Mascots stage="page2" showController={false} active={isTransitionSettled} />
             <CommandCenter controller={commandCenter} />
           </section>
         </main>

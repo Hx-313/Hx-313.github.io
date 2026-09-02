@@ -28,11 +28,40 @@ export default function CosmicBackground() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return undefined;
 
-    let animationFrameId;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let animationFrameId = null;
     let mouseX = 0;
     let mouseY = 0;
     let targetMouseX = 0;
     let targetMouseY = 0;
+
+    // Pre-rendered offscreen particle glow sprites to avoid CPU shadowBlur in 60fps loop
+    const createGlowSprite = (color) => {
+      const size = 32;
+      const offscreen = document.createElement('canvas');
+      offscreen.width = size;
+      offscreen.height = size;
+      const offCtx = offscreen.getContext('2d');
+      if (!offCtx) return null;
+
+      const grad = offCtx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+      grad.addColorStop(0, color);
+      grad.addColorStop(0.35, color);
+      grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+      offCtx.fillStyle = grad;
+      offCtx.beginPath();
+      offCtx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+      offCtx.fill();
+      return offscreen;
+    };
+
+    const sprites = {
+      '#10b981': createGlowSprite('rgba(16, 185, 129, 0.85)'),
+      '#00f2fe': createGlowSprite('rgba(0, 242, 254, 0.85)'),
+      '#ffffff': createGlowSprite('rgba(255, 255, 255, 0.9)'),
+    };
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -41,7 +70,7 @@ export default function CosmicBackground() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     resize();
-    window.addEventListener('resize', resize);
+    window.addEventListener('resize', resize, { passive: true });
 
     const onMouseMove = (e) => {
       targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -49,7 +78,7 @@ export default function CosmicBackground() {
     };
     window.addEventListener('mousemove', onMouseMove, { passive: true });
 
-    const numParticles = 95;
+    const numParticles = 75;
     const particles = Array.from({ length: numParticles }, (_, i) => ({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
@@ -63,6 +92,8 @@ export default function CosmicBackground() {
     }));
 
     const render = () => {
+      if (document.hidden) return;
+
       const w = window.innerWidth;
       const h = window.innerHeight;
       ctx.clearRect(0, 0, w, h);
@@ -84,26 +115,44 @@ export default function CosmicBackground() {
         if (p.y < -10) p.y = h + 10;
         if (p.y > h + 10) p.y = -10;
 
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
         ctx.globalAlpha = currentAlpha;
-        ctx.shadowBlur = p.color === '#ffffff' ? 4 : 8;
-        ctx.shadowColor = p.color;
-        ctx.fill();
+        const sprite = sprites[p.color];
+        if (sprite) {
+          const drawSize = p.radius * 6;
+          ctx.drawImage(sprite, p.x - drawSize / 2, p.y - drawSize / 2, drawSize, drawSize);
+        } else {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+        }
       }
 
       ctx.globalAlpha = 1;
-      ctx.shadowBlur = 0;
-      animationFrameId = requestAnimationFrame(render);
+      if (!prefersReducedMotion) {
+        animationFrameId = requestAnimationFrame(render);
+      }
     };
 
     render();
 
+    const handleVisibility = () => {
+      if (document.hidden) {
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+          animationFrameId = null;
+        }
+      } else if (!animationFrameId && !prefersReducedMotion) {
+        animationFrameId = requestAnimationFrame(render);
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+
     return () => {
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', onMouseMove);
-      cancelAnimationFrame(animationFrameId);
+      document.removeEventListener('visibilitychange', handleVisibility);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
     };
   }, []);
 

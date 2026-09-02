@@ -49,7 +49,7 @@
 
 .opening-boot-hud {
   position: absolute;
-  top: 6vh;
+  top: 4vh;
   left: 50%;
   transform: translateX(-50%);
   z-index: var(--layer-control);
@@ -112,21 +112,27 @@
 
 .opening-cinematic-stage {
   position: absolute;
-  inset: 3vh 4vw 9vh;
-  display: grid;
-  place-items: center;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   perspective: 1200px;
+  pointer-events: none;
+  overflow: hidden;
 }
 
 .opening-network-globe {
   position: absolute;
+  inset: 0;
+  margin: auto;
   z-index: var(--layer-globe);
-  width: min(1200px, 100vw, 125vh);
+  width: min(780px, 82vw, 76vh);
   aspect-ratio: 1;
-  filter: drop-shadow(0 28px 65px rgba(0, 0, 0, .72));
+  filter: drop-shadow(0 24px 60px rgba(0, 0, 0, .72));
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: auto;
 }
 
 .opening-3d-globe-layer {
@@ -503,8 +509,15 @@
 
 @media (max-width: 600px) {
   .opening-cinematic-stage { inset: 0; }
-  .opening-network-globe { width: 118vw; top: -8vw; }
-  .opening-mascot { top: 46%; width: clamp(116px, 34vw, 148px); }
+  .opening-network-globe {
+    width: min(86vw, 54vh);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+  .opening-mascot { top: 48%; width: clamp(116px, 34vw, 148px); }
   .opening-mascot--dash { left: 80%; }
   .opening-mascot--aero { left: 20%; }
   .opening-projector { position: absolute; right: auto; top: 135%; width: 90vw; }

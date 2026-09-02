@@ -7,6 +7,8 @@
   color: var(--color-hero-text, #f8fafc);
   display: flex;
   align-items: center;
+  justify-content: center;
+  padding: clamp(1.5rem, 3vh, 3rem) 0;
 }
 
 .hero-grid {

@@ -136,6 +136,7 @@ export default function Mascots({ stage = 'page1', showController = true, active
   const [dashBubble, setDashBubble] = useState(null);
 
   const isGreetingRef = useRef(false);
+  const hasStartedGreetingsRef = useRef(false);
   const greetingTimersRef = useRef([]);
   const customTimerRef = useRef(null);
   const roamTimer = useRef(null);
@@ -337,82 +338,128 @@ export default function Mascots({ stage = 'page1', showController = true, active
     }
   }, []);
 
-  // 2. INITIAL GREETINGS & INTRODUCTIONS CONVERSATION ON REVEAL
+  // 2. INITIAL GREETINGS & INTRODUCTIONS CONVERSATION ON REVEAL / SETTLE
   useEffect(() => {
-    if (!active) return undefined;
+    if (!active || hasStartedGreetingsRef.current) return undefined;
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (mediaQuery.matches) return undefined;
 
-    isGreetingRef.current = true;
-    clearAllSpeechTimers();
+    const startGreetings = () => {
+      if (hasStartedGreetingsRef.current) return;
+      hasStartedGreetingsRef.current = true;
+      isGreetingRef.current = true;
+      clearAllSpeechTimers();
 
-    const script = HERO_GREETINGS[activePage] || HERO_GREETINGS.page1;
+      const script = HERO_GREETINGS[activePage] || HERO_GREETINGS.page1;
 
-    script.forEach((step) => {
-      const showTimer = setTimeout(() => {
-        const payload = {
-          text: step.text,
-          chips: step.chips,
-          onChipClick: (chip) => handleChipAction(chip.action, step.who),
-          onClose: () => {
+      script.forEach((step) => {
+        const showTimer = setTimeout(() => {
+          const payload = {
+            text: step.text,
+            chips: step.chips,
+            onChipClick: (chip) => handleChipAction(chip.action, step.who),
+            onClose: () => {
+              if (step.who === 'aero') setAeroBubble(null);
+              else setDashBubble(null);
+            },
+          };
+
+          if (step.who === 'aero') {
+            setAeroBubble(payload);
+            setAeroExpr(step.expr || 'happy');
+            if (step.anim) {
+              setAeroAnim(step.anim);
+              setTimeout(() => setAeroAnim(''), 1200);
+            }
+            setDashBubble(null);
+          } else {
+            setDashBubble(payload);
+            setDashExpr(step.expr || 'winking');
+            if (step.anim) {
+              setDashAnim(step.anim);
+              setTimeout(() => setDashAnim(''), 1200);
+            }
+            setAeroBubble(null);
+          }
+
+          const hideTimer = setTimeout(() => {
             if (step.who === 'aero') setAeroBubble(null);
             else setDashBubble(null);
-          },
-        };
+          }, step.duration);
+          greetingTimersRef.current.push(hideTimer);
+        }, step.delay);
 
-        if (step.who === 'aero') {
-          setAeroBubble(payload);
-          setAeroExpr(step.expr || 'happy');
-          if (step.anim) {
-            setAeroAnim(step.anim);
-            setTimeout(() => setAeroAnim(''), 1200);
-          }
-          setDashBubble(null);
-        } else {
-          setDashBubble(payload);
-          setDashExpr(step.expr || 'winking');
-          if (step.anim) {
-            setDashAnim(step.anim);
-            setTimeout(() => setDashAnim(''), 1200);
-          }
-          setAeroBubble(null);
+        greetingTimersRef.current.push(showTimer);
+      });
+
+      const lastStep = script[script.length - 1];
+      const totalTime = lastStep.delay + lastStep.duration + 500;
+      const finishTimer = setTimeout(() => {
+        isGreetingRef.current = false;
+        setAeroBubble(null);
+        setDashBubble(null);
+        setAeroExpr('happy');
+        setDashExpr('happy');
+      }, totalTime);
+      greetingTimersRef.current.push(finishTimer);
+    };
+
+    if (typeof window !== 'undefined' && 'IntersectionObserver' in window && containerRef.current) {
+      const observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          startGreetings();
+          observer.disconnect();
         }
+      }, { threshold: 0.1 });
 
-        const hideTimer = setTimeout(() => {
-          if (step.who === 'aero') setAeroBubble(null);
-          else setDashBubble(null);
-        }, step.duration);
-        greetingTimersRef.current.push(hideTimer);
-      }, step.delay);
+      observer.observe(containerRef.current);
+      return () => {
+        observer.disconnect();
+        clearAllSpeechTimers();
+      };
+    }
 
-      greetingTimersRef.current.push(showTimer);
-    });
-
-    const lastStep = script[script.length - 1];
-    const totalTime = lastStep.delay + lastStep.duration + 500;
-    const finishTimer = setTimeout(() => {
-      isGreetingRef.current = false;
-      setAeroBubble(null);
-      setDashBubble(null);
-      setAeroExpr('happy');
-      setDashExpr('happy');
-    }, totalTime);
-    greetingTimersRef.current.push(finishTimer);
-
+    startGreetings();
     return () => {
       clearAllSpeechTimers();
     };
   }, [active, activePage, handleChipAction]);
 
-  // 3. REAL-TIME CURSOR EYE-TRACKING
+  // 3. REAL-TIME CURSOR EYE-TRACKING (Throttled via RAF with cached geometry)
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
+    let rafId = 0;
+    let cachedRect = null;
+
+    const updateCachedRect = () => {
+      if (containerRef.current) {
+        cachedRect = containerRef.current.getBoundingClientRect();
+      }
+    };
+    updateCachedRect();
+
+    const handleResizeOrScroll = () => {
+      cachedRect = null;
+    };
+    window.addEventListener('resize', handleResizeOrScroll, { passive: true });
+    window.addEventListener('scroll', handleResizeOrScroll, { passive: true });
+
+    let latestEvent = null;
+
+    const processPointerMove = () => {
+      rafId = 0;
+      if (!latestEvent || !containerRef.current) return;
+      if (!cachedRect) {
+        cachedRect = containerRef.current.getBoundingClientRect();
+      }
+      const rect = cachedRect;
+      if (!rect || rect.width === 0 || rect.height === 0) return;
+
+      const clientX = latestEvent.clientX;
+      const clientY = latestEvent.clientY;
 
       mousePosRef.current = {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
+        x: clientX - rect.left,
+        y: clientY - rect.top,
       };
 
       const aeroPixelX = (aeroPos.x / 100) * rect.width;
@@ -420,22 +467,32 @@ export default function Mascots({ stage = 'page1', showController = true, active
       const dashPixelX = (dashPos.x / 100) * rect.width;
       const dashPixelY = (dashPos.y / 100) * rect.height;
 
-      const aeroAngle = Math.atan2((e.clientY - rect.top) - aeroPixelY, (e.clientX - rect.left) - aeroPixelX);
-      const dashAngle = Math.atan2((e.clientY - rect.top) - dashPixelY, (e.clientX - rect.left) - dashPixelX);
+      const aeroAngle = Math.atan2((clientY - rect.top) - aeroPixelX, (clientX - rect.left) - aeroPixelX);
+      const dashAngle = Math.atan2((clientY - rect.top) - dashPixelY, (clientX - rect.left) - dashPixelX);
 
-      setEyeOffsetAero({
-        x: Math.cos(aeroAngle) * 4,
-        y: Math.sin(aeroAngle) * 3,
-      });
+      const nextAeroX = Math.round(Math.cos(aeroAngle) * 4 * 10) / 10;
+      const nextAeroY = Math.round(Math.sin(aeroAngle) * 3 * 10) / 10;
+      const nextDashX = Math.round(Math.cos(dashAngle) * 4 * 10) / 10;
+      const nextDashY = Math.round(Math.sin(dashAngle) * 3 * 10) / 10;
 
-      setEyeOffsetDash({
-        x: Math.cos(dashAngle) * 4,
-        y: Math.sin(dashAngle) * 3,
-      });
+      setEyeOffsetAero((prev) => (prev.x === nextAeroX && prev.y === nextAeroY ? prev : { x: nextAeroX, y: nextAeroY }));
+      setEyeOffsetDash((prev) => (prev.x === nextDashX && prev.y === nextDashY ? prev : { x: nextDashX, y: nextDashY }));
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    const handleMouseMove = (e) => {
+      latestEvent = e;
+      if (!rafId) {
+        rafId = window.requestAnimationFrame(processPointerMove);
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', handleResizeOrScroll);
+      window.removeEventListener('scroll', handleResizeOrScroll);
+      if (rafId) window.cancelAnimationFrame(rafId);
+    };
   }, [aeroPos, dashPos]);
 
   // 4. GENERATE WAYPOINTS CONFINED TO ACTIVE PAGE (VISUAL STAGE ZONES)
@@ -454,7 +511,7 @@ export default function Mascots({ stage = 'page1', showController = true, active
   // 5. CALM AUTONOMOUS FLIGHT LOOP
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (mediaQuery.matches || !isRoam) return undefined;
+    if (mediaQuery.matches || !isRoam || !active) return undefined;
 
     roamTimer.current = setInterval(() => {
       if (isGreetingRef.current) return;
@@ -469,7 +526,7 @@ export default function Mascots({ stage = 'page1', showController = true, active
     return () => {
       clearInterval(roamTimer.current);
     };
-  }, [isRoam, getRandomWaypoint]);
+  }, [isRoam, active, getRandomWaypoint]);
 
   // 6. POINTER DRAGGING PHYSICS
   const handlePointerDown = (mascot, e) => {

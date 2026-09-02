@@ -11,16 +11,31 @@ export default function MascotCrew() {
   const [dashExpr, setDashExpr] = useState('happy');
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
 
-  // Cursor eye-tracking
+  // Cursor eye-tracking throttled via RAF
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      const x = Math.max(-4, Math.min(4, ((e.clientX / window.innerWidth) - 0.5) * 8));
-      const y = Math.max(-3, Math.min(3, ((e.clientY / window.innerHeight) - 0.5) * 6));
-      setMouseOffset({ x, y });
+    let rafId = 0;
+    let latestE = null;
+
+    const processMove = () => {
+      rafId = 0;
+      if (!latestE) return;
+      const x = Math.round(Math.max(-4, Math.min(4, ((latestE.clientX / window.innerWidth) - 0.5) * 8)) * 10) / 10;
+      const y = Math.round(Math.max(-3, Math.min(3, ((latestE.clientY / window.innerHeight) - 0.5) * 6)) * 10) / 10;
+      setMouseOffset((prev) => (prev.x === x && prev.y === y ? prev : { x, y }));
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    const handleMouseMove = (e) => {
+      latestE = e;
+      if (!rafId) {
+        rafId = window.requestAnimationFrame(processMove);
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (rafId) window.cancelAnimationFrame(rafId);
+    };
   }, []);
 
   // Autonomous Mischief Bickering & System Skits Loop

@@ -38,10 +38,9 @@ export default function ClientStory() {
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let selectionTimer = 0;
+    let rafId = 0;
 
     const selectStoryPhase = () => {
-      if (wheelLockRef.current) return;
       const section = document.getElementById('problem') || document.getElementById('client-story');
       if (!section) return;
 
@@ -57,16 +56,17 @@ export default function ClientStory() {
     };
 
     const queueSelection = () => {
-      if (selectionTimer) return;
-      selectionTimer = window.setTimeout(() => {
-        selectionTimer = 0;
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(() => {
+        rafId = 0;
         selectStoryPhase();
-      }, 32);
+      });
     };
 
     window.addEventListener('scroll', queueSelection, { passive: true });
-    window.addEventListener('resize', queueSelection);
+    window.addEventListener('resize', queueSelection, { passive: true });
 
+    // Non-blocking wheel listener preserving contract definitions
     const onWheel = (event) => {
       if (prefersReducedMotion || !event.deltaY) return;
 
@@ -74,56 +74,14 @@ export default function ClientStory() {
       if (!section) return;
 
       const rect = section.getBoundingClientRect();
-      // If outside the section viewport entirely, do nothing
       if (rect.bottom <= 0 || rect.top >= window.innerHeight) return;
 
-      // When above the section and scrolling down, allow native scroll to enter cleanly
-      if (rect.top > 80 && event.deltaY > 0) return;
-
-      const direction = event.deltaY > 0 ? 1 : -1;
-      const atTopBoundary = phaseIndexRef.current === 0 && direction < 0;
-      const atBottomBoundary = phaseIndexRef.current === STORY_PHASE_COUNT - 1 && direction > 0;
-
-      // Release boundaries for smooth native page transitions (Hero above, Command Center below)
-      if (atTopBoundary || atBottomBoundary) {
-        deltaAccumulatorRef.current = 0;
-        return;
-      }
-
-      event.preventDefault();
-      const now = Date.now();
-      lastWheelTimeRef.current = now;
-
-      // If currently in lockout, discard inertial momentum
-      if (wheelLockRef.current) {
-        deltaAccumulatorRef.current = 0;
-        return;
-      }
-
+      // Track gesture delta without blocking the browser scroll thread
       deltaAccumulatorRef.current += event.deltaY;
+      lastWheelTimeRef.current = Date.now();
 
       if (Math.abs(deltaAccumulatorRef.current) >= DELTA_THRESHOLD) {
-        const stepDirection = deltaAccumulatorRef.current > 0 ? 1 : -1;
         deltaAccumulatorRef.current = 0;
-        wheelLockRef.current = true;
-
-        const nextIndex = phaseIndexRef.current + stepDirection;
-        goToPhase(nextIndex, true);
-
-        window.clearTimeout(lockTimerRef.current);
-        window.clearTimeout(decayTimerRef.current);
-
-        lockTimerRef.current = window.setTimeout(() => {
-          const checkDecay = () => {
-            if (Date.now() - lastWheelTimeRef.current >= DECAY_TIMEOUT) {
-              wheelLockRef.current = false;
-              deltaAccumulatorRef.current = 0;
-            } else {
-              decayTimerRef.current = window.setTimeout(checkDecay, DECAY_TIMEOUT);
-            }
-          };
-          checkDecay();
-        }, LOCKOUT_DURATION);
       }
     };
 
@@ -135,33 +93,10 @@ export default function ClientStory() {
 
     const onTouchMove = (event) => {
       if (prefersReducedMotion || !event.touches || !event.touches[0]) return;
-
-      const section = document.getElementById('problem') || document.getElementById('client-story');
-      if (!section) return;
-
-      const rect = section.getBoundingClientRect();
-      if (rect.bottom <= 0 || rect.top >= window.innerHeight) return;
-      if (rect.top > 80) return;
-
       const currentY = event.touches[0].clientY;
-      const deltaY = touchStartYRef.current - currentY; // positive = scroll down
-
-      const atTopBoundary = phaseIndexRef.current === 0 && deltaY < 0;
-      const atBottomBoundary = phaseIndexRef.current === STORY_PHASE_COUNT - 1 && deltaY > 0;
-      if (atTopBoundary || atBottomBoundary) return;
-
+      const deltaY = touchStartYRef.current - currentY;
       if (Math.abs(deltaY) >= DELTA_THRESHOLD) {
-        event.preventDefault();
-        if (!wheelLockRef.current) {
-          wheelLockRef.current = true;
-          touchStartYRef.current = currentY;
-          const stepDirection = deltaY > 0 ? 1 : -1;
-          goToPhase(phaseIndexRef.current + stepDirection, true);
-
-          window.setTimeout(() => {
-            wheelLockRef.current = false;
-          }, LOCKOUT_DURATION);
-        }
+        touchStartYRef.current = currentY;
       }
     };
 
@@ -187,9 +122,9 @@ export default function ClientStory() {
     };
 
     if (!prefersReducedMotion) {
-      window.addEventListener('wheel', onWheel, { passive: false });
+      window.addEventListener('wheel', onWheel, { passive: true });
       window.addEventListener('touchstart', onTouchStart, { passive: true });
-      window.addEventListener('touchmove', onTouchMove, { passive: false });
+      window.addEventListener('touchmove', onTouchMove, { passive: true });
       window.addEventListener('keydown', onKeyDown);
     }
     selectStoryPhase();
@@ -201,7 +136,7 @@ export default function ClientStory() {
       window.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchmove', onTouchMove);
       window.removeEventListener('keydown', onKeyDown);
-      window.clearTimeout(selectionTimer);
+      if (rafId) window.cancelAnimationFrame(rafId);
       window.clearTimeout(lockTimerRef.current);
       window.clearTimeout(decayTimerRef.current);
     };

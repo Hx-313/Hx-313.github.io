@@ -11,6 +11,7 @@ const projectionPath = path.resolve('src/modules/home/presentation/opening/Openi
 const sequencePath = path.resolve('src/modules/home/presentation/opening/openingSequence.js');
 const dashPath = path.resolve('src/components/mascots/DashMascot.jsx');
 const homePagePath = path.resolve('src/modules/home/presentation/HomePage.jsx');
+const heroCssPath = path.resolve('src/modules/home/presentation/hero/hero.css');
 
 test('OpeningExperience contains connected-globe sequence led by Dash with Aero support', () => {
   const jsx = fs.readFileSync(openingJsxPath, 'utf8');
@@ -59,7 +60,7 @@ test('opening.css defines space animations and transition constraints', () => {
   assert.match(css, /spaceWarpOut/, 'Must define space warp out keyframe animation');
   assert.match(css, /spaceFloat/, 'Must define space float animation');
   assert.match(css, /transition:\s*opacity\s*280ms/, 'Opening transition duration must be within budget');
-  assert.match(css, /width:\s*min\(1200px,\s*100vw,\s*125vh\)/, 'Opening globe must use the 1200px reference frame');
+  assert.match(css, /width:\s*min\(780px,\s*82vw,\s*76vh\)/, 'Opening globe must fit within the screen with graceful padding');
 });
 
 test('Aero robot mascot includes high-definition robot design features', () => {
@@ -167,3 +168,25 @@ test('the intro always starts at the top instead of restoring a prior slide posi
   assert.match(homePage, /window\.history\.scrollRestoration\s*=\s*'manual'/);
   assert.match(homePage, /window\.scrollTo\(\{ top: 0, left: 0, behavior: 'auto' \}\)/);
 });
+
+test('opening stage and hero section are gracefully centered and fit viewport with padding', () => {
+  const openingCss = fs.readFileSync(openingCssPath, 'utf8');
+  const openingJsx = fs.readFileSync(openingJsxPath, 'utf8');
+  const heroCss = fs.readFileSync(heroCssPath, 'utf8');
+
+  // Stage must be symmetrically centered
+  assert.match(openingCss, /\.opening-cinematic-stage\s*\{[^}]*inset:\s*0/);
+  // Globe must fit within screen bounds and be centered
+  assert.match(openingCss, /\.opening-network-globe\s*\{[^}]*inset:\s*0[^}]*margin:\s*auto/s);
+  assert.match(openingCss, /\.opening-network-globe\s*\{[^}]*width:\s*min\(780px,\s*82vw,\s*76vh\)/s);
+  // Boot HUD must have clearance
+  assert.match(openingCss, /\.opening-boot-hud\s*\{[^}]*top:\s*4vh/s);
+
+  // Timeline must not translate the globe up off-center into the ceiling
+  assert.doesNotMatch(openingJsx, /add\(globe,\s*\{[^}]*y:\s*\[0,\s*'-6vh'\]/s);
+
+  // Hero section must be centered with padding
+  assert.match(heroCss, /\.hero\s*\{[^}]*justify-content:\s*center/);
+  assert.match(heroCss, /\.hero\s*\{[^}]*padding:\s*clamp\(1\.5rem,\s*3vh,\s*3rem\)\s+0/);
+});
+

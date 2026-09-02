@@ -24,7 +24,7 @@ function createPointTexture() {
   return texture;
 }
 
-export default function HolographicGlobe({ className = '' }) {
+export default function HolographicGlobe({ className = '', active = true }) {
   const containerRef = useRef(null);
   const canvasContainerRef = useRef(null);
   const canvasRef = useRef(null);
@@ -395,6 +395,14 @@ export default function HolographicGlobe({ className = '' }) {
 
     const visibilityObserver = new IntersectionObserver(([entry]) => {
       isInViewport = entry.isIntersecting;
+      if (isInViewport && !animId && !disposed && !document.hidden && active) {
+        if (idleTimerId) {
+          window.clearTimeout(idleTimerId);
+          idleTimerId = null;
+        }
+        clock.getDelta();
+        animId = requestAnimationFrame(render);
+      }
     }, { threshold: 0.01 });
     visibilityObserver.observe(container);
 
@@ -405,8 +413,8 @@ export default function HolographicGlobe({ className = '' }) {
 
     const render = () => {
       if (disposed) return;
-      if (!isInViewport || document.hidden) {
-        idleTimerId = window.setTimeout(render, 250);
+      if (!isInViewport || document.hidden || !active) {
+        animId = null;
         return;
       }
 
@@ -463,12 +471,23 @@ export default function HolographicGlobe({ className = '' }) {
       animId = requestAnimationFrame(render);
     };
 
-    animId = requestAnimationFrame(render);
+    if (active) {
+      animId = requestAnimationFrame(render);
+    }
+
+    const handleDocVisibility = () => {
+      if (!document.hidden && isInViewport && !animId && !disposed && active) {
+        clock.getDelta();
+        animId = requestAnimationFrame(render);
+      }
+    };
+    document.addEventListener('visibilitychange', handleDocVisibility);
 
     return () => {
       disposed = true;
       if (animId) cancelAnimationFrame(animId);
       if (idleTimerId) window.clearTimeout(idleTimerId);
+      document.removeEventListener('visibilitychange', handleDocVisibility);
       ro.disconnect();
       visibilityObserver.disconnect();
       mediaQuery.removeEventListener('change', onMotionChange);

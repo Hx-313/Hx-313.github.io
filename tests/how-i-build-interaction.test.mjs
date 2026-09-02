@@ -72,6 +72,7 @@ test('how-i-build.css defines scroll margin, non-disappearing node focus, and re
   assert.match(css, /\.blueprint-node\.is-unrelated/, 'must style unrelated nodes');
   assert.match(css, /opacity:\s*1/, 'active nodes must have full opacity');
   assert.doesNotMatch(css, /\.blueprint-node\.is-unrelated\s*\{[^}]*display:\s*none/, 'unrelated nodes must never be hidden with display:none');
+  assert.match(css, /\.databus-overlay\s*\{[^}]*position:\s*absolute/, 'databus-overlay must be absolutely positioned to prevent empty space');
   assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)/, 'must support reduced motion');
 });
 

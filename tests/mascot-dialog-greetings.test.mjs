@@ -52,3 +52,22 @@ test('CSS styles provide proper dialog sizing, no squashing, and light theme sup
   assert.ok(mascotsCss.includes(".mischief-bubble.bubble--bottom"), 'mascots.css supports bottom-oriented bubble');
   assert.ok(mascotsCss.includes(":root[data-theme='light'] .mischief-bubble"), 'mascots.css provides full light theme support');
 });
+
+test('dashboard mascots wait for transition to settle before initiating intro greetings', () => {
+  const homePage = readFileSync(resolve('src/modules/home/presentation/HomePage.jsx'), 'utf-8');
+  const hero = readFileSync(resolve('src/modules/home/presentation/hero/Hero.jsx'), 'utf-8');
+  const mascots = readFileSync(resolve('src/components/Mascots.jsx'), 'utf-8');
+
+  // HomePage must track transition settlement and pass it to Hero
+  assert.ok(homePage.includes('isTransitionSettled'), 'HomePage tracks when the transition has settled');
+  assert.ok(homePage.includes('settled={isTransitionSettled}'), 'Hero receives settled flag based on transition settlement');
+
+  // Hero must gate Mascots activation on settled flag
+  assert.ok(hero.includes('settled'), 'Hero accepts settled prop');
+  assert.ok(hero.includes('active={isMascotsActive}'), 'Hero passes active status derived from settled prop to Mascots');
+
+  // Mascots must gate speech and flight loop on active state
+  assert.ok(mascots.includes('!active || hasStartedGreetingsRef.current'), 'Mascots speech waits for active state');
+  assert.ok(mascots.includes('!active') && mascots.includes('roamTimer'), 'Mascots flight loop waits for active state');
+});
+

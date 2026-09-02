@@ -42,7 +42,7 @@
   scroll-margin-top: 5rem;
   overflow: hidden;
   isolation: isolate;
-  padding: 4rem 0 6rem;
+  padding: 2.5rem 0 5rem;
   border-top: 1px solid rgba(16, 185, 129, 0.12);
   background: transparent;
   transition: border-color 350ms ease;

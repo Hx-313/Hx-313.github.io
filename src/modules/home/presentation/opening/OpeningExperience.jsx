@@ -107,7 +107,7 @@ export default function OpeningExperience({ onHandoff = noop, onComplete = noop 
 
     const timeline = createTimeline({ defaults: { ease: 'outCubic' } });
     timeline
-      .add(globe, { scale: [1.05, 1], opacity: [0.76, 1], duration: 400 }, OPENING_BEATS[0].start)
+      .add(globe, { scale: [1.02, 1], opacity: [0.76, 1], duration: 400 }, OPENING_BEATS[0].start)
       .call(() => setBootProgress(100), OPENING_BEATS[0].start + 300)
       .add(bootHud, { opacity: [1, 0], y: [0, -12], duration: 450 }, OPENING_BEATS[1].start)
       .add([dash, aero], {
@@ -119,7 +119,7 @@ export default function OpeningExperience({ onHandoff = noop, onComplete = noop 
         duration: 2_100, delay: stagger(140),
       }, OPENING_BEATS[1].start)
       .call(() => root.classList.add('opening--mascots-front'), OPENING_BEATS[2].start)
-      .add(globe, { scale: [1, 0.76], y: [0, '-6vh'], opacity: [1, 0.54], duration: 1_200 }, OPENING_BEATS[2].start)
+      .add(globe, { scale: [1, 0.84], opacity: [1, 0.68], duration: 1_200 }, OPENING_BEATS[2].start)
       .add([dash, aero], { y: ['11vh', 0], scale: [0.86, 1], opacity: [0.78, 1], duration: 1_200 }, OPENING_BEATS[2].start)
       .call(() => setLiveStatement(OPENING_STATEMENTS[0]), OPENING_BEATS[3].start)
       .add(aero, { scale: 0.86, opacity: 0.48, x: '-2vw', filter: 'blur(2px) brightness(.7)', duration: 600 }, OPENING_BEATS[3].start)
@@ -157,7 +157,7 @@ export default function OpeningExperience({ onHandoff = noop, onComplete = noop 
         opacity: [1, 0.2],
         duration: 1_600,
       }, OPENING_BEATS[7].start)
-      .add(globe, { y: ['-6vh', '-24vh'], scale: [0.76, 0.58], opacity: [0.54, 0], duration: 1_600 }, OPENING_BEATS[7].start)
+      .add(globe, { y: [0, '-20vh'], scale: [0.84, 0.58], opacity: [0.68, 0], duration: 1_600 }, OPENING_BEATS[7].start)
       .add(root, { y: [0, '-6vh'], opacity: [1, 0], duration: 1_600 }, OPENING_BEATS[7].start)
       .call(() => once(onComplete, completeRef), OPENING_BEATS[7].end);
 

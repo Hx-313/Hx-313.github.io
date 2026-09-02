@@ -3,7 +3,7 @@
   position: relative;
   isolation: isolate;
   width: 100%;
-  padding: 5.5rem 0 6.5rem;
+  padding: 3.25rem 0 3.25rem;
   scroll-margin-top: var(--header-offset, 4.5rem);
   background: transparent;
   color: var(--color-foreground);
@@ -15,7 +15,7 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 3.5rem;
+  gap: 2rem;
 }
 
 /* ==========================================================================
@@ -210,7 +210,8 @@
 .console-split-body {
   display: grid;
   grid-template-columns: minmax(320px, 1fr) minmax(440px, 1.4fr);
-  min-height: 480px;
+  min-height: auto;
+  align-items: stretch;
 }
 
 /* Left Column: Active Discipline Reasoning Panel */
@@ -544,6 +545,52 @@
 :root[data-theme='light'] .bus-pill-label {
   background: #ffffff;
   border-color: rgba(4, 120, 87, 0.2);
+}
+
+/* Data Bus Overlay - True absolute positioning with zero flow height */
+.databus-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.bus-connection {
+  transition: opacity 300ms ease;
+}
+
+.bus-connection.is-active {
+  opacity: 1;
+}
+
+.bus-connection.is-dim {
+  opacity: 0.3;
+}
+
+.bus-pulse-dot {
+  filter: drop-shadow(0 0 4px var(--color-lime, #79f29a));
+  animation: busPulseTravel 0.95s linear infinite;
+}
+
+@keyframes busPulseTravel {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  30% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
 }
 
 /* Console Footer: Engineering Priorities */

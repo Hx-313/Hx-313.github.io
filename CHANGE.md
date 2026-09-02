@@ -189,6 +189,54 @@ Documentation-only changes, configuration changes, dependency changes, source ch
 - Files: `public/brand/ithx-logo.png`, `src/modules/home/presentation/header/SiteHeader.jsx`, `src/modules/home/presentation/header/header.css`, `src/modules/home/presentation/how-i-build/HowIBuild.jsx`, `src/modules/home/presentation/how-i-build/SystemBlueprint.jsx`, `src/modules/home/presentation/how-i-build/DisciplineControllers.jsx`, `src/modules/home/presentation/how-i-build/how-i-build.css`, `tests/how-i-build-interaction.test.mjs`, `tests/site-header.test.mjs`, `CHANGE.md`
 - Verification: Ran `npm test` with 52/52 tests passing. Ran `npm run build` with 123 modules compiled cleanly with 0 errors.
 
+## 2026-09-02 — Update browser tab logo (favicon) with official itHX brand logo
+
+- Summary: Updated the browser tab icon / project logo across `index.html` and `public/` using the official `itHX` metallic 3D brand logo. Generated a squircle SVG favicon (`public/favicon.svg`) with the centered `itHX` emblem on `#0b0f0e` dark cosmic background, generated `public/favicon.png`, and updated `index.html` to declare `favicon.svg`, `favicon.png`, and `apple-touch-icon`.
+- Files: `public/favicon.svg`, `public/favicon.png`, `index.html`, `CHANGE.md`
+- Verification: Executed `npm test` with 52/52 unit and integration tests passing. Executed `npm run build` cleanly in 14.79s with `dist/favicon.svg` and `dist/favicon.png` verified.
+
+## 2026-09-02 — Comprehensive performance overhaul: Eliminate wheel locking, reflows, canvas CPU blurs & bundle bloat
+
+- Summary: Diagnosed and resolved multi-layer performance bottlenecks making the portfolio feel bulky, slow, and burdened across browsers and development PCs:
+  1. Removed non-passive wheel hijacking, `event.preventDefault()`, and the 680ms momentum lockout in `ClientStory.jsx`. Converted narrative progression to buttery-smooth native scrolling synchronized with `requestAnimationFrame` while preserving accessibility and test contracts.
+  2. Eliminated Canvas 2D CPU software Gaussian blur (`ctx.shadowBlur = 8`) on the full-screen canvas in `CosmicBackground.jsx`. Replaced with pre-rendered offscreen hardware-accelerated particle sprites, added tab-visibility pausing via `visibilitychange`, and respected `prefers-reduced-motion`.
+  3. Optimized `cosmic-background.css` by replacing expensive 80px/90px Gaussian blur filters on giant 1100px elements with hardware-composited `radial-gradient` falloffs, `will-change: transform, opacity`, and layer containment for animating stars.
+  4. Throttled cursor eye-tracking in `Mascots.jsx` and `MascotCrew.jsx` via `requestAnimationFrame` and cached container bounding geometry, eliminating up to 500 forced synchronous layout recalculations (`getBoundingClientRect`) and hundreds of React re-renders per second. Added GPU compositor promotion (`will-change: left, top, transform`) to `.roam-mascot-pod`.
+  5. Optimized `HolographicGlobe.jsx` to cleanly pause WebGL render loops when offscreen or when document is hidden, and added `active` prop support so non-visible globes don't consume GPU memory or compete with the intro.
+  6. Configured Rollup vendor code-splitting in `vite.config.js` (`vendor-three`, `vendor-motion`, `vendor-react`), shrinking the main application chunk from 765 kB to 110 kB (30 kB gzip) and eliminating bundle size warnings.
+- Files: `src/modules/home/presentation/client-story/ClientStory.jsx`, `src/modules/home/presentation/CosmicBackground.jsx`, `src/modules/home/presentation/cosmic-background.css`, `src/components/Mascots.jsx`, `src/modules/home/presentation/hero/MascotCrew.jsx`, `src/styles/mascots.css`, `src/modules/home/presentation/hero/HolographicGlobe.jsx`, `vite.config.js`, `CHANGE.md`
+- Verification: Executed `npm test` (`node --test tests/*.test.mjs`) with all 52 unit and integration tests passing in 545ms. Executed `npm run build` with 123 modules transformed and cleanly bundled into optimized chunks without warnings in 4.35s.
+
+## 2026-09-02 — Fix Chapter 02 empty vertical space & tighten section spacing
+
+- Summary: Diagnosed and resolved the root cause of the massive empty space below the Build section shown in user testing (`media_1788368819520.png`):
+  1. Fixed un-positioned SVG overlay `.databus-overlay`: The SVG connection overlay lacked `position: absolute; inset: 0;`, causing browsers to render its 100x100 viewBox as a default inline/block flex item that expanded to 650px wide by 650px tall directly underneath Tier 3 (`03 // OPERATIONS & INTELLIGENCE`), pushing the entire console footer, bridge banner, and command center 650px off-screen into an empty black void. Applied strict `position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3;` so it overlays seamlessly with 0px flex flow height.
+  2. Tightened `.how-i-build-section` padding from `5.5rem 0 6.5rem` down to `3.25rem 0 3.25rem` and `.how-i-build__container` gap from `3.5rem` down to `2rem`.
+  3. Adjusted `.console-split-body` `min-height: auto; align-items: stretch;` to prevent artificial height expansion when switching disciplines.
+  4. Tightened `.command-center-portal-section` padding from `4rem 0 6rem` to `2.5rem 0 5rem`, producing a balanced, continuous visual rhythm between Chapter 02 and Chapter 03.
+- Files: `src/modules/home/presentation/how-i-build/how-i-build.css`, `src/modules/home/presentation/home.css`, `tests/how-i-build-interaction.test.mjs`, `CHANGE.md`
+- Verification: Executed `npm test` with all 52 unit and integration tests passing. Ran `npm run build` with 123 modules compiled cleanly in 5.34s.
+
+## 2026-09-02 — Gate dashboard mascots intro on transition settlement
+
+- Summary: Resolved issue where dashboard mascots (Dash & Aero) started talking and bouncing during the opening-to-dashboard transition phase while the site experience was still blurred and sliding into place.
+  1. In `HomePage.jsx`, introduced `isTransitionSettled` state that tracks when the opening unmounts and the `.site-experience.is-ready` CSS transition (320ms) has fully settled (+360ms settle window).
+  2. Passed `settled={isTransitionSettled}` to `Hero.jsx`, which passes `active={isMascotsActive}` to `<Mascots stage="page1">`.
+  3. In `Hero.jsx`, preserved `revealed` for hero DOM entrance animation without prematurely activating mascots during handoff.
+  4. In `Mascots.jsx`, added viewport intersection awareness and active status gating to ensure greetings and autonomous roaming only initiate once the dashboard transition has completely settled and the mascots container is in the viewport.
+  5. Connected `active={isTransitionSettled}` to `Mascots stage="page2"` on the Command Center to prevent off-screen mascots from talking prematurely.
+- Files: `src/modules/home/presentation/HomePage.jsx`, `src/modules/home/presentation/hero/Hero.jsx`, `src/components/Mascots.jsx`, `tests/mascot-dialog-greetings.test.mjs`, `CHANGE.md`
+## 2026-09-02 — Center hero/opening stage and fit globe gracefully within viewport
+
+- Summary: Diagnosed and resolved issue reported with screenshots where the opening globe was oversized (125vh), shifted upward into the top edge of the browser, and clipped off during boot and mascot dialogue:
+  1. In `opening.css`, replaced oversized `width: min(1200px, 100vw, 125vh)` with responsive, bounded sizing `width: min(780px, 82vw, 76vh); aspect-ratio: 1; inset: 0; margin: auto;`. This guarantees at least 24% vertical clearance (12% padding top and bottom) on all viewports, preventing any top-edge clipping.
+  2. Replaced asymmetric stage positioning `inset: 3vh 4vw 9vh;` with symmetric `inset: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; pointer-events: none;`.
+  3. In `OpeningExperience.jsx`, removed `y: [0, '-6vh']` upward translation on the globe so it remains centered throughout the opening sequence and mascot statements, smoothly exiting with `y: [0, '-20vh']` only upon final handoff into the hero.
+  4. In `hero.css`, added `justify-content: center; padding: clamp(1.5rem, 3vh, 3rem) 0;` to `.hero` so the dashboard hero section remains gracefully centered and padded across resolutions.
+  5. In mobile queries, replaced overflow `width: 118vw; top: -8vw;` with centered `width: min(86vw, 54vh); inset: 0; margin: auto;`.
+- Files: `src/modules/home/presentation/opening/opening.css`, `src/modules/home/presentation/opening/OpeningExperience.jsx`, `src/modules/home/presentation/hero/hero.css`, `tests/cosmic-opening.test.mjs`, `CHANGE.md`
+- Verification: Executed `npm test` (`node --test tests/*.test.mjs`) with all 54 unit and integration tests passing. Ran `npm run build` with 123 modules compiled cleanly in 2.76s with 0 errors.
+
 
 
 

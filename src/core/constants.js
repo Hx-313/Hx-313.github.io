@@ -14,4 +14,6 @@ export const wosLinks = Object.freeze({
   customerWebsite: 'https://westcoastcoffee.pk/',
 });
 
+export const scheduleLink = 'https://cal.com/hafiz-ali';
+
 export const siteUrl = 'https://YOURDOMAIN.com';
