@@ -29,13 +29,6 @@
   transition: opacity 320ms var(--ease-out), transform 320ms var(--ease-out), filter 320ms var(--ease-out);
 }
 
-.site-footer {
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  width: min(100% - 3rem, 1480px);
-  margin: 0 auto;
-}
 
 .command-center-portal-section {
   position: relative;
@@ -53,31 +46,6 @@
   border-top: 1px solid rgba(0, 59, 47, 0.1);
 }
 
-.site-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2.5rem 0;
-  border-top: 1px solid var(--color-border);
-  color: var(--color-muted-foreground);
-  font-size: 0.75rem;
-}
-
-.footer-left {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.footer-left strong {
-  color: var(--color-foreground);
-}
-
-.footer-right a {
-  color: var(--color-accent, #10b981);
-  text-decoration: none;
-  font-weight: 600;
-}
 
 .theme-toggle {
   display: flex;
@@ -122,13 +90,6 @@
   box-shadow: 0 1px 4px rgba(4, 120, 87, 0.3);
 }
 
-@media (max-width: 800px) {
-  .site-footer {
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-  }
-}
 
 @media (prefers-reduced-motion: reduce) {
   .site-experience,

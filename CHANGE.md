@@ -237,6 +237,19 @@ Documentation-only changes, configuration changes, dependency changes, source ch
 - Files: `src/modules/home/presentation/opening/opening.css`, `src/modules/home/presentation/opening/OpeningExperience.jsx`, `src/modules/home/presentation/hero/hero.css`, `tests/cosmic-opening.test.mjs`, `CHANGE.md`
 - Verification: Executed `npm test` (`node --test tests/*.test.mjs`) with all 54 unit and integration tests passing. Ran `npm run build` with 123 modules compiled cleanly in 2.76s with 0 errors.
 
+## 2026-09-02 — Implement Dual-Column Contact Funnel & Multi-Column Architectural Footer
+
+- Summary: Built the primary conversion funnel and closing landmark following `/impeccable`, `/ui-ux-pro-max`, `/brand-guidelines`, and `/app-engineering-guardrails`:
+  1. Extended `src/core/constants.js` with `scheduleLink = 'https://cal.com/hafiz-ali'` for centralized calendar booking.
+  2. Created Contact Domain (`src/modules/contact/domain/contactData.js`) centralizing channels, project scope categories, and operational telemetry (PKT timezone, <2h response latency).
+  3. Created Contact Application hook (`src/modules/contact/application/useContactForm.js`) with client-side field validation, simulated 450ms network animation, success state, and prefilled `mailto:` fallback.
+  4. Built `ContactChannels.jsx` (Fast-Track 30-min discovery meeting card, operational status beacon, WhatsApp direct chat, and copyable email) and `ContactForm.jsx` (category scope pills, accessible labels, inline errors, loading state).
+  5. Built `ContactSection.jsx` (`#contact`) and `contact.css` (responsive 2-column grid, light/dark theme variables, WCAG AA contrast, focus rings, reduced-motion support).
+  6. Created Footer Domain (`src/modules/footer/domain/footerData.js`), `SiteFooter.jsx`, and `footer.css` featuring a 4-column directory (Identity & Thesis, Navigation Sitemap, Live Systems [WOS Admin, EPOS, West Coast Coffee], Direct Channels) and a lower colophon bar with timezone, tech stack citation, and smooth Back-to-Top control.
+  7. Mounted `<ContactSection />` and `<SiteFooter />` in `HomePage.jsx` and connected `#contact` into `SiteHeader.jsx` navigation and scroll-spy tracking.
+- Files: `src/core/constants.js`, `src/modules/contact/domain/contactData.js`, `src/modules/contact/application/useContactForm.js`, `src/modules/contact/presentation/ContactChannels.jsx`, `src/modules/contact/presentation/ContactForm.jsx`, `src/modules/contact/presentation/ContactSection.jsx`, `src/modules/contact/presentation/contact.css`, `src/modules/footer/domain/footerData.js`, `src/modules/footer/presentation/SiteFooter.jsx`, `src/modules/footer/presentation/footer.css`, `src/modules/home/presentation/HomePage.jsx`, `src/modules/home/presentation/home.css`, `src/modules/home/presentation/header/SiteHeader.jsx`, `tests/core-constants.test.mjs`, `tests/contact-funnel.test.mjs`, `tests/site-footer.test.mjs`, `CHANGE.md`
+- Verification: Executed `npm test` (`node --test tests/*.test.mjs`) with all 61 unit and integration tests passing. Ran `npm run build` with 132 modules transformed into optimized chunks in 2.22s with 0 errors.
+
 
 
 

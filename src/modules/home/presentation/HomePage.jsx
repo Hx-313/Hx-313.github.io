@@ -6,6 +6,8 @@ import Hero from './hero/Hero.jsx';
 import ClientStory from './client-story/ClientStory.jsx';
 import HowIBuild from './how-i-build/HowIBuild.jsx';
 import CommandCenter from './command-center/CommandCenter.jsx';
+import ContactSection from '../../contact/presentation/ContactSection.jsx';
+import SiteFooter from '../../footer/presentation/SiteFooter.jsx';
 import Mascots from '../../../components/Mascots.jsx';
 import { useTheme } from '../../../shared/theme/useTheme.js';
 import { useCommandCenter } from '../../../hooks/useCommandCenter.js';
@@ -74,17 +76,12 @@ export default function HomePage() {
             <Mascots stage="page2" showController={false} active={isTransitionSettled} />
             <CommandCenter controller={commandCenter} />
           </section>
+
+          {/* Contact & Main Funnel Section */}
+          <ContactSection />
         </main>
 
-        <footer className="site-footer">
-          <div className="footer-left">
-            <strong>Hafiz Ali Abdullah</strong>
-            <span>Software engineering · Product building · 2026</span>
-          </div>
-          <div className="footer-right">
-            <a href="#top">Back to top ↑</a>
-          </div>
-        </footer>
+        <SiteFooter />
       </div>
     </div>
   );

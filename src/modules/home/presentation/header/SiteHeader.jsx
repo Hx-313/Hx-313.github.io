@@ -8,7 +8,7 @@ const NAV_ITEMS = [
   { id: 'problem', label: '01 Problem', href: '#problem' },
   { id: 'how-i-build', label: '02 Build', href: '#how-i-build' },
   { id: 'systems', label: '03 Systems', href: '#systems' },
-  { id: 'contact', label: 'Contact', href: contactLinks.email },
+  { id: 'contact', label: '04 Contact', href: '#contact' },
 ];
 
 export default function SiteHeader({ theme, setTheme }) {
@@ -39,6 +39,7 @@ export default function SiteHeader({ theme, setTheme }) {
       { id: 'problem', element: document.getElementById('problem') || document.getElementById('client-story') },
       { id: 'how-i-build', element: document.getElementById('how-i-build') },
       { id: 'systems', element: document.getElementById('systems') || document.getElementById('command-center') },
+      { id: 'contact', element: document.getElementById('contact') },
     ];
 
     if (!('IntersectionObserver' in window)) {
