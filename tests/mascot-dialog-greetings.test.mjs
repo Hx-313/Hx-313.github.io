@@ -53,21 +53,21 @@ test('CSS styles provide proper dialog sizing, no squashing, and light theme sup
   assert.ok(mascotsCss.includes(":root[data-theme='light'] .mischief-bubble"), 'mascots.css provides full light theme support');
 });
 
-test('dashboard mascots wait for transition to settle before initiating intro greetings', () => {
+test('dashboard mascots wait for transition to settle while the hero stays conversion-focused', () => {
   const homePage = readFileSync(resolve('src/modules/home/presentation/HomePage.jsx'), 'utf-8');
   const hero = readFileSync(resolve('src/modules/home/presentation/hero/Hero.jsx'), 'utf-8');
   const mascots = readFileSync(resolve('src/components/Mascots.jsx'), 'utf-8');
 
-  // HomePage must track transition settlement and pass it to Hero
+  // HomePage must track transition settlement and gate dashboard mascots.
   assert.ok(homePage.includes('isTransitionSettled'), 'HomePage tracks when the transition has settled');
-  assert.ok(homePage.includes('settled={isTransitionSettled}'), 'Hero receives settled flag based on transition settlement');
+  assert.ok(homePage.includes('stage="page2"'), 'Dashboard retains the mascot interaction space');
+  assert.ok(homePage.includes('active={isTransitionSettled}'), 'Dashboard mascots wait for the settled state');
 
-  // Hero must gate Mascots activation on settled flag
-  assert.ok(hero.includes('settled'), 'Hero accepts settled prop');
-  assert.ok(hero.includes('active={isMascotsActive}'), 'Hero passes active status derived from settled prop to Mascots');
+  // The first screen should not have a mascot dialog competing with the offer.
+  assert.ok(!hero.includes("import Mascots"), 'Hero does not import the mascot experience');
+  assert.ok(!hero.includes('<Mascots'), 'Hero does not render mascot interactions');
 
   // Mascots must gate speech and flight loop on active state
   assert.ok(mascots.includes('!active || hasStartedGreetingsRef.current'), 'Mascots speech waits for active state');
   assert.ok(mascots.includes('!active') && mascots.includes('roamTimer'), 'Mascots flight loop waits for active state');
 });
-

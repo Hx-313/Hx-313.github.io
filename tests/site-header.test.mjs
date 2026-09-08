@@ -11,9 +11,10 @@ test('SiteHeader component contains tactical navigation, live telemetry, socials
 
   // Navigation Items
   assert.match(jsx, /Overview/, 'should contain Overview nav item');
-  assert.match(jsx, /01 Problem/, 'should contain problem chapter nav item');
-  assert.match(jsx, /02 Build/, 'should contain build chapter nav item');
-  assert.match(jsx, /03 Systems/, 'should contain systems chapter nav item');
+  assert.match(jsx, /01 Thesis/, 'should contain thesis chapter nav item');
+  assert.match(jsx, /02 About/, 'should contain about chapter nav item');
+  assert.match(jsx, /03 Build/, 'should contain build chapter nav item');
+  assert.match(jsx, /04 Systems/, 'should contain systems chapter nav item');
   assert.match(jsx, /Contact/, 'should contain Contact nav item');
   assert.match(jsx, /aria-current=\{isActive \? 'location' : undefined\}/, 'should set aria-current="location" for active section');
   assert.match(jsx, /IntersectionObserver/, 'should use IntersectionObserver for performant scroll-spying');

@@ -7,22 +7,23 @@ const cosmicJsxPath = path.resolve('src/modules/home/presentation/CosmicBackgrou
 const cosmicCssPath = path.resolve('src/modules/home/presentation/cosmic-background.css');
 const homeJsxPath = path.resolve('src/modules/home/presentation/HomePage.jsx');
 
-test('CosmicBackground component renders canvas starfield and celestial nebula', () => {
+test('CosmicBackground component renders a restrained, minimal surface', () => {
   const jsx = fs.readFileSync(cosmicJsxPath, 'utf8');
 
-  assert.match(jsx, /cosmic-canvas/, 'Must render dynamic starfield canvas');
-  assert.match(jsx, /cosmic-nebula-glow/, 'Must render nebula glow');
-  assert.match(jsx, /cosmic-star/, 'Must render celestial stars');
+  assert.match(jsx, /cosmic-ambient-wash/, 'Must render the restrained ambient wash');
+  assert.match(jsx, /cosmic-grain/, 'Must render a texture layer');
+  assert.doesNotMatch(jsx, /cosmic-tactical-grid/, 'Must remove decorative grids from the background');
+  assert.doesNotMatch(jsx, /canvas|cosmic-star|nebula/i, 'Must retire the animated starfield and nebula effects');
 });
 
-test('cosmic-background.css defines exact deep-space radial gradients', () => {
+test('cosmic-background.css defines mature tinted surfaces without neon effects', () => {
   const css = fs.readFileSync(cosmicCssPath, 'utf8');
 
-  assert.match(css, /position:\s*fixed/, 'Must be fixed across Page 1');
-  assert.match(css, /rgba\(16,\s*185,\s*129,\s*0\.12\)/, 'Must use emerald cosmic radial gradient');
-  assert.match(css, /rgba\(14,\s*116,\s*144,\s*0\.14\)/, 'Must use cyan cosmic radial gradient');
-  assert.match(css, /#03070d/, 'Must use deep-space base void color');
-  assert.match(css, /nebulaPulsePage/, 'Must include nebula pulse keyframe animation');
+  assert.match(css, /position:\s*fixed/, 'Must stay fixed across the site');
+  assert.match(css, /var\(--color-background\)/, 'Must inherit the theme canvas color');
+  assert.match(css, /rgb\(61 112 79 \/ 0\.16\)/, 'Must use the muted forest wash');
+  assert.match(css, /cosmic-grain/, 'Must include subtle texture');
+  assert.doesNotMatch(css, /#00f2fe|twinkleCosmicStar|nebulaPulsePage/, 'Must not retain cyan or animated cosmic effects');
 });
 
 test('HomePage.jsx embeds CosmicBackground for Page 1', () => {

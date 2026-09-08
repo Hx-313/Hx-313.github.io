@@ -5,10 +5,11 @@ import './header.css';
 
 const NAV_ITEMS = [
   { id: 'top', label: 'Overview', href: '#top' },
-  { id: 'problem', label: '01 Problem', href: '#problem' },
-  { id: 'how-i-build', label: '02 Build', href: '#how-i-build' },
-  { id: 'systems', label: '03 Systems', href: '#systems' },
-  { id: 'contact', label: '04 Contact', href: '#contact' },
+  { id: 'problem', label: '01 Thesis', href: '#problem' },
+  { id: 'about', label: '02 About', href: '#about' },
+  { id: 'how-i-build', label: '03 Build', href: '#how-i-build' },
+  { id: 'systems', label: '04 Systems', href: '#systems' },
+  { id: 'contact', label: '05 Contact', href: '#contact' },
 ];
 
 export default function SiteHeader({ theme, setTheme }) {
@@ -37,6 +38,7 @@ export default function SiteHeader({ theme, setTheme }) {
     const sections = [
       { id: 'top', element: document.getElementById('top') },
       { id: 'problem', element: document.getElementById('problem') || document.getElementById('client-story') },
+      { id: 'about', element: document.getElementById('about') },
       { id: 'how-i-build', element: document.getElementById('how-i-build') },
       { id: 'systems', element: document.getElementById('systems') || document.getElementById('command-center') },
       { id: 'contact', element: document.getElementById('contact') },
@@ -139,8 +141,8 @@ export default function SiteHeader({ theme, setTheme }) {
               src="/brand/ithx-logo.png"
               alt="itHX Logo"
               className="site-brand-logo-img"
-              width="96"
-              height="28"
+              width="120"
+              height="35"
             />
             <span className="status-live-dot" title="Available for hire" aria-hidden="true" />
           </a>

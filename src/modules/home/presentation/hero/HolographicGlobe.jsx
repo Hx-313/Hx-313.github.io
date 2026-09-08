@@ -547,12 +547,6 @@ export default function HolographicGlobe({ className = '', active = true }) {
         <div className="radar-sweep-beam" />
         <div className="radar-axis-x" />
         <div className="radar-axis-y" />
-        <div className="radar-corner-brackets">
-          <span className="bracket bracket-tl">SYS.CORE // 313</span>
-          <span className="bracket bracket-tr">NODE.MESH // 1200</span>
-          <span className="bracket bracket-bl">LAT.ORBIT // ACTIVE</span>
-          <span className="bracket bracket-br">COORD // 31.5204° N</span>
-        </div>
       </div>
     </div>
   );

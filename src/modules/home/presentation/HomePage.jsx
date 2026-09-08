@@ -3,6 +3,7 @@ import OpeningExperience from './opening/OpeningExperience.jsx';
 import CosmicBackground from './CosmicBackground.jsx';
 import SiteHeader from './header/SiteHeader.jsx';
 import Hero from './hero/Hero.jsx';
+import AboutSection from '../../about/presentation/AboutSection.jsx';
 import ClientStory from './client-story/ClientStory.jsx';
 import HowIBuild from './how-i-build/HowIBuild.jsx';
 import CommandCenter from './command-center/CommandCenter.jsx';
@@ -66,7 +67,11 @@ export default function HomePage() {
           {/* Page 1: Clean Entry Portal (Mascots bound strictly to Page 1) */}
           <Hero revealed={isSiteVisible} settled={isTransitionSettled} />
 
+          {/* Scroll-Driven Hook System: The 3 Core Theses */}
           <ClientStory />
+
+          {/* Profile & Tools Ecosystem */}
+          <AboutSection />
 
           <HowIBuild />
 

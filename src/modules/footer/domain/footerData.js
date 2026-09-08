@@ -1,11 +1,12 @@
 import { contactLinks, siteLinks, wosLinks, scheduleLink } from '../../../core/constants.js';
 
 export const FOOTER_NAVIGATION = Object.freeze([
-  Object.freeze({ label: '00 // Top & Hero', href: '#top' }),
-  Object.freeze({ label: '01 // The Problem', href: '#story' }),
-  Object.freeze({ label: '02 // Architecture', href: '#how-i-build' }),
-  Object.freeze({ label: '03 // Systems Console', href: '#command-center' }),
-  Object.freeze({ label: '04 // Contact & Schedule', href: '#contact' }),
+  Object.freeze({ label: '00 · Top & Hero', href: '#top' }),
+  Object.freeze({ label: '01 · Core Thesis', href: '#problem' }),
+  Object.freeze({ label: '02 · About & Tools', href: '#about' }),
+  Object.freeze({ label: '03 · Architecture', href: '#how-i-build' }),
+  Object.freeze({ label: '04 · Systems Console', href: '#command-center' }),
+  Object.freeze({ label: '05 · Contact', href: '#contact' }),
 ]);
 
 export const FOOTER_SYSTEMS = Object.freeze([

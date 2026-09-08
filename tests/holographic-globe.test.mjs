@@ -25,7 +25,7 @@ test('dashboard reuses the hero holographic globe and anchors clear the sticky h
   assert.match(dashboard, /import HolographicGlobe from '\.\.\/hero\/HolographicGlobe\.jsx'/);
   assert.match(dashboard, /<HolographicGlobe/);
   assert.match(dashboard, /system-core--shared-globe/);
-  assert.match(heroCss, /min-height:\s*min\(880px, calc\(100dvh - 4\.5rem\)\)/);
+  assert.match(heroCss, /min-height:\s*min\(900px, calc\(100dvh - 4\.5rem\)\)/);
   assert.match(homeCss, /\.command-center-portal-section\s*\{[^}]*scroll-margin-top:\s*5rem/s);
 });
 
@@ -47,4 +47,3 @@ test('globeData exports hubs, routes, continent polygons, and procedural map tex
   const vec = latLngToVector3(0, 0, 1.75);
   assert.ok(typeof vec.x === 'number' && typeof vec.y === 'number' && typeof vec.z === 'number', 'Converts lat/lng to 3D Cartesian coordinates');
 });
-

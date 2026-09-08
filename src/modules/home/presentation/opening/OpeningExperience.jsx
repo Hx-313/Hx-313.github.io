@@ -124,32 +124,32 @@ export default function OpeningExperience({ onHandoff = noop, onComplete = noop 
       .call(() => setLiveStatement(OPENING_STATEMENTS[0]), OPENING_BEATS[3].start)
       .add(aero, { scale: 0.86, opacity: 0.48, x: '-2vw', filter: 'blur(2px) brightness(.7)', duration: 600 }, OPENING_BEATS[3].start)
       .add(dash, { x: '-4vw', scale: 1.06, opacity: 1, filter: 'blur(0px) brightness(1.15) drop-shadow(0 0 24px rgba(25, 230, 140, .45))', duration: 600 }, OPENING_BEATS[3].start)
-      .add(dashArm, { rotate: [-4, -28], duration: 620 }, 4_080)
-      .add(dashProjectionTargets, { opacity: [0, 1], scale: [0.78, 1], duration: 700 }, 4_160)
+      .add(dashArm, { rotate: [-4, -28], duration: 620 }, 3_720)
+      .add(dashProjectionTargets, { opacity: [0, 1], scale: [0.78, 1], duration: 700 }, 3_800)
       .add(dashProjectionCopy, {
-        opacity: [0, 1], y: [8, 0], delay: stagger(120), duration: 380,
-      }, 4_460)
-      .add(dashProjectionTargets, { opacity: [1, 0], scale: [1, 0.9], duration: 380 }, 5_520)
+        opacity: [0, 1], y: [8, 0], delay: stagger(140), duration: 420,
+      }, 4_100)
+      .add(dashProjectionTargets, { opacity: [1, 0], scale: [1, 0.9], duration: 420 }, 6_700)
       .call(() => setLiveStatement(OPENING_STATEMENTS[1]), OPENING_BEATS[4].start)
       .add(dash, { scale: 0.86, opacity: 0.48, x: '2vw', filter: 'blur(2px) brightness(.7)', duration: 600 }, OPENING_BEATS[4].start)
       .add(aero, { x: '4vw', scale: 1.06, opacity: 1, filter: 'blur(0px) brightness(1.15) drop-shadow(0 0 24px rgba(98, 232, 232, .45))', duration: 600 }, OPENING_BEATS[4].start)
-      .add(aeroArm, { rotate: [0, -14], duration: 620 }, 6_080)
-      .add(aeroProjectionTargets, { opacity: [0, 1], scaleX: [0.78, 1], duration: 700 }, 6_160)
+      .add(aeroArm, { rotate: [0, -14], duration: 620 }, 7_320)
+      .add(aeroProjectionTargets, { opacity: [0, 1], scaleX: [0.78, 1], duration: 700 }, 7_400)
       .add(aeroProjectionCopy, {
-        opacity: [0, 1], x: [10, 0], delay: stagger(120), duration: 380,
-      }, 6_460)
-      .add(aeroProjectionTargets, { opacity: [1, 0], scaleX: [1, 0.9], duration: 380 }, 7_520)
+        opacity: [0, 1], x: [10, 0], delay: stagger(140), duration: 420,
+      }, 7_700)
+      .add(aeroProjectionTargets, { opacity: [1, 0], scaleX: [1, 0.9], duration: 420 }, 10_300)
       .call(() => setLiveStatement(OPENING_STATEMENTS[2]), OPENING_BEATS[5].start)
       .add(root.querySelector('[data-globe-core]'), { scale: [1, 1.3, 1], opacity: [0.5, 0.82, 0.5], duration: 800 }, OPENING_BEATS[5].start)
       .add(aero, { scale: 0.86, opacity: 0.48, x: '-1vw', filter: 'blur(2px) brightness(.7)', duration: 600 }, OPENING_BEATS[5].start)
       .add(dash, { x: '-3vw', scale: 1.06, opacity: 1, filter: 'blur(0px) brightness(1.15) drop-shadow(0 0 24px rgba(25, 230, 140, .45))', duration: 600 }, OPENING_BEATS[5].start)
-      .add(dashProjectionTargets, { opacity: [0, 1], scale: [0.78, 1.04], duration: 700 }, 8_160)
+      .add(dashProjectionTargets, { opacity: [0, 1], scale: [0.78, 1.04], duration: 700 }, 11_000)
       .add(dashProjectionCopy, {
-        opacity: [0, 1], y: [8, 0], delay: stagger(120), duration: 380,
-      }, 8_460)
-      .add(dashProjectionTargets, { opacity: [1, 0], scale: [1.04, 0.9], duration: 380 }, 9_520)
+        opacity: [0, 1], y: [8, 0], delay: stagger(140), duration: 420,
+      }, 11_300)
+      .add(dashProjectionTargets, { opacity: [1, 0], scale: [1.04, 0.9], duration: 420 }, 13_900)
       .add([dash, aero], { x: 0, scale: 1, opacity: 1, filter: 'blur(0px) brightness(1)', duration: 700 }, OPENING_BEATS[6].start)
-      .add(root.querySelector('[data-duo-connection]'), { opacity: [0, 0.62, 0.18], scaleX: [0.5, 1, 1], duration: 800 }, 10_000)
+      .add(root.querySelector('[data-duo-connection]'), { opacity: [0, 0.62, 0.18], scaleX: [0.5, 1, 1], duration: 800 }, 14_500)
       .call(() => once(onHandoff, handoffRef), OPENING_BEATS[7].start)
       .add([dash, aero], {
         y: ['0vh', '45vh'],
@@ -268,7 +268,7 @@ export default function OpeningExperience({ onHandoff = noop, onComplete = noop 
         <div className="opening-boot-badge">
           <span className="opening-boot-beacon" />
           <span className="opening-boot-title">
-            {bootProgress >= 100 ? 'MESH ONLINE // 100%' : 'INITIALIZING SYSTEM // CALIBRATING'}
+            {bootProgress >= 100 ? 'SYSTEM READY' : 'INITIALIZING SYSTEM'}
           </span>
         </div>
         <div className="opening-boot-meter">

@@ -8,13 +8,13 @@ import {
 } from '../src/modules/home/presentation/opening/openingSequence.js';
 
 test('opening gives the approved narrative room to breathe', () => {
-  assert.equal(OPENING_DURATION, 12_400);
+  assert.equal(OPENING_DURATION, 17_000);
   assert.deepEqual(
     OPENING_STATEMENTS.map(({ speaker, text }) => ({ speaker, text })),
     [
-      { speaker: 'dash', text: 'IDEAS NEED STRUCTURE.' },
-      { speaker: 'aero', text: 'PRODUCTS NEED MOMENTUM.' },
-      { speaker: 'dash', text: 'MOMENTUM NEEDS CONVICTION.' },
+      { speaker: 'dash', text: 'YOUR USERS ONLY SEE THE APP.' },
+      { speaker: 'aero', text: 'YOUR BUSINESS RELIES ON EVERYTHING BEHIND IT.' },
+      { speaker: 'dash', text: 'WHEN BOTH WORK, YOUR PRODUCT WORKS.' },
     ],
   );
 });
@@ -32,9 +32,9 @@ test('phase lookup resolves the major camera states', () => {
   assert.equal(getOpeningBeatAt(200).id, 'globe-intro');
   assert.equal(getOpeningBeatAt(2_000).id, 'mascots-emerging');
   assert.equal(getOpeningBeatAt(4_200).speaker, 'dash');
-  assert.equal(getOpeningBeatAt(6_200).speaker, 'aero');
-  assert.equal(getOpeningBeatAt(10_200).id, 'duo-focus');
-  assert.equal(getOpeningBeatAt(11_400).id, 'transitioning-to-home');
+  assert.equal(getOpeningBeatAt(8_200).speaker, 'aero');
+  assert.equal(getOpeningBeatAt(14_600).id, 'duo-focus');
+  assert.equal(getOpeningBeatAt(16_000).id, 'transitioning-to-home');
 });
 
 test('phase lookup includes every beat boundary and clamps out-of-range times', () => {

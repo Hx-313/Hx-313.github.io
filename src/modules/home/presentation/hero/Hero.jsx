@@ -2,10 +2,9 @@ import { useEffect, useRef } from 'react';
 import { animate, stagger } from 'animejs';
 import HeroContent from './HeroContent.jsx';
 import HeroVisual from './HeroVisual.jsx';
-import Mascots from '../../../../components/Mascots.jsx';
 import './hero.css';
 
-export default function Hero({ revealed, settled }) {
+export default function Hero({ revealed }) {
   const heroRef = useRef(null);
 
   useEffect(() => {
@@ -39,11 +38,8 @@ export default function Hero({ revealed, settled }) {
     return undefined;
   }, [revealed]);
 
-  const isMascotsActive = typeof settled === 'boolean' ? settled : Boolean(revealed);
-
   return (
     <section ref={heroRef} className="hero" aria-labelledby="hero-title">
-      <Mascots stage="page1" showController={true} active={isMascotsActive} />
       <div className="hero-grid">
         <HeroContent />
         <HeroVisual />

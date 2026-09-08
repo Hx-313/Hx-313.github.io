@@ -19,9 +19,9 @@ test('OpeningExperience contains connected-globe sequence led by Dash with Aero 
   const sequence = fs.readFileSync(sequencePath, 'utf8');
 
   // 3 Statements Check
-  assert.match(sequence, /lead: 'IDEAS NEED', accent: 'STRUCTURE\.'/,'Statement 1 must be present');
-  assert.match(sequence, /lead: 'PRODUCTS NEED', accent: 'MOMENTUM\.'/,'Statement 2 must be present');
-  assert.match(sequence, /lead: 'MOMENTUM NEEDS', accent: 'CONVICTION\.'/,'Statement 3 must be present');
+  assert.match(sequence, /lead: 'YOUR USERS ONLY SEE', accent: 'THE APP\.'/,'Statement 1 must be present');
+  assert.match(sequence, /lead: 'YOUR BUSINESS RELIES ON', accent: 'EVERYTHING BEHIND IT\.'/,'Statement 2 must be present');
+  assert.match(sequence, /lead: 'WHEN BOTH WORK,', accent: 'YOUR PRODUCT WORKS\.'/,'Statement 3 must be present');
 
   // Dash leads the A/B/A dialogue and both concept mascots are present.
   assert.match(sequence, /speaker: 'dash'[\s\S]*speaker: 'aero'[\s\S]*speaker: 'dash'/, 'Opening speaker order must be Dash, Aero, Dash');
@@ -185,8 +185,7 @@ test('opening stage and hero section are gracefully centered and fit viewport wi
   // Timeline must not translate the globe up off-center into the ceiling
   assert.doesNotMatch(openingJsx, /add\(globe,\s*\{[^}]*y:\s*\[0,\s*'-6vh'\]/s);
 
-  // Hero section must be centered with padding
-  assert.match(heroCss, /\.hero\s*\{[^}]*justify-content:\s*center/);
-  assert.match(heroCss, /\.hero\s*\{[^}]*padding:\s*clamp\(1\.5rem,\s*3vh,\s*3rem\)\s+0/);
+  // Hero section must preserve a balanced viewport-ready composition.
+  assert.match(heroCss, /\.hero\s*\{[^}]*display:\s*grid/);
+  assert.match(heroCss, /\.hero\s*\{[^}]*padding:\s*clamp\(4rem,\s*8vw,\s*7\.5rem\)\s+0\s+clamp\(4\.5rem,\s*8vw,\s*7rem\)/);
 });
-

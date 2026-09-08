@@ -12,7 +12,7 @@ test('howIBuildData exports valid frozen content and narrative structure', () =>
   assert.equal(howIBuildContent.chapter, '02');
   assert.equal(howIBuildContent.kicker, 'HOW I BUILD');
   assert.equal(howIBuildContent.tagline, 'SYSTEM DELIVERY MODEL');
-  assert.equal(howIBuildContent.lead, 'FROM PRODUCT VISION TO PRODUCTION SYSTEM.');
+  assert.match(howIBuildContent.lead, /ONE TOOL PER LAYER/);
   assert.ok(howIBuildContent.priorities.includes('RELIABILITY'));
   assert.ok(howIBuildContent.priorities.includes('RESILIENCE'));
   assert.ok(howIBuildContent.priorities.includes('MAINTAINABILITY'));

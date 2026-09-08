@@ -250,11 +250,31 @@ Documentation-only changes, configuration changes, dependency changes, source ch
 - Files: `src/core/constants.js`, `src/modules/contact/domain/contactData.js`, `src/modules/contact/application/useContactForm.js`, `src/modules/contact/presentation/ContactChannels.jsx`, `src/modules/contact/presentation/ContactForm.jsx`, `src/modules/contact/presentation/ContactSection.jsx`, `src/modules/contact/presentation/contact.css`, `src/modules/footer/domain/footerData.js`, `src/modules/footer/presentation/SiteFooter.jsx`, `src/modules/footer/presentation/footer.css`, `src/modules/home/presentation/HomePage.jsx`, `src/modules/home/presentation/home.css`, `src/modules/home/presentation/header/SiteHeader.jsx`, `tests/core-constants.test.mjs`, `tests/contact-funnel.test.mjs`, `tests/site-footer.test.mjs`, `CHANGE.md`
 - Verification: Executed `npm test` (`node --test tests/*.test.mjs`) with all 61 unit and integration tests passing. Ran `npm run build` with 132 modules transformed into optimized chunks in 2.22s with 0 errors.
 
+## 2026-09-08 — Convert Scroll Story into 3-Phase Core Thesis Hooks and Streamline About Section
 
+- Summary: Replaced legacy "The Problem" section with the 3 signature scroll hooks (`STORY_PHASE_COUNT = 3`):
+  1. Updated `src/modules/home/presentation/client-story/storyData.js` with the 3 core theses:
+     - Beat 1: `GREAT MOBILE PRODUCTS DON'T END AT THE INTERFACE.` / `THEY RUN ON SYSTEMS BUILT TO HOLD UP.`
+     - Beat 2: `PERFORMANCE ISN'T A FEATURE.` / `IT'S THE FOUNDATION.`
+     - Beat 3: `EVERY SCREEN IS A STATE. EVERY TAP IS AN EVENT.` / `THE PRODUCT IS THE LOGIC BETWEEN THEM.`
+  2. Streamlined `ClientStory.jsx` and `client-story.css` into a clean 3-step scroll stage showing both lead and statement simultaneously in unified view with zero `//` pseudo-comments.
+  3. Streamlined `AboutSection.jsx` to focus on Profile Narrative, Metrics Grid, and Categorized Tools Showcase directly following the scroll hook system.
+  4. Updated site navigation in `SiteHeader.jsx` (`01 Thesis`, `02 About`) and `footerData.js`.
+- Files: `src/modules/home/presentation/client-story/storyData.js`, `src/modules/home/presentation/client-story/ClientStory.jsx`, `src/modules/home/presentation/client-story/client-story.css`, `src/modules/about/presentation/AboutSection.jsx`, `src/modules/home/presentation/HomePage.jsx`, `src/modules/home/presentation/header/SiteHeader.jsx`, `src/modules/footer/domain/footerData.js`, `tests/client-scroll-story.test.mjs`, `tests/about-section.test.mjs`, `tests/site-header.test.mjs`, `tests/site-footer.test.mjs`, `CHANGE.md`
+- Verification: Executed `npm test` (`node --test tests/*.test.mjs`) with all 67 unit/integration tests passing. Ran `npm run build` compiling cleanly with 0 errors.
 
+## 2026-09-08 — Implement Portfolio Design System Guide for About Me & How I Build
 
-
-
+- Summary: Built the About Me and How I Build sections strictly following the Portfolio Design System Guide:
+  1. Extended the dark architectural palette (`--bg-void: #0A0D0B`, `--bg-raised: #101410`, `--ink-primary: #EDEFEC`, `--ink-muted: #8A928C`, `--ink-faint: #4A524C`, `--signal: #3ECF8E`, `--fault: #C9A227`).
+  2. Implemented the asymmetric, left-weighted single-flow layout for About Me (`AboutSection.jsx` and `about.css`):
+     - Left-aligned, full-bleed headline in condensed display face (72px desktop): *"Three years, fifteen systems, zero excuses for crashing."*
+     - Indented ~65ch body copy explaining the over-engineering mindset and live production deployment of WOS EPOS with the single green signal accent on *"Real state, real transactions, real uptime."*
+     - Flat hairline divider and humanist stat numbers (56px) featuring the one amber fault accent on `98.7%` uptime.
+     - Single orchestrated entrance on scroll with smooth RAF counter interpolation (0 → target over 800ms) and reduced-motion support.
+  3. Structured How I Build around the layered stack visual echoing the hook system's language (*"ONE TOOL PER LAYER. NOT ONE TOOL FOR EVERYTHING."*).
+- Files: `src/modules/about/domain/aboutData.js`, `src/modules/about/presentation/AboutSection.jsx`, `src/modules/about/presentation/about.css`, `src/modules/home/presentation/how-i-build/howIBuildData.js`, `tests/about-section.test.mjs`, `tests/how-i-build-data.test.mjs`, `CHANGE.md`
+- Verification: Executed `npm test` (`node --test tests/*.test.mjs`) with all 67 unit/integration tests passing. Executed `npm run build` with 134 modules transforming and compiling cleanly in 8.59s with 0 errors.
 
 
 

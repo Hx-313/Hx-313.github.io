@@ -1,0 +1,229 @@
+/* ==========================================================================
+   About Me — Asymmetric Single Flow Design System
+   ========================================================================== */
+
+.about-section {
+  position: relative;
+  width: 100%;
+  padding: clamp(5rem, 10vw, 9rem) 0 clamp(4rem, 8vw, 7rem);
+  background: transparent;
+  color: var(--ink-primary, #EDEFEC);
+  overflow: hidden;
+
+  /* Scoped Design System Tokens */
+  --bg-void: #0A0D0B;
+  --bg-raised: #101410;
+  --ink-primary: #EDEFEC;
+  --ink-muted: #8A928C;
+  --ink-faint: #4A524C;
+  --signal: #3ECF8E;
+  --signal-dim: #1F6B4B;
+  --fault: #C9A227;
+
+  --font-display: 'Archivo Expanded', 'Inter Tight', 'Outfit', sans-serif;
+  --font-body: 'General Sans', 'Suisse Intl', 'Plus Jakarta Sans', sans-serif;
+}
+
+.about-container {
+  width: min(1180px, 88vw);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+  text-align: left;
+}
+
+/* 1. Section Label — Subdued sentence case, no tracked uppercase */
+.about-label {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink-muted);
+  text-transform: none;
+  display: block;
+}
+
+/* 2. Asymmetric Headline — Left-aligned, full-bleed, condensed display */
+.about-headline {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5.8vw, 4.5rem); /* ~72px on desktop */
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  color: var(--ink-primary);
+  text-wrap: balance;
+}
+
+.about-headline-line {
+  display: block;
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition: opacity 500ms var(--ease-out, ease-out), transform 500ms var(--ease-out, ease-out);
+  transition-delay: calc(var(--line-idx, 0) * 80ms);
+}
+
+.about-section.is-visible .about-headline-line {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* 3. Indented Body Copy — Subordinate, narrow ~65ch column */
+.about-body {
+  margin-left: clamp(1.5rem, 7vw, 6.5rem);
+  max-width: 65ch;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  transition: opacity 600ms var(--ease-out, ease-out) 240ms, transform 600ms var(--ease-out, ease-out) 240ms;
+}
+
+.about-section.is-visible .about-body {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.about-paragraph {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(1.05rem, 1.3vw, 1.1875rem); /* ~19px on desktop */
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--ink-muted);
+  text-wrap: pretty;
+}
+
+.about-emphasis-product {
+  color: var(--ink-primary);
+  font-weight: 600;
+}
+
+/* The ONE green signal accent spent on the closing memorable takeaway */
+.about-signal-closing {
+  color: var(--signal);
+  font-weight: 600;
+  text-shadow: 0 0 20px rgba(62, 207, 142, 0.35);
+}
+
+/* 4. Stats Area — Hairline divider + Flat horizontal stat row */
+.about-stats-wrap {
+  margin-top: clamp(1rem, 2vw, 2rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.75rem, 3.5vw, 2.75rem);
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  transition: opacity 600ms var(--ease-out, ease-out) 360ms, transform 600ms var(--ease-out, ease-out) 360ms;
+}
+
+.about-section.is-visible .about-stats-wrap {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.about-divider {
+  width: 100%;
+  height: 1px;
+  border: none;
+  background: rgba(74, 82, 76, 0.35);
+  margin: 0;
+}
+
+.about-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+.about-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.about-stat-number {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: var(--font-body);
+  font-size: clamp(2.25rem, 4.5vw, 3.5rem); /* ~56px on desktop */
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: var(--ink-primary);
+}
+
+/* The ONE amber fault accent reserved exclusively for uptime reliability */
+.about-stat-item.is-highlight .about-stat-number {
+  color: var(--fault);
+  text-shadow: 0 0 25px rgba(201, 162, 39, 0.4);
+}
+
+.stat-value {
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-suffix {
+  font-size: 0.7em;
+  margin-left: 1px;
+  font-weight: 600;
+}
+
+.about-stat-label {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ink-muted);
+  text-transform: lowercase;
+  letter-spacing: 0.01em;
+}
+
+/* 5. Responsive Adaptations */
+@media (max-width: 900px) {
+  .about-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 1.5rem;
+  }
+
+  .about-body {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-headline {
+    font-size: clamp(2.1rem, 10vw, 3rem);
+  }
+
+  .about-paragraph {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .about-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.75rem 1rem;
+  }
+
+  .about-stat-number {
+    font-size: 2.25rem;
+  }
+}
+
+/* 6. True Reduced Motion Fallback */
+@media (prefers-reduced-motion: reduce) {
+  .about-headline-line,
+  .about-body,
+  .about-stats-wrap {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
