@@ -38,8 +38,13 @@ test('AboutSection component renders asymmetric single flow, headline, and human
   assert.match(jsx, /id="about"/, 'Section must have #about id');
   assert.match(jsx, /about-section/);
   assert.match(jsx, /about-headline/);
+  assert.match(jsx, /about-signal-phrase/);
   assert.match(jsx, /about-body/);
-  assert.match(jsx, /about-stats-row/);
+  assert.match(jsx, /about-credit/);
+  assert.match(jsx, /Hafiz Ali Abdullah/);
+  assert.match(jsx, /Mobile app developer/);
+  assert.match(jsx, /about-stats-col/);
+  assert.match(jsx, /about-stats-vertical-list/);
   assert.match(jsx, /about-signal-closing/);
 });
 

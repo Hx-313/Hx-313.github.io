@@ -1,131 +1,96 @@
-import { useState, useEffect, useRef } from 'react';
-import { animate } from 'animejs';
-import SystemBlueprint from './SystemBlueprint.jsx';
-import DisciplineControllers from './DisciplineControllers.jsx';
-import { howIBuildContent, disciplines } from './howIBuildData.js';
+import { useEffect, useRef, useState } from 'react';
+import { howIBuildData } from './howIBuildData.js';
+import ToolIcon from './ToolIcons.jsx';
 import './how-i-build.css';
 
 export default function HowIBuild() {
-  const [activeDisciplineId, setActiveDisciplineId] = useState(disciplines[0].id);
-  const activeDiscipline = disciplines.find((d) => d.id === activeDisciplineId) || disciplines[0];
-  const panelRef = useRef(null);
+  const sectionRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if (typeof window === 'undefined' || !panelRef.current) return;
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
+    const el = sectionRef.current;
+    if (!el) return;
 
-    try {
-      animate(panelRef.current, {
-        opacity: [0.4, 1],
-        translateY: [6, 0],
-        duration: 320,
-        ease: 'outQuad',
-      });
-    } catch {
-      // Fallback
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setIsVisible(true);
+      return;
     }
-  }, [activeDisciplineId]);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      {
+        threshold: 0.15,
+      }
+    );
+
+    observer.observe(el);
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section
       id="how-i-build"
-      className="how-i-build-section"
-      aria-labelledby="chapter-02-title"
+      ref={sectionRef}
+      className={`how-i-build-section ${isVisible ? 'is-visible' : ''}`}
+      aria-labelledby="how-i-build-heading"
       data-section="how-i-build"
     >
-      <div className="how-i-build__container">
-        {/* 1. EDITORIAL HEADER */}
-        <header className="how-i-build__header">
-          <div className="chapter-marker-pill">
-            <span className="pill-chapter">02 // {howIBuildContent.kicker}</span>
-            <span className="pill-divider" aria-hidden="true" />
-            <span className="pill-tagline">{howIBuildContent.tagline}</span>
-          </div>
+      <div className="how-i-build-container">
+        <div className="how-i-build-layout">
+          {/* Left Column: Label + Narrative Copy + Tag Chips */}
+          <div className="how-i-build-narrative">
+            <span id="how-i-build-heading" className="how-i-build-label">
+              {howIBuildData.label}
+            </span>
 
-          <h2 id="chapter-02-title" className="how-i-build__hook-headline">
-            <span>{howIBuildContent.statementPart1}</span>
-            <strong className="accent-statement">{howIBuildContent.statementPart2}</strong>
-          </h2>
+            <div className="how-i-build-copy">
+              {howIBuildData.paragraphs.map((paragraph, index) => (
+                <p key={index} className="how-i-build-paragraph">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
 
-          <p className="how-i-build__subtext">{howIBuildContent.description}</p>
-        </header>
-
-        {/* 2. UNIFIED ARCHITECTURAL CONSOLE */}
-        <div className="how-i-build__console-card">
-          {/* Top: Segmented Discipline Tabs */}
-          <div className="console-controls-header">
-            <DisciplineControllers
-              activeDisciplineId={activeDisciplineId}
-              onSelectDiscipline={setActiveDisciplineId}
-            />
-          </div>
-
-          {/* Console Body: Split Architecture & Reasoning */}
-          <div className="console-split-body">
-            {/* Left: Active Discipline Deep-Dive & Reasoning Panel */}
+            {/* Tag Chips Row */}
             <div
-              id="discipline-panel"
-              role="tabpanel"
-              className="discipline-reasoning-panel"
-              aria-labelledby={`discipline-tab-${activeDiscipline.id}`}
-              tabIndex={0}
-              ref={panelRef}
+              className="how-i-build-tags"
+              role="list"
+              aria-label="Engineering competencies"
             >
-              <div className="panel-badge-row">
-                <span className="panel-number-pill">
-                  {activeDiscipline.number} // {activeDiscipline.label}
-                </span>
-                <span className="panel-focus-tag">DISCIPLINE FOCUS</span>
-              </div>
-
-              <h3 className="panel-lead-headline">{activeDiscipline.headline}</h3>
-
-              {/* Stack Chips */}
-              <div className="panel-stack-section">
-                <span className="stack-label">PRIMARY STACK</span>
-                <div className="stack-chips-group">
-                  {activeDiscipline.stack.split('•').map((tech) => (
-                    <span key={tech.trim()} className="tech-chip">
-                      {tech.trim()}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="panel-summary-box">
-                <span className="summary-label">ARCHITECTURAL APPROACH</span>
-                <p className="summary-text">{activeDiscipline.summary}</p>
-              </div>
-            </div>
-
-            {/* Right: Living System Map Blueprint */}
-            <div className="console-blueprint-view">
-              <SystemBlueprint activeDiscipline={activeDiscipline} />
-            </div>
-          </div>
-
-          {/* Console Footer: Engineering Priorities */}
-          <div className="console-priorities-footer">
-            <span className="priorities-tag">{howIBuildContent.prioritiesLabel}</span>
-            <div className="priorities-chips" role="list">
-              {howIBuildContent.priorities.map((priority) => (
-                <span key={priority} className="priority-pill" role="listitem">
-                  <span className="priority-bullet" aria-hidden="true">•</span>
-                  {priority}
+              {howIBuildData.tags.map((tag) => (
+                <span key={tag} className="how-i-build-tag" role="listitem">
+                  {tag}
                 </span>
               ))}
             </div>
           </div>
-        </div>
 
-        {/* 3. CHAPTER BRIDGE BANNER */}
-        <div className="chapter-bridge-banner">
-          <p className="bridge-lead">{howIBuildContent.bridgeLead}</p>
-          <a className="bridge-cta-btn" href={howIBuildContent.bridgeCta.href}>
-            <span>{howIBuildContent.bridgeCta.label}</span>
-            <span className="btn-arrow" aria-hidden="true">→</span>
-          </a>
+          {/* Right Column: 3×4 Tool Grid with Divider Lines */}
+          <div
+            className="how-i-build-grid"
+            role="list"
+            aria-label="Technologies and development tools"
+          >
+            {howIBuildData.tools.map((tool) => (
+              <div key={tool.id} className="how-i-build-tile" role="listitem">
+                <div className="tile-icon-wrap">
+                  <ToolIcon name={tool.icon} />
+                </div>
+                <div className="tile-content">
+                  <h3 className="tile-name">{tool.name}</h3>
+                  <p className="tile-description">{tool.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

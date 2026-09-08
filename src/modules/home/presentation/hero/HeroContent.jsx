@@ -26,7 +26,7 @@ export default function HeroContent() {
       </div>
 
       <p className="hero-proof" data-hero-enter>
-        <span>2+ years building</span>
+        <span>3+ years building</span>
         <span>15+ apps shipped</span>
         <span>100k+ downloads</span>
       </p>

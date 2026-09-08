@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { aboutParagraphs, aboutStats } from '../domain/aboutData.js';
 import './about.css';
 
-const HEADLINE_TEXT = 'Three years, fifteen systems, zero excuses for crashing.';
-
 export default function AboutSection() {
   const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -26,13 +24,12 @@ export default function AboutSection() {
         if (entry.isIntersecting) {
           setIsVisible(true);
 
-          // Fast, synchronized count-up (350ms) across all stats as group settles
+          // Fast, clean synchronized count-up (350ms) across stat values
           const startTime = performance.now();
           const duration = 350;
 
           const animateCounts = (now) => {
             const elapsed = Math.min((now - startTime) / duration, 1);
-            // easeOutQuad
             const ease = elapsed * (2 - elapsed);
 
             setCounts(
@@ -75,12 +72,14 @@ export default function AboutSection() {
     >
       <div className="about-container">
         <div className="about-composition-grid">
-          {/* Left Column (~60%): Label + Natural Wrapped Headline + Body Copy */}
+          {/* Left Column: Label + Headline with Signal Split + Body + Name Credit */}
           <div className="about-narrative-col">
             <span className="about-label">About me</span>
 
             <h2 id="about-heading" className="about-headline">
-              {HEADLINE_TEXT}
+              Three years,{' '}
+              <span className="about-signal-phrase">fifteen systems</span>,{' '}
+              zero excuses for crashing.
             </h2>
 
             <div className="about-body">
@@ -93,9 +92,15 @@ export default function AboutSection() {
                 <span className="about-signal-closing">Real state, real transactions, real uptime.</span>
               </p>
             </div>
+
+            {/* Clean Name / Title Credit Line */}
+            <div className="about-credit">
+              <span className="about-credit-name">Hafiz Ali Abdullah</span>
+              <span className="about-credit-title">Mobile app developer</span>
+            </div>
           </div>
 
-          {/* Right Column (~40%): Vertically Stacked Stat Mass */}
+          {/* Right Column: Flat Number + Label Stats (No Icons, No Cards, No Borders) */}
           <aside className="about-stats-col" aria-label="Key engineering metrics">
             <div className="about-stats-vertical-list" role="list">
               {aboutStats.map((stat, idx) => (

@@ -1,16 +1,21 @@
 /* ==========================================================================
-   About Me — Asymmetric Single Flow Design System
+   About Me — Refined Centered Two-Column Specification
    ========================================================================== */
 
 .about-section {
   position: relative;
   width: 100%;
-  padding: clamp(5rem, 10vw, 9rem) 0 clamp(4rem, 8vw, 7rem);
-  background: transparent;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(2.5rem, 5vh, 4rem) 0;
+  box-sizing: border-box;
+  background: var(--bg-void, #0A0D0B);
   color: var(--ink-primary, #EDEFEC);
   overflow: hidden;
 
-  /* Scoped Design System Tokens */
+  /* Scoped Tokens */
   --bg-void: #0A0D0B;
   --bg-raised: #101410;
   --ink-primary: #EDEFEC;
@@ -22,81 +27,91 @@
 
   --font-display: 'Archivo Expanded', 'Inter Tight', 'Outfit', sans-serif;
   --font-body: 'General Sans', 'Suisse Intl', 'Plus Jakarta Sans', sans-serif;
+
+  /* Uniform lining numerals across the section */
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: 'lnum' 1, 'tnum' 1;
 }
 
 .about-container {
-  width: min(1180px, 88vw);
+  width: min(960px, 88vw);
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(2.5rem, 5vw, 4.5rem);
-  text-align: left;
 }
 
-/* 1. Section Label — Subdued sentence case, no tracked uppercase */
+/* 1. Proportioned Two-Column Grid with Defined 48px Gap */
+.about-composition-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 48px;
+  align-items: center;
+  justify-content: start;
+}
+
+/* 2. Left Column: Label + Headline + Body + Name Credit */
+.about-narrative-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 42ch;
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  transition: opacity 500ms var(--ease-out, ease-out), transform 500ms var(--ease-out, ease-out);
+}
+
+.about-section.is-visible .about-narrative-col {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Section Label — 12px, --ink-muted, no numbering, no border/box */
 .about-label {
   font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 500;
   letter-spacing: 0.02em;
   color: var(--ink-muted);
   text-transform: none;
-  display: block;
+  margin-bottom: -0.25rem;
 }
 
-/* 2. Asymmetric Headline — Left-aligned, full-bleed, condensed display */
+/* Headline — 26px, weight 500, line-height 1.35, natural wrap */
 .about-headline {
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5.8vw, 4.5rem); /* ~72px on desktop */
-  font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.035em;
+  font-size: clamp(1.35rem, 2vw, 1.625rem); /* ~26px */
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
   color: var(--ink-primary);
-  text-wrap: balance;
+  text-wrap: pretty;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: 'lnum' 1, 'tnum' 1;
 }
 
-.about-headline-line {
-  display: block;
-  opacity: 0;
-  transform: translate3d(0, 24px, 0);
-  transition: opacity 500ms var(--ease-out, ease-out), transform 500ms var(--ease-out, ease-out);
-  transition-delay: calc(var(--line-idx, 0) * 80ms);
+/* Only "fifteen systems" in --signal green (#3ECF8E); rest --ink-primary */
+.about-signal-phrase {
+  color: var(--signal);
+  font-weight: 600;
 }
 
-.about-section.is-visible .about-headline-line {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-}
-
-/* 3. Indented Body Copy — Subordinate, narrow ~65ch column */
+/* Body Copy — 14px, --ink-muted, line-height 1.6, max-width ~38ch */
 .about-body {
-  margin-left: clamp(1.5rem, 7vw, 6.5rem);
-  max-width: 65ch;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  opacity: 0;
-  transform: translate3d(0, 20px, 0);
-  transition: opacity 600ms var(--ease-out, ease-out) 240ms, transform 600ms var(--ease-out, ease-out) 240ms;
-}
-
-.about-section.is-visible .about-body {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
+  gap: 1.15rem;
 }
 
 .about-paragraph {
   margin: 0;
   font-family: var(--font-body);
-  font-size: clamp(1.05rem, 1.3vw, 1.1875rem); /* ~19px on desktop */
+  font-size: 14px;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.6;
   color: var(--ink-muted);
+  max-width: 38ch;
   text-wrap: pretty;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: 'lnum' 1, 'tnum' 1;
 }
 
 .about-emphasis-product {
@@ -104,124 +119,148 @@
   font-weight: 600;
 }
 
-/* The ONE green signal accent spent on the closing memorable takeaway */
 .about-signal-closing {
   color: var(--signal);
-  font-weight: 600;
-  text-shadow: 0 0 20px rgba(62, 207, 142, 0.35);
+  font-weight: 500;
 }
 
-/* 4. Stats Area — Hairline divider + Flat horizontal stat row */
-.about-stats-wrap {
-  margin-top: clamp(1rem, 2vw, 2rem);
+/* Name / Title Credit Line — Plain text, no icon */
+.about-credit {
   display: flex;
   flex-direction: column;
-  gap: clamp(1.75rem, 3.5vw, 2.75rem);
-  opacity: 0;
-  transform: translate3d(0, 20px, 0);
-  transition: opacity 600ms var(--ease-out, ease-out) 360ms, transform 600ms var(--ease-out, ease-out) 360ms;
+  gap: 0.15rem;
+  margin-top: 0.5rem;
 }
 
-.about-section.is-visible .about-stats-wrap {
+.about-credit-name {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-primary);
+  letter-spacing: 0.01em;
+}
+
+.about-credit-title {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-muted);
+  letter-spacing: 0.01em;
+}
+
+/* 3. Right Column: Vertically Centered Stat Stack */
+.about-stats-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 0;
+  margin-top: 0;
+  min-width: 130px;
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  transition: opacity 500ms var(--ease-out, ease-out) 150ms, transform 500ms var(--ease-out, ease-out) 150ms;
+}
+
+.about-section.is-visible .about-stats-col {
   opacity: 1;
   transform: translate3d(0, 0, 0);
 }
 
-.about-divider {
-  width: 100%;
-  height: 1px;
-  border: none;
-  background: rgba(74, 82, 76, 0.35);
-  margin: 0;
-}
-
-.about-stats-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(1.5rem, 4vw, 3.5rem);
-  align-items: start;
+/* Stat Spacing — 14px gap between stat groups */
+.about-stats-vertical-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .about-stat-item {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.15rem;
 }
 
+/* Stat Number — 26px, weight 500, with lining and tabular numerals */
 .about-stat-number {
   display: inline-flex;
   align-items: baseline;
   font-family: var(--font-body);
-  font-size: clamp(2.25rem, 4.5vw, 3.5rem); /* ~56px on desktop */
-  font-weight: 700;
+  font-size: 26px;
+  font-weight: 500;
   line-height: 1.0;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   color: var(--ink-primary);
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: 'lnum' 1, 'tnum' 1;
 }
 
-/* The ONE amber fault accent reserved exclusively for uptime reliability */
 .about-stat-item.is-highlight .about-stat-number {
   color: var(--fault);
-  text-shadow: 0 0 25px rgba(201, 162, 39, 0.4);
 }
 
 .stat-value {
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: 'lnum' 1, 'tnum' 1;
 }
 
 .stat-suffix {
-  font-size: 0.7em;
+  font-size: 0.85em;
   margin-left: 1px;
-  font-weight: 600;
 }
 
+/* Stat Label — 12px, --ink-muted, directly under number */
 .about-stat-label {
   font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 400;
   line-height: 1.3;
   color: var(--ink-muted);
   text-transform: lowercase;
-  letter-spacing: 0.01em;
 }
 
-/* 5. Responsive Adaptations */
-@media (max-width: 900px) {
-  .about-stats-row {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem 1.5rem;
+/* 4. Responsive Adaptations */
+@media (max-width: 860px) {
+  .about-section {
+    min-height: auto;
+    padding: clamp(3rem, 7vh, 4.5rem) 0;
   }
 
-  .about-body {
-    margin-left: 0;
+  .about-composition-grid {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
   }
-}
 
-@media (max-width: 600px) {
-  .about-headline {
-    font-size: clamp(2.1rem, 10vw, 3rem);
+  .about-narrative-col {
+    max-width: 100%;
   }
 
   .about-paragraph {
-    font-size: 1rem;
-    line-height: 1.6;
+    max-width: 100%;
   }
 
-  .about-stats-row {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.75rem 1rem;
+  .about-stats-col {
+    min-width: 0;
   }
 
-  .about-stat-number {
-    font-size: 2.25rem;
+  .about-stats-vertical-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(74, 82, 76, 0.25);
   }
 }
 
-/* 6. True Reduced Motion Fallback */
+@media (max-width: 540px) {
+  .about-stats-vertical-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem 1rem;
+  }
+}
+
+/* 5. Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-  .about-headline-line,
-  .about-body,
-  .about-stats-wrap {
+  .about-narrative-col,
+  .about-stats-col {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;

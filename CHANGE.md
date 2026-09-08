@@ -24,6 +24,12 @@ Documentation-only changes, configuration changes, dependency changes, source ch
 - Verification: Commands run and their result, or `Not run` with the reason.
 ```
 
+## 2026-09-09 — Rebuild How I Build section to four-row layered list and direct narrative copy
+
+- Summary: Replaced the benchmark 3x3 icon grid, "building a house" metaphor, and buzzword chips with a clean four-row architectural layer list (UI layer, Data & backend, Infra & deploy, Workflow & tooling) using Hafiz's real tool stack and middle-dot delimiters. Added the new direct narrative copy block below the layer list. Matched the About Me section's typography, spacing, lining numerals, and vertical-centering rules. Removed obsolete interactive blueprint components and updated test suites.
+- Files: `src/modules/home/presentation/how-i-build/howIBuildData.js`, `src/modules/home/presentation/how-i-build/HowIBuild.jsx`, `src/modules/home/presentation/how-i-build/how-i-build.css`, `tests/how-i-build-data.test.mjs`, `tests/how-i-build-interaction.test.mjs`, `CHANGE.md`
+- Verification: `npm test` passed (61/61 tests passing). `npm run build` compiled cleanly with 0 errors in 10.22s.
+
 ## 2026-08-26 — Add shared change-tracking workflow
 
 - Summary: Added this project-wide change log and documented the mandatory read-before-change and write-after-change workflow for all agents.
@@ -263,18 +269,24 @@ Documentation-only changes, configuration changes, dependency changes, source ch
 - Files: `src/modules/home/presentation/client-story/storyData.js`, `src/modules/home/presentation/client-story/ClientStory.jsx`, `src/modules/home/presentation/client-story/client-story.css`, `src/modules/about/presentation/AboutSection.jsx`, `src/modules/home/presentation/HomePage.jsx`, `src/modules/home/presentation/header/SiteHeader.jsx`, `src/modules/footer/domain/footerData.js`, `tests/client-scroll-story.test.mjs`, `tests/about-section.test.mjs`, `tests/site-header.test.mjs`, `tests/site-footer.test.mjs`, `CHANGE.md`
 - Verification: Executed `npm test` (`node --test tests/*.test.mjs`) with all 67 unit/integration tests passing. Ran `npm run build` compiling cleanly with 0 errors.
 
-## 2026-09-08 — Implement Portfolio Design System Guide for About Me & How I Build
+## 2026-09-08 — Update Hero Proof Point to 3+ Years
 
-- Summary: Built the About Me and How I Build sections strictly following the Portfolio Design System Guide:
-  1. Extended the dark architectural palette (`--bg-void: #0A0D0B`, `--bg-raised: #101410`, `--ink-primary: #EDEFEC`, `--ink-muted: #8A928C`, `--ink-faint: #4A524C`, `--signal: #3ECF8E`, `--fault: #C9A227`).
-  2. Implemented the asymmetric, left-weighted single-flow layout for About Me (`AboutSection.jsx` and `about.css`):
-     - Left-aligned, full-bleed headline in condensed display face (72px desktop): *"Three years, fifteen systems, zero excuses for crashing."*
-     - Indented ~65ch body copy explaining the over-engineering mindset and live production deployment of WOS EPOS with the single green signal accent on *"Real state, real transactions, real uptime."*
-     - Flat hairline divider and humanist stat numbers (56px) featuring the one amber fault accent on `98.7%` uptime.
-     - Single orchestrated entrance on scroll with smooth RAF counter interpolation (0 → target over 800ms) and reduced-motion support.
-  3. Structured How I Build around the layered stack visual echoing the hook system's language (*"ONE TOOL PER LAYER. NOT ONE TOOL FOR EVERYTHING."*).
-- Files: `src/modules/about/domain/aboutData.js`, `src/modules/about/presentation/AboutSection.jsx`, `src/modules/about/presentation/about.css`, `src/modules/home/presentation/how-i-build/howIBuildData.js`, `tests/about-section.test.mjs`, `tests/how-i-build-data.test.mjs`, `CHANGE.md`
-- Verification: Executed `npm test` (`node --test tests/*.test.mjs`) with all 67 unit/integration tests passing. Executed `npm run build` with 134 modules transforming and compiling cleanly in 8.59s with 0 errors.
+- Summary: Updated the experience proof point in `HeroContent.jsx` from `2+ years building` to `3+ years building` for consistency with the About Me narrative and career milestone data.
+- Files: `src/modules/home/presentation/hero/HeroContent.jsx`, `tests/hero-content.test.mjs`, `CHANGE.md`
+- Verification: Executed `npm test` (`node --test tests/*.test.mjs`) with all 67 unit/integration tests passing. Executed `npm run build` compiling cleanly with 0 errors.
+
+## 2026-09-08 — Implement About Me Final Spec & Remove Decorative Clutter
+
+- Summary: Streamlined the About Me section (`AboutSection.jsx` and `about.css`) strictly to the final approved specification:
+  1. Removed all decorative clutter: globe/orbit illustrations, floating badges, numbered eyebrow, bordered icon cards around stats, marketing subtext under numbers, sidebar tag lists, and signature icons.
+  2. Implemented the clean, flat two-column structure with content vertically centered in the section (`min-height: 80vh`).
+  3. Left column: Plain `About me` label (12px), natural wrapping headline at 26px with `"fifteen systems"` highlighted in `--signal` green, body copy at 14px (line-height 1.6, max-width ~38ch), and a clean plain-text name credit (*Hafiz Ali Abdullah / Mobile app developer*).
+  4. Right column: Flat numbers at 28px (weight 500) and lowercase labels at 12px with 14px group spacing and `98.7%` in `--fault` amber.
+- Files: `src/modules/about/presentation/AboutSection.jsx`, `src/modules/about/presentation/about.css`, `tests/about-section.test.mjs`, `CHANGE.md`
+- Verification: Executed `npm test` (`node --test tests/*.test.mjs`) with all 67 unit/integration tests passing. Executed `npm run build` with 134 modules transforming and compiling cleanly in 5.38s with 0 errors.
+
+
+
 
 
 

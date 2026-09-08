@@ -7,141 +7,98 @@ function deepFreeze(obj) {
   return Object.freeze(obj);
 }
 
-export const howIBuildContent = deepFreeze({
-  chapter: '02',
-  kicker: 'HOW I BUILD',
-  tagline: 'SYSTEM DELIVERY MODEL',
-  lead: 'ONE TOOL PER LAYER. NOT ONE TOOL FOR EVERYTHING.',
-  statementPart1: 'ONE TOOL PER LAYER.',
-  statementPart2: 'NOT ONE TOOL FOR EVERYTHING.',
-  description:
-    'I structure products around clear boundaries between UI, domain state, persistence, integrations and operations — each chosen for the layer it serves.',
-  prioritiesLabel: 'ENGINEERING PRIORITIES',
-  priorities: ['RELIABILITY', 'RESILIENCE', 'MAINTAINABILITY', 'SCALE'],
-  bridgeLead: 'THE MODEL IS ONLY USEFUL IF IT SURVIVES REAL PRODUCTS.',
-  bridgeCta: {
-    label: '03 // EXPLORE SHIPPED SYSTEMS',
-    href: '#systems',
-  },
+export const howIBuildData = deepFreeze({
+  label: 'How I build',
+  paragraphs: [
+    'Every layer gets a tool chosen for what it actually has to survive \u2014 not what\u2019s trending this year.',
+    'Flutter and native Android for the UI layer that has to stay smooth under real load. Firebase, Node, Mongo, and SQL for the data layer that has to hold state reliably. Vercel and Hostinger for infra that has to stay up \u2014 because 98.7% uptime isn\u2019t an accident, it\u2019s a stack decision made at every layer.',
+    'Architecture decides what\u2019s possible. Tooling decides what\u2019s actually reliable.',
+  ],
+  tags: [
+    'MOBILE APP',
+    'CROSS-PLATFORM',
+    'BACKEND',
+    'DEPLOYMENT',
+    'API DESIGN',
+    'DATABASE',
+    'VERSION CONTROL',
+  ],
+  tools: [
+    // Row 1
+    {
+      id: 'flutter',
+      name: 'Flutter',
+      description: 'Cross-platform mobile development',
+      icon: 'flutter',
+    },
+    {
+      id: 'android',
+      name: 'Android Native',
+      description: 'Platform-specific builds',
+      icon: 'android',
+    },
+    {
+      id: 'firebase',
+      name: 'Firebase',
+      description: 'Backend and authentication',
+      icon: 'firebase',
+    },
+    // Row 2
+    {
+      id: 'nodejs',
+      name: 'Node.js',
+      description: 'Server-side runtime',
+      icon: 'nodejs',
+    },
+    {
+      id: 'mongodb-sql',
+      name: 'MongoDB + SQL',
+      description: 'Document and relational data',
+      icon: 'mongodb',
+    },
+    {
+      id: 'sqlite',
+      name: 'SQLite',
+      description: 'Local data storage',
+      icon: 'sqlite',
+    },
+    // Row 3
+    {
+      id: 'vercel',
+      name: 'Vercel',
+      description: 'Frontend deployment',
+      icon: 'vercel',
+    },
+    {
+      id: 'hostinger',
+      name: 'Hostinger',
+      description: 'Backend hosting',
+      icon: 'hostinger',
+    },
+    {
+      id: 'github',
+      name: 'GitHub',
+      description: 'Version control and collaboration',
+      icon: 'github',
+    },
+    // Row 4
+    {
+      id: 'vscode',
+      name: 'VS Code',
+      description: 'Code editor',
+      icon: 'vscode',
+    },
+    {
+      id: 'postman-insomnia',
+      name: 'Postman + Insomnia',
+      description: 'API testing and documentation',
+      icon: 'postman',
+    },
+    {
+      id: 'slack',
+      name: 'Slack',
+      description: 'Messaging and collaboration',
+      icon: 'slack',
+    },
+  ],
 });
-
-export const systemLayers = deepFreeze([
-  {
-    id: 'experience',
-    number: '01',
-    title: 'EXPERIENCE',
-    subtitle: 'Client & Peripherals',
-    nodes: [
-      { id: 'exp-mobile', label: 'MOBILE', detail: 'iOS / Android Native & Flutter', icon: 'mobile' },
-      { id: 'exp-web', label: 'WEB', detail: 'Platforms & Web Portals', icon: 'web' },
-      { id: 'exp-terminals', label: 'TERMINALS', detail: 'ePOS & Order Terminals', icon: 'terminal' },
-      { id: 'exp-admin', label: 'ADMIN', detail: 'Operations & Management Dashboards', icon: 'admin' },
-    ],
-    busId: 'events',
-    busLabel: 'SYSTEM EVENTS / DATA FLOW',
-  },
-  {
-    id: 'domain-data',
-    number: '02',
-    title: 'DOMAIN & DATA',
-    subtitle: 'Execution & Persistence',
-    nodes: [
-      { id: 'core-apis', label: 'APIS', detail: 'REST & WebSocket Gateways', icon: 'api' },
-      { id: 'core-rules', label: 'BUSINESS RULES', detail: 'Domain Logic & Workflows', icon: 'rules' },
-      { id: 'core-data', label: 'DATA', detail: 'Local Persistence & Cloud DB', icon: 'data' },
-      { id: 'core-identity', label: 'IDENTITY', detail: 'Auth, RBAC & Permissions', icon: 'auth' },
-    ],
-    busId: 'integrations',
-    busLabel: 'SERVICES / OPERATIONS INTEGRATIONS',
-  },
-  {
-    id: 'operations',
-    number: '03',
-    title: 'OPERATIONS & INTELLIGENCE',
-    subtitle: 'Automation & Health',
-    nodes: [
-      { id: 'ops-ai', label: 'AI / LLM', detail: 'Intelligent Workflows & Processing', icon: 'ai' },
-      { id: 'ops-jobs', label: 'BACKGROUND', detail: 'Scheduled Jobs & Workers', icon: 'jobs' },
-      { id: 'ops-delivery', label: 'DELIVERY', detail: 'CI/CD & Versioned Releases', icon: 'delivery' },
-      { id: 'ops-observability', label: 'OBSERVABILITY', detail: 'Telemetry, Logging & Health', icon: 'metrics' },
-    ],
-  },
-]);
-
-export const systemBuses = deepFreeze([
-  {
-    id: 'events',
-    label: 'SYSTEM EVENTS / DATA FLOW',
-    fromLayer: 'experience',
-    toLayer: 'domain-data',
-  },
-  {
-    id: 'integrations',
-    label: 'SERVICES / OPERATIONS INTEGRATIONS',
-    fromLayer: 'domain-data',
-    toLayer: 'operations',
-  },
-]);
-
-export const systemConnections = deepFreeze([
-  { id: 'mobile-to-api', from: 'exp-mobile', to: 'core-apis', bus: 'events' },
-  { id: 'web-to-api', from: 'exp-web', to: 'core-apis', bus: 'events' },
-  { id: 'terminal-to-rules', from: 'exp-terminals', to: 'core-rules', bus: 'events' },
-  { id: 'admin-to-identity', from: 'exp-admin', to: 'core-identity', bus: 'events' },
-  { id: 'rules-to-data', from: 'core-rules', to: 'core-data', bus: 'events' },
-  { id: 'api-to-jobs', from: 'core-apis', to: 'ops-jobs', bus: 'integrations' },
-  { id: 'data-to-ai', from: 'core-data', to: 'ops-ai', bus: 'integrations' },
-  { id: 'identity-to-delivery', from: 'core-identity', to: 'ops-delivery', bus: 'integrations' },
-  { id: 'rules-to-observability', from: 'core-rules', to: 'ops-observability', bus: 'integrations' },
-]);
-
-export const disciplines = deepFreeze([
-  {
-    id: 'build',
-    number: '01',
-    label: 'BUILD',
-    headline: 'Responsive product interfaces, native capabilities and performant client experiences.',
-    stack: 'Flutter • Native Android • React • TypeScript',
-    summary:
-      'Built for responsive interaction, native platform capabilities, offline-aware experiences, and consistent behavior across screen sizes and platforms.',
-    activeNodeIds: ['exp-mobile', 'exp-web', 'exp-terminals', 'exp-admin'],
-    relatedNodeIds: ['core-apis', 'core-rules'],
-    activeConnectionIds: ['mobile-to-api', 'web-to-api', 'terminal-to-rules', 'admin-to-identity'],
-  },
-  {
-    id: 'architect',
-    number: '02',
-    label: 'ARCHITECT',
-    headline: 'Boundaries, state ownership, persistence, recovery and role-aware workflows.',
-    stack: 'Clean Architecture • Modular State • Offline-First • RBAC',
-    summary:
-      'Clear separation between presentation, domain behavior, persistence, and infrastructure, with offline-first strategies and explicit role boundaries where the product requires them.',
-    activeNodeIds: ['core-rules', 'core-data', 'core-identity', 'exp-terminals'],
-    relatedNodeIds: ['core-apis', 'exp-mobile', 'exp-admin'],
-    activeConnectionIds: ['terminal-to-rules', 'rules-to-data', 'admin-to-identity'],
-  },
-  {
-    id: 'connect',
-    number: '03',
-    label: 'CONNECT',
-    headline: 'APIs, realtime synchronization, authentication, printers, scanners and platform services.',
-    stack: 'REST • WebSockets • Firebase • Node.js • Device Integrations',
-    summary:
-      'Reliable exchange between applications, backend services, realtime channels, authentication systems, and device integrations such as scanners and thermal printers.',
-    activeNodeIds: ['core-apis', 'core-identity', 'exp-terminals', 'ops-jobs'],
-    relatedNodeIds: ['exp-mobile', 'exp-web', 'core-data'],
-    activeConnectionIds: ['mobile-to-api', 'web-to-api', 'api-to-jobs', 'admin-to-identity'],
-  },
-  {
-    id: 'automate',
-    number: '04',
-    label: 'AUTOMATE',
-    headline: 'Scheduled work, intelligent features, automation, diagnostics and production visibility.',
-    stack: 'AI Workflows • Background Jobs • Delivery Pipelines • Observability',
-    summary:
-      'Background processing, AI-assisted workflows, repeatable delivery pipelines, logging, diagnostics, and production visibility where the system requires them.',
-    activeNodeIds: ['ops-ai', 'ops-jobs', 'ops-delivery', 'ops-observability'],
-    relatedNodeIds: ['core-data', 'core-apis', 'core-rules'],
-    activeConnectionIds: ['data-to-ai', 'api-to-jobs', 'identity-to-delivery', 'rules-to-observability'],
-  },
-]);

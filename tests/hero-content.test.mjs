@@ -15,7 +15,7 @@ test('HeroContent establishes Hafiz as a mobile application developer before pre
   assert.ok(content.includes('View apps'), 'Includes an approachable work fast path');
   assert.ok(content.includes('href="#systems"'), 'Secondary CTA targets systems section');
   assert.ok(content.includes('hero-proof'), 'Includes concise proof');
-  assert.ok(content.includes('2+ years building'), 'Uses Hafiz’s accurate years-building experience');
+  assert.ok(content.includes('3+ years building'), 'Uses Hafiz’s accurate years-building experience');
   assert.ok(content.includes('15+ apps shipped'), 'Frames proof around Hafiz’s app work');
   assert.ok(content.includes('100k+ downloads'), 'Includes mobile-app reach proof');
   assert.ok(content.includes('100k+'), 'Includes download proof point');
