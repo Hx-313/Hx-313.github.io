@@ -50,18 +50,11 @@
   transform: none;
 }
 
-/* Left column: label, copy, and bordered scope chips */
+/* Left column: display heading, copy, and bordered scope chips */
 .how-i-build-label {
-  display: block;
   margin: 0 0 1.35rem;
   padding: 0;
   border: 0;
-  color: var(--ink-muted);
-  font-family: var(--font-body);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  text-transform: none;
 }
 
 .how-i-build-copy {

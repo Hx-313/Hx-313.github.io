@@ -63,15 +63,9 @@
   transform: translate3d(0, 0, 0);
 }
 
-/* Section Label — 12px, --ink-muted, no numbering, no border/box */
+/* Shared display heading keeps the section title legible beside the narrative. */
 .about-label {
-  font-family: var(--font-body);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  color: var(--ink-muted);
-  text-transform: none;
-  margin-bottom: -0.25rem;
+  margin-bottom: 0.25rem;
 }
 
 /* Headline — 26px, weight 500, line-height 1.35, natural wrap */

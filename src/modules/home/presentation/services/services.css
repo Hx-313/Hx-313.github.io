@@ -1,5 +1,5 @@
 /* ============================================================================
-   Services — structured capability matrix
+   Services — calm tabs over a structured capability matrix
    ============================================================================ */
 
 .services-section {
@@ -34,12 +34,77 @@
 
 .services-label {
   margin: 0 0 clamp(1.75rem, 4vh, 2.75rem);
+}
+
+.services-tabs {
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(1.35rem, 4vw, 2.25rem);
+  overflow-x: auto;
+  border-bottom: 1px solid var(--grid-line);
+  scrollbar-width: none;
+  scroll-padding-inline: 0.25rem;
+}
+
+.services-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.services-tab {
+  position: relative;
+  flex: 0 0 auto;
+  margin: 0 0 -1px;
+  padding: 0 0 0.85rem;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
   color: var(--ink-muted);
+  cursor: pointer;
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
-  letter-spacing: 0.02em;
   line-height: 1.3;
+  text-align: left;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.services-tab:hover,
+.services-tab:focus-visible,
+.services-tab.is-active {
+  color: var(--ink-primary);
+}
+
+.services-tab.is-active {
+  border-bottom-color: var(--signal);
+}
+
+.services-tab:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--signal) 75%, white);
+  outline-offset: 4px;
+}
+
+.services-panels {
+  position: relative;
+  display: grid;
+  margin-top: clamp(2.25rem, 5vh, 3.25rem);
+  isolation: isolate;
+}
+
+.services-panel {
+  grid-area: 1 / 1;
+  min-width: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 180ms ease, visibility 0s linear 180ms;
+}
+
+.services-panel.is-active {
+  z-index: 1;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 180ms ease, visibility 0s linear 0s;
 }
 
 .services-grid {
@@ -141,6 +206,10 @@
     width: min(100% - 2.5rem, 720px);
   }
 
+  .services-tabs {
+    gap: 1.5rem;
+  }
+
   .services-grid {
     grid-template-columns: 1fr;
   }
@@ -161,9 +230,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .services-tab,
+  .services-panel,
   .services-item,
   .services-item-icon {
     transition: none;
   }
 }
-

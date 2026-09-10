@@ -74,7 +74,7 @@ export default function HowIBuild() {
         <div className="how-i-build-layout">
           {/* Left column: narrative copy and scope tags */}
           <div className="how-i-build-narrative">
-            <h2 id="how-i-build-heading" className="how-i-build-label">
+            <h2 id="how-i-build-heading" className="how-i-build-label section-heading">
               {howIBuildData.label}
             </h2>
 

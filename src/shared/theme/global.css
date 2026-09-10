@@ -14,6 +14,37 @@ button, a { font: inherit; }
 a { color: inherit; }
 button:focus-visible, a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; }
 
+/* Shared section heading: a display-led title with one restrained signal mark. */
+.section-heading {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  width: fit-content;
+  color: var(--ink-primary, var(--color-foreground));
+  font-family: var(--font-display, system-ui, sans-serif);
+  font-size: clamp(1.15rem, 1.7vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  text-transform: none;
+}
+
+.section-heading::after {
+  display: block;
+  width: clamp(2rem, 4vw, 3.25rem);
+  height: 2px;
+  background: var(--signal, var(--color-accent));
+  content: '';
+  opacity: 0.9;
+}
+
+@media (max-width: 560px) {
+  .section-heading {
+    gap: 0.6rem;
+    font-size: 1.2rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }

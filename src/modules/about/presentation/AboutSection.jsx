@@ -74,7 +74,7 @@ export default function AboutSection() {
         <div className="about-composition-grid">
           {/* Left Column: Label + Headline with Signal Split + Body + Name Credit */}
           <div className="about-narrative-col">
-            <span className="about-label">About me</span>
+            <span className="about-label section-heading">About me</span>
 
             <h2 id="about-heading" className="about-headline">
               Three years,{' '}

@@ -4,12 +4,12 @@ import ThemeToggle from '../../../../shared/theme/ThemeToggle.jsx';
 import './header.css';
 
 const NAV_ITEMS = [
-  { id: 'top', label: 'Overview', href: '#top' },
-  { id: 'problem', label: '01 Thesis', href: '#problem' },
-  { id: 'about', label: '02 About', href: '#about' },
-  { id: 'how-i-build', label: '03 Build', href: '#how-i-build' },
-  { id: 'systems', label: '04 Systems', href: '#systems' },
-  { id: 'contact', label: '05 Contact', href: '#contact' },
+  { id: 'top', label: 'Overview', shortLabel: 'Overview', index: '00', href: '#top' },
+  { id: 'problem', label: '01 Thesis', shortLabel: 'Thesis', index: '01', href: '#problem' },
+  { id: 'about', label: '02 About', shortLabel: 'About', index: '02', href: '#about' },
+  { id: 'how-i-build', label: '03 Build', shortLabel: 'Build', index: '03', href: '#how-i-build' },
+  { id: 'systems', label: '04 Systems', shortLabel: 'Systems', index: '04', href: '#systems' },
+  { id: 'contact', label: '05 Contact', shortLabel: 'Contact', index: '05', href: '#contact' },
 ];
 
 export default function SiteHeader({ theme, setTheme }) {
@@ -129,7 +129,7 @@ export default function SiteHeader({ theme, setTheme }) {
   return (
     <header className={`site-header ${isScrolled ? 'is-scrolled' : ''}`} aria-label="Primary navigation">
       <div className="header-inner">
-        {/* Left: Clean Brand Logo + Minimal Available Indicator */}
+        {/* Left: Brand mark */}
         <div className="header-brand-wrap">
           <a
             className="site-mark site-mark--logo"
@@ -137,39 +137,44 @@ export default function SiteHeader({ theme, setTheme }) {
             aria-label="itHX - Hafiz Ali Abdullah"
             onClick={(e) => handleNavClick(e, '#top', 'top')}
           >
-            <img
-              src="/brand/ithx-logo.png"
-              alt="itHX Logo"
-              className="site-brand-logo-img"
-              width="120"
-              height="35"
-            />
-            <span className="status-live-dot" title="Available for hire" aria-hidden="true" />
+            <span className="site-mark-visual">
+              <img
+                src="/brand/ithx-logo.png"
+                alt="itHX Logo"
+                className="site-brand-logo-img"
+                width="120"
+                height="35"
+              />
+              <span className="status-live-dot" title="Available for hire" aria-hidden="true" />
+            </span>
           </a>
         </div>
 
-        {/* Center: Clean Airy Desktop Navigation */}
+        {/* Center: Primary navigation */}
         <nav className="header-desktop-nav" aria-label="Main Navigation">
-          <ul className="nav-list" role="list">
-            {NAV_ITEMS.map((item) => {
-              const isActive = activeSection === item.id;
-              return (
-                <li key={item.id} className="nav-item">
-                  <a
-                    href={item.href}
-                    className={`nav-link ${isActive ? 'is-active' : ''}`}
-                    aria-current={isActive ? 'location' : undefined}
-                    onClick={(e) => handleNavClick(e, item.href, item.id)}
-                  >
-                    <span className="nav-label">{item.label}</span>
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
+          <div className="nav-rail">
+            <ul className="nav-list" role="list">
+              {NAV_ITEMS.map((item) => {
+                const isActive = activeSection === item.id;
+                return (
+                  <li key={item.id} className="nav-item">
+                    <a
+                      href={item.href}
+                      className={`nav-link ${isActive ? 'is-active' : ''}`}
+                      aria-label={item.shortLabel}
+                      aria-current={isActive ? 'location' : undefined}
+                      onClick={(e) => handleNavClick(e, item.href, item.id)}
+                    >
+                      <span className="nav-label">{item.shortLabel}</span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </nav>
 
-        {/* Right: Clean, Minimal Actions (Let's Talk CTA & Mobile Menu) */}
+        {/* Right: Theme and contact */}
         <div className="header-actions">
           <ThemeToggle theme={theme} onChange={setTheme} />
 
@@ -187,7 +192,7 @@ export default function SiteHeader({ theme, setTheme }) {
           <button
             type="button"
             className={`header-burger-btn ${isMobileOpen ? 'is-open' : ''}`}
-            aria-label="Toggle navigation menu"
+            aria-label={isMobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={isMobileOpen}
             aria-controls="mobile-nav-drawer"
             onClick={() => setIsMobileOpen((prev) => !prev)}
@@ -204,13 +209,17 @@ export default function SiteHeader({ theme, setTheme }) {
         id="mobile-nav-drawer"
         className={`mobile-nav-drawer ${isMobileOpen ? 'is-visible' : ''}`}
         aria-hidden={!isMobileOpen}
+        inert={!isMobileOpen ? '' : undefined}
       >
         <div className="mobile-drawer-backdrop" onClick={() => setIsMobileOpen(false)} aria-hidden="true" />
-        <div className="mobile-drawer-pane">
+        <div className="mobile-drawer-pane" role="dialog" aria-modal="true" aria-label="Navigation menu">
           <div className="mobile-drawer-header">
-            <div className="mobile-status-pill" title="Live System Time">
-              <span className="status-live-dot" aria-hidden="true" />
-              <span>SYS: ONLINE</span>
+            <div className="mobile-drawer-identity">
+              <span className="mobile-status-pill" title="Live System Time">
+                <span className="status-live-dot" aria-hidden="true" />
+                <span>SYS: ONLINE</span>
+              </span>
+              <span className="mobile-drawer-kicker">MAIN NAVIGATION</span>
             </div>
             <button
               type="button"
@@ -229,9 +238,11 @@ export default function SiteHeader({ theme, setTheme }) {
                   <a
                     href={item.href}
                     className={`mobile-nav-link ${activeSection === item.id ? 'is-active' : ''}`}
+                    aria-label={item.shortLabel}
                     onClick={(e) => handleNavClick(e, item.href, item.id)}
                   >
-                    <span className="mobile-nav-text">{item.label}</span>
+                    <span className="mobile-nav-text">{item.shortLabel}</span>
+                    <span className="mobile-nav-arrow" aria-hidden="true">↗</span>
                   </a>
                 </li>
               ))}
