@@ -1,6 +1,6 @@
-/* ==========================================================================
-   How I Build — Four-Row Architectural Layer Specification
-   ========================================================================== */
+/* ============================================================================
+   How I Build — mirrored benchmark grid
+   ============================================================================ */
 
 .how-i-build-section {
   position: relative;
@@ -9,14 +9,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(2.5rem, 5vh, 4rem) 0;
+  padding: clamp(4rem, 9vh, 7rem) 0;
   box-sizing: border-box;
   background: var(--bg-void, #0A0D0B);
   color: var(--ink-primary, #EDEFEC);
   overflow: hidden;
   scroll-margin-top: var(--header-offset, 4.5rem);
 
-  /* Scoped Tokens */
   --bg-void: #0A0D0B;
   --bg-raised: #101410;
   --ink-primary: #EDEFEC;
@@ -29,118 +28,420 @@
   --font-display: 'Archivo Expanded', 'Inter Tight', 'Outfit', sans-serif;
   --font-body: 'General Sans', 'Suisse Intl', 'Plus Jakarta Sans', sans-serif;
 
-  /* Uniform lining numerals across the section */
   font-variant-numeric: lining-nums tabular-nums;
   font-feature-settings: 'lnum' 1, 'tnum' 1;
 }
 
 .how-i-build-container {
-  width: min(960px, 88vw);
+  width: min(1180px, 88vw);
   margin: 0 auto;
 }
 
-/* 1. Centered Single-Column Content Flow */
-.how-i-build-content {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  max-width: 52ch;
-  opacity: 0;
-  transform: translate3d(0, 16px, 0);
-  transition: opacity 500ms var(--ease-out, ease-out), transform 500ms var(--ease-out, ease-out);
+.how-i-build-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+  align-items: center;
+  gap: clamp(3rem, 7vw, 7rem);
 }
 
-.how-i-build-section.is-visible .how-i-build-content {
+.how-i-build-narrative,
+.how-i-build-grid {
   opacity: 1;
-  transform: translate3d(0, 0, 0);
+  transform: none;
 }
 
-/* 2. Section Label — 12px, --ink-muted, matching About section */
+/* Left column: label, copy, and bordered scope chips */
 .how-i-build-label {
   display: block;
+  margin: 0 0 1.35rem;
+  padding: 0;
+  border: 0;
+  color: var(--ink-muted);
   font-family: var(--font-body);
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.02em;
-  color: var(--ink-muted);
   text-transform: none;
-  margin-bottom: 0.25rem;
 }
 
-/* 3. Four-Row Layered Tool List */
-.how-i-build-layers {
+.how-i-build-copy {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  margin: 0.5rem 0 1rem;
-}
-
-.how-i-build-layer-row {
-  display: grid;
-  grid-template-columns: 160px 1fr;
-  gap: 1.5rem;
-  align-items: baseline;
-}
-
-.how-i-build-layer-name {
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--ink-muted);
-  white-space: nowrap;
-}
-
-.how-i-build-layer-tools {
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--ink-primary);
-  line-height: 1.5;
-  letter-spacing: 0.01em;
-}
-
-/* 4. Body Copy Block — 14px, --ink-muted, line-height 1.6, max-width ~44ch */
-.how-i-build-body {
-  display: flex;
-  flex-direction: column;
-  gap: 1.15rem;
+  gap: 1rem;
+  max-width: 43ch;
 }
 
 .how-i-build-paragraph {
   margin: 0;
+  max-width: 44ch;
+  color: var(--ink-muted);
   font-family: var(--font-body);
   font-size: 14px;
   font-weight: 400;
   line-height: 1.6;
-  color: var(--ink-muted);
-  max-width: 44ch;
   text-wrap: pretty;
   font-variant-numeric: lining-nums tabular-nums;
   font-feature-settings: 'lnum' 1, 'tnum' 1;
 }
 
-/* 5. Responsive Adjustments */
-@media (max-width: 600px) {
-  .how-i-build-layer-row {
-    grid-template-columns: 1fr;
-    gap: 0.2rem;
-    margin-bottom: 0.5rem;
+.how-i-build-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  max-width: 46ch;
+  margin-top: 2rem;
+}
+
+.how-i-build-tag {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.85rem;
+  padding: 0.25rem 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--ink-muted) 45%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-muted);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  white-space: nowrap;
+  transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.how-i-build-tag:hover,
+.how-i-build-tag:focus-visible,
+.how-i-build-tag.is-active {
+  border-color: var(--signal);
+  color: var(--ink-primary);
+  background: color-mix(in srgb, var(--signal) 9%, transparent);
+}
+
+.how-i-build-tag:hover {
+  transform: translateY(-2px);
+}
+
+.how-i-build-tag:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.how-i-build-tag:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--signal) 75%, white);
+  outline-offset: 3px;
+}
+
+.how-i-build-sparkles {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.how-i-build-sparkle {
+  position: absolute;
+  color: var(--signal);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0;
+  transform: translate(0, 0) scale(0.25);
+  animation: how-i-build-sparkle-burst 720ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.how-i-build-sparkle--one {
+  top: -0.3rem;
+  left: 14%;
+  --sparkle-x: -0.55rem;
+  --sparkle-y: -0.55rem;
+}
+
+.how-i-build-sparkle--two {
+  top: 8%;
+  right: 12%;
+  font-size: 0.6rem;
+  --sparkle-x: 0.55rem;
+  --sparkle-y: -0.45rem;
+  animation-delay: 45ms;
+}
+
+.how-i-build-sparkle--three {
+  right: 18%;
+  bottom: -0.35rem;
+  --sparkle-x: 0.6rem;
+  --sparkle-y: 0.5rem;
+  animation-delay: 90ms;
+}
+
+.how-i-build-sparkle--four {
+  bottom: -0.35rem;
+  left: 22%;
+  font-size: 0.9rem;
+  --sparkle-x: -0.45rem;
+  --sparkle-y: 0.45rem;
+  animation-delay: 25ms;
+}
+
+@keyframes how-i-build-sparkle-burst {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.25) rotate(0deg);
   }
 
-  .how-i-build-layer-name {
-    font-size: 13px;
+  24% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(35deg);
   }
 
-  .how-i-build-layer-tools {
-    font-size: 14px;
+  100% {
+    opacity: 0;
+    transform: translate(var(--sparkle-x), var(--sparkle-y)) scale(1.35) rotate(90deg);
   }
 }
 
-/* 6. Reduced Motion Accessibility */
+/* Right column: 3 columns × 4 rows with benchmark-style dividers */
+.how-i-build-grid {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-self: stretch;
+  background: radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--signal) 6%, transparent), transparent 48%);
+  border-top: 1px solid color-mix(in srgb, var(--ink-muted) 28%, transparent);
+}
+
+.how-i-build-grid::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border: 1px solid color-mix(in srgb, var(--ink-muted) 8%, transparent);
+  content: '';
+  pointer-events: none;
+}
+
+.how-i-build-tile {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  min-width: 0;
+  min-height: 7.1rem;
+  position: relative;
+  padding: 1.15rem 1rem 1.15rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--ink-muted) 24%, transparent);
+  transition: background-color 180ms ease;
+}
+
+.how-i-build-tile::before {
+  position: absolute;
+  top: 1px;
+  left: 0;
+  width: 2.5rem;
+  height: 1px;
+  background: var(--signal);
+  content: '';
+  opacity: 0;
+  transform: scaleX(0.6);
+  transform-origin: left;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.how-i-build-tile:hover {
+  background: color-mix(in srgb, var(--signal) 3%, transparent);
+}
+
+.how-i-build-tile:hover::before {
+  opacity: 0.72;
+  transform: scaleX(1);
+}
+
+.how-i-build-tile:not(:nth-child(3n)) {
+  border-right: 1px solid color-mix(in srgb, var(--ink-muted) 20%, transparent);
+  padding-right: 1rem;
+}
+
+.how-i-build-tile:nth-child(3n + 2),
+.how-i-build-tile:nth-child(3n + 3) {
+  padding-left: 1rem;
+}
+
+.tile-icon-wrap {
+  display: grid;
+  flex: 0 0 2.25rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+}
+
+.tool-icon {
+  display: block;
+  width: 1.45rem;
+  height: 1.45rem;
+}
+
+/* Brand marks keep their own official color instead of inheriting the page accent. */
+.tool-icon--flutter { color: #54C5F8; }
+.tool-icon--android { color: #3DDC84; }
+.tool-icon--nodejs { color: #5FA04E; }
+.tool-icon--mongodb { color: #47A248; }
+.tool-icon--sqlite { color: #44A9D8; }
+.tool-icon--vercel { color: #FFFFFF; }
+.tool-icon--hostinger { color: #673DE6; }
+.tool-icon--github { color: #F0F6FC; }
+.tool-icon--vscode { color: #007ACC; }
+.tool-icon--postman { color: #FF6C37; }
+
+.tool-icon--postman-insomnia {
+  position: relative;
+  width: 1.7rem;
+  height: 1.45rem;
+  overflow: visible;
+}
+
+.tool-sub-icon {
+  position: absolute;
+  display: block;
+}
+
+.tool-sub-icon--postman {
+  top: 0.18rem;
+  left: 0;
+  width: 1.12rem;
+  height: 1.12rem;
+  color: #FF6C37;
+  z-index: 1;
+}
+
+.tool-sub-icon--insomnia {
+  top: -0.12rem;
+  right: -0.02rem;
+  width: 1.05rem;
+  height: 1.05rem;
+  padding: 0.1rem;
+  border-radius: 50%;
+  background: var(--bg-void);
+  color: #4000BF;
+  z-index: 2;
+}
+
+.tile-content {
+  min-width: 0;
+}
+
+.tile-name {
+  margin: 0 0 0.35rem;
+  color: var(--ink-primary);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.tile-description {
+  margin: 0;
+  color: var(--ink-muted);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+@media (max-width: 960px) {
+  .how-i-build-layout {
+    gap: 3rem;
+  }
+
+  .how-i-build-tile {
+    min-height: 6.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .tile-icon-wrap {
+    flex-basis: 2rem;
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .tile-name {
+    font-size: 0.76rem;
+  }
+
+  .tile-description {
+    font-size: 0.68rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .how-i-build-section {
+    min-height: auto;
+    padding: 4.5rem 0;
+  }
+
+  .how-i-build-layout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .how-i-build-copy {
+    max-width: 52ch;
+  }
+
+  .how-i-build-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .how-i-build-tile:nth-child(3n + 2),
+  .how-i-build-tile:nth-child(3n + 3) {
+    padding-left: 0;
+  }
+
+  .how-i-build-tile:nth-child(even) {
+    padding-left: 1rem;
+  }
+
+  .how-i-build-tile:not(:nth-child(3n)) {
+    border-right: 0;
+    padding-right: 0;
+  }
+
+  .how-i-build-tile:nth-child(odd) {
+    border-right: 1px solid color-mix(in srgb, var(--ink-muted) 20%, transparent);
+    padding-right: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .how-i-build-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .how-i-build-tile,
+  .how-i-build-tile:nth-child(even),
+  .how-i-build-tile:nth-child(odd) {
+    min-height: auto;
+    padding: 1rem 0;
+    border-right: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .how-i-build-content {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
+  .how-i-build-narrative,
+  .how-i-build-grid {
+    transition: none;
+  }
+
+  .how-i-build-tag,
+  .how-i-build-sparkle,
+  .how-i-build-tile,
+  .how-i-build-tile::before {
+    transition: none;
+    animation: none;
+  }
+
+  .how-i-build-sparkle {
+    display: none;
   }
 }

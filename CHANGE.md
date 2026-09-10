@@ -290,3 +290,44 @@ Documentation-only changes, configuration changes, dependency changes, source ch
 
 
 
+## 2026-09-10 — Restore mirrored benchmark grid for How I Build
+
+- Summary: Implemented the final How I Build v2 specification by mirroring the benchmark layout: narrative copy and bordered scope chips remain on the left, while the 12 real tools render as a card-style 3×4 grid on the right with icon, bold name, one-line description, and thin row/column dividers. Reconciled the component, stylesheet, and tests with the `tools`/`tags` data contract and preserved responsive two-column, two-column mobile, and single-column phone layouts.
+- Files: `src/modules/home/presentation/how-i-build/HowIBuild.jsx`, `src/modules/home/presentation/how-i-build/how-i-build.css`, `tests/how-i-build-data.test.mjs`, `tests/how-i-build-interaction.test.mjs`, `CHANGE.md`
+- Verification: `npm test` passed (61/61); `npm run build` passed with 132 modules transformed. Browser verification at 1280×720 confirmed 12 tiles, a 3-column grid measuring 632×455px, 23px icons, section height 720px, and no horizontal overflow.
+
+## 2026-09-10 — Replace placeholder tool glyphs with brand icons
+
+- Summary: Replaced the hand-drawn inline SVG sketches in the How I Build tool grid with real brand marks from the Simple Icons, Font Awesome, and VS Code icon sets. The existing green accent, 23px tile sizing, mirrored 3×4 layout, and accessibility-hidden decorative treatment remain unchanged.
+- Files: `package.json`, `package-lock.json`, `src/modules/home/presentation/how-i-build/ToolIcons.jsx`, `tests/how-i-build-interaction.test.mjs`, `CHANGE.md`
+- Verification: `npm test` passed (62/62); `npm run build` passed with 139 modules transformed. Browser verification confirmed all 12 brand marks render inside the existing 3×4 grid without layout changes.
+
+## 2026-09-10 — Restore official brand icon colors
+
+- Summary: Removed the shared `--signal` color from the tool icon wrapper and added per-brand color classes so each real icon renders in its own recognizable palette while the rest of the How I Build visual system remains unchanged.
+- Files: `src/modules/home/presentation/how-i-build/ToolIcons.jsx`, `src/modules/home/presentation/how-i-build/how-i-build.css`, `tests/how-i-build-interaction.test.mjs`, `CHANGE.md`
+- Verification: `npm test` passed (62/62); `npm run build` passed with 139 modules transformed. Browser verification confirmed the official brand colors render correctly across all 12 tiles.
+
+## 2026-09-10 — Pair Postman and Insomnia marks in one tile
+
+- Summary: Replaced the single Postman mark in the `Postman + Insomnia` tile with a contained overlapping pair of the Postman and Insomnia brand marks, using independent sizing, layering, and brand colors so both logos remain recognizable at compact scale.
+- Files: `src/modules/home/presentation/how-i-build/ToolIcons.jsx`, `src/modules/home/presentation/how-i-build/how-i-build.css`, `tests/how-i-build-interaction.test.mjs`, `CHANGE.md`
+- Verification: `npm test` passed (62/62); `npm run build` passed with 138 modules transformed. Browser verification confirmed the two marks overlap inside the existing icon slot without shifting the tile content.
+
+## 2026-09-10 — Add clickable sparkle interactions to competency chips
+
+- Summary: Converted the seven competency pills into accessible toggle buttons with `aria-pressed` state, hover/focus/pressed feedback, and a restrained four-particle sparkle burst on each activation. Added reduced-motion handling so the interaction remains usable without animated particles.
+- Files: `src/modules/home/presentation/how-i-build/HowIBuild.jsx`, `src/modules/home/presentation/how-i-build/how-i-build.css`, `tests/how-i-build-interaction.test.mjs`, `CHANGE.md`
+- Verification: `npm test` passed (62/62); `npm run build` passed with 139 modules transformed. Browser verification confirmed a chip toggles visibly and emits a sparkle burst.
+
+## 2026-09-10 — Correct Firebase and Slack marks and add SaaS scope
+
+- Summary: Replaced the monochrome Firebase and Slack substitutes with full-color flame and four-color octothorpe logomarks, then added the missing `SAAS DEVELOPMENT` competency to the How I Build scope tags.
+- Files: `src/modules/home/presentation/how-i-build/howIBuildData.js`, `src/modules/home/presentation/how-i-build/ToolIcons.jsx`, `tests/how-i-build-data.test.mjs`, `tests/how-i-build-interaction.test.mjs`, `CHANGE.md`
+- Verification: `npm test` passed (62/62); `npm run build` passed with 138 modules transformed. Browser verification confirmed the corrected marks and `SAAS DEVELOPMENT` chip render in the mirrored section.
+
+## 2026-09-10 — Add restrained grid decoration
+
+- Summary: Added a faint ambient glow, quiet inset frame, and low-key hover accent to the How I Build tool grid without changing its mirrored layout, divider mechanics, or official icon treatment.
+- Files: `src/modules/home/presentation/how-i-build/how-i-build.css`, `tests/how-i-build-interaction.test.mjs`, `CHANGE.md`
+- Verification: `npm test` passed (62/62); `npm run build` passed with 138 modules transformed. Browser verification confirmed the decoration stays subtle at the live 1280×720 preview size.

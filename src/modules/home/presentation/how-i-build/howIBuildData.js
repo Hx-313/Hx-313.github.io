@@ -18,6 +18,7 @@ export const howIBuildData = deepFreeze({
     'MOBILE APP',
     'CROSS-PLATFORM',
     'BACKEND',
+    'SAAS DEVELOPMENT',
     'DEPLOYMENT',
     'API DESIGN',
     'DATABASE',

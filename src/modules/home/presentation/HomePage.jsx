@@ -6,6 +6,7 @@ import Hero from './hero/Hero.jsx';
 import AboutSection from '../../about/presentation/AboutSection.jsx';
 import ClientStory from './client-story/ClientStory.jsx';
 import HowIBuild from './how-i-build/HowIBuild.jsx';
+import Services from './services/Services.jsx';
 import CommandCenter from './command-center/CommandCenter.jsx';
 import ContactSection from '../../contact/presentation/ContactSection.jsx';
 import SiteFooter from '../../footer/presentation/SiteFooter.jsx';
@@ -74,6 +75,8 @@ export default function HomePage() {
           <AboutSection />
 
           <HowIBuild />
+
+          <Services />
 
           {/* Page 2: Dedicated Command Center & System Proof */}
           <section id="command-center" className="command-center-portal-section" aria-label="System Command Center" data-section="systems">

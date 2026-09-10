@@ -1,106 +1,67 @@
+import {
+  SiAndroid,
+  SiFlutter,
+  SiGithub,
+  SiHostinger,
+  SiInsomnia,
+  SiMongodb,
+  SiNodedotjs,
+  SiPostman,
+  SiSqlite,
+  SiVercel,
+} from 'react-icons/si';
+import { VscVscode } from 'react-icons/vsc';
+
+function FirebaseLogo({ className, ...props }) {
+  return (
+    <svg className={className} viewBox="0 0 108 136" {...props}>
+      <path d="M33.6995187 131.255869C39.3541228 133.531378 45.4887278 134.882158 51.9300077 135.106943C60.6474186 135.411266 68.9370478 133.608842 76.3480125 130.185205C67.4610797 126.693786 59.4126267 121.58807 52.5436342 115.239471C48.0910381 122.368936 41.5054121 127.99961 33.6995187 131.255869Z" fill="#FF9100" />
+      <path d="M52.5423892 115.241546C36.8624755 100.739847 27.3503657 79.7505291 28.1542634 56.7290225C28.1804076 55.9814246 28.2198313 55.2343108 28.2659639 54.4874045C25.4577512 53.7611093 22.526011 53.3179038 19.5089218 53.2125664C15.1902971 53.0617189 11.0080646 53.597328 7.05967687 54.7092148C2.87398613 62.0413321 0.348074826 70.454143 0.0334045032 79.4648801C-0.778689218 102.720716 13.2945702 123.040523 33.6982737 131.257944C41.5041671 128.001685 48.0895856 122.377236 52.5423892 115.241546Z" fill="#FFC400" />
+      <path d="M52.5430117 115.240854C56.1885286 109.406838 58.3988842 102.567171 58.6561758 95.1983963C59.3330877 75.8143835 46.3020319 59.1396783 28.2666556 54.4866437C28.2205229 55.23355 28.1810301 55.9806638 28.1549551 56.7282617C27.3509882 79.7498374 36.863098 100.739156 52.5430117 115.240854Z" fill="#FF9100" />
+      <path d="M56.6392729 0C46.3674614 8.22901349 38.2562764 19.0796618 33.3488552 31.5793276C30.5392592 38.7390181 28.7736997 46.4296836 28.2582175 54.4914161C46.293663 59.1444506 59.3247188 75.819225 58.6478069 95.2032378C58.3904462 102.572012 56.1736582 109.404763 52.5346428 115.245696C59.4034279 121.60052 67.4520883 126.700011 76.3390212 130.191429C94.1765181 121.946342 106.832219 104.2036 107.565361 83.2177401C108.039829 69.6207121 102.815842 57.5026954 95.4339268 47.273835C87.6384081 36.4558323 56.6392729 0 56.6392729 0Z" fill="#DD2C00" />
+    </svg>
+  );
+}
+
+function SlackLogo({ className, ...props }) {
+  return (
+    <svg className={className} viewBox="0 0 256 256" {...props}>
+      <path d="M53.8412698 161.320635C53.8412698 176.152381 41.8539683 188.139683 27.0222222 188.139683C12.1904762 188.139683 0.203174603 176.152381 0.203174603 161.320635C0.203174603 146.488889 12.1904762 134.501587 27.0222222 134.501587H53.8412698V161.320635ZM67.2507937 161.320635C67.2507937 146.488889 79.2380952 134.501587 94.0698413 134.501587C108.901587 134.501587 120.888889 146.488889 120.888889 161.320635V228.368254C120.888889 243.2 108.901587 255.187302 94.0698413 255.187302C79.2380952 255.187302 67.2507937 243.2 67.2507937 228.368254V161.320635Z" fill="#E01E5A" />
+      <path d="M94.0698413 53.6380952C79.2380952 53.6380952 67.2507937 41.6507937 67.2507937 26.8190476C67.2507937 11.9873016 79.2380952 0 94.0698413 0C108.901587 0 120.888889 11.9873016 120.888889 26.8190476V53.6380952H94.0698413ZM94.0698413 67.2507937C108.901587 67.2507937 120.888889 79.2380952 120.888889 94.0698413C120.888889 108.901587 108.901587 120.888889 94.0698413 120.888889H26.8190476C11.9873016 120.888889 0 108.901587 0 94.0698413C0 79.2380952 11.9873016 67.2507937 26.8190476 67.2507937H94.0698413Z" fill="#36C5F0" />
+      <path d="M201.549206 94.0698413C201.549206 79.2380952 213.536508 67.2507937 228.368254 67.2507937C243.2 67.2507937 255.187302 79.2380952 255.187302 94.0698413C255.187302 108.901587 243.2 120.888889 228.368254 120.888889H201.549206V94.0698413ZM188.139683 94.0698413C188.139683 108.901587 176.152381 120.888889 161.320635 120.888889C146.488889 120.888889 134.501587 108.901587 134.501587 94.0698413V26.8190476C134.501587 11.9873016 146.488889 0 161.320635 0C176.152381 0 188.139683 11.9873016 188.139683 26.8190476V94.0698413Z" fill="#2EB67D" />
+      <path d="M161.320635 201.549206C176.152381 201.549206 188.139683 213.536508 188.139683 228.368254C188.139683 243.2 176.152381 255.187302 161.320635 255.187302C146.488889 255.187302 134.501587 243.2 134.501587 228.368254V201.549206H161.320635ZM161.320635 188.139683C146.488889 188.139683 134.501587 176.152381 134.501587 161.320635C134.501587 146.488889 146.488889 134.501587 161.320635 134.501587H228.571429C243.403175 134.501587 255.390476 146.488889 255.390476 161.320635C255.390476 176.152381 243.403175 188.139683 228.571429 188.139683H161.320635Z" fill="#ECB22E" />
+    </svg>
+  );
+}
+
+function PostmanInsomniaLogo({ className, ...props }) {
+  return (
+    <span className={`${className} tool-icon--postman-insomnia`} {...props}>
+      <SiPostman className="tool-sub-icon tool-sub-icon--postman" aria-hidden="true" focusable="false" />
+      <SiInsomnia className="tool-sub-icon tool-sub-icon--insomnia" aria-hidden="true" focusable="false" />
+    </span>
+  );
+}
+
+const TOOL_ICONS = {
+  flutter: SiFlutter,
+  android: SiAndroid,
+  firebase: FirebaseLogo,
+  nodejs: SiNodedotjs,
+  mongodb: SiMongodb,
+  sqlite: SiSqlite,
+  vercel: SiVercel,
+  hostinger: SiHostinger,
+  github: SiGithub,
+  vscode: VscVscode,
+  postman: PostmanInsomniaLogo,
+  slack: SlackLogo,
+};
+
 export default function ToolIcon({ name, className = 'tool-icon' }) {
-  switch (name) {
-    case 'flutter':
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M14.5 2.5 3 14l3.5 3.5L21 3h-6.5Z" />
-          <path d="m14 13.5 3.5-3.5L21 13.5 14 20.5l-3.5-3.5 3.5-3.5Z" fill="currentColor" fillOpacity="0.2" />
-        </svg>
-      );
-    case 'android':
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M5 14a7 7 0 0 1 14 0v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3Z" />
-          <path d="M8.5 7.5 6.5 4.5M15.5 7.5l2-3" />
-          <circle cx="9" cy="13" r="1" fill="currentColor" />
-          <circle cx="15" cy="13" r="1" fill="currentColor" />
-        </svg>
-      );
-    case 'firebase':
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M4.5 17.5 7 3.5l4.5 8.5L8.5 19 4.5 17.5Z" />
-          <path d="m11.5 12 3-5.5 5 11-15 4 15-4-8-14" />
-        </svg>
-      );
-    case 'nodejs':
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M12 2.5 20.5 7.5v9.5L12 21.5 3.5 17V7.5L12 2.5Z" />
-          <path d="M12 8.5v7M8.5 10.5l3.5 2 3.5-2" />
-        </svg>
-      );
-    case 'mongodb':
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M12 2C10.5 4 6 8.5 6 13.5a6 6 0 0 0 12 0C18 8.5 13.5 4 12 2Z" />
-          <path d="M12 2v20" />
-        </svg>
-      );
-    case 'sqlite':
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <ellipse cx="12" cy="6" rx="8" ry="3" />
-          <path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6" />
-          <path d="M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6" />
-        </svg>
-      );
-    case 'vercel':
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="m12 3 10 17.5H2L12 3Z" />
-        </svg>
-      );
-    case 'hostinger':
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <rect x="3" y="4" width="18" height="6" rx="2" />
-          <rect x="3" y="14" width="18" height="6" rx="2" />
-          <circle cx="7" cy="7" r="1" fill="currentColor" />
-          <circle cx="7" cy="17" r="1" fill="currentColor" />
-          <path d="M14 7h4M14 17h4" />
-        </svg>
-      );
-    case 'github':
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-        </svg>
-      );
-    case 'vscode':
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="m18 3 3.5 2v14L18 21l-9.5-8L18 3Z" />
-          <path d="m18 3-9.5 8L3.5 7 2 8v8l1.5 1 5-4 9.5 8" />
-        </svg>
-      );
-    case 'postman':
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="9" />
-          <path d="m8 12 3 3 5-6" />
-          <path d="M12 3a9 9 0 0 1 9 9" strokeDasharray="2 2" />
-        </svg>
-      );
-    case 'slack':
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5Z" />
-          <path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5Z" />
-          <path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5Z" />
-          <path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14Z" />
-          <path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5Z" />
-          <path d="M14 20.5V19h1.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5Z" />
-          <path d="M10 9.5c0 .83-.67 1.5-1.5 1.5h-5C2.67 11 2 10.33 2 9.5S2.67 8 3.5 8h5c.83 0 1.5.67 1.5 1.5Z" />
-          <path d="M10 3.5V5H8.5C7.67 5 7 4.33 7 3.5S7.67 2 8.5 2 10 2.67 10 3.5Z" />
-        </svg>
-      );
-    default:
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="9" />
-          <path d="m10 14 4-4m-4 0 4 4" />
-        </svg>
-      );
-  }
+  const Icon = TOOL_ICONS[name];
+
+  if (!Icon) return null;
+
+  return <Icon className={`${className} tool-icon--${name}`} aria-hidden="true" focusable="false" />;
 }
