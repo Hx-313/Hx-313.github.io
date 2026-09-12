@@ -3,7 +3,7 @@ import { CONTACT_CHANNELS, TELEMETRY_DATA } from '../domain/contactData.js';
 
 export default function ContactChannels() {
   const [copied, setCopied] = useState(false);
-  const { meeting, whatsapp, email, socials } = CONTACT_CHANNELS;
+  const { meeting, whatsapp, phone, email, socials } = CONTACT_CHANNELS;
 
   const handleCopyEmail = useCallback(async () => {
     try {
@@ -21,7 +21,11 @@ export default function ContactChannels() {
 
   return (
     <aside className="contact-channels" aria-label="Direct Communication Channels & Fast-Track Booking">
-      {/* 1. Fast-Track Discovery Meeting Card */}
+      <div className="contact-channels__intro">
+        <span className="contact-channels__eyebrow">Prefer a direct route?</span>
+        <p>Skip the form and choose one of these.</p>
+      </div>
+
       <div className="channel-card channel-card--meeting">
         <div className="channel-card__header">
           <div className="channel-badge-group">
@@ -54,7 +58,6 @@ export default function ContactChannels() {
         </a>
       </div>
 
-      {/* 2. Live Operational Telemetry */}
       <div className="channel-card channel-card--telemetry">
         <div className="telemetry-item">
           <span className="telemetry-label">OPERATIONAL STATUS</span>
@@ -75,9 +78,7 @@ export default function ContactChannels() {
         </div>
       </div>
 
-      {/* 3. Direct Tactical Channels */}
       <div className="direct-channels-list">
-        {/* WhatsApp Direct */}
         <a
           href={whatsapp.link}
           target="_blank"
@@ -94,7 +95,18 @@ export default function ContactChannels() {
           </span>
         </a>
 
-        {/* Email Direct */}
+        <a
+          href={phone.link}
+          className="direct-channel-pill direct-channel-pill--phone"
+          aria-label={`${phone.title}: ${phone.label}`}
+        >
+          <div className="direct-channel-info">
+            <span className="direct-channel-tag">{phone.title}</span>
+            <span className="direct-channel-val">{phone.label}</span>
+          </div>
+          <span className="direct-channel-action">{phone.actionLabel}</span>
+        </a>
+
         <div className="direct-channel-pill direct-channel-pill--email">
           <div className="direct-channel-info">
             <span className="direct-channel-tag">{email.title}</span>
@@ -112,7 +124,6 @@ export default function ContactChannels() {
           </button>
         </div>
 
-        {/* Social Badges */}
         <div className="channel-socials-row">
           {socials.map((social) => (
             <a

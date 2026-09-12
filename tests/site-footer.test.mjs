@@ -32,7 +32,9 @@ test('footerData exports navigation chapters, live systems, and colophon', () =>
   const connectUrls = FOOTER_CONNECT.map((c) => c.url);
   assert.ok(connectUrls.includes('mailto:aliabdullahva313@gmail.com'), 'Includes email link');
   assert.ok(connectUrls.some((u) => u.startsWith('https://wa.me/')), 'Includes WhatsApp link');
+  assert.ok(connectUrls.some((u) => u.startsWith('tel:')), 'Includes phone link');
   assert.ok(connectUrls.some((u) => u.includes('linkedin.com')), 'Includes LinkedIn link');
+  assert.ok(connectUrls.some((u) => u.includes('instagram.com/ithx313')), 'Includes Instagram link');
   assert.ok(connectUrls.some((u) => u.includes('cal.com')), 'Includes Calendar schedule link');
 
   // Colophon

@@ -24,8 +24,14 @@ export const CONTACT_CHANNELS = Object.freeze({
   whatsapp: Object.freeze({
     title: 'Instant WhatsApp Chat',
     link: contactLinks.whatsapp,
-    label: '+92 347 5662750',
+    label: '0347 5662750',
     actionLabel: 'Chat on WhatsApp →',
+  }),
+  phone: Object.freeze({
+    title: 'Phone call',
+    link: contactLinks.phone,
+    label: '0347 5662750',
+    actionLabel: 'Call now →',
   }),
   email: Object.freeze({
     title: 'Direct Engineering Email',
@@ -36,10 +42,10 @@ export const CONTACT_CHANNELS = Object.freeze({
   }),
   socials: Object.freeze([
     Object.freeze({
-      id: 'github',
-      name: 'GitHub',
-      handle: '@Hx-313',
-      url: siteLinks.github,
+      id: 'instagram',
+      name: 'Instagram',
+      handle: '@ithx313',
+      url: siteLinks.instagram,
     }),
     Object.freeze({
       id: 'linkedin',

@@ -13,8 +13,10 @@ test('defines the external WOS destinations used by the system constellation', (
 test('centralizes shared contact and site destinations', () => {
   assert.equal(contactLinks.email, 'mailto:aliabdullahva313@gmail.com');
   assert.equal(contactLinks.whatsapp, 'https://wa.me/923475662750');
+  assert.equal(contactLinks.phone, 'tel:+923475662750');
   assert.equal(siteLinks.github, 'https://github.com/Hx-313');
   assert.equal(siteLinks.linkedin, 'https://www.linkedin.com/in/hafiz-ali-abdullah-660429207');
+  assert.equal(siteLinks.instagram, 'https://www.instagram.com/ithx313/');
 });
 
 test('defines the schedule meeting link for the conversion funnel', () => {

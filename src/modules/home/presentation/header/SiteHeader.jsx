@@ -263,6 +263,9 @@ export default function SiteHeader({ theme, setTheme }) {
               <a href={siteLinks.github} target="_blank" rel="noopener noreferrer" className="mobile-social-link" title="GitHub Profile">
                 GitHub ↗
               </a>
+              <a href={siteLinks.instagram} target="_blank" rel="noopener noreferrer" className="mobile-social-link" title="Instagram Profile">
+                Instagram ↗
+              </a>
               <a href={siteLinks.linkedin} target="_blank" rel="noopener noreferrer" className="mobile-social-link" title="LinkedIn Profile">
                 LinkedIn ↗
               </a>

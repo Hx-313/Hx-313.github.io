@@ -16,14 +16,13 @@ export default function SiteFooter() {
   return (
     <footer className="site-footer" role="contentinfo" aria-label="Site Footer and Navigation Directory">
       <div className="footer-container">
-        {/* Upper Tier: 4-Column Directory Grid */}
         <div className="footer-directory-grid">
-          {/* Column 1: Identity & Thesis */}
           <div className="footer-col footer-col--brand">
             <div className="footer-brand-lockup">
-              <span className="footer-monogram" aria-label="Hx-313 Insignia">[ Hx-313 ]</span>
-              <h2 className="footer-author-name">{FOOTER_COLOPHON.author}</h2>
+              <img src="/brand/ithx-logo.png" alt="itHX" className="footer-brand-logo" width="120" height="35" />
+              <span className="footer-monogram" aria-label="Hx-313 Insignia">HX-313</span>
             </div>
+            <h2 className="footer-author-name">{FOOTER_COLOPHON.author}</h2>
             <p className="footer-author-title">{FOOTER_COLOPHON.title}</p>
             <p className="footer-positioning">{FOOTER_COLOPHON.positioning}</p>
             <div className="footer-availability-tag">
@@ -32,9 +31,8 @@ export default function SiteFooter() {
             </div>
           </div>
 
-          {/* Column 2: Sitemap */}
           <nav className="footer-col footer-col--nav" aria-label="Footer Sitemap">
-            <h3 className="footer-col-heading">NAVIGATION SITEMAP</h3>
+            <h3 className="footer-col-heading">Explore</h3>
             <ul className="footer-link-list">
               {FOOTER_NAVIGATION.map((item) => (
                 <li key={item.href}>
@@ -46,9 +44,8 @@ export default function SiteFooter() {
             </ul>
           </nav>
 
-          {/* Column 3: Live Systems */}
           <div className="footer-col footer-col--systems">
-            <h3 className="footer-col-heading">LIVE PLATFORMS</h3>
+            <h3 className="footer-col-heading">Systems</h3>
             <ul className="footer-link-list">
               {FOOTER_SYSTEMS.map((system) => (
                 <li key={system.name} className="footer-system-item">
@@ -73,9 +70,9 @@ export default function SiteFooter() {
             </ul>
           </div>
 
-          {/* Column 4: Connect */}
           <div className="footer-col footer-col--connect">
-            <h3 className="footer-col-heading">DIRECT CHANNELS</h3>
+            <h3 className="footer-col-heading">Contact</h3>
+            <p className="footer-contact-note">Available for select product builds, system reviews, and technical advisory.</p>
             <ul className="footer-link-list">
               {FOOTER_CONNECT.map((channel) => (
                 <li key={channel.label}>
@@ -91,10 +88,14 @@ export default function SiteFooter() {
                 </li>
               ))}
             </ul>
+            <div className="footer-location-card">
+              <span>Based in</span>
+              <strong>Lahore, Pakistan</strong>
+              <small>Working worldwide</small>
+            </div>
           </div>
         </div>
 
-        {/* Lower Tier: Colophon & Status Bar */}
         <div className="footer-colophon-bar">
           <div className="colophon-item colophon-item--timezone">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

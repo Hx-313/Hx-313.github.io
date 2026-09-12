@@ -1,12 +1,12 @@
 import { contactLinks, siteLinks, wosLinks, scheduleLink } from '../../../core/constants.js';
 
 export const FOOTER_NAVIGATION = Object.freeze([
-  Object.freeze({ label: '00 · Top & Hero', href: '#top' }),
-  Object.freeze({ label: '01 · Core Thesis', href: '#problem' }),
-  Object.freeze({ label: '02 · About & Tools', href: '#about' }),
-  Object.freeze({ label: '03 · Architecture', href: '#how-i-build' }),
-  Object.freeze({ label: '04 · Systems Console', href: '#command-center' }),
-  Object.freeze({ label: '05 · Contact', href: '#contact' }),
+  Object.freeze({ label: 'Overview', href: '#top' }),
+  Object.freeze({ label: 'Thesis', href: '#problem' }),
+  Object.freeze({ label: 'About & tools', href: '#about' }),
+  Object.freeze({ label: 'How I build', href: '#how-i-build' }),
+  Object.freeze({ label: 'Systems', href: '#command-center' }),
+  Object.freeze({ label: 'Contact', href: '#contact' }),
 ]);
 
 export const FOOTER_SYSTEMS = Object.freeze([
@@ -34,24 +34,34 @@ export const FOOTER_SYSTEMS = Object.freeze([
 
 export const FOOTER_CONNECT = Object.freeze([
   Object.freeze({
-    label: 'Schedule 30-Min Call',
+    label: 'Book a call',
     url: scheduleLink,
-    action: 'Book on Cal.com →',
+    action: '30 minutes · Cal.com →',
   }),
   Object.freeze({
-    label: 'Direct WhatsApp',
+    label: 'WhatsApp',
     url: contactLinks.whatsapp,
-    action: '+92 347 5662750 →',
+    action: '0347 5662750 →',
   }),
   Object.freeze({
-    label: 'Engineering Email',
+    label: 'Call me',
+    url: contactLinks.phone,
+    action: '0347 5662750 →',
+  }),
+  Object.freeze({
+    label: 'Email',
     url: contactLinks.email,
     action: 'aliabdullahva313@gmail.com →',
   }),
   Object.freeze({
-    label: 'LinkedIn Professional',
+    label: 'LinkedIn',
     url: siteLinks.linkedin,
-    action: 'Connect on LinkedIn →',
+    action: 'Connect with me →',
+  }),
+  Object.freeze({
+    label: 'Instagram',
+    url: siteLinks.instagram,
+    action: '@ithx313 →',
   }),
 ]);
 

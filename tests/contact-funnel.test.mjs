@@ -16,8 +16,10 @@ test('contactData exports immutable channels, categories, and operational teleme
   assert.ok(CONTACT_CHANNELS.meeting.link.includes('cal.com'), 'Meeting channel contains cal.com booking link');
   assert.equal(CONTACT_CHANNELS.meeting.duration, '30 mins');
   assert.ok(CONTACT_CHANNELS.whatsapp.link.startsWith('https://wa.me/'), 'WhatsApp channel contains wa.me link');
+  assert.equal(CONTACT_CHANNELS.phone.link, 'tel:+923475662750');
   assert.equal(CONTACT_CHANNELS.email.address, 'aliabdullahva313@gmail.com');
   assert.equal(CONTACT_CHANNELS.email.mailto, 'mailto:aliabdullahva313@gmail.com');
+  assert.ok(CONTACT_CHANNELS.socials.some((social) => social.url.includes('instagram.com/ithx313')), 'Includes Instagram profile');
 
   assert.ok(Array.isArray(PROJECT_CATEGORIES), 'Project categories is an array');
   assert.ok(PROJECT_CATEGORIES.includes('Full-Stack SaaS'));
@@ -99,4 +101,3 @@ test('ContactSection, ContactChannels, and ContactForm implement accessible funn
   assert.ok(contactCss.includes(":root[data-theme='light']"), 'CSS defines light theme styling');
   assert.ok(contactCss.includes('prefers-reduced-motion'), 'CSS supports reduced motion');
 });
-

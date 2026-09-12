@@ -14,13 +14,13 @@ export default function ContactForm() {
   } = useContactForm();
 
   return (
-    <div className="contact-form-card" aria-label="Direct Project Inquiry Form">
+    <section className="contact-form-card" aria-labelledby="contact-form-title">
       <div className="form-card-header">
         <div className="form-card-title-row">
           <span className="console-led" aria-hidden="true" />
-          <h3 className="form-card-title">DIRECT INQUIRY CONSOLE</h3>
+          <h3 className="form-card-title" id="contact-form-title">Tell me about the project</h3>
         </div>
-        <span className="form-card-subtitle">Encrypted Direct Client Dispatch</span>
+        <span className="form-card-subtitle">About 60 seconds · No pitch deck required</span>
       </div>
 
       {isSuccess ? (
@@ -30,9 +30,9 @@ export default function ContactForm() {
               <polyline points="20 6 9 17 4 12" />
             </svg>
           </div>
-          <h4 className="success-heading">Transmission Prepared</h4>
+          <h4 className="success-heading">Your note is ready</h4>
           <p className="success-text">
-            Thank you, <strong>{formData.name}</strong>. Your project scope for <em>{formData.category}</em> has been packaged.
+            Thanks, <strong>{formData.name}</strong>. Your email app is ready with the details for your <em>{formData.category}</em> project.
           </p>
           <div className="success-actions">
             {mailtoUrl && (
@@ -49,16 +49,15 @@ export default function ContactForm() {
               onClick={resetForm}
               className="success-btn success-btn--ghost"
             >
-              Send Another Inquiry
+              Start another note
             </button>
           </div>
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="inquiry-form" noValidate>
-          {/* Category Chips Selector */}
           <div className="form-group">
             <label className="form-label" id="category-label">
-              PROJECT CLASSIFICATION
+              What are you building? <span className="field-hint">optional</span>
             </label>
             <div
               className="category-chips-grid"
@@ -84,10 +83,9 @@ export default function ContactForm() {
             </div>
           </div>
 
-          {/* Name Field */}
           <div className={`form-group ${errors.name ? 'has-error' : ''}`}>
             <label htmlFor="contact-name" className="form-label">
-              FULL NAME <span className="field-req" aria-hidden="true">*</span>
+              Your name <span className="field-req" aria-hidden="true">*</span>
             </label>
             <input
               id="contact-name"
@@ -109,10 +107,9 @@ export default function ContactForm() {
             )}
           </div>
 
-          {/* Email Field */}
           <div className={`form-group ${errors.email ? 'has-error' : ''}`}>
             <label htmlFor="contact-email" className="form-label">
-              WORK EMAIL <span className="field-req" aria-hidden="true">*</span>
+              Best email <span className="field-req" aria-hidden="true">*</span>
             </label>
             <input
               id="contact-email"
@@ -134,17 +131,16 @@ export default function ContactForm() {
             )}
           </div>
 
-          {/* Message Field */}
           <div className={`form-group ${errors.message ? 'has-error' : ''}`}>
             <label htmlFor="contact-message" className="form-label">
-              PROJECT SCOPE & TIMELINE <span className="field-req" aria-hidden="true">*</span>
+              What can I help with? <span className="field-req" aria-hidden="true">*</span>
             </label>
             <textarea
               id="contact-message"
               name="message"
               rows={4}
               required
-              placeholder="Tell me about your product vision, target architecture, or key technical challenges..."
+              placeholder="A link, rough brief, or one sentence is enough."
               value={formData.message}
               onChange={(e) => handleChange('message', e.target.value)}
               aria-invalid={Boolean(errors.message)}
@@ -158,7 +154,6 @@ export default function ContactForm() {
             )}
           </div>
 
-          {/* Submit Action */}
           <div className="form-actions">
             <button
               type="submit"
@@ -168,11 +163,11 @@ export default function ContactForm() {
               {isSubmitting ? (
                 <>
                   <span className="submit-spinner" aria-hidden="true" />
-                  <span>DISPATCHING TRANSMISSION...</span>
+                  <span>Preparing your email…</span>
                 </>
               ) : (
                 <>
-                  <span>SEND INQUIRY TRANSMISSION</span>
+                  <span>Send project note</span>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <line x1="22" y1="2" x2="11" y2="13" />
                     <polygon points="22 2 15 22 11 13 2 9 22 2" />
@@ -181,11 +176,11 @@ export default function ContactForm() {
               )}
             </button>
             <span className="form-footer-note">
-              Direct response guaranteed within 24 business hours.
+              I’ll reply to this address within 2 hours.
             </span>
           </div>
         </form>
       )}
-    </div>
+    </section>
   );
 }
