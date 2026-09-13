@@ -12,10 +12,10 @@ export default function ContactSection() {
             <span>Start here</span>
           </div>
           <h2 className="contact-title">
-            Let’s make the next step <strong className="title-accent">simple.</strong>
+            Have a system to build? <strong className="title-accent">Start here.</strong>
           </h2>
           <p className="contact-lead">
-            Tell me what you’re building, or choose the fastest way to reach me. I reply within two hours.
+            Tell me what you’re building, who it is for, and where the workflow gets difficult. I’ll help turn the brief into a buildable plan.
           </p>
         </header>
 

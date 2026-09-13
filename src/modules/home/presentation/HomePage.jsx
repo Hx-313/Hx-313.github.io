@@ -4,7 +4,8 @@ import CosmicBackground from './CosmicBackground.jsx';
 import SiteHeader from './header/SiteHeader.jsx';
 import Hero from './hero/Hero.jsx';
 import AboutSection from '../../about/presentation/AboutSection.jsx';
-import ClientStory from './client-story/ClientStory.jsx';
+import ThesisSection from './thesis/ThesisSection.jsx';
+import SolutionsSection from './solutions/SolutionsSection.jsx';
 import HowIBuild from './how-i-build/HowIBuild.jsx';
 import Services from './services/Services.jsx';
 import CommandCenter from './command-center/CommandCenter.jsx';
@@ -68,15 +69,8 @@ export default function HomePage() {
           {/* Page 1: Clean Entry Portal (Mascots bound strictly to Page 1) */}
           <Hero revealed={isSiteVisible} settled={isTransitionSettled} />
 
-          {/* Scroll-Driven Hook System: The 3 Core Theses */}
-          <ClientStory />
-
-          {/* Profile & Tools Ecosystem */}
-          <AboutSection />
-
-          <HowIBuild />
-
-          <Services />
+          {/* Clear positioning thesis before the work proof */}
+          <ThesisSection />
 
           {/* Page 2: Dedicated Command Center & System Proof */}
           <section id="command-center" className="command-center-portal-section" aria-label="System Command Center" data-section="systems">
@@ -84,6 +78,16 @@ export default function HomePage() {
             <Mascots stage="page2" showController={false} active={isTransitionSettled} />
             <CommandCenter controller={commandCenter} />
           </section>
+
+          {/* Explicit entry points for the kinds of systems Hafiz can build */}
+          <SolutionsSection />
+
+          {/* Profile & Tools Ecosystem */}
+          <AboutSection />
+
+          <HowIBuild />
+
+          <Services />
 
           {/* Contact & Main Funnel Section */}
           <ContactSection />

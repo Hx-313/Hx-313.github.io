@@ -23,15 +23,15 @@ export const aboutHooks = Object.freeze([
 ]);
 
 export const aboutHeadline = Object.freeze([
-  'Three years,',
-  'fifteen systems,',
-  'zero excuses for crashing.',
+  'Mobile first,',
+  'systems included,',
+  'built for real use.',
 ]);
 
 export const aboutParagraphs = Object.freeze([
-  "I'll admit it — I over-engineer. I overthink edge cases most people would ship around, I get curious about the failure mode nobody asked about yet, and I don't stop until the thing actually holds.",
-  'That curiosity is exactly why the apps I build stay clean and solid — clean the way architecture should be, solid enough that "it crashed" isn\'t a sentence I hear back.',
-  'That same obsession is what led me to build WOS EPOS, a SaaS EPOS system running in production right now — not a demo, not a case study screenshot. Real state, real transactions, real uptime.',
+  'I build mobile applications with Flutter and native technologies, then connect them to the Node.js services, APIs, and operational tools they need to work in production.',
+  'My work spans customer-facing apps, internal workflows, dashboards, and connected systems — always shaped around the way people actually use them.',
+  'One example is OnlineOrder.pk / WOS, a restaurant ordering and POS system I built for Webticians. My contribution covered mobile development, backend services, system connections, and UI/UX direction.',
 ]);
 
 export const aboutStats = Object.freeze([
@@ -43,35 +43,28 @@ export const aboutStats = Object.freeze([
     highlight: false,
   }),
   Object.freeze({
-    id: 'experience',
-    targetNumber: 3,
-    suffix: '+',
-    label: 'years experience',
-    highlight: false,
-  }),
-  Object.freeze({
-    id: 'uptime',
-    targetNumber: 98.7,
-    suffix: '%',
-    label: 'uptime',
-    highlight: true,
-  }),
-  Object.freeze({
     id: 'downloads',
     targetNumber: 100,
     suffix: 'k+',
     label: 'downloads',
     highlight: false,
   }),
+  Object.freeze({
+    id: 'systems',
+    targetNumber: 1,
+    suffix: '',
+    label: 'connected system built',
+    highlight: true,
+  }),
 ]);
 
 export const aboutIntro = Object.freeze({
   eyebrow: 'About me',
   title: 'Hafiz Ali Abdullah',
-  subtitle: 'Mobile Application Architect & AI/ML Engineer',
+  subtitle: 'Flutter + Native Mobile Developer · Node.js Backend Engineer',
   headline: aboutHeadline,
   paragraphs: aboutParagraphs,
-  heading: 'Three years, fifteen systems, zero excuses for crashing.',
+  heading: 'Mobile first, systems included, built for real use.',
   paragraph1: aboutParagraphs[0],
   paragraph2: aboutParagraphs[1],
   paragraph3: aboutParagraphs[2],
@@ -85,60 +78,55 @@ export const aboutMetrics = Object.freeze([
     description: 'Production mobile & web systems',
   }),
   Object.freeze({
-    id: 'experience',
-    value: '3+',
-    label: 'years experience',
-    description: 'Flutter & fullstack engineering',
-  }),
-  Object.freeze({
-    id: 'uptime',
-    value: '98.7%',
-    label: 'uptime',
-    description: 'Live production reliability',
-    highlight: true,
-  }),
-  Object.freeze({
     id: 'downloads',
     value: '100k+',
     label: 'downloads',
     description: 'Global user engagement',
+  }),
+  Object.freeze({
+    id: 'systems',
+    value: '1',
+    label: 'connected system',
+    description: 'Built for Webticians',
+    highlight: true,
   }),
 ]);
 
 export const toolCategories = Object.freeze([
   Object.freeze({
     id: 'mobile',
-    label: 'UI Layer',
-    description: 'Fluid UI, reactive state machines and cross-platform native execution.',
+    label: 'Mobile layer',
+    description: 'Flutter and native mobile interfaces shaped around real user flows.',
     tools: Object.freeze([
       'Flutter',
       'Dart',
-      'React Native',
+      'Native Android',
+      'Native iOS',
       'Figma',
-      'Tailwind CSS',
+      'UI/UX direction',
     ]),
   }),
   Object.freeze({
     id: 'ai',
-    label: 'State & Logic',
-    description: 'Deterministic state management, reactive streams and computer vision.',
+    label: 'App architecture',
+    description: 'State, navigation, integrations, offline behavior, and the logic between screens.',
     tools: Object.freeze([
       'Riverpod',
-      'Redux Toolkit',
-      'PyTorch',
-      'OpenCV',
-      'YOLOv8',
+      'REST APIs',
+      'Realtime data',
+      'Offline-first',
+      'Testing',
     ]),
   }),
   Object.freeze({
     id: 'backend',
-    label: 'Data & Backend',
-    description: 'High-throughput microservices, realtime APIs and containerized pipelines.',
+    label: 'Backend & data',
+    description: 'Node.js services, APIs, data models, and operational connections that hold state reliably.',
     tools: Object.freeze([
-      'Python',
-      'FastAPI',
       'Node.js',
+      'Express',
       'PostgreSQL',
+      'MongoDB',
       'Docker',
       'Supabase',
       'Firebase',

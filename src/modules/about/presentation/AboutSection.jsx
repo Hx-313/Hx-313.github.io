@@ -77,26 +77,24 @@ export default function AboutSection() {
             <span className="about-label section-heading">About me</span>
 
             <h2 id="about-heading" className="about-headline">
-              Three years,{' '}
-              <span className="about-signal-phrase">fifteen systems</span>,{' '}
-              zero excuses for crashing.
+              Mobile first,{' '}
+              <span className="about-signal-phrase">systems included</span>,{' '}
+              built for real use.
             </h2>
 
             <div className="about-body">
               <p className="about-paragraph">{aboutParagraphs[0]}</p>
               <p className="about-paragraph">{aboutParagraphs[1]}</p>
               <p className="about-paragraph">
-                That same obsession is what led me to build{' '}
-                <strong className="about-emphasis-product">WOS EPOS</strong>, a SaaS EPOS system
-                running in production right now — not a demo, not a case study screenshot.{' '}
-                <span className="about-signal-closing">Real state, real transactions, real uptime.</span>
+                <strong className="about-emphasis-product">OnlineOrder.pk / WOS</strong> is a restaurant ordering and POS system I built for Webticians.{' '}
+                <span className="about-signal-closing">The work connected mobile, backend, and operations.</span>
               </p>
             </div>
 
             {/* Clean Name / Title Credit Line */}
             <div className="about-credit">
               <span className="about-credit-name">Hafiz Ali Abdullah</span>
-              <span className="about-credit-title">Mobile app developer</span>
+              <span className="about-credit-title">Flutter + Native Mobile · Node.js Backend</span>
             </div>
           </div>
 

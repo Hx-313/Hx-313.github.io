@@ -8,7 +8,7 @@ import SystemCore from './SystemCore.jsx';
 export default function CommandCenter({ controller }) {
   const { projects, selectedProject, selectedId, setSelectedId, highlightedDomains } = controller;
   return <section className="command-center" aria-labelledby="command-center-title">
-    <header className="command-center__header"><h2 id="command-center-title">/// System command center</h2><span>System map / 08</span></header>
+    <header className="command-center__header"><h2 id="command-center-title">/// Selected work</h2><span>System map / 01</span></header>
     <div className="command-center__top"><SystemCore project={selectedProject} highlightedDomains={highlightedDomains} /><ActiveBuild project={selectedProject} /></div>
     <div className="command-center__lower">
       <section className="projects-panel panel" id="work" aria-labelledby="projects-title"><div className="panel__header"><span id="projects-title">Projects</span><span>Shipped ecosystem</span></div><div className="project-grid">{projects.slice(1).map((project) => <ProjectCard key={project.id} project={project} selected={project.id === selectedId} onSelect={setSelectedId} />)}</div></section>

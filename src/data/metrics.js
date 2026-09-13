@@ -1,10 +1,9 @@
 export const proofMetrics = [
   ['100K+', 'Total downloads'],
-  ['08+', 'Projects completed'],
-  ['15+', 'Systems shipped'],
-  ['5+', 'Years building'],
+  ['15+', 'Apps shipped'],
+  ['01', 'System built for Webticians'],
 ];
 
 export const systemStatus = [
-  ['System health', 'Optimal'], ['Active projects', '08'], ['Shipped projects', '15+'], ['Years building', '5+'], ['Uptime', '99.9%'],
+  ['Build scope', 'Mobile + backend'], ['Apps shipped', '15+'], ['Featured build', 'WOS / Webticians'], ['Primary backend', 'Node.js'], ['Delivery mode', 'End-to-end'],
 ];

@@ -5,7 +5,7 @@ export const FOOTER_NAVIGATION = Object.freeze([
   Object.freeze({ label: 'Thesis', href: '#problem' }),
   Object.freeze({ label: 'About & tools', href: '#about' }),
   Object.freeze({ label: 'How I build', href: '#how-i-build' }),
-  Object.freeze({ label: 'Systems', href: '#command-center' }),
+  Object.freeze({ label: 'Selected work', href: '#command-center' }),
   Object.freeze({ label: 'Contact', href: '#contact' }),
 ]);
 
@@ -68,10 +68,10 @@ export const FOOTER_CONNECT = Object.freeze([
 export const FOOTER_COLOPHON = Object.freeze({
   author: 'Hafiz Ali Abdullah',
   handle: 'Hx-313',
-  title: 'Full-Stack Software Engineer & Product Architect',
-  positioning: 'Architecting high-velocity SaaS products, distributed point-of-sale systems, and cinematic digital experiences.',
-  status: '🟢 Open for Q3/Q4 contracts & technical advisory',
+  title: 'Flutter + Native Mobile Developer · Node.js Backend Engineer',
+  positioning: 'Building mobile applications, APIs, dashboards, and operational systems for teams that need the whole workflow to work.',
+  status: '🟢 Available for project conversations & selected roles',
   timezone: 'PKT / UTC+5 (Lahore)',
-  craft: 'Engineered with React 19, Vite, Anime.js & Three.js',
+  craft: 'Engineered with React, Vite, Motion & Three.js',
   copyright: '© 2026 Hafiz Ali Abdullah. All rights reserved.',
 });

@@ -11,14 +11,14 @@ export const howIBuildData = deepFreeze({
   label: 'How I build',
   paragraphs: [
     'Every layer gets a tool chosen for what it actually has to survive \u2014 not what\u2019s trending this year.',
-    'Flutter and native Android for the UI layer that has to stay smooth under real load. Firebase, Node, Mongo, and SQL for the data layer that has to hold state reliably. Vercel and Hostinger for infra that has to stay up \u2014 because 98.7% uptime isn\u2019t an accident, it\u2019s a stack decision made at every layer.',
-    'Architecture decides what\u2019s possible. Tooling decides what\u2019s actually reliable.',
+    'Flutter and native mobile for the interface people use. Node.js, REST APIs, MongoDB, SQL, and Firebase for the services and data layer behind it. The stack follows the product, the workflow, and the reliability it needs.',
+    'Architecture decides what\u2019s possible. Clear ownership of every layer makes it shippable.',
   ],
   tags: [
     'MOBILE APP',
-    'CROSS-PLATFORM',
+    'NATIVE MOBILE',
     'BACKEND',
-    'SAAS DEVELOPMENT',
+    'SYSTEM DESIGN',
     'DEPLOYMENT',
     'API DESIGN',
     'DATABASE',

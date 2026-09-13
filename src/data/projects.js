@@ -4,9 +4,9 @@ import { wosLinks } from '../core/constants.js';
 export const projects = [
   {
     id: 'wos', name: 'WOS', category: 'Restaurant technology', type: 'OnlineOrder.pk · Restaurant technology', status: 'production', featured: true,
-    description: 'Restaurant commerce and operations platform connecting ordering, administration, terminals, ePOS, and kitchen workflows.',
-    image: assetPath('/assets/wos/epos-desktop.png'), metrics: { outlets: '24', products: '1,842', users: '3.2K+' },
-    domains: ['saas', 'backend', 'cloud'], cta: 'View case study',
+    description: 'Restaurant ordering and POS system built for Webticians, connecting customer ordering, administration, terminals, ePOS, and kitchen workflows.',
+    image: assetPath('/assets/wos/epos-desktop.png'), metrics: { surfaces: '04', layers: '03', builtFor: 'Webticians' },
+    domains: ['saas', 'backend', 'cloud'], cta: 'Explore the build',
     surfaces: [
       { label: 'Admin panel', image: assetPath('/assets/wos/epos-dark-mode-menu.jpeg'), href: wosLinks.adminPanel },
       { label: 'Order terminal', image: assetPath('/assets/wos/terminal-1.jpeg') },

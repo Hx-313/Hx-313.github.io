@@ -8,7 +8,7 @@ const NAV_ITEMS = [
   { id: 'problem', label: '01 Thesis', shortLabel: 'Thesis', index: '01', href: '#problem' },
   { id: 'about', label: '02 About', shortLabel: 'About', index: '02', href: '#about' },
   { id: 'how-i-build', label: '03 Build', shortLabel: 'Build', index: '03', href: '#how-i-build' },
-  { id: 'systems', label: '04 Systems', shortLabel: 'Systems', index: '04', href: '#systems' },
+  { id: 'systems', label: '04 Work', shortLabel: 'Work', index: '04', href: '#systems' },
   { id: 'contact', label: '05 Contact', shortLabel: 'Contact', index: '05', href: '#contact' },
 ];
 
@@ -184,7 +184,7 @@ export default function SiteHeader({ theme, setTheme }) {
             href={contactLinks.email}
             aria-label="Contact Hafiz Ali Abdullah"
           >
-            <span>Let’s talk</span>
+            <span>Start a project</span>
             <span className="cta-arrow" aria-hidden="true">↗</span>
           </a>
 
@@ -275,7 +275,7 @@ export default function SiteHeader({ theme, setTheme }) {
             </div>
 
             <a className="mobile-cta-btn" href={contactLinks.email} onClick={() => setIsMobileOpen(false)}>
-              Let’s Talk ↗
+              Start a project ↗
             </a>
           </div>
         </div>

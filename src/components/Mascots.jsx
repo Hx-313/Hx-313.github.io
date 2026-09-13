@@ -46,7 +46,7 @@ export const HERO_GREETINGS = {
     },
     {
       who: 'aero',
-      text: "🤖 And I'm **Aero** — your AI architecture & systems guide! We build high-speed apps, scalable SaaS & real-time telemetry.",
+      text: "🤖 And I'm **Aero** — your architecture guide! Hafiz builds mobile apps, Node.js backends, and the workflows connecting them.",
       expr: 'happy',
       anim: 'm-dance',
       delay: 6000,
@@ -58,7 +58,7 @@ export const HERO_GREETINGS = {
     },
     {
       who: 'dash',
-      text: "✨ Feel free to explore our 3D globe & command center, click either of us to chat, or drag us around in zero-g!",
+      text: "✨ Explore the work, open the system map, or click either of us to learn how Hafiz builds.",
       expr: 'winking',
       anim: 'm-spin',
       delay: 11400,
@@ -161,7 +161,7 @@ export default function Mascots({ stage = 'page1', showController = true, active
       setAeroAnim('m-jump-back');
       setAeroExpr('excited');
       setAeroBubble({
-        text: "**Hafiz Ali Abdullah** is a Full-Stack Software Engineer specializing in production Flutter apps, distributed SaaS architecture, and high-performance cloud backends! 👨‍💻🚀",
+        text: "**Hafiz Ali Abdullah** is a Flutter and native mobile developer who also builds the Node.js backends, APIs, and operational systems behind the app! 👨‍💻🚀",
         chips: [
           { label: '📱 Shipped Apps', action: 'apps' },
           { label: '📬 Contact Abdullah', action: 'contact' },
@@ -178,7 +178,7 @@ export default function Mascots({ stage = 'page1', showController = true, active
       setDashAnim('m-bounce');
       setDashExpr('excited');
       setDashBubble({
-        text: "We build enterprise POS platforms, multi-tenant SaaS, cross-platform mobile apps, and real-time telemetry systems with 60 FPS polish! ⚡📱",
+        text: "I build mobile applications, Node.js backends, dashboards, and connected workflows for products that need more than a screen! ⚡📱",
         chips: [
           { label: '📱 Shipped Apps', action: 'apps' },
           { label: '🎯 Command Center', action: 'command_center' },
@@ -195,7 +195,7 @@ export default function Mascots({ stage = 'page1', showController = true, active
       setDashAnim('m-bounce');
       setDashExpr('happy');
       setDashBubble({
-        text: "Over **5+ production apps** shipped on App Store & Google Play — WOS POS, ReadMate, Dietify, Noor-ul-Quran & more! 📱✨",
+        text: "Over **15 apps** shipped on the App Store and Google Play, with **100K+ downloads** across the portfolio! 📱✨",
         chips: [
           { label: '🎯 Go to Command Center', action: 'command_center' },
           { label: '⚡ Do a Flip!', action: 'flip' },
@@ -267,7 +267,7 @@ export default function Mascots({ stage = 'page1', showController = true, active
       setAeroAnim('m-jump-back');
       setAeroExpr('analyzing');
       setAeroBubble({
-        text: "Stack: **Flutter & Dart** (Mobile/POS), **React & TypeScript** (Web/SaaS), **Node.js & Python** (APIs), **PostgreSQL & Redis** (Data)! 🛠️",
+        text: "Stack: **Flutter and native mobile** for the app, **Node.js** for APIs, and **MongoDB, SQL, Firebase, and Docker** for the systems around it! 🛠️",
         chips: [
           { label: '📱 Shipped Apps', action: 'apps' },
           { label: '📬 Let\'s Connect', action: 'contact' },
@@ -284,7 +284,7 @@ export default function Mascots({ stage = 'page1', showController = true, active
       setAeroAnim('m-dance');
       setAeroExpr('happy');
       setAeroBubble({
-        text: "Telemetry: **99.98% Uptime**, **42ms latency**, **08 active cluster nodes**, and **100% test coverage**! 📊✅",
+        text: "Portfolio proof: **15+ apps shipped**, **100K+ downloads**, and one connected restaurant ordering and POS system built for Webticians! 📊✅",
         chips: [
           { label: '📱 Shipped Apps', action: 'apps' },
           { label: '⚡ Ask Dash', action: 'flip' },
@@ -301,7 +301,7 @@ export default function Mascots({ stage = 'page1', showController = true, active
       setDashAnim('m-bounce');
       setDashExpr('excited');
       setDashBubble({
-        text: "**WOS (Waiter Order System)** is our flagship multi-platform restaurant suite with EPOS desktop, mobile waiter terminal & customer ordering! 🍔📱",
+        text: "**OnlineOrder.pk / WOS** is a restaurant ordering and POS system built for Webticians, connecting admin tools, terminals, customer ordering, and operations! 🍔📱",
         chips: [
           { label: '🎯 Go to Command Center', action: 'command_center' },
           { label: '⚡ Do a Flip!', action: 'flip' },
@@ -602,7 +602,7 @@ export default function Mascots({ stage = 'page1', showController = true, active
 
     const aeroResponses = [
       {
-        text: "I'm **Aero**! I analyze architecture, optimize pipelines & maintain 99.8% code coverage! 🤖✨",
+        text: "I'm **Aero**! I analyze architecture, connect the layers, and help map the workflow behind the app! 🤖✨",
         chips: [
           { label: '💡 Who is Abdullah?', action: 'who' },
           { label: '📊 System Metrics', action: 'metrics' },
@@ -616,14 +616,14 @@ export default function Mascots({ stage = 'page1', showController = true, active
         ],
       },
       {
-        text: "Abdullah builds production systems with **Flutter**, **React**, **TypeScript**, **Node.js** & **Python**! 🛠️✨",
+        text: "Abdullah builds production systems with **Flutter**, **native mobile**, **Node.js**, APIs, and data services! 🛠️✨",
         chips: [
           { label: '📱 Shipped Apps', action: 'apps' },
           { label: '📬 Let\'s Connect', action: 'contact' },
         ],
       },
       {
-        text: "*BEEP BOOP!* Microservices online and running at 100% efficiency. Drag me anywhere to reposition our sensor array! 🌐🛰️",
+        text: "*BEEP BOOP!* The build map is online. Drag me anywhere to reposition the system sensor array! 🌐🛰️",
         chips: [
           { label: '⚡ Ask Dash', action: 'flip' },
           { label: '💬 Say Hello', action: 'hello' },
@@ -661,7 +661,7 @@ export default function Mascots({ stage = 'page1', showController = true, active
         ],
       },
       {
-        text: "**5+ live apps** shipped on App Store & Google Play with smooth 60 FPS performance! 📱✨",
+        text: "**15+ apps** shipped on the App Store and Google Play, with **100K+ downloads** across the portfolio! 📱✨",
         chips: [
           { label: '🎯 Command Center', action: 'command_center' },
           { label: '⚡ Zero-G Flip!', action: 'flip' },
@@ -675,7 +675,7 @@ export default function Mascots({ stage = 'page1', showController = true, active
         ],
       },
       {
-        text: "Did you know? Our POS order terminals handle live restaurant queues with zero latency! ⚡🍔",
+        text: "Did you know? The WOS system connects restaurant ordering, terminals, admin tools, and backend workflows in one build! ⚡🍔",
         chips: [
           { label: '📱 WOS Flagship', action: 'wos' },
           { label: '🤖 Ask Aero', action: 'who' },

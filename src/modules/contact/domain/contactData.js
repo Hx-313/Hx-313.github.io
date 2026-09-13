@@ -1,16 +1,19 @@
 import { contactLinks, siteLinks, scheduleLink } from '../../../core/constants.js';
 
 export const PROJECT_CATEGORIES = Object.freeze([
-  'Full-Stack SaaS',
-  'Web Application',
-  'POS & Systems Architecture',
-  'Technical Advisory / Audit',
+  'Mobile application',
+  'Event or university app',
+  'Government / civic system',
+  'Business operations system',
+  'Restaurant ordering / POS',
+  'Node.js backend / API',
+  'Full-time role',
 ]);
 
 export const TELEMETRY_DATA = Object.freeze({
   timezone: 'PKT / UTC+5 (Lahore)',
   responseTime: '< 2 hours',
-  status: '🟢 Available for Q3/Q4 contracts & advisory',
+  status: '🟢 Available for project conversations & selected roles',
 });
 
 export const CONTACT_CHANNELS = Object.freeze({

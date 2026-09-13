@@ -10,22 +10,22 @@ function deepFreeze(value) {
 }
 
 export const servicesData = deepFreeze({
-  label: 'Services',
+  label: 'Capabilities',
   tabs: [
     {
       id: 'mobile-development',
-      label: 'Mobile Development',
+      label: 'Mobile apps',
       items: [
         {
           id: 'mobile-app-development',
-          name: 'Mobile App Development',
-          description: 'Custom Flutter applications with clean UI and solid performance',
+          name: 'Flutter + Native Apps',
+          description: 'Customer-facing and internal mobile applications shaped around real workflows',
           icon: 'smartphone',
         },
         {
           id: 'app-revamping',
           name: 'App Revamping',
-          description: 'Modernizing existing apps for better performance and architecture',
+          description: 'Modernizing existing apps for clearer architecture, better performance, and smoother flows',
           icon: 'refresh',
         },
         {
@@ -36,26 +36,26 @@ export const servicesData = deepFreeze({
         },
         {
           id: 'app-deployment',
-          name: 'App Deployment',
-          description: 'Shipped to the App Store and Google Play with expert guidance',
+          name: 'App Delivery',
+          description: 'Prepared, tested, and shipped to the App Store and Google Play',
           icon: 'rocket',
         },
         {
           id: 'bug-fixes-maintenance',
-          name: 'Bug Fixes & Maintenance',
-          description: 'Ongoing support, troubleshooting, and upkeep',
+          name: 'Stabilization',
+          description: 'Ongoing support, troubleshooting, and the unglamorous work that keeps software dependable',
           icon: 'shield',
         },
       ],
     },
     {
       id: 'backend',
-      label: 'Backend',
+      label: 'Node.js backend',
       items: [
         {
           id: 'backend-development',
-          name: 'Backend Development',
-          description: 'APIs and server-side systems built to hold state reliably',
+          name: 'Node.js Backend',
+          description: 'APIs and server-side systems built to hold business state reliably',
           icon: 'server',
         },
         {
@@ -68,18 +68,18 @@ export const servicesData = deepFreeze({
     },
     {
       id: 'saas-development',
-      label: 'SaaS Development',
+      label: 'Connected systems',
       items: [
         {
           id: 'saas-product-development',
-          name: 'SaaS Development',
-          description: 'Full products, not just apps — from architecture to deployment',
+          name: 'Connected Systems',
+          description: 'Full products, not just apps — mobile, backend, dashboards, and integrations',
           icon: 'layers',
         },
         {
-          id: 'epos-development',
-          name: 'ePOS Development',
-          description: 'Point-of-sale systems built for real transactions, real uptime',
+          id: 'ordering-pos-systems',
+          name: 'Ordering & POS Systems',
+          description: 'Commerce workflows connecting ordering, terminals, admin tools, and backend services',
           icon: 'creditCard',
         },
       ],

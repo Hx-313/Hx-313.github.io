@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { animate, stagger } from 'animejs';
 import HeroContent from './HeroContent.jsx';
-import HeroVisual from './HeroVisual.jsx';
 import './hero.css';
 
 export default function Hero({ revealed }) {
@@ -42,7 +41,6 @@ export default function Hero({ revealed }) {
     <section ref={heroRef} className="hero" aria-labelledby="hero-title">
       <div className="hero-grid">
         <HeroContent />
-        <HeroVisual />
       </div>
     </section>
   );
