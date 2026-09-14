@@ -1,52 +1,98 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { animate, createTimeline, stagger } from 'animejs';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { animate, createTimeline } from 'animejs';
 import AeroMascot from '../../../../components/mascots/AeroMascot.jsx';
 import DashMascot from '../../../../components/mascots/DashMascot.jsx';
-import OpeningNetworkGlobe from './OpeningNetworkGlobe.jsx';
-import OpeningProjection from './OpeningProjection.jsx';
-import { getMobileProjectionBounds } from './openingMobileGeometry.js';
-import { OPENING_BEATS, OPENING_STATEMENTS } from './openingSequence.js';
+import FrameSequence from '../../../../shared/media/FrameSequence.jsx';
+import { ORB_FRAMES } from '../media/visualSequences.js';
+import { OPENING_BEATS } from './openingSequence.js';
 import './opening.css';
 
 const noop = () => {};
+const LOADER_DURATION = OPENING_BEATS[0].end;
 
-const once = (callback, guard) => {
+function formatLoaderTime(milliseconds) {
+  const seconds = Math.min(Math.max(milliseconds, 0), LOADER_DURATION) / 1000;
+  return `00:${seconds.toFixed(1).padStart(4, '0')}`;
+}
+
+function callOnce(callback, guard) {
   if (guard.current) return;
   guard.current = true;
   callback();
-};
+}
 
 export default function OpeningExperience({ onHandoff = noop, onComplete = noop }) {
-  const [liveStatement, setLiveStatement] = useState(null);
-  const [bootProgress, setBootProgress] = useState(0);
+  const [phase, setPhase] = useState('splash');
+  const [loaderElapsed, setLoaderElapsed] = useState(0);
   const openingRef = useRef(null);
-  const starCanvasRef = useRef(null);
   const timelineRef = useRef(null);
   const skipAnimationRef = useRef(null);
   const handoffRef = useRef(false);
   const completeRef = useRef(false);
 
-  const backgroundStars = useMemo(() => Array.from({ length: 42 }, (_, index) => ({
-    id: index,
-    x: (index * 19 + 7) % 100,
-    y: (index * 23 + 13) % 100,
-    size: (index % 3) * 0.7 + 0.8,
-    duration: (index % 4) + 3,
-    delay: (index % 5) * 0.45,
-  })), []);
-
   useEffect(() => {
-    let current = 0;
-    const interval = setInterval(() => {
-      current += 12;
-      if (current >= 100) {
-        setBootProgress(100);
-        clearInterval(interval);
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousDocumentOverflow = document.documentElement.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) {
+      setLoaderElapsed(LOADER_DURATION);
+      return () => {
+        document.body.style.overflow = previousBodyOverflow;
+        document.documentElement.style.overflow = previousDocumentOverflow;
+      };
+    }
+
+    let animationFrame = 0;
+    let elapsed = 0;
+    let lastTick = performance.now();
+
+    const tick = (now) => {
+      elapsed = Math.min(LOADER_DURATION, elapsed + now - lastTick);
+      lastTick = now;
+      const displayElapsed = Math.floor(elapsed / 100) * 100;
+      setLoaderElapsed((current) => (current === displayElapsed ? current : displayElapsed));
+
+      if (elapsed < LOADER_DURATION) {
+        animationFrame = window.requestAnimationFrame(tick);
       } else {
-        setBootProgress(current);
+        animationFrame = 0;
       }
-    }, 38);
-    return () => clearInterval(interval);
+    };
+
+    const start = () => {
+      if (!animationFrame) {
+        lastTick = performance.now();
+        animationFrame = window.requestAnimationFrame(tick);
+      }
+    };
+
+    const stop = () => {
+      if (animationFrame) {
+        window.cancelAnimationFrame(animationFrame);
+        animationFrame = 0;
+      }
+    };
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        stop();
+      } else if (elapsed < LOADER_DURATION) {
+        start();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibility);
+    start();
+
+    return () => {
+      stop();
+      document.removeEventListener('visibilitychange', handleVisibility);
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousDocumentOverflow;
+    };
   }, []);
 
   useEffect(() => {
@@ -56,252 +102,192 @@ export default function OpeningExperience({ onHandoff = noop, onComplete = noop 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     root.dataset.motion = reduced ? 'reduced' : 'standard';
 
-    if (reduced) {
-      const reducedTimeline = createTimeline({ defaults: { ease: 'outQuad' } })
-        .add(root.querySelectorAll('[data-opening-mascot]'), {
-          opacity: [0, 1], y: [12, 0], duration: 180,
-        }, 80)
-        .call(() => setLiveStatement(OPENING_STATEMENTS[0]), 220)
-        .call(() => setLiveStatement(OPENING_STATEMENTS[1]), 600)
-        .call(() => setLiveStatement(OPENING_STATEMENTS[2]), 980)
-        .call(() => once(onHandoff, handoffRef), 1_340)
-        .add(root, { opacity: [1, 0], duration: 300 }, 1_340)
-        .call(() => once(onComplete, completeRef), 1_640);
+    const orbStage = root.querySelector('[data-opening-orb-stage]');
+    const orb = root.querySelector('[data-opening-orb]');
+    const aero = root.querySelector('[data-opening-mascot="aero"]');
+    const dash = root.querySelector('[data-opening-mascot="dash"]');
 
-      timelineRef.current = reducedTimeline;
-      const handleVisibility = () => (document.hidden ? reducedTimeline.pause() : reducedTimeline.resume());
-      document.addEventListener('visibilitychange', handleVisibility);
-      return () => {
-        document.removeEventListener('visibilitychange', handleVisibility);
-        skipAnimationRef.current?.revert?.();
-        reducedTimeline.revert();
-        timelineRef.current = null;
-      };
+    if (reduced) {
+      setPhase('reduced');
+      callOnce(onHandoff, handoffRef);
+      const timer = window.setTimeout(() => callOnce(onComplete, completeRef), 520);
+      return () => window.clearTimeout(timer);
     }
 
-    const dash = root.querySelector('[data-opening-mascot="dash"]');
-    const aero = root.querySelector('[data-opening-mascot="aero"]');
-    const globe = root.querySelector('[data-opening-globe]');
-    const bootHud = root.querySelector('[data-opening-boot-hud]');
-    const dashProjection = dash.querySelector('[data-opening-projection]').closest('.opening-projector');
-    const aeroProjection = aero.querySelector('[data-opening-projection]').closest('.opening-projector');
-    const mobileStage = root.querySelector('[data-opening-mobile-stage]');
-    const mobileDashProjection = root.querySelector('[data-opening-mobile-projection="dash"]');
-    const mobileAeroProjection = root.querySelector('[data-opening-mobile-projection="aero"]');
-    const dashProjectionTargets = [dashProjection, mobileDashProjection].filter(Boolean);
-    const aeroProjectionTargets = [aeroProjection, mobileAeroProjection].filter(Boolean);
-    const dashProjectionCopy = dashProjectionTargets.flatMap((projection) => [...projection.querySelectorAll('[data-opening-copy] > *')]);
-    const aeroProjectionCopy = aeroProjectionTargets.flatMap((projection) => [...projection.querySelectorAll('[data-opening-copy] > *')]);
-    const dashArm = dash.querySelector('[data-opening-arm="dash"]');
-    const aeroArm = aero.querySelector('[data-opening-arm="aero"]');
-
-    const updateMobileProjectionGeometry = () => {
-      if (!mobileStage) return;
-      const bounds = getMobileProjectionBounds(window.innerWidth, window.innerHeight);
-      mobileStage.style.setProperty('--mobile-projection-left', `${bounds.left}px`);
-      mobileStage.style.setProperty('--mobile-projection-top', `${bounds.top}px`);
-      mobileStage.style.setProperty('--mobile-projection-width', `${bounds.width}px`);
+    let disposed = false;
+    const setActivePhase = (nextPhase) => {
+      if (!disposed) setPhase(nextPhase);
     };
-    updateMobileProjectionGeometry();
-    window.addEventListener('resize', updateMobileProjectionGeometry);
+    const handoff = () => {
+      if (!disposed) callOnce(onHandoff, handoffRef);
+    };
+    const complete = () => {
+      if (!disposed) callOnce(onComplete, completeRef);
+    };
 
     const timeline = createTimeline({ defaults: { ease: 'outCubic' } });
     timeline
-      .add(globe, { scale: [1.02, 1], opacity: [0.76, 1], duration: 400 }, OPENING_BEATS[0].start)
-      .call(() => setBootProgress(100), OPENING_BEATS[0].start + 300)
-      .add(bootHud, { opacity: [1, 0], y: [0, -12], duration: 450 }, OPENING_BEATS[1].start)
-      .add([dash, aero], {
-        opacity: [0, 0.78],
-        x: (_, index) => (index === 0 ? ['-28vw', 0] : ['28vw', 0]),
-        y: ['16vh', '11vh'],
-        scale: [0.38, 0.86],
-        filter: ['blur(8px) brightness(.7)', 'blur(0px) brightness(1)'],
-        duration: 2_100, delay: stagger(140),
+      .call(() => setActivePhase('unfocus'), OPENING_BEATS[1].start)
+      .add(orb, {
+        scale: [1, 0.7],
+        opacity: [1, 0.72],
+        filter: ['blur(0px) brightness(1)', 'blur(10px) brightness(.72)'],
+        duration: OPENING_BEATS[1].end - OPENING_BEATS[1].start,
+        ease: 'outQuad',
       }, OPENING_BEATS[1].start)
-      .call(() => root.classList.add('opening--mascots-front'), OPENING_BEATS[2].start)
-      .add(globe, { scale: [1, 0.84], opacity: [1, 0.68], duration: 1_200 }, OPENING_BEATS[2].start)
-      .add([dash, aero], { y: ['11vh', 0], scale: [0.86, 1], opacity: [0.78, 1], duration: 1_200 }, OPENING_BEATS[2].start)
-      .call(() => setLiveStatement(OPENING_STATEMENTS[0]), OPENING_BEATS[3].start)
-      .add(aero, { scale: 0.86, opacity: 0.48, x: '-2vw', filter: 'blur(2px) brightness(.7)', duration: 600 }, OPENING_BEATS[3].start)
-      .add(dash, { x: '-4vw', scale: 1.06, opacity: 1, filter: 'blur(0px) brightness(1.15) drop-shadow(0 0 24px rgba(25, 230, 140, .45))', duration: 600 }, OPENING_BEATS[3].start)
-      .add(dashArm, { rotate: [-4, -28], duration: 620 }, 3_720)
-      .add(dashProjectionTargets, { opacity: [0, 1], scale: [0.78, 1], duration: 700 }, 3_800)
-      .add(dashProjectionCopy, {
-        opacity: [0, 1], y: [8, 0], delay: stagger(140), duration: 420,
-      }, 4_100)
-      .add(dashProjectionTargets, { opacity: [1, 0], scale: [1, 0.9], duration: 420 }, 6_700)
-      .call(() => setLiveStatement(OPENING_STATEMENTS[1]), OPENING_BEATS[4].start)
-      .add(dash, { scale: 0.86, opacity: 0.48, x: '2vw', filter: 'blur(2px) brightness(.7)', duration: 600 }, OPENING_BEATS[4].start)
-      .add(aero, { x: '4vw', scale: 1.06, opacity: 1, filter: 'blur(0px) brightness(1.15) drop-shadow(0 0 24px rgba(98, 232, 232, .45))', duration: 600 }, OPENING_BEATS[4].start)
-      .add(aeroArm, { rotate: [0, -14], duration: 620 }, 7_320)
-      .add(aeroProjectionTargets, { opacity: [0, 1], scaleX: [0.78, 1], duration: 700 }, 7_400)
-      .add(aeroProjectionCopy, {
-        opacity: [0, 1], x: [10, 0], delay: stagger(140), duration: 420,
-      }, 7_700)
-      .add(aeroProjectionTargets, { opacity: [1, 0], scaleX: [1, 0.9], duration: 420 }, 10_300)
-      .call(() => setLiveStatement(OPENING_STATEMENTS[2]), OPENING_BEATS[5].start)
-      .add(root.querySelector('[data-globe-core]'), { scale: [1, 1.3, 1], opacity: [0.5, 0.82, 0.5], duration: 800 }, OPENING_BEATS[5].start)
-      .add(aero, { scale: 0.86, opacity: 0.48, x: '-1vw', filter: 'blur(2px) brightness(.7)', duration: 600 }, OPENING_BEATS[5].start)
-      .add(dash, { x: '-3vw', scale: 1.06, opacity: 1, filter: 'blur(0px) brightness(1.15) drop-shadow(0 0 24px rgba(25, 230, 140, .45))', duration: 600 }, OPENING_BEATS[5].start)
-      .add(dashProjectionTargets, { opacity: [0, 1], scale: [0.78, 1.04], duration: 700 }, 11_000)
-      .add(dashProjectionCopy, {
-        opacity: [0, 1], y: [8, 0], delay: stagger(140), duration: 420,
-      }, 11_300)
-      .add(dashProjectionTargets, { opacity: [1, 0], scale: [1.04, 0.9], duration: 420 }, 13_900)
-      .add([dash, aero], { x: 0, scale: 1, opacity: 1, filter: 'blur(0px) brightness(1)', duration: 700 }, OPENING_BEATS[6].start)
-      .add(root.querySelector('[data-duo-connection]'), { opacity: [0, 0.62, 0.18], scaleX: [0.5, 1, 1], duration: 800 }, 14_500)
-      .call(() => once(onHandoff, handoffRef), OPENING_BEATS[7].start)
-      .add([dash, aero], {
-        y: ['0vh', '45vh'],
-        x: (_, index) => (index === 0 ? '4vw' : '-4vw'),
-        opacity: [1, 0.2],
-        duration: 1_600,
-      }, OPENING_BEATS[7].start)
-      .add(globe, { y: [0, '-20vh'], scale: [0.84, 0.58], opacity: [0.68, 0], duration: 1_600 }, OPENING_BEATS[7].start)
-      .add(root, { y: [0, '-6vh'], opacity: [1, 0], duration: 1_600 }, OPENING_BEATS[7].start)
-      .call(() => once(onComplete, completeRef), OPENING_BEATS[7].end);
+      .call(() => setActivePhase('mascot-entrance'), OPENING_BEATS[2].start)
+      // Mascot SVGs currently do not expose completion callbacks, so the
+      // agreed 1.5s entrance beat controls their settle/exit and refocus.
+      .add(aero, {
+        opacity: [0, 1],
+        x: ['-58vw', '-25vw'],
+        y: ['7vh', '0vh'],
+        scale: [0.62, 1],
+        filter: ['blur(8px) brightness(.65)', 'blur(0px) brightness(1)'],
+        duration: OPENING_BEATS[2].end - OPENING_BEATS[2].start,
+        ease: 'outExpo',
+      }, OPENING_BEATS[2].start)
+      .add(dash, {
+        opacity: [0, 1],
+        x: ['58vw', '25vw'],
+        y: ['7vh', '0vh'],
+        scale: [0.62, 1],
+        filter: ['blur(8px) brightness(.65)', 'blur(0px) brightness(1)'],
+        duration: OPENING_BEATS[2].end - OPENING_BEATS[2].start,
+        ease: 'outExpo',
+      }, OPENING_BEATS[2].start)
+      .call(() => setActivePhase('refocus'), OPENING_BEATS[3].start)
+      .add([aero, dash], {
+        opacity: [1, 0],
+        y: ['0vh', '8vh'],
+        scale: [1, 0.82],
+        filter: ['blur(0px) brightness(1)', 'blur(4px) brightness(.7)'],
+        duration: OPENING_BEATS[3].end - OPENING_BEATS[3].start,
+        ease: 'inQuad',
+      }, OPENING_BEATS[3].start)
+      .add(orb, {
+        scale: [0.7, 1],
+        opacity: [0.72, 1],
+        filter: ['blur(10px) brightness(.72)', 'blur(0px) brightness(1)'],
+        duration: OPENING_BEATS[3].end - OPENING_BEATS[3].start,
+        ease: 'outQuad',
+      }, OPENING_BEATS[3].start)
+      .call(() => {
+        setActivePhase('transition');
+        handoff();
+      }, OPENING_BEATS[4].start)
+      .add(orbStage, {
+        scale: [1, 14],
+        opacity: [1, 0],
+        filter: ['blur(0px)', 'blur(2px)'],
+        duration: OPENING_BEATS[4].end - OPENING_BEATS[4].start,
+        ease: 'inExpo',
+      }, OPENING_BEATS[4].start)
+      .add(root, {
+        opacity: [1, 0],
+        duration: OPENING_BEATS[4].end - OPENING_BEATS[4].start,
+        ease: 'outQuad',
+      }, OPENING_BEATS[4].start)
+      .call(complete, OPENING_BEATS[4].end);
 
     timelineRef.current = timeline;
     const handleVisibility = () => (document.hidden ? timeline.pause() : timeline.resume());
     document.addEventListener('visibilitychange', handleVisibility);
 
     return () => {
+      disposed = true;
       document.removeEventListener('visibilitychange', handleVisibility);
-      window.removeEventListener('resize', updateMobileProjectionGeometry);
       skipAnimationRef.current?.revert?.();
+      timeline.pause();
       timeline.revert();
       timelineRef.current = null;
     };
   }, [onComplete, onHandoff]);
 
-  useEffect(() => {
-    const canvas = starCanvasRef.current;
-    if (!canvas) return undefined;
-    const context = canvas.getContext('2d');
-    if (!context) return undefined;
-
-    let frame = 0;
-    let particles = [];
-    const resize = () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
-      canvas.width = Math.round(width * pixelRatio);
-      canvas.height = Math.round(height * pixelRatio);
-      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-      particles = Array.from({ length: 68 }, (_, index) => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        radius: Math.random() * 1.25 + 0.35,
-        speed: Math.random() * 0.16 + 0.04,
-        color: index % 7 === 0 ? '#19e68c' : '#dffcf6',
-        alpha: Math.random() * 0.45 + 0.14,
-      }));
-    };
-    const render = () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      context.clearRect(0, 0, width, height);
-      particles.forEach((particle) => {
-        particle.y -= particle.speed;
-        if (particle.y < -8) particle.y = height + 8;
-        context.beginPath();
-        context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        context.fillStyle = particle.color;
-        context.globalAlpha = particle.alpha;
-        context.fill();
-      });
-      context.globalAlpha = 1;
-      frame = window.requestAnimationFrame(render);
-    };
-    const handleVisibility = () => {
-      window.cancelAnimationFrame(frame);
-      if (!document.hidden) frame = window.requestAnimationFrame(render);
-    };
-
-    resize();
-    render();
-    window.addEventListener('resize', resize);
-    document.addEventListener('visibilitychange', handleVisibility);
-    return () => {
-      window.removeEventListener('resize', resize);
-      document.removeEventListener('visibilitychange', handleVisibility);
-      window.cancelAnimationFrame(frame);
-    };
-  }, []);
-
   const skipOpening = useCallback(() => {
     timelineRef.current?.pause();
-    once(onHandoff, handoffRef);
+    callOnce(onHandoff, handoffRef);
+    setPhase('transition');
+
     const root = openingRef.current;
     if (!root) {
-      once(onComplete, completeRef);
+      callOnce(onComplete, completeRef);
       return;
     }
+
     skipAnimationRef.current?.revert?.();
     skipAnimationRef.current = animate(root, {
-      opacity: [Number.parseFloat(getComputedStyle(root).opacity) || 1, 0],
-      y: [0, '-3vh'],
-      duration: 220,
+      opacity: [1, 0],
+      duration: 180,
       ease: 'outQuad',
-      onComplete: () => once(onComplete, completeRef),
+      onComplete: () => callOnce(onComplete, completeRef),
     });
   }, [onComplete, onHandoff]);
 
-  const activeSpeaker = liveStatement?.speaker ?? null;
-
   return (
-    <section ref={openingRef} className="opening" aria-label="HX313 portfolio introduction">
-      <canvas ref={starCanvasRef} className="space-star-canvas" aria-hidden="true" />
-      <div className="space-celestial-field" aria-hidden="true">
-        {backgroundStars.map((star) => (
-          <span
-            key={star.id}
-            className="celestial-star"
-            style={{ left: `${star.x}%`, top: `${star.y}%`, width: star.size, height: star.size, animationDuration: `${star.duration}s`, animationDelay: `${star.delay}s` }}
+    <section
+      ref={openingRef}
+      className={`opening opening--${phase}`}
+      aria-label="Hafiz Ali Abdullah portfolio opening sequence"
+    >
+      <div className="opening-stage" aria-hidden="true">
+        <div className="opening-orb-stage" data-opening-orb-stage>
+          <FrameSequence
+            frames={ORB_FRAMES}
+            frameDuration={82}
+            className="opening-orb"
+            data-opening-orb
+            alt=""
           />
-        ))}
-      </div>
+        </div>
 
-      {/* Tactical Sci-Fi Loader / Boot Indicator */}
-      <div className="opening-boot-hud" data-opening-boot-hud aria-hidden="true">
-        <div className="opening-boot-badge">
-          <span className="opening-boot-beacon" />
-          <span className="opening-boot-title">
-            {bootProgress >= 100 ? 'SYSTEM READY' : 'INITIALIZING SYSTEM'}
-          </span>
+        <div className="opening-transmission" data-opening-transmission aria-hidden="true">
+          <div className="opening-transmission__inner">
+            <span className="opening-transmission__eyebrow">AERO. TRANSMISSION</span>
+            <h2 className="opening-transmission__title">
+              Your business
+              <br />
+              relies on
+              <br />
+              <strong>everything<br />behind it.</strong>
+            </h2>
+            <span className="opening-transmission__signal">CHANNEL 01 / LIVE</span>
+          </div>
         </div>
-        <div className="opening-boot-meter">
-          <div className="opening-boot-fill" style={{ width: `${bootProgress}%` }} />
-        </div>
-      </div>
 
-      <div className="opening-cinematic-stage">
-        <OpeningNetworkGlobe />
-        <div className="opening-mascot opening-mascot--aero" data-opening-mascot="aero" inert="" aria-hidden="true">
-          <span className="opening-mascot-thrust" />
-          <AeroMascot expression={activeSpeaker === 'aero' ? 'analyzing' : 'happy'} size={180} isFloating={false} />
-          <OpeningProjection mascot="aero" statement={OPENING_STATEMENTS[1]} />
+        <div
+          className="opening-mascot opening-mascot--aero"
+          data-opening-mascot="aero"
+          inert=""
+        >
+          <span className="opening-mascot__trail opening-mascot__trail--aero" />
+          <AeroMascot expression="happy" size={188} isFloating={false} />
         </div>
-        <div className="opening-mascot opening-mascot--dash" data-opening-mascot="dash" inert="" aria-hidden="true">
-          <span className="opening-mascot-thrust" />
-          <DashMascot expression={activeSpeaker === 'dash' ? 'executing' : 'happy'} size={176} isFloating={false} armPose="wave" />
-          <OpeningProjection mascot="dash" statement={activeSpeaker === 'dash' ? liveStatement : OPENING_STATEMENTS[0]} />
-        </div>
-        <div className="opening-mobile-projections" data-opening-mobile-stage aria-hidden="true">
-          <OpeningProjection mascot="aero" statement={OPENING_STATEMENTS[1]} mobile />
-          <OpeningProjection mascot="dash" statement={activeSpeaker === 'dash' ? liveStatement : OPENING_STATEMENTS[0]} mobile />
-        </div>
-        <span className="opening-duo-connection" data-duo-connection aria-hidden="true" />
-        <div className="opening-reduced-statement" aria-hidden="true">
-          <span>{liveStatement?.lead}</span>
-          <strong>{liveStatement?.accent}</strong>
+
+        <div
+          className="opening-mascot opening-mascot--dash"
+          data-opening-mascot="dash"
+          inert=""
+        >
+          <span className="opening-mascot__trail opening-mascot__trail--dash" />
+          <DashMascot expression="excited" size={184} isFloating={false} armPose="wave" />
         </div>
       </div>
 
-      <p className="opening-live-region" data-opening-live aria-live="polite" aria-atomic="true">
-        {liveStatement?.text ?? ''}
+      <div className="opening-loader" aria-hidden="true">
+        <div className="opening-loader__meta">
+          <span>INITIALIZING</span>
+          <span>{formatLoaderTime(loaderElapsed)}</span>
+        </div>
+        <div className="opening-loader__track">
+          <span className="opening-loader__fill" />
+        </div>
+      </div>
+
+      <p className="opening-live-region" aria-live="polite">
+        Hafiz Ali Abdullah portfolio opening sequence.
       </p>
+
       <button className="space-skip-btn" type="button" onClick={skipOpening}>
         SKIP INTRO <span aria-hidden="true">→</span>
       </button>

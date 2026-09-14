@@ -1,48 +1,63 @@
+import FrameSequence from '../../../../shared/media/FrameSequence.jsx';
+import { proofMetrics } from '../../../../data/metrics.js';
+import { GLOBE_FRAMES } from '../media/visualSequences.js';
+
 export default function HeroVisual() {
   return (
-    <aside className="hero-visual" data-hero-enter aria-label="Architecture map for a connected mobile system">
-      <div className="hero-system-card">
-        <div className="hero-system-card__header">
-          <span>Build map</span>
-          <span>01 / 03</span>
-        </div>
-
-        <div className="hero-system-flow" aria-label="Flutter or native app connects to a Node.js API and operational tools">
-          <div className="hero-system-node hero-system-node--app">
-            <span className="hero-system-node__index">01</span>
-            <strong>Flutter / Native</strong>
-            <small>Mobile experience</small>
-          </div>
-          <span className="hero-system-connector" aria-hidden="true">→</span>
-          <div className="hero-system-node hero-system-node--api">
-            <span className="hero-system-node__index">02</span>
-            <strong>Node.js API</strong>
-            <small>Business logic</small>
-          </div>
-          <span className="hero-system-connector" aria-hidden="true">→</span>
-          <div className="hero-system-node hero-system-node--ops">
-            <span className="hero-system-node__index">03</span>
-            <strong>Data + Ops</strong>
-            <small>Systems that run</small>
+    <aside
+      className="hero-visual"
+      data-hero-enter
+      style={{ '--hero-enter-delay': '0ms' }}
+      aria-label="Digital green earth globe for Hafiz Ali Abdullah's systems portfolio"
+    >
+      <div className="hero-orbit-scene">
+        <div className="hero-identity-arc hero-identity-arc--top" aria-hidden="true">
+          <div className="hero-arc-track">
+            <span>Hafiz Ali Abdullah</span>
           </div>
         </div>
 
-        <div className="hero-system-card__footer">
-          <span>One connected build</span>
-          <span>Interface · API · Workflow</span>
+        <div className="hero-identity-arc hero-identity-arc--bottom" aria-hidden="true">
+          <div className="hero-arc-track">
+            <span>Flutter Developer · Mobile Application Developer · SaaS Developer</span>
+          </div>
+        </div>
+
+        <div
+          className="hero-globe-portal"
+          role="img"
+          aria-label="Looping digital green earth representing connected products and systems"
+        >
+          <FrameSequence
+            frames={GLOBE_FRAMES}
+            frameDuration={112}
+            className="hero-globe-sequence"
+            alt=""
+          />
+          <span className="hero-globe-portal__veil" />
+          <span className="hero-globe-portal__ring" />
+          <span className="hero-globe-portal__crosshair hero-globe-portal__crosshair--horizontal" />
+          <span className="hero-globe-portal__crosshair hero-globe-portal__crosshair--vertical" />
+        </div>
+
+        <ul className="hero-visual-stats" aria-label="Selected proof points">
+          {proofMetrics.slice(0, 2).map(([value, label]) => (
+            <li className="hero-stat-card" key={label}>
+              <strong>{value}</strong>
+              <span>{label}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div className="hero-visual-readout" aria-hidden="true">
+          <span>LIVE / CONNECTED</span>
+          <span>GLB—01</span>
         </div>
       </div>
 
-      <figure className="hero-portrait">
-        <img
-          src="/assets/hafiz-ali-abdullah.png"
-          alt="Hafiz Ali Abdullah, mobile application developer"
-          width="942"
-          height="1680"
-          fetchPriority="high"
-        />
-      </figure>
-      <div className="hero-visual-stamp" aria-hidden="true">HX / 313</div>
+      <p className="hero-identity-accessible">
+        Hafiz Ali Abdullah. Flutter Developer, Mobile Application Developer, and SaaS Developer.
+      </p>
     </aside>
   );
 }

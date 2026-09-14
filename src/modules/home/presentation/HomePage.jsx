@@ -67,7 +67,7 @@ export default function HomePage() {
 
         <main id="top">
           {/* Page 1: Clean Entry Portal (Mascots bound strictly to Page 1) */}
-          <Hero revealed={isSiteVisible} settled={isTransitionSettled} />
+          <Hero revealed={isSiteVisible} transitioning={experienceState === 'handoff'} />
 
           {/* Clear positioning thesis before the work proof */}
           <ThesisSection />

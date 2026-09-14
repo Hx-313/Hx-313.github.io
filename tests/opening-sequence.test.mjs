@@ -3,38 +3,37 @@ import assert from 'node:assert/strict';
 import {
   OPENING_BEATS,
   OPENING_DURATION,
-  OPENING_STATEMENTS,
   getOpeningBeatAt,
 } from '../src/modules/home/presentation/opening/openingSequence.js';
 
-test('opening gives the approved narrative room to breathe', () => {
-  assert.equal(OPENING_DURATION, 17_000);
+test('opening matches the approved 5.2 second cinematic choreography', () => {
+  assert.equal(OPENING_DURATION, 5_200);
   assert.deepEqual(
-    OPENING_STATEMENTS.map(({ speaker, text }) => ({ speaker, text })),
+    OPENING_BEATS.map(({ id, start, end }) => ({ id, start, end })),
     [
-      { speaker: 'dash', text: 'YOUR USERS ONLY SEE THE APP.' },
-      { speaker: 'aero', text: 'YOUR BUSINESS RELIES ON EVERYTHING BEHIND IT.' },
-      { speaker: 'dash', text: 'WHEN BOTH WORK, YOUR PRODUCT WORKS.' },
+      { id: 'splash', start: 0, end: 2_500 },
+      { id: 'unfocus', start: 2_500, end: 2_800 },
+      { id: 'mascot-entrance', start: 2_800, end: 4_300 },
+      { id: 'refocus', start: 4_300, end: 4_600 },
+      { id: 'zoom-through', start: 4_600, end: 5_200 },
     ],
   );
 });
 
 test('opening beats are contiguous and finish at the declared duration', () => {
   assert.equal(OPENING_BEATS[0].start, 0);
-  assert.equal(OPENING_BEATS[0].end, 400, 'the globe has a 0.4s solo beat before the crew rises');
   for (let index = 1; index < OPENING_BEATS.length; index += 1) {
     assert.equal(OPENING_BEATS[index - 1].end, OPENING_BEATS[index].start);
   }
   assert.equal(OPENING_BEATS.at(-1).end, OPENING_DURATION);
 });
 
-test('phase lookup resolves the major camera states', () => {
-  assert.equal(getOpeningBeatAt(200).id, 'globe-intro');
-  assert.equal(getOpeningBeatAt(2_000).id, 'mascots-emerging');
-  assert.equal(getOpeningBeatAt(4_200).speaker, 'dash');
-  assert.equal(getOpeningBeatAt(8_200).speaker, 'aero');
-  assert.equal(getOpeningBeatAt(14_600).id, 'duo-focus');
-  assert.equal(getOpeningBeatAt(16_000).id, 'transitioning-to-home');
+test('phase lookup resolves every major camera state', () => {
+  assert.equal(getOpeningBeatAt(200).id, 'splash');
+  assert.equal(getOpeningBeatAt(2_600).id, 'unfocus');
+  assert.equal(getOpeningBeatAt(3_400).id, 'mascot-entrance');
+  assert.equal(getOpeningBeatAt(4_450).id, 'refocus');
+  assert.equal(getOpeningBeatAt(4_900).id, 'zoom-through');
 });
 
 test('phase lookup includes every beat boundary and clamps out-of-range times', () => {

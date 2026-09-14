@@ -15,10 +15,10 @@
 }
 
 .site-experience.is-handoff {
-  opacity: 0.82;
-  transform: translate3d(0, 2vh, 0) scale(0.988);
-  filter: blur(2px);
-  transition: opacity 1.3s var(--ease-out), transform 1.3s var(--ease-out), filter 1.3s var(--ease-out);
+  opacity: 0.9;
+  transform: translate3d(0, 1vh, 0) scale(0.994);
+  filter: blur(1.5px);
+  transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out), filter 600ms var(--ease-out);
 }
 
 .site-experience.is-ready {

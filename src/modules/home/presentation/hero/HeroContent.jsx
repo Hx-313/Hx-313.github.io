@@ -1,49 +1,71 @@
+import { FaGithub, FaLinkedinIn } from 'react-icons/fa';
+import { FiMail } from 'react-icons/fi';
+import { contactLinks, siteLinks } from '../../../../core/constants.js';
+
+const SOCIAL_LINKS = [
+  {
+    label: 'GitHub',
+    href: siteLinks.github,
+    icon: FaGithub,
+    external: true,
+  },
+  {
+    label: 'LinkedIn',
+    href: siteLinks.linkedin,
+    icon: FaLinkedinIn,
+    external: true,
+  },
+  {
+    label: 'Email',
+    href: contactLinks.email,
+    icon: FiMail,
+    external: false,
+  },
+];
+
 export default function HeroContent() {
   return (
     <div className="hero-content">
-      <p className="hero-kicker" data-hero-enter>
-        <span className="hero-kicker-name">Hafiz Ali Abdullah</span>
-        <span aria-hidden="true">·</span>
-        <span>Flutter + Native Mobile</span>
-        <span aria-hidden="true">·</span>
-        <span>Node.js Backend</span>
+      <p className="hero-kicker" data-hero-enter style={{ '--hero-enter-delay': '80ms' }}>
+        Product-minded mobile &amp; systems engineer
       </p>
 
-      <h1 id="hero-title" className="hero-title hero-title--clear" data-hero-enter>
-        <span>FLUTTER &amp; NATIVE</span>
-        <strong className="beyond">MOBILE DEVELOPER.</strong>
+      <h1 id="hero-title" className="hero-title" data-hero-enter style={{ '--hero-enter-delay': '150ms' }}>
+        <span>Built to</span>
+        <strong>hold together.</strong>
       </h1>
 
-      <p className="hero-role-line" data-hero-enter>
-        NODE.JS BACKEND ENGINEER
+      <p className="hero-description" data-hero-enter style={{ '--hero-enter-delay': '240ms' }}>
+        I build mobile applications and the systems behind them—from Flutter interfaces to the APIs, dashboards, and workflows that keep a product moving.
       </p>
 
-      <p className="hero-description" data-hero-enter>
-        I build mobile applications and the systems behind them — from Flutter and native mobile apps to Node.js APIs, dashboards, and operational workflows.
-      </p>
-
-      <p className="hero-micro-proof" data-hero-enter>Your app. Your backend. Your workflow.</p>
-
-      <div className="hero-actions" data-hero-enter>
-        <a className="btn-command-center" href="#contact">
-          <span>Start a project</span>
-          <span className="btn-arrow" aria-hidden="true">↗</span>
+      <div className="hero-actions" data-hero-enter style={{ '--hero-enter-delay': '340ms' }}>
+        <a className="hero-action hero-action--primary" href="#systems">
+          <span>See Work</span>
+          <span aria-hidden="true">↘</span>
         </a>
-        <a className="btn-explore-work" href="#systems">
-          <span>View selected work</span>
-          <span className="btn-arrow" aria-hidden="true">↓</span>
+        <a className="hero-action hero-action--secondary" href="#contact">
+          <span>Let's Plan</span>
+          <span aria-hidden="true">↗</span>
         </a>
       </div>
 
-      <p className="hero-proof" data-hero-enter>
-        <span>15+ apps shipped</span>
-        <span>100K+ downloads</span>
-        <span>1 restaurant ordering/POS system built for Webticians</span>
-      </p>
+      <nav className="hero-socials" aria-label="Social links" data-hero-enter style={{ '--hero-enter-delay': '440ms' }}>
+        {SOCIAL_LINKS.map(({ label, href, icon: Icon, external }) => (
+          <a
+            key={label}
+            className="hero-social-link"
+            href={href}
+            target={external ? '_blank' : undefined}
+            rel={external ? 'noopener noreferrer' : undefined}
+            aria-label={label}
+          >
+            <Icon aria-hidden="true" focusable="false" />
+            <span>{label}</span>
+          </a>
+        ))}
+      </nav>
 
-      <p className="hero-availability" data-hero-enter>
-        Available for freelance projects and selected full-time roles.
-      </p>
     </div>
   );
 }
