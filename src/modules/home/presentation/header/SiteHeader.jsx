@@ -127,7 +127,12 @@ export default function SiteHeader({ theme, setTheme }) {
   }, []);
 
   return (
-    <header className={`site-header ${isScrolled ? 'is-scrolled' : ''}`} aria-label="Primary navigation">
+    <header
+      className={`site-header ${isScrolled ? 'is-scrolled' : ''}`}
+      data-hero-enter
+      style={{ '--hero-enter-delay': '0ms' }}
+      aria-label="Primary navigation"
+    >
       <div className="header-inner">
         {/* Left: Brand mark */}
         <div className="header-brand-wrap">

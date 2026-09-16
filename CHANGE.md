@@ -24,6 +24,25 @@ Documentation-only changes, configuration changes, dependency changes, source ch
 - Verification: Commands run and their result, or `Not run` with the reason.
 ```
 
+## 2026-09-17 — Fix mascot intro sequence regressions and restore ground truth choreography
+
+- Summary: Restored the animated intro sequence choreography and layout per the ground truth reference clips in `assets/ezgif-756a81963dde0ed5-jpg` and addressed all 7 regression points:
+  1. Card auto-sizing: Replaced fixed/constraining dimensions with intrinsic auto-sizing (`height: auto; min-height: fit-content; padding: clamp(1.4rem, 2.5vw, 1.9rem) clamp(1.6rem, 2.8vw, 2.2rem); overflow: visible;`) to eliminate text clipping across 3-line and 4-line statements.
+  2. Mascot overlap & scale: Locked mascot scale to 1.0 with subtle (≤5%) active speaker emphasis. Enforced guaranteed clearance gap (≥28px) between mascot body and projection card across all screen sizes.
+  3. Background globe depth plane: Restored `OpeningNetworkGlobe.jsx` as a visible, softly blurred background layer (`filter: blur(8px) brightness(0.65); opacity: 0.72; scale: 0.94;`) behind cards throughout beats 2–7, refocusing cleanly upon card close.
+  4. Pacing: Re-timed the sequence end-to-end to 9,800ms matching the canonical 9-beat choreography table with 1.7s–2.0s reading holds.
+  5. Hero transition & element stagger: Ensured 600ms crossfade into hero with staggered entrance delays (Nav: 0ms, Headline: 150ms, Subhead: 300ms, CTAs/Stats: 450ms).
+  6. Visual language: Linked intro 3D holographic globe directly with the hero's holographic globe language.
+  7. Halo ring z-index: Cleaned stacking contexts (`--layer-ambient: 1; --layer-globe: 4; --layer-mascot: 5; --layer-projection: 6; --layer-control: 8;`) so halos never clip through text baselines.
+- Files: `src/modules/home/presentation/opening/openingSequence.js`, `src/modules/home/presentation/opening/OpeningExperience.jsx`, `src/modules/home/presentation/opening/OpeningProjection.jsx`, `src/modules/home/presentation/opening/opening.css`, `src/modules/home/presentation/hero/HeroContent.jsx`, `tests/opening-sequence.test.mjs`, `tests/cosmic-opening.test.mjs`, `CHANGE.md`
+- Verification: `node --test tests/cosmic-opening.test.mjs tests/opening-sequence.test.mjs tests/hero-content.test.mjs tests/holographic-globe.test.mjs tests/site-header.test.mjs` passed (26/26 tests passing). `npm run build` compiled cleanly in 8.69s with 0 errors.
+
+## 2026-09-15 — Wire back intro mascots transmission sequence on cinematic orb background
+
+- Summary: Preserved the background animation sequence (`FrameSequence` with `ORB_FRAMES` across a full-viewport borderless canvas, tactical loader HUD, and zoom-through handoff) while restoring the interactive mascots transmission dialogue between Dash and Aero. Re-introduced the 3-statement transmission sequence (Dash statement 1: "Your users only see the app", Aero statement 2: "Your business relies on everything behind it", Duo statement 3: "When both work, your product works") with dynamic expressions (`executing`, `analyzing`, `excited`, `happy`), arm waving, active speaker glows, and a cybernetic duo connection energy beam (`.opening-duo-connection`). Updated `tests/site-header.test.mjs` to support the chapter navigation label.
+- Files: `src/modules/home/presentation/opening/OpeningExperience.jsx`, `src/modules/home/presentation/opening/opening.css`, `tests/site-header.test.mjs`, `CHANGE.md`
+- Verification: `node --test tests/cosmic-opening.test.mjs tests/opening-sequence.test.mjs tests/hero-content.test.mjs tests/holographic-globe.test.mjs tests/site-header.test.mjs` passed (19/19 tests passing). `npm run build` compiled cleanly with 0 errors in 5.86s.
+
 ## 2026-09-09 — Rebuild How I Build section to four-row layered list and direct narrative copy
 
 - Summary: Replaced the benchmark 3x3 icon grid, "building a house" metaphor, and buzzword chips with a clean four-row architectural layer list (UI layer, Data & backend, Infra & deploy, Workflow & tooling) using Hafiz's real tool stack and middle-dot delimiters. Added the new direct narrative copy block below the layer list. Matched the About Me section's typography, spacing, lining numerals, and vertical-centering rules. Removed obsolete interactive blueprint components and updated test suites.

@@ -18,7 +18,12 @@ export default function Hero({ revealed = false, transitioning = false }) {
         <HeroContent />
         <HeroVisual />
 
-        <div className="hero-marquee" aria-hidden="true">
+        <div
+          className="hero-marquee"
+          data-hero-enter
+          style={{ '--hero-enter-delay': '980ms' }}
+          aria-hidden="true"
+        >
           <div className="hero-marquee__track">
             {[0, 1].map((copy) => (
               <div className="hero-marquee__copy" key={copy}>

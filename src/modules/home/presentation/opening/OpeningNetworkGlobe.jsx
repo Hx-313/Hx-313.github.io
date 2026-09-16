@@ -1,4 +1,5 @@
-import HolographicGlobe from '../hero/HolographicGlobe.jsx';
+import FrameSequence from '../../../../shared/media/FrameSequence.jsx';
+import { ORB_FRAMES } from '../media/visualSequences.js';
 
 const ROUTES = [
   'M212 287 Q350 120 520 246',
@@ -16,9 +17,16 @@ const NODES = [
 export default function OpeningNetworkGlobe() {
   return (
     <div className="opening-network-globe" data-opening-globe aria-hidden="true">
-      {/* 3D Kinetic Holographic Globe (WebGL active from frame 0) */}
-      <div className="opening-3d-globe-layer">
-        <HolographicGlobe className="holographic-stage-wrapper--opening" />
+      {/* Crop the animation frames to the spherical core; the surrounding artwork is intentionally not shown. */}
+      <div className="opening-asset-globe-layer">
+        <div className="opening-asset-globe-crop">
+          <FrameSequence
+            frames={ORB_FRAMES}
+            frameDuration={150}
+            className="opening-asset-globe-frame"
+            alt=""
+          />
+        </div>
       </div>
 
       <svg viewBox="0 0 800 800" role="img" aria-label="Connected global software network" className="opening-svg-overlay">

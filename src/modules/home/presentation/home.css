@@ -21,6 +21,19 @@
   transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out), filter 600ms var(--ease-out);
 }
 
+.site-experience.is-handoff .site-header,
+.site-experience.is-handoff .hero-content,
+.site-experience.is-handoff .hero-visual-stats,
+.site-experience.is-handoff .hero-visual-readout,
+.site-experience.is-handoff .hero-marquee {
+  opacity: 0;
+}
+
+.site-experience.is-ready .site-header {
+  animation: heroContentAssemble 600ms var(--ease-out) both;
+  animation-delay: 0ms;
+}
+
 .site-experience.is-ready {
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1);

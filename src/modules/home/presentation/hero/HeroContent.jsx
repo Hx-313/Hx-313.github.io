@@ -26,7 +26,7 @@ const SOCIAL_LINKS = [
 export default function HeroContent() {
   return (
     <div className="hero-content">
-      <p className="hero-kicker" data-hero-enter style={{ '--hero-enter-delay': '80ms' }}>
+      <p className="hero-kicker" data-hero-enter style={{ '--hero-enter-delay': '0ms' }}>
         Product-minded mobile &amp; systems engineer
       </p>
 
@@ -35,11 +35,11 @@ export default function HeroContent() {
         <strong>hold together.</strong>
       </h1>
 
-      <p className="hero-description" data-hero-enter style={{ '--hero-enter-delay': '240ms' }}>
+      <p className="hero-description" data-hero-enter style={{ '--hero-enter-delay': '300ms' }}>
         I build mobile applications and the systems behind them—from Flutter interfaces to the APIs, dashboards, and workflows that keep a product moving.
       </p>
 
-      <div className="hero-actions" data-hero-enter style={{ '--hero-enter-delay': '340ms' }}>
+      <div className="hero-actions" data-hero-enter style={{ '--hero-enter-delay': '450ms' }}>
         <a className="hero-action hero-action--primary" href="#systems">
           <span>See Work</span>
           <span aria-hidden="true">↘</span>
@@ -50,7 +50,7 @@ export default function HeroContent() {
         </a>
       </div>
 
-      <nav className="hero-socials" aria-label="Social links" data-hero-enter style={{ '--hero-enter-delay': '440ms' }}>
+      <nav className="hero-socials" aria-label="Social links" data-hero-enter style={{ '--hero-enter-delay': '600ms' }}>
         {SOCIAL_LINKS.map(({ label, href, icon: Icon, external }) => (
           <a
             key={label}

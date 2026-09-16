@@ -3,23 +3,37 @@ import assert from 'node:assert/strict';
 import {
   OPENING_BEATS,
   OPENING_DURATION,
+  OPENING_SPLASH_DURATION,
+  OPENING_STATEMENTS,
   getOpeningBeatAt,
 } from '../src/modules/home/presentation/opening/openingSequence.js';
 
-test('opening matches the approved 5.2 second cinematic choreography', () => {
-  assert.equal(OPENING_DURATION, 5_200);
+test('opening uses a six-second splash before the cinematic mascot choreography', () => {
+  assert.equal(OPENING_SPLASH_DURATION, 6_000);
+  assert.equal(OPENING_DURATION, 13_800);
   assert.deepEqual(
-    OPENING_BEATS.map(({ id, start, end }) => ({ id, start, end })),
+    OPENING_STATEMENTS.map(({ speaker, text }) => ({ speaker, text })),
     [
-      { id: 'splash', start: 0, end: 2_500 },
-      { id: 'unfocus', start: 2_500, end: 2_800 },
-      { id: 'mascot-entrance', start: 2_800, end: 4_300 },
-      { id: 'refocus', start: 4_300, end: 4_600 },
-      { id: 'zoom-through', start: 4_600, end: 5_200 },
+      { speaker: 'dash', text: 'YOUR USERS ONLY SEE THE APP.' },
+      { speaker: 'aero', text: 'YOUR BUSINESS RELIES ON EVERYTHING BEHIND IT.' },
+      { speaker: 'dash', text: 'WHEN BOTH WORK, YOUR PRODUCT WORKS.' },
+    ],
+  );
+  assert.deepEqual(
+    OPENING_BEATS.map(({ id, start, end, speaker }) => ({ id, start, end, speaker })),
+    [
+      { id: 'splash', start: 0, end: 6_000, speaker: null },
+      { id: 'settle', start: 6_000, end: 6_400, speaker: null },
+      { id: 'card-one', start: 6_400, end: 8_100, speaker: 'dash' },
+      { id: 'card-two-transition', start: 8_100, end: 8_400, speaker: null },
+      { id: 'card-two', start: 8_400, end: 10_100, speaker: 'aero' },
+      { id: 'breather', start: 10_100, end: 10_400, speaker: null },
+      { id: 'card-three', start: 10_400, end: 12_400, speaker: 'dash' },
+      { id: 'exit', start: 12_400, end: 13_200, speaker: null },
+      { id: 'transition', start: 13_200, end: 13_800, speaker: null },
     ],
   );
 });
-
 test('opening beats are contiguous and finish at the declared duration', () => {
   assert.equal(OPENING_BEATS[0].start, 0);
   for (let index = 1; index < OPENING_BEATS.length; index += 1) {
@@ -30,10 +44,15 @@ test('opening beats are contiguous and finish at the declared duration', () => {
 
 test('phase lookup resolves every major camera state', () => {
   assert.equal(getOpeningBeatAt(200).id, 'splash');
-  assert.equal(getOpeningBeatAt(2_600).id, 'unfocus');
-  assert.equal(getOpeningBeatAt(3_400).id, 'mascot-entrance');
-  assert.equal(getOpeningBeatAt(4_450).id, 'refocus');
-  assert.equal(getOpeningBeatAt(4_900).id, 'zoom-through');
+  assert.equal(getOpeningBeatAt(2_100).id, 'splash');
+  assert.equal(getOpeningBeatAt(6_100).id, 'settle');
+  assert.equal(getOpeningBeatAt(7_000).speaker, 'dash');
+  assert.equal(getOpeningBeatAt(8_200).id, 'card-two-transition');
+  assert.equal(getOpeningBeatAt(9_000).speaker, 'aero');
+  assert.equal(getOpeningBeatAt(10_200).id, 'breather');
+  assert.equal(getOpeningBeatAt(11_000).speaker, 'dash');
+  assert.equal(getOpeningBeatAt(12_800).id, 'exit');
+  assert.equal(getOpeningBeatAt(13_500).id, 'transition');
 });
 
 test('phase lookup includes every beat boundary and clamps out-of-range times', () => {

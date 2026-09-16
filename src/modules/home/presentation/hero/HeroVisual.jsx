@@ -6,8 +6,6 @@ export default function HeroVisual() {
   return (
     <aside
       className="hero-visual"
-      data-hero-enter
-      style={{ '--hero-enter-delay': '0ms' }}
       aria-label="Digital green earth globe for Hafiz Ali Abdullah's systems portfolio"
     >
       <div className="hero-orbit-scene">
@@ -40,7 +38,12 @@ export default function HeroVisual() {
           <span className="hero-globe-portal__crosshair hero-globe-portal__crosshair--vertical" />
         </div>
 
-        <ul className="hero-visual-stats" aria-label="Selected proof points">
+        <ul
+          className="hero-visual-stats"
+          data-hero-enter
+          style={{ '--hero-enter-delay': '760ms' }}
+          aria-label="Selected proof points"
+        >
           {proofMetrics.slice(0, 2).map(([value, label]) => (
             <li className="hero-stat-card" key={label}>
               <strong>{value}</strong>
@@ -49,7 +52,12 @@ export default function HeroVisual() {
           ))}
         </ul>
 
-        <div className="hero-visual-readout" aria-hidden="true">
+        <div
+          className="hero-visual-readout"
+          data-hero-enter
+          style={{ '--hero-enter-delay': '880ms' }}
+          aria-hidden="true"
+        >
           <span>LIVE / CONNECTED</span>
           <span>GLB—01</span>
         </div>
