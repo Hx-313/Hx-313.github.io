@@ -331,3 +331,15 @@ Documentation-only changes, configuration changes, dependency changes, source ch
 - Summary: Added a faint ambient glow, quiet inset frame, and low-key hover accent to the How I Build tool grid without changing its mirrored layout, divider mechanics, or official icon treatment.
 - Files: `src/modules/home/presentation/how-i-build/how-i-build.css`, `tests/how-i-build-interaction.test.mjs`, `CHANGE.md`
 - Verification: `npm test` passed (62/62); `npm run build` passed with 138 modules transformed. Browser verification confirmed the decoration stays subtle at the live 1280×720 preview size.
+
+## 2026-09-15 — Refine hero screen full-bleed canvas, stacking hierarchy, KPI card equalization, and viewport framing
+
+- Summary: Upgraded the Hero section to match the full-screen visual composition of reference Image 2 and address user feedback:
+  1. Eliminated top empty space and background cutting by floating the navigation header directly over the hero canvas (`margin-top: -5.75rem` / `padding-top: 5.75rem`), extending the background and particle atmosphere from `top: 0` to `100dvh`.
+  2. Moved animating identity tracks ("Hafiz Ali Abdullah" and "Flutter Developer · Mobile Application Developer · SaaS Developer") to `z-index: 0` (lowest in stack), so they sweep behind the globe.
+  3. Expanded the 3D green globe portal and particle field to span the entire screen (`width: 100%; height: 100%; min-width: 100vw; min-height: 100vh;`) with smooth radial vignette and `mix-blend-mode: screen`.
+  4. Equalized the KPI cards by removing the `.hero-stat-card:nth-child(2) { margin-top: 1.35rem; }` stagger offset and setting equal height, width, padding, and baseline alignment.
+  5. Calibrated hero vertical rhythm so all content (kicker, title, description, CTAs, and social links) fits cleanly above the fold on the first screen without scrolling.
+- Files: `src/modules/home/presentation/hero/hero.css`, `CHANGE.md`
+- Verification: `node --test tests/hero-content.test.mjs tests/holographic-globe.test.mjs` passed (6/6 tests passing). `npm run build` compiled cleanly with 0 errors in 7.43s.
+
