@@ -5,11 +5,14 @@ import './header.css';
 
 const NAV_ITEMS = [
   { id: 'top', label: 'Overview', shortLabel: 'Overview', index: '00', href: '#top' },
-  { id: 'problem', label: '01 Thesis', shortLabel: 'Thesis', index: '01', href: '#problem' },
+  { id: 'projects', label: '01 Projects', shortLabel: 'Projects', index: '01', href: '#projects' },
   { id: 'about', label: '02 About', shortLabel: 'About', index: '02', href: '#about' },
-  { id: 'how-i-build', label: '03 Build', shortLabel: 'Build', index: '03', href: '#how-i-build' },
-  { id: 'systems', label: '04 Work', shortLabel: 'Work', index: '04', href: '#systems' },
-  { id: 'contact', label: '05 Contact', shortLabel: 'Contact', index: '05', href: '#contact' },
+  { id: 'services', label: '03 Services', shortLabel: 'Services', index: '03', href: '#services' },
+  { id: 'domains', label: '04 Domains', shortLabel: 'Domains', index: '04', href: '#domains' },
+  { id: 'certifications', label: '05 Certifications', shortLabel: 'Certifications', index: '05', href: '#certifications' },
+  { id: 'tools', label: '06 Tools', shortLabel: 'Tools', index: '06', href: '#tools' },
+  { id: 'contact', label: '07 Contact', shortLabel: 'Contact', index: '07', href: '#contact' },
+  { id: 'testimonials', label: '08 Testimonials', shortLabel: 'Testimonials', index: '08', href: '#testimonials' },
 ];
 
 export default function SiteHeader({ theme, setTheme }) {
@@ -37,11 +40,14 @@ export default function SiteHeader({ theme, setTheme }) {
 
     const sections = [
       { id: 'top', element: document.getElementById('top') },
-      { id: 'problem', element: document.getElementById('problem') || document.getElementById('client-story') },
+      { id: 'projects', element: document.getElementById('projects') || document.getElementById('command-center') },
       { id: 'about', element: document.getElementById('about') },
-      { id: 'how-i-build', element: document.getElementById('how-i-build') },
-      { id: 'systems', element: document.getElementById('systems') || document.getElementById('command-center') },
+      { id: 'services', element: document.getElementById('services') },
+      { id: 'domains', element: document.getElementById('domains') || document.getElementById('solutions') },
+      { id: 'certifications', element: document.getElementById('certifications') },
+      { id: 'tools', element: document.getElementById('tools') || document.getElementById('how-i-build') },
       { id: 'contact', element: document.getElementById('contact') },
+      { id: 'testimonials', element: document.getElementById('testimonials') },
     ];
 
     if (!('IntersectionObserver' in window)) {

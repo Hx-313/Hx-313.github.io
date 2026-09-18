@@ -10,7 +10,7 @@ test('HeroContent presents the approved punchline and conversion paths', () => {
   assert.ok(content.includes('hold together.'), 'Includes the hero punchline accent');
   assert.ok(content.includes('See Work'), 'Includes the work CTA');
   assert.ok(content.includes("Let's Plan"), 'Includes the planning CTA');
-  assert.ok(content.includes('href="#systems"'), 'Work CTA targets selected systems');
+  assert.ok(content.includes('href="#projects"'), 'Work CTA targets the projects sequence');
   assert.ok(content.includes('href="#contact"'), 'Planning CTA targets contact');
   assert.ok(content.includes('GitHub'), 'Includes GitHub social link');
   assert.ok(content.includes('LinkedIn'), 'Includes LinkedIn social link');

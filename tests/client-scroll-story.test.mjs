@@ -66,12 +66,12 @@ test('client story CSS pins sticky stage, handles scroll offset, and provides tr
   assert.doesNotMatch(css, /scroll-snap-type/);
 });
 
-test('HomePage places the problem story between the hero and systems command center', () => {
+test('HomePage keeps the thesis story out of the approved portfolio flow', () => {
   const page = readFileSync(resolve('src/modules/home/presentation/HomePage.jsx'), 'utf8');
   const heroIndex = page.indexOf('<Hero');
-  const storyIndex = page.indexOf('<ClientStory');
-  const systemsIndex = page.indexOf('id="command-center"');
+  const projectsIndex = page.indexOf('<CommandCenter');
+  const aboutIndex = page.indexOf('<AboutSection');
 
-  assert.match(page, /import ClientStory from '.\/client-story\/ClientStory\.jsx'/);
-  assert.ok(heroIndex >= 0 && storyIndex > heroIndex && systemsIndex > storyIndex);
+  assert.ok(heroIndex >= 0 && projectsIndex > heroIndex && aboutIndex > projectsIndex);
+  assert.doesNotMatch(page, /<ClientStory/);
 });

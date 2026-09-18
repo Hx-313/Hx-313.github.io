@@ -45,7 +45,7 @@ export default function SolutionsSection() {
       <div className="solutions-container">
         <header className="solutions-header">
           <div>
-            <p className="solutions-kicker">Where this fits</p>
+            <p className="solutions-kicker">Services in domains</p>
             <h2 id="solutions-heading">Bring the workflow. I’ll build the system around it.</h2>
           </div>
           <p className="solutions-intro">The same technical range can serve a university farewell, a government event, a new startup, or a business that needs its own operational app.</p>

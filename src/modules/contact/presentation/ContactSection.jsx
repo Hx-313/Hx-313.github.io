@@ -8,7 +8,7 @@ export default function ContactSection() {
       <div className="contact-container">
         <header className="contact-header">
           <div className="contact-kicker">
-            <span className="kicker-index">05</span>
+            <span className="kicker-index">07</span>
             <span>Start here</span>
           </div>
           <h2 className="contact-title">

@@ -14,10 +14,13 @@ test('footerData exports navigation chapters, live systems, and colophon', () =>
   assert.ok(Array.isArray(FOOTER_NAVIGATION), 'FOOTER_NAVIGATION is an array');
   const navHrefs = FOOTER_NAVIGATION.map((n) => n.href);
   assert.ok(navHrefs.includes('#top'), 'Navigation includes #top');
-  assert.ok(navHrefs.includes('#problem') || navHrefs.includes('#story'), 'Navigation includes thesis/story');
-  assert.ok(navHrefs.includes('#how-i-build'), 'Navigation includes #how-i-build');
-  assert.ok(navHrefs.includes('#command-center'), 'Navigation includes #command-center');
+  assert.ok(navHrefs.includes('#projects'), 'Navigation includes #projects');
+  assert.ok(navHrefs.includes('#services'), 'Navigation includes #services');
+  assert.ok(navHrefs.includes('#domains'), 'Navigation includes #domains');
+  assert.ok(navHrefs.includes('#certifications'), 'Navigation includes #certifications');
+  assert.ok(navHrefs.includes('#tools'), 'Navigation includes #tools');
   assert.ok(navHrefs.includes('#contact'), 'Navigation includes #contact');
+  assert.ok(navHrefs.includes('#testimonials'), 'Navigation includes #testimonials');
 
   // Live Systems
   assert.ok(Array.isArray(FOOTER_SYSTEMS), 'FOOTER_SYSTEMS is an array');

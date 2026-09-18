@@ -40,7 +40,7 @@ export default function HeroContent() {
       </p>
 
       <div className="hero-actions" data-hero-enter style={{ '--hero-enter-delay': '450ms' }}>
-        <a className="hero-action hero-action--primary" href="#systems">
+        <a className="hero-action hero-action--primary" href="#projects">
           <span>See Work</span>
           <span aria-hidden="true">↘</span>
         </a>

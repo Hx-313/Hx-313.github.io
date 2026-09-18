@@ -75,15 +75,15 @@ test('AboutSection and aboutData contain strictly zero // pseudo-comment text in
   }
 });
 
-test('HomePage embeds ClientStory and AboutSection in sequence', () => {
+test('HomePage embeds Projects and AboutSection in sequence', () => {
   const homePage = readFileSync(resolve('src/modules/home/presentation/HomePage.jsx'), 'utf8');
 
   assert.match(homePage, /import AboutSection from '\.\.\/\.\.\/about\/presentation\/AboutSection\.jsx'/);
   const heroPos = homePage.indexOf('<Hero');
-  const storyPos = homePage.indexOf('<ClientStory');
+  const projectsPos = homePage.indexOf('<CommandCenter');
   const aboutPos = homePage.indexOf('<AboutSection');
 
-  assert.ok(heroPos !== -1 && storyPos !== -1 && aboutPos !== -1);
-  assert.ok(storyPos > heroPos, 'ClientStory must appear after Hero');
-  assert.ok(aboutPos > storyPos, 'AboutSection must appear after ClientStory');
+  assert.ok(heroPos !== -1 && projectsPos !== -1 && aboutPos !== -1);
+  assert.ok(projectsPos > heroPos, 'Projects must appear after Hero');
+  assert.ok(aboutPos > projectsPos, 'AboutSection must appear after Projects');
 });

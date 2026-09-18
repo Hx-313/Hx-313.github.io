@@ -4,11 +4,13 @@ import CosmicBackground from './CosmicBackground.jsx';
 import SiteHeader from './header/SiteHeader.jsx';
 import Hero from './hero/Hero.jsx';
 import AboutSection from '../../about/presentation/AboutSection.jsx';
-import ThesisSection from './thesis/ThesisSection.jsx';
 import SolutionsSection from './solutions/SolutionsSection.jsx';
 import HowIBuild from './how-i-build/HowIBuild.jsx';
 import Services from './services/Services.jsx';
 import CommandCenter from './command-center/CommandCenter.jsx';
+import CertificationsSection from './certifications/CertificationsSection.jsx';
+import TestimonialsSection from './testimonials/TestimonialsSection.jsx';
+import SectionReveal from '../../../shared/motion/SectionReveal.jsx';
 import ContactSection from '../../contact/presentation/ContactSection.jsx';
 import SiteFooter from '../../footer/presentation/SiteFooter.jsx';
 import Mascots from '../../../components/Mascots.jsx';
@@ -66,31 +68,42 @@ export default function HomePage() {
         <SiteHeader theme={theme} setTheme={setTheme} />
 
         <main id="top">
-          {/* Page 1: Clean Entry Portal (Mascots bound strictly to Page 1) */}
           <Hero revealed={isSiteVisible} transitioning={experienceState === 'handoff'} />
 
-          {/* Clear positioning thesis before the work proof */}
-          <ThesisSection />
-
-          {/* Page 2: Dedicated Command Center & System Proof */}
-          <section id="command-center" className="command-center-portal-section" aria-label="System Command Center" data-section="systems">
+          <SectionReveal id="projects" motion="projects" className="portfolio-flow-section">
+            <span id="command-center" className="section-anchor-compat" aria-hidden="true" />
             <span id="systems" className="section-anchor-compat" aria-hidden="true" />
             <Mascots stage="page2" showController={false} active={isTransitionSettled} />
             <CommandCenter controller={commandCenter} />
-          </section>
+          </SectionReveal>
 
-          {/* Explicit entry points for the kinds of systems Hafiz can build */}
-          <SolutionsSection />
+          <SectionReveal motion="about" className="portfolio-flow-section">
+            <AboutSection />
+          </SectionReveal>
 
-          {/* Profile & Tools Ecosystem */}
-          <AboutSection />
+          <SectionReveal motion="services" className="portfolio-flow-section">
+            <Services />
+          </SectionReveal>
 
-          <HowIBuild />
+          <SectionReveal id="domains" motion="domains" className="portfolio-flow-section">
+            <SolutionsSection />
+          </SectionReveal>
 
-          <Services />
+          <SectionReveal motion="certifications" className="portfolio-flow-section">
+            <CertificationsSection />
+          </SectionReveal>
 
-          {/* Contact & Main Funnel Section */}
-          <ContactSection />
+          <SectionReveal id="tools" motion="tools" className="portfolio-flow-section">
+            <HowIBuild />
+          </SectionReveal>
+
+          <SectionReveal motion="contact" className="portfolio-flow-section">
+            <ContactSection />
+          </SectionReveal>
+
+          <SectionReveal motion="testimonials" className="portfolio-flow-section">
+            <TestimonialsSection />
+          </SectionReveal>
         </main>
 
         <SiteFooter />

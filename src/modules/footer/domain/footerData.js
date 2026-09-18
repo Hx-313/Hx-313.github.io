@@ -2,11 +2,14 @@ import { contactLinks, siteLinks, wosLinks, scheduleLink } from '../../../core/c
 
 export const FOOTER_NAVIGATION = Object.freeze([
   Object.freeze({ label: 'Overview', href: '#top' }),
-  Object.freeze({ label: 'Thesis', href: '#problem' }),
-  Object.freeze({ label: 'About & tools', href: '#about' }),
-  Object.freeze({ label: 'How I build', href: '#how-i-build' }),
-  Object.freeze({ label: 'Selected work', href: '#command-center' }),
+  Object.freeze({ label: 'Projects', href: '#projects' }),
+  Object.freeze({ label: 'About', href: '#about' }),
+  Object.freeze({ label: 'Services', href: '#services' }),
+  Object.freeze({ label: 'Services in domains', href: '#domains' }),
+  Object.freeze({ label: 'Certifications', href: '#certifications' }),
+  Object.freeze({ label: 'Tools', href: '#tools' }),
   Object.freeze({ label: 'Contact', href: '#contact' }),
+  Object.freeze({ label: 'Testimonials', href: '#testimonials' }),
 ]);
 
 export const FOOTER_SYSTEMS = Object.freeze([
@@ -70,7 +73,7 @@ export const FOOTER_COLOPHON = Object.freeze({
   handle: 'Hx-313',
   title: 'Flutter + Native Mobile Developer · Node.js Backend Engineer',
   positioning: 'Building mobile applications, APIs, dashboards, and operational systems for teams that need the whole workflow to work.',
-  status: '🟢 Available for project conversations & selected roles',
+  status: 'Available for project conversations & selected roles',
   timezone: 'PKT / UTC+5 (Lahore)',
   craft: 'Engineered with React, Vite, Motion & Three.js',
   copyright: '© 2026 Hafiz Ali Abdullah. All rights reserved.',
