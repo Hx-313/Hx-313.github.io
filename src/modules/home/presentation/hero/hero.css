@@ -451,37 +451,48 @@
 
 .hero-identity-arc {
   position: absolute;
-  top: 40%;
-  left: 60%;
+  left: -8vw;
+  width: 116vw;
   z-index: 0;
-  width: min(92vw, 76rem);
   display: flex;
   align-items: center;
   pointer-events: none;
   overflow: hidden;
-  transform: translate(-50%, -50%);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 20%, black 34%, black 94%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, transparent 20%, black 34%, black 94%, transparent 100%);
+  user-select: none;
+  transform-origin: center center;
   will-change: transform;
 }
 
 .hero-identity-arc--top {
+  top: 15%;
+  transform: rotate(-2.2deg);
+}
+
+.hero-identity-arc--mid {
+  top: 42%;
+  left: 60%;
+  width: min(92vw, 76rem);
   transform: translate(-50%, -50%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 20%, black 34%, black 94%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, transparent 20%, black 34%, black 94%, transparent 100%);
+  opacity: 0.65;
 }
 
 .hero-identity-arc--bottom {
-  display: none;
+  display: flex;
+  bottom: 15%;
+  transform: rotate(-2.2deg);
 }
 
 .hero-arc-track {
   display: flex;
   width: max-content;
-  color: color-mix(in srgb, var(--color-accent) 22%, transparent);
-  text-shadow: 0 0 1.6rem color-mix(in srgb, var(--color-accent) 18%, transparent);
+  color: color-mix(in srgb, var(--color-accent) 20%, transparent);
+  text-shadow: 0 0 1.6rem color-mix(in srgb, var(--color-accent) 14%, transparent);
   font-family: var(--font-display);
-  font-size: clamp(2.4rem, 4.2vw, 4.5rem);
-  font-weight: 900;
-  letter-spacing: -0.04em;
+  font-size: clamp(2.4rem, 4.4vw, 4.4rem);
+  font-weight: 850;
+  letter-spacing: -0.03em;
   line-height: 0.9;
   text-transform: uppercase;
   white-space: nowrap;
@@ -492,8 +503,8 @@
 .hero-arc-chunk {
   display: inline-flex;
   align-items: center;
-  gap: clamp(1.2rem, 2vw, 2.4rem);
-  padding-right: clamp(1.2rem, 2vw, 2.4rem);
+  gap: clamp(1.2rem, 2.2vw, 2.6rem);
+  padding-right: clamp(1.2rem, 2.2vw, 2.6rem);
 }
 
 .hero-arc-chunk span {
@@ -503,9 +514,9 @@
 
 .hero-arc-separator {
   color: inherit;
-  font-size: 0.7em;
+  font-size: 0.72em;
   font-style: normal;
-  opacity: 0.65;
+  opacity: 0.75;
 }
 
 .hero-visual-stats {
@@ -617,6 +628,10 @@
   animation: heroArcTextSweep 13s linear infinite;
 }
 
+.hero.is-revealed:not(.is-transitioning) .hero-identity-arc--mid .hero-arc-track {
+  animation: heroArcTextSweep 16s linear infinite;
+}
+
 .hero.is-revealed:not(.is-transitioning) .hero-identity-arc--bottom .hero-arc-track {
   animation: heroArcTextSweepReverse 13s linear infinite;
 }
@@ -646,25 +661,25 @@
 
 @keyframes heroArcRotateTop {
   0% {
-    transform: translate(-50%, -50%) rotate(0deg);
+    transform: rotate(-2.2deg);
   }
   50% {
-    transform: translate(-50%, -50%) rotate(-1deg) translateY(-6px);
+    transform: rotate(-2.6deg) translateY(-3px);
   }
   100% {
-    transform: translate(-50%, -50%) rotate(0deg);
+    transform: rotate(-2.2deg);
   }
 }
 
 @keyframes heroArcRotateBottom {
   0% {
-    transform: translate(-50%, -50%) rotate(0deg);
+    transform: rotate(-2.2deg);
   }
   50% {
-    transform: translate(-50%, -50%) rotate(1deg) translateY(6px);
+    transform: rotate(-1.8deg) translateY(3px);
   }
   100% {
-    transform: translate(-50%, -50%) rotate(0deg);
+    transform: rotate(-2.2deg);
   }
 }
 
@@ -699,7 +714,7 @@
   .hero {
     height: auto;
     min-height: 100dvh;
-    padding: 5.5rem 0 3.5rem;
+    padding: 5.5rem 0 clamp(11.5rem, 24vh, 14rem);
   }
 
   .hero-grid {
@@ -717,7 +732,7 @@
 
   .hero-visual-stats {
     position: absolute;
-    bottom: clamp(4.5rem, 12vh, 7rem);
+    bottom: clamp(4.8rem, 11vh, 6.8rem);
     right: 1.25rem;
     margin: 0;
     justify-content: flex-start;
@@ -726,15 +741,16 @@
   .hero-visual-readout {
     position: absolute;
     right: 1.25rem;
-    bottom: 2.2rem;
+    bottom: 2.5rem;
     margin: 0;
   }
 
   .hero-marquee {
-    position: relative;
+    position: absolute;
+    bottom: clamp(0.4rem, 1.5vh, 0.9rem);
     left: -6vw;
     width: 112vw;
-    margin-top: 2rem;
+    margin-top: 0;
     transform: rotate(-2.2deg);
   }
 }
@@ -742,7 +758,7 @@
 @media (max-width: 760px) {
   .hero {
     min-height: 100dvh;
-    padding: 5.5rem 0 3rem;
+    padding: 5.5rem 0 clamp(11.5rem, 24vh, 14rem);
   }
 
   .hero-grid {
@@ -766,6 +782,10 @@
 }
 
 @media (max-width: 480px) {
+  .hero {
+    padding: 5.25rem 0 clamp(10.5rem, 22vh, 13rem);
+  }
+
   .hero-grid {
     width: min(100% - 2rem, 34rem);
   }
@@ -801,10 +821,12 @@
 
   .hero-visual-readout {
     right: 0;
+    bottom: 2.4rem;
     font-size: 0.43rem;
   }
 
   .hero-visual-stats {
+    bottom: clamp(4.4rem, 10vh, 6rem);
     gap: 0.5rem;
   }
 
@@ -822,6 +844,10 @@
   .hero-stat-card span {
     font-size: 0.44rem;
   }
+
+  .hero-marquee {
+    bottom: clamp(0.35rem, 1.2vh, 0.75rem);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-action,
@@ -832,8 +858,10 @@
 
   .hero.is-revealed:not(.is-transitioning) [data-hero-enter],
   .hero.is-revealed:not(.is-transitioning) .hero-identity-arc--top,
+  .hero.is-revealed:not(.is-transitioning) .hero-identity-arc--mid,
   .hero.is-revealed:not(.is-transitioning) .hero-identity-arc--bottom,
   .hero.is-revealed:not(.is-transitioning) .hero-identity-arc--top .hero-arc-track,
+  .hero.is-revealed:not(.is-transitioning) .hero-identity-arc--mid .hero-arc-track,
   .hero.is-revealed:not(.is-transitioning) .hero-identity-arc--bottom .hero-arc-track,
   .hero.is-revealed:not(.is-transitioning) .hero-marquee__track {
     animation: none;
@@ -845,14 +873,18 @@
   }
 
   .hero.is-revealed:not(.is-transitioning) .hero-identity-arc--top {
+    transform: rotate(-2.2deg);
+  }
+
+  .hero.is-revealed:not(.is-transitioning) .hero-identity-arc--mid {
     transform: translate(-50%, -50%);
   }
 
   .hero.is-revealed:not(.is-transitioning) .hero-identity-arc--bottom {
-    transform: translate(-50%, -50%);
+    transform: rotate(-2.2deg);
   }
 
   .hero.is-revealed:not(.is-transitioning) .hero-arc-track {
-    transform: translate(-50%, -50%);
+    transform: none;
   }
 }

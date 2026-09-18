@@ -1,10 +1,10 @@
 :root {
   color-scheme: light dark;
 
-  /* Canonical itHX palette — mirrored from branding/visual-identity/brand-colors. */
+  /* Canonical itHX palette — mirrored from branding/visual-identity/brand-colors (v1.2.0). */
   --ithx-primary-green: #0D3736;
   --ithx-paper-marble: #F4F2EA;
-  --ithx-night-green: #041312;
+  --ithx-night-green: #08130A;
   --ithx-deep-surface: #092322;
   --ithx-dark-primary-green: #0A2C2B;
   --ithx-emerald-accent: #147A5D;
@@ -16,7 +16,17 @@
   --ithx-mist: #AAB8B0;
   --ithx-line-light: #CBD7D0;
   --ithx-line-dark: #244944;
+  --ithx-theme-border-dark: #28514A;
   --ithx-action-text-dark: #06221F;
+  --ithx-danger: #9B4E45;
+
+  /* Functional status tokens (v1.2) */
+  --ithx-warning-light: #8C5800;
+  --ithx-warning-dark: #FFB951;
+  --ithx-danger-light: #9B4E45;
+  --ithx-danger-dark: #FFB4AB;
+  --ithx-info-light: #0B4F6C;
+  --ithx-info-dark: #82CFFF;
 
   /* Approved typography roles. */
   --font-display: "Space Grotesk", system-ui, -apple-system, sans-serif;
@@ -35,6 +45,7 @@
   --color-muted: var(--ithx-graphite);
   --color-muted-foreground: var(--ithx-graphite);
   --color-border: var(--ithx-line-light);
+  --color-hairline: var(--ithx-line-light);
   --color-line: color-mix(in srgb, var(--ithx-graphite) 24%, transparent);
   --color-accent: var(--ithx-emerald-accent);
   --color-accent-foreground: var(--ithx-white);
@@ -45,6 +56,12 @@
   --color-glitch-highlight: var(--ithx-primary-green);
   --color-loader: var(--ithx-warm-brass);
   --color-ink: var(--ithx-ink);
+
+  /* Status semantic roles */
+  --color-success: var(--ithx-emerald-accent);
+  --color-warning: var(--ithx-warning-light);
+  --color-danger: var(--ithx-danger-light);
+  --color-info: var(--ithx-info-light);
 
   /* Compatibility aliases for the existing presentation layers. */
   --color-forest: var(--ithx-primary-green);
@@ -74,6 +91,7 @@
   --color-muted: var(--ithx-graphite);
   --color-muted-foreground: var(--ithx-graphite);
   --color-border: var(--ithx-line-light);
+  --color-hairline: var(--ithx-line-light);
   --color-line: color-mix(in srgb, var(--ithx-graphite) 24%, transparent);
   --color-accent: var(--ithx-emerald-accent);
   --color-accent-foreground: var(--ithx-white);
@@ -84,6 +102,10 @@
   --color-glitch-highlight: var(--ithx-primary-green);
   --color-loader: var(--ithx-warm-brass);
   --color-ink: var(--ithx-ink);
+  --color-success: var(--ithx-emerald-accent);
+  --color-warning: var(--ithx-warning-light);
+  --color-danger: var(--ithx-danger-light);
+  --color-info: var(--ithx-info-light);
   --story-surface: color-mix(in srgb, var(--color-background) 88%, var(--color-surface-raised));
 }
 
@@ -95,7 +117,8 @@
   --color-foreground: var(--ithx-paper-marble);
   --color-muted: var(--ithx-mist);
   --color-muted-foreground: var(--ithx-mist);
-  --color-border: var(--ithx-line-dark);
+  --color-border: var(--ithx-theme-border-dark);
+  --color-hairline: var(--ithx-line-dark);
   --color-line: color-mix(in srgb, var(--ithx-mist) 24%, transparent);
   --color-accent: var(--ithx-mint-signal);
   --color-accent-foreground: var(--ithx-action-text-dark);
@@ -106,6 +129,10 @@
   --color-glitch-highlight: var(--ithx-dark-primary-green);
   --color-loader: var(--ithx-mint-signal);
   --color-ink: var(--ithx-paper-marble);
+  --color-success: var(--ithx-mint-signal);
+  --color-warning: var(--ithx-warning-dark);
+  --color-danger: var(--ithx-danger-dark);
+  --color-info: var(--ithx-info-dark);
   --story-surface: color-mix(in srgb, var(--color-background) 88%, var(--color-surface-raised));
 }
 
@@ -121,7 +148,8 @@
     --color-foreground: var(--ithx-paper-marble);
     --color-muted: var(--ithx-mist);
     --color-muted-foreground: var(--ithx-mist);
-    --color-border: var(--ithx-line-dark);
+    --color-border: var(--ithx-theme-border-dark);
+    --color-hairline: var(--ithx-line-dark);
     --color-line: color-mix(in srgb, var(--ithx-mist) 24%, transparent);
     --color-accent: var(--ithx-mint-signal);
     --color-accent-foreground: var(--ithx-action-text-dark);
@@ -132,6 +160,10 @@
     --color-glitch-highlight: var(--ithx-dark-primary-green);
     --color-loader: var(--ithx-mint-signal);
     --color-ink: var(--ithx-paper-marble);
+    --color-success: var(--ithx-mint-signal);
+    --color-warning: var(--ithx-warning-dark);
+    --color-danger: var(--ithx-danger-dark);
+    --color-info: var(--ithx-info-dark);
     --story-surface: color-mix(in srgb, var(--color-background) 88%, var(--color-surface-raised));
   }
 }

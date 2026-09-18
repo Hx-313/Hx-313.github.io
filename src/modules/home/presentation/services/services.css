@@ -1,5 +1,5 @@
 /* ============================================================================
-   Services — calm tabs over a structured capability matrix
+   Services — calm tabs over solid matte itHX brand cards
    ============================================================================ */
 
 .services-section {
@@ -14,16 +14,62 @@
   overflow: hidden;
   scroll-margin-top: var(--header-offset, 4.5rem);
 
+  /* Semantic itHX tokens */
   --bg-void: var(--color-background);
   --ink-primary: var(--color-foreground);
   --ink-muted: var(--color-muted-foreground);
-  --ink-faint: color-mix(in srgb, var(--color-muted-foreground) 42%, transparent);
   --signal: var(--color-accent);
-  --grid-line: color-mix(in srgb, var(--ink-faint) 72%, transparent);
 
-  background: var(--bg-void);
+  /* Solid matte brand card tokens (Zero Opacity) */
+  --services-card-bg: var(--color-surface);
+  --services-card-border: var(--color-border);
+  --services-card-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  --services-card-hover-bg: var(--color-surface-raised);
+  --services-card-hover-border: var(--color-accent);
+  --services-card-hover-shadow: 0 16px 36px rgba(0, 0, 0, 0.38);
+  --services-icon-bg: var(--color-background);
+  --services-icon-border: var(--color-border);
+  --services-tab-border: var(--color-border);
+
+  background: transparent;
   color: var(--ink-primary);
   font-variant-numeric: lining-nums tabular-nums;
+}
+
+:root[data-theme='light'] .services-section {
+  --bg-void: var(--ithx-paper-marble);
+  --ink-primary: var(--ithx-ink);
+  --ink-muted: var(--ithx-graphite);
+  --signal: var(--ithx-emerald-accent);
+
+  /* Solid matte itHX Light Tokens */
+  --services-card-bg: var(--ithx-white);
+  --services-card-border: var(--ithx-line-light);
+  --services-card-shadow: 0 8px 24px rgba(9, 36, 33, 0.06);
+  --services-card-hover-bg: var(--ithx-white);
+  --services-card-hover-border: var(--ithx-emerald-accent);
+  --services-card-hover-shadow: 0 16px 36px rgba(9, 36, 33, 0.12);
+  --services-icon-bg: var(--ithx-paper-marble);
+  --services-icon-border: var(--ithx-line-light);
+  --services-tab-border: var(--ithx-line-light);
+}
+
+:root[data-theme='dark'] .services-section {
+  --bg-void: var(--ithx-night-green);
+  --ink-primary: var(--ithx-paper-marble);
+  --ink-muted: var(--ithx-mist);
+  --signal: var(--ithx-mint-signal);
+
+  /* Solid matte itHX Dark Tokens */
+  --services-card-bg: var(--ithx-deep-surface);
+  --services-card-border: var(--ithx-theme-border-dark);
+  --services-card-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  --services-card-hover-bg: var(--ithx-dark-primary-green);
+  --services-card-hover-border: var(--ithx-mint-signal);
+  --services-card-hover-shadow: 0 20px 42px rgba(0, 0, 0, 0.65);
+  --services-icon-bg: var(--ithx-night-green);
+  --services-icon-border: var(--ithx-line-dark);
+  --services-tab-border: var(--ithx-theme-border-dark);
 }
 
 .services-container {
@@ -40,7 +86,7 @@
   align-items: flex-end;
   gap: clamp(1.35rem, 4vw, 2.25rem);
   overflow-x: auto;
-  border-bottom: 1px solid var(--grid-line);
+  border-bottom: 1px solid var(--services-tab-border);
   scrollbar-width: none;
   scroll-padding-inline: 0.25rem;
 }
@@ -78,7 +124,7 @@
 }
 
 .services-tab:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--signal) 75%, white);
+  outline: 2px solid var(--signal);
   outline-offset: 4px;
 }
 
@@ -106,99 +152,124 @@
   transition: opacity 180ms ease, visibility 0s linear 0s;
 }
 
+/* Card Grid Layout */
 .services-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-top: 1px solid var(--grid-line);
-  border-left: 1px solid var(--grid-line);
+  gap: clamp(1.25rem, 2.2vw, 1.75rem);
+  border: none;
 }
 
+/* Distinct Solid Matte Brand Cards */
 .services-item {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   min-width: 0;
-  min-height: 17rem;
-  padding: clamp(1.75rem, 3.5vw, 3.75rem) clamp(1.25rem, 3.5vw, 3.75rem);
-  border-right: 1px solid var(--grid-line);
-  border-bottom: 1px solid var(--grid-line);
-  background: transparent;
-  transition: background-color 180ms ease;
+  min-height: clamp(15rem, 20vw, 18rem);
+  padding: clamp(1.6rem, 2.4vw, 2.25rem);
+  border: 1px solid var(--services-card-border);
+  border-radius: var(--radius-lg, 1.25rem);
+  background: var(--services-card-bg);
+  box-shadow: var(--services-card-shadow);
+  overflow: hidden;
+  transition: transform 300ms var(--ease-out, ease-out),
+              border-color 300ms var(--ease-out, ease-out),
+              background-color 300ms var(--ease-out, ease-out),
+              box-shadow 300ms var(--ease-out, ease-out);
+}
+
+.services-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--services-card-border);
+  transition: background-color 300ms ease;
 }
 
 .services-item:hover {
-  background: color-mix(in srgb, var(--signal) 3%, transparent);
+  transform: translateY(-4px);
+  background: var(--services-card-hover-bg);
+  border-color: var(--services-card-hover-border);
+  box-shadow: var(--services-card-hover-shadow);
 }
 
+.services-item:hover::before {
+  background: var(--services-card-hover-border);
+}
+
+/* Solid Brand Icon Badge */
 .services-item-icon {
   display: grid;
-  width: 2rem;
-  height: 2rem;
-  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+  width: 3.1rem;
+  height: 3.1rem;
+  margin-bottom: clamp(1.4rem, 2.5vh, 2rem);
   place-items: center;
-  color: var(--ink-muted);
-  font-size: 2rem;
-  transition: color 180ms ease, transform 180ms ease;
+  border: 1px solid var(--services-icon-border);
+  border-radius: var(--radius-sm, 0.45rem);
+  background: var(--services-icon-bg);
+  color: var(--signal);
+  font-size: 1.45rem;
+  transition: border-color 240ms ease, color 240ms ease, transform 240ms ease, background-color 240ms ease;
 }
 
 .services-item:hover .services-item-icon {
+  border-color: var(--services-card-hover-border);
   color: var(--signal);
-  transform: translateY(-2px);
+  transform: scale(1.08);
 }
 
 .services-item-name {
-  max-width: 18ch;
-  margin: 0 0 0.8rem;
+  max-width: 22ch;
+  margin: 0 0 0.85rem;
   color: var(--ink-primary);
-  font-family: var(--font-body);
-  font-size: clamp(1.2rem, 1.7vw, 1.65rem);
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 1.7vw, 1.55rem);
   font-weight: 700;
-  line-height: 1.13;
+  line-height: 1.15;
   letter-spacing: -0.025em;
   text-wrap: balance;
 }
 
 .services-item-description {
-  max-width: 29ch;
+  max-width: 34ch;
   margin: 0;
   color: var(--ink-muted);
   font-family: var(--font-body);
-  font-size: clamp(0.95rem, 1.15vw, 1.15rem);
+  font-size: clamp(0.88rem, 1.1vw, 1rem);
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.6;
   text-wrap: pretty;
-}
-
-:root[data-theme='light'] .services-section {
-  --bg-void: var(--color-background);
-  --ink-primary: var(--color-foreground);
-  --ink-muted: var(--color-muted-foreground);
-  --ink-faint: color-mix(in srgb, var(--color-muted-foreground) 35%, transparent);
-  --signal: var(--color-accent);
 }
 
 @media (max-width: 900px) {
   .services-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
   }
 
   .services-item {
-    min-height: 15rem;
+    min-height: 14rem;
+    padding: 1.75rem 1.5rem;
   }
 
   .services-item-name {
-    font-size: clamp(1.15rem, 2.5vw, 1.45rem);
+    font-size: clamp(1.15rem, 2.5vw, 1.35rem);
   }
 
   .services-item-description {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 600px) {
   .services-section {
     min-height: auto;
-    padding: 4.75rem 0 5.25rem;
+    padding: 4.5rem 0 5rem;
   }
 
   .services-container {
@@ -211,20 +282,24 @@
 
   .services-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .services-item {
     min-height: 0;
-    padding: 2rem 1.5rem 2.25rem;
+    padding: 1.6rem 1.35rem;
   }
 
   .services-item-icon {
-    margin-bottom: 1.35rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    font-size: 1.3rem;
+    margin-bottom: 1.15rem;
   }
 
   .services-item-name,
   .services-item-description {
-    max-width: 48ch;
+    max-width: 100%;
   }
 }
 
@@ -232,7 +307,9 @@
   .services-tab,
   .services-panel,
   .services-item,
-  .services-item-icon {
+  .services-item-icon,
+  .services-item::before {
     transition: none;
+    transform: none !important;
   }
 }

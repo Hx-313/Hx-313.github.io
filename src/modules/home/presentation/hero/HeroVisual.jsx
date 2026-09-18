@@ -15,13 +15,47 @@ export default function HeroVisual() {
             {[0, 1].map((copy) => (
               <span className="hero-arc-chunk" key={copy}>
                 <span>{HERO_TEXT.orbitVisual.nameArc}</span>
-                <i className="hero-arc-separator">·</i>
+                <i className="hero-arc-separator">•</i>
                 <span>{HERO_TEXT.orbitVisual.rolesArc}</span>
-                <i className="hero-arc-separator">·</i>
+                <i className="hero-arc-separator">•</i>
                 <span>{HERO_TEXT.orbitVisual.nameArc}</span>
-                <i className="hero-arc-separator">·</i>
+                <i className="hero-arc-separator">•</i>
                 <span>{HERO_TEXT.orbitVisual.rolesArc}</span>
-                <i className="hero-arc-separator">·</i>
+                <i className="hero-arc-separator">•</i>
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="hero-identity-arc hero-identity-arc--mid" aria-hidden="true">
+          <div className="hero-arc-track">
+            {[0, 1].map((copy) => (
+              <span className="hero-arc-chunk" key={copy}>
+                <span>{HERO_TEXT.orbitVisual.nameArc}</span>
+                <i className="hero-arc-separator">•</i>
+                <span>{HERO_TEXT.orbitVisual.rolesArc}</span>
+                <i className="hero-arc-separator">•</i>
+                <span>{HERO_TEXT.orbitVisual.nameArc}</span>
+                <i className="hero-arc-separator">•</i>
+                <span>{HERO_TEXT.orbitVisual.rolesArc}</span>
+                <i className="hero-arc-separator">•</i>
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="hero-identity-arc hero-identity-arc--bottom" aria-hidden="true">
+          <div className="hero-arc-track">
+            {[0, 1].map((copy) => (
+              <span className="hero-arc-chunk" key={copy}>
+                <span>{HERO_TEXT.orbitVisual.nameArc}</span>
+                <i className="hero-arc-separator">•</i>
+                <span>{HERO_TEXT.orbitVisual.rolesArc}</span>
+                <i className="hero-arc-separator">•</i>
+                <span>{HERO_TEXT.orbitVisual.nameArc}</span>
+                <i className="hero-arc-separator">•</i>
+                <span>{HERO_TEXT.orbitVisual.rolesArc}</span>
+                <i className="hero-arc-separator">•</i>
               </span>
             ))}
           </div>

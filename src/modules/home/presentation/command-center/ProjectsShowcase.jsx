@@ -3,9 +3,7 @@ import { useEffect, useRef } from 'react';
 
 import './projects-showcase.css';
 
-export const HOLD_START_PROGRESS = 0.82;
-
-const FEATURED_PROJECT_IDS = ['speak', 'expenseflow', 'wos'];
+const FEATURED_PROJECT_IDS = ['dietify', 'speak', 'expenseflow', 'wos'];
 
 function getCarouselState(index, total) {
   if (index === 0) return 'active';
@@ -30,7 +28,11 @@ function ProjectCard({ project, carouselState }) {
         <h3>{project.name}</h3>
         <p>{project.description}</p>
         <div className="projects-showcase__platforms" aria-label={`${project.name} surfaces`}>
-          {project.platforms.map((platform) => <span className="projects-showcase__platform" key={platform}>{platform}</span>)}
+          {project.platforms.map((platform) => (
+            <span className="projects-showcase__platform" key={platform}>
+              {platform}
+            </span>
+          ))}
         </div>
       </div>
     </article>
@@ -59,12 +61,13 @@ function SeeAllProjectsCard({ carouselState }) {
 
 export default function ProjectsShowcase({ projects = [] }) {
   const sectionRef = useRef(null);
+  const scrollTrackRef = useRef(null);
   const viewportRef = useRef(null);
   const trackRef = useRef(null);
   const cardsStageRef = useRef(null);
-  const fillRef = useRef(null);
   const previousButtonRef = useRef(null);
   const nextButtonRef = useRef(null);
+
   const featuredProjects = FEATURED_PROJECT_IDS
     .map((projectId) => projects.find((project) => project.id === projectId))
     .filter(Boolean);
@@ -72,17 +75,16 @@ export default function ProjectsShowcase({ projects = [] }) {
 
   useEffect(() => {
     const section = sectionRef.current;
+    const scrollTrack = scrollTrackRef.current;
     const viewport = viewportRef.current;
     const track = trackRef.current;
     const cardsStage = cardsStageRef.current;
-    const fill = fillRef.current;
     const previousButton = previousButtonRef.current;
     const nextButton = nextButtonRef.current;
-    if (!section || !viewport || !track || !cardsStage || !fill) return undefined;
+    if (!section || !scrollTrack || !viewport || !track || !cardsStage) return undefined;
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const finePointer = window.matchMedia('(pointer:fine)');
-    const experience = section.closest('.site-experience') || document.querySelector('.site-experience');
     const cards = [...track.querySelectorAll('[data-project-id]')];
     const CAROUSEL_STEP_COUNT = Math.max(1, cards.length - 1);
     let activeIndex = 0;
@@ -90,9 +92,7 @@ export default function ProjectsShowcase({ projects = [] }) {
 
     const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
     const isScrubMode = () => finePointer.matches && !reducedMotion.matches && window.innerWidth > 720;
-    const setHeaderMode = (active) => {
-      experience?.classList.toggle('is-carousel-active', active);
-    };
+
     const getStateForCard = (cardIndex, currentIndex) => {
       const relativeIndex = (cardIndex - currentIndex + cards.length) % cards.length;
       if (relativeIndex === 0) return 'active';
@@ -113,10 +113,11 @@ export default function ProjectsShowcase({ projects = [] }) {
 
     const scrollToIndex = (index) => {
       if (!isScrubMode()) return;
-      const scrollable = Math.max(0, section.offsetHeight - window.innerHeight);
+      const trackTop = scrollTrack.getBoundingClientRect().top + window.scrollY;
+      const scrollable = Math.max(0, scrollTrack.offsetHeight - window.innerHeight);
       const progress = CAROUSEL_STEP_COUNT > 0 ? index / CAROUSEL_STEP_COUNT : 0;
       window.scrollTo({
-        top: section.offsetTop + scrollable * progress,
+        top: trackTop + scrollable * progress,
         behavior: reducedMotion.matches ? 'auto' : 'smooth',
       });
     };
@@ -130,63 +131,18 @@ export default function ProjectsShowcase({ projects = [] }) {
       if (syncScroll) scrollToIndex(activeIndex);
     };
 
-    const measureNaturalCardHeight = () => {
-      const trackHeight = track.style.height;
-      const cardStyles = cards.map((card) => ({
-        height: card.style.height,
-        maxHeight: card.style.maxHeight,
-      }));
-
-      track.style.height = 'auto';
-      cards.forEach((card) => {
-        card.style.height = 'auto';
-        card.style.maxHeight = 'none';
-      });
-
-      const height = cards.reduce((maxHeight, card) => Math.max(maxHeight, card.scrollHeight), 0);
-
-      if (trackHeight) track.style.height = trackHeight;
-      else track.style.removeProperty('height');
-      cards.forEach((card, cardIndex) => {
-        const previousStyle = cardStyles[cardIndex];
-        if (previousStyle.height) card.style.height = previousStyle.height;
-        else card.style.removeProperty('height');
-        if (previousStyle.maxHeight) card.style.maxHeight = previousStyle.maxHeight;
-        else card.style.removeProperty('max-height');
-      });
-
-      return height;
-    };
-
     const measure = () => {
-      const cardHeight = measureNaturalCardHeight();
-      const stageTop = cardsStage.getBoundingClientRect().top;
-      const sticky = cardsStage.closest('.projects-showcase__sticky');
-      const stickyStyles = sticky ? window.getComputedStyle(sticky) : null;
-      const bottomPadding = Number.parseFloat(stickyStyles?.paddingBottom || '0') || 0;
-      const breathingRoom = Math.max(28, Math.round(window.innerHeight * 0.04));
-      const availableHeight = Math.max(
-        360,
-        Math.floor(window.innerHeight - Math.max(stageTop, 0) - bottomPadding - breathingRoom),
-      );
-      const maxCardHeight = isScrubMode()
-        ? Math.min(cardHeight || availableHeight, availableHeight)
-        : cardHeight;
+      const availableHeight = Math.max(380, Math.floor(window.innerHeight * 0.8));
+      section.style.setProperty('--projects-card-max-height', `${availableHeight}px`);
+      track.style.setProperty('--projects-card-height', `${availableHeight}px`);
 
-      if (maxCardHeight > 0) {
-        section.style.setProperty('--projects-card-max-height', `${maxCardHeight}px`);
-        track.style.setProperty('--projects-card-height', `${maxCardHeight}px`);
-      }
-
-      const stepDistance = Math.max(220, Math.round(window.innerHeight * 0.42));
+      const stepDistance = Math.max(260, Math.round(window.innerHeight * 0.55));
       const scrollDistance = isScrubMode() ? stepDistance * CAROUSEL_STEP_COUNT : 0;
-      section.style.setProperty('--projects-scroll-distance', `${scrollDistance}px`);
+      scrollTrack.style.setProperty('--projects-scroll-distance', `${scrollDistance}px`);
     };
 
     const update = () => {
       frame = 0;
-      const sectionBounds = section.getBoundingClientRect();
-      setHeaderMode(sectionBounds.top < window.innerHeight && sectionBounds.bottom > 0);
       measure();
       const scrub = isScrubMode();
       const interaction = scrub ? 'scrub' : 'carousel';
@@ -195,20 +151,17 @@ export default function ProjectsShowcase({ projects = [] }) {
 
       if (!scrub) {
         if (modeChanged) setActiveIndex(0);
-        fill.style.transform = 'scaleX(0)';
-        section.style.removeProperty('--projects-progress');
         return;
       }
 
-      const scrollable = Math.max(0, section.offsetHeight - window.innerHeight);
-      const rawProgress = scrollable > 0 ? (-section.getBoundingClientRect().top) / scrollable : 0;
+      const trackRect = scrollTrack.getBoundingClientRect();
+      const scrollable = Math.max(0, scrollTrack.offsetHeight - window.innerHeight);
+      const rawProgress = scrollable > 0 ? (-trackRect.top) / scrollable : 0;
       const progress = clamp(rawProgress, 0, 1);
       const targetIndex = clamp(Math.round(progress * CAROUSEL_STEP_COUNT), 0, CAROUSEL_STEP_COUNT);
 
       setActiveIndex(targetIndex);
-      fill.style.transform = `scaleX(${progress})`;
-      section.style.setProperty('--projects-progress', progress);
-      section.classList.toggle('is-holding', rawProgress >= HOLD_START_PROGRESS && targetIndex === cards.length - 1);
+      section.classList.toggle('is-holding', rawProgress >= 0.82 && targetIndex === cards.length - 1);
     };
 
     const scheduleUpdate = () => {
@@ -217,8 +170,93 @@ export default function ProjectsShowcase({ projects = [] }) {
 
     const handlePrevious = () => setActiveIndex(activeIndex - 1, { syncScroll: true });
     const handleNext = () => setActiveIndex(activeIndex + 1, { syncScroll: true });
+
+    // Touch swipe gestures for mobile
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchDeltaX = 0;
+    let isHorizontalGesture = false;
+
+    const handleTouchStart = (e) => {
+      if (e.touches.length !== 1) return;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchDeltaX = 0;
+      isHorizontalGesture = false;
+    };
+
+    const handleTouchMove = (e) => {
+      if (e.touches.length !== 1) return;
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const diffX = currentX - touchStartX;
+      const diffY = currentY - touchStartY;
+
+      if (!isHorizontalGesture && Math.abs(diffX) > 8) {
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+          isHorizontalGesture = true;
+        }
+      }
+
+      if (isHorizontalGesture) {
+        if (e.cancelable) e.preventDefault();
+        touchDeltaX = diffX;
+        track.style.transform = `translate3d(${diffX * 0.45}px, 0, 0)`;
+        track.style.transition = 'none';
+      }
+    };
+
+    const handleTouchEnd = () => {
+      if (isHorizontalGesture) {
+        track.style.transition = 'transform 280ms var(--ease-out)';
+        track.style.transform = '';
+        const SWIPE_THRESHOLD = 35;
+        if (touchDeltaX < -SWIPE_THRESHOLD) {
+          handleNext();
+        } else if (touchDeltaX > SWIPE_THRESHOLD) {
+          handlePrevious();
+        }
+      }
+      touchDeltaX = 0;
+      isHorizontalGesture = false;
+    };
+
+    // Tap peeking card to navigate
+    const handleCardClick = (e) => {
+      const card = e.target.closest('.projects-showcase__card');
+      if (!card) return;
+      const state = card.dataset.carouselState;
+      if (state === 'next') {
+        e.preventDefault();
+        handleNext();
+      } else if (state === 'previous') {
+        e.preventDefault();
+        handlePrevious();
+      }
+    };
+
+    // Horizontal wheel / trackpad gesture support
+    let wheelCooldown = false;
+    const handleWheel = (e) => {
+      if (!isScrubMode() && Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 25) {
+        e.preventDefault();
+        if (wheelCooldown) return;
+        wheelCooldown = true;
+        if (e.deltaX > 0) handleNext();
+        else handlePrevious();
+        setTimeout(() => { wheelCooldown = false; }, 320);
+      }
+    };
+
+    cardsStage.addEventListener('touchstart', handleTouchStart, { passive: true });
+    cardsStage.addEventListener('touchmove', handleTouchMove, { passive: false });
+    cardsStage.addEventListener('touchend', handleTouchEnd, { passive: true });
+    cardsStage.addEventListener('touchcancel', handleTouchEnd, { passive: true });
+    cardsStage.addEventListener('wheel', handleWheel, { passive: false });
+    track.addEventListener('click', handleCardClick);
+
     const resizeObserver = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(scheduleUpdate);
-    resizeObserver?.observe(track);
+    resizeObserver?.observe(scrollTrack);
     resizeObserver?.observe(viewport);
     cards.forEach((card) => resizeObserver?.observe(card));
     const images = [...track.querySelectorAll('img')];
@@ -240,12 +278,17 @@ export default function ProjectsShowcase({ projects = [] }) {
       window.removeEventListener('resize', scheduleUpdate);
       reducedMotion.removeEventListener?.('change', scheduleUpdate);
       finePointer.removeEventListener?.('change', scheduleUpdate);
+      cardsStage.removeEventListener('touchstart', handleTouchStart);
+      cardsStage.removeEventListener('touchmove', handleTouchMove);
+      cardsStage.removeEventListener('touchend', handleTouchEnd);
+      cardsStage.removeEventListener('touchcancel', handleTouchEnd);
+      cardsStage.removeEventListener('wheel', handleWheel);
+      track.removeEventListener('click', handleCardClick);
       resizeObserver?.disconnect();
       images.forEach((image) => image.removeEventListener('load', scheduleUpdate));
       previousButton?.removeEventListener('click', handlePrevious);
       nextButton?.removeEventListener('click', handleNext);
-      setHeaderMode(false);
-      section.style.removeProperty('--projects-scroll-distance');
+      scrollTrack.style.removeProperty('--projects-scroll-distance');
       section.style.removeProperty('--projects-card-max-height');
       track.style.removeProperty('--projects-card-height');
     };
@@ -253,47 +296,45 @@ export default function ProjectsShowcase({ projects = [] }) {
 
   return (
     <section className="projects-showcase" ref={sectionRef} id="work" aria-labelledby="projects-showcase-title">
-      <div className="projects-showcase__sticky">
-        <div className="projects-showcase__header-stage">
-          <header className="projects-showcase__header">
-            <div>
-              <span className="projects-showcase__eyebrow">Selected work / 01</span>
-              <h2 id="projects-showcase-title">
-                <span className="projects-showcase__headline-line">Built for the moment </span>
-                <span className="projects-showcase__headline-line">after the idea.</span>
-              </h2>
-            </div>
-            <p className="projects-showcase__intro">A few products and systems where clear thinking became something people could use.</p>
-          </header>
-        </div>
+      <div className="projects-showcase__header-stage">
+        <header className="projects-showcase__header">
+          <div>
+            <span className="projects-showcase__eyebrow">Selected work / 01</span>
+            <h2 id="projects-showcase-title">
+              <span className="projects-showcase__headline-line">Built for the moment </span>
+              <span className="projects-showcase__headline-line">after the idea.</span>
+            </h2>
+          </div>
+          <p className="projects-showcase__intro">
+            A few products and systems where clear thinking became something people could use.
+          </p>
+        </header>
+      </div>
 
-        <div className="projects-showcase__cards-stage" ref={cardsStageRef}>
-          <div className="projects-showcase__viewport" ref={viewportRef} role="region" aria-label="Selected work carousel">
-            <div className="projects-showcase__track" ref={trackRef}>
-              {featuredProjects.map((project, index) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  carouselState={getCarouselState(index, cardCount)}
-                />
-              ))}
-              <SeeAllProjectsCard carouselState={getCarouselState(cardCount - 1, cardCount)} />
+      <div className="projects-showcase__scroll-track" ref={scrollTrackRef}>
+        <div className="projects-showcase__sticky-viewport" ref={viewportRef} role="region" aria-label="Selected work carousel">
+          <div className="projects-showcase__cards-stage" ref={cardsStageRef}>
+            <div className="projects-showcase__viewport">
+              <div className="projects-showcase__track" ref={trackRef}>
+                {featuredProjects.map((project, index) => (
+                  <ProjectCard
+                    key={project.id}
+                    project={project}
+                    carouselState={getCarouselState(index, cardCount)}
+                  />
+                ))}
+                <SeeAllProjectsCard carouselState={getCarouselState(cardCount - 1, cardCount)} />
+              </div>
+            </div>
+            <div className="projects-showcase__carousel-controls" aria-label="Change selected project">
+              <button className="projects-showcase__carousel-button" ref={previousButtonRef} type="button" aria-label="Show previous project">
+                <FiArrowLeft aria-hidden="true" />
+              </button>
+              <button className="projects-showcase__carousel-button" ref={nextButtonRef} type="button" aria-label="Show next project">
+                <FiArrowRight aria-hidden="true" />
+              </button>
             </div>
           </div>
-          <div className="projects-showcase__carousel-controls" aria-label="Change selected project">
-            <button className="projects-showcase__carousel-button" ref={previousButtonRef} type="button" aria-label="Show previous project">
-              <FiArrowLeft aria-hidden="true" />
-            </button>
-            <button className="projects-showcase__carousel-button" ref={nextButtonRef} type="button" aria-label="Show next project">
-              <FiArrowRight aria-hidden="true" />
-            </button>
-          </div>
-        </div>
-
-        <div className="projects-showcase__progress" aria-hidden="true">
-          <span className="projects-showcase__progress-label">Scroll to explore</span>
-          <span className="projects-showcase__progress-rail"><span className="projects-showcase__progress-fill" ref={fillRef} /></span>
-          <span className="projects-showcase__progress-label">04 / 04</span>
         </div>
       </div>
     </section>

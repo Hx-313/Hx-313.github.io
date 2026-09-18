@@ -5,7 +5,10 @@ import './about.css';
 
 export default function AboutSection() {
   const sectionRef = useRef(null);
+  const kpisRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [isKpisInView, setIsKpisInView] = useState(false);
+  const [isCounting, setIsCounting] = useState(false);
   const [counts, setCounts] = useState(() => ABOUT_TEXT.stats.map(() => 0));
 
   useEffect(() => {
@@ -15,27 +18,59 @@ export default function AboutSection() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
       setIsVisible(true);
+      setIsKpisInView(true);
       setCounts(ABOUT_TEXT.stats.map((s) => s.targetNumber));
       return;
     }
 
-    const observer = new IntersectionObserver(
+    const sectionObserver = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
         if (entry.isIntersecting) {
           setIsVisible(true);
+          sectionObserver.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    sectionObserver.observe(el);
+
+    return () => sectionObserver.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const kpisEl = kpisRef.current;
+    if (!kpisEl) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setIsKpisInView(true);
+      setCounts(ABOUT_TEXT.stats.map((s) => s.targetNumber));
+      return;
+    }
+
+    const kpiObserver = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting) {
+          setIsKpisInView(true);
+          setIsCounting(true);
 
           const startTime = performance.now();
-          const duration = 400;
+          const duration = 1200;
 
           const animateCounts = (now) => {
             const elapsed = Math.min((now - startTime) / duration, 1);
-            const ease = elapsed * (2 - elapsed);
+            const ease = 1 - Math.pow(1 - elapsed, 3);
 
             setCounts(
               ABOUT_TEXT.stats.map((stat) => {
+                if (stat.targetNumber === 1) {
+                  return elapsed >= 0.4 ? 1 : 0;
+                }
                 const current = stat.targetNumber * ease;
-                return Math.floor(current);
+                return Math.min(stat.targetNumber, Math.floor(current));
               })
             );
 
@@ -43,21 +78,20 @@ export default function AboutSection() {
               requestAnimationFrame(animateCounts);
             } else {
               setCounts(ABOUT_TEXT.stats.map((s) => s.targetNumber));
+              setIsCounting(false);
             }
           };
 
           requestAnimationFrame(animateCounts);
-          observer.disconnect();
+          kpiObserver.disconnect();
         }
       },
-      {
-        threshold: 0.2,
-      }
+      { threshold: 0.3 }
     );
 
-    observer.observe(el);
+    kpiObserver.observe(kpisEl);
 
-    return () => observer.disconnect();
+    return () => kpiObserver.disconnect();
   }, []);
 
   return (
@@ -97,14 +131,37 @@ export default function AboutSection() {
           </div>
         </div>
 
-        <div className="about-kpis kpis" aria-label={ABOUT_TEXT.aria.keyMetrics}>
+        <div
+          ref={kpisRef}
+          className={`about-kpis kpis ${isKpisInView ? 'is-in-view' : ''} ${isCounting ? 'is-counting' : ''}`}
+          aria-label={ABOUT_TEXT.aria.keyMetrics}
+        >
           {ABOUT_TEXT.stats.map((stat, idx) => (
-            <div className="about-kpi kpi" key={stat.id}>
-              <div className="about-kpi-num num">
-                <span>{counts[idx]}</span>
-                {stat.suffix && <span className="stat-suffix">{stat.suffix}</span>}
+            <div
+              className={`about-kpi kpi ${stat.highlight ? 'is-highlight' : ''} ${isCounting ? 'is-counting' : ''}`}
+              key={stat.id}
+            >
+              <div className="about-kpi-top">
+                <div className="about-kpi-badge">
+                  <span className="about-kpi-beacon" aria-hidden="true" />
+                  <span className="about-kpi-tag">{stat.tag}</span>
+                </div>
+                {stat.highlight && (
+                  <span className="about-kpi-chip">{ABOUT_TEXT.featuredBadge}</span>
+                )}
               </div>
-              <div className="about-kpi-lbl lbl">{stat.label}</div>
+
+              <div className="about-kpi-main">
+                <div className="about-kpi-num num">
+                  <span className="stat-count">{counts[idx]}</span>
+                  {stat.suffix && <span className="about-kpi-suffix stat-suffix">{stat.suffix}</span>}
+                </div>
+                <div className="about-kpi-lbl lbl">{stat.label}</div>
+              </div>
+
+              {stat.description && (
+                <div className="about-kpi-desc">{stat.description}</div>
+              )}
             </div>
           ))}
         </div>

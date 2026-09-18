@@ -34,10 +34,6 @@
   animation-delay: 0ms;
 }
 
-.site-experience.is-carousel-active .site-header {
-  position: static;
-}
-
 .site-experience.is-ready {
   opacity: 1;
   transform: none;

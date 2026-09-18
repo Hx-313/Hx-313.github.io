@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 const THEME_VALUES = new Set(['system', 'light', 'dark']);
 const THEME_COLORS = Object.freeze({
   light: '#F4F2EA',
-  dark: '#041312',
+  dark: '#08130A',
 });
 
 function getInitialTheme() {

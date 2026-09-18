@@ -13,23 +13,14 @@
   position: relative;
   padding: clamp(5rem, 11vw, 9rem) 0 clamp(5.5rem, 10vw, 8rem);
   overflow: hidden;
-  background: var(--bg-void);
+  background: transparent;
   color: var(--ink-primary);
   isolation: isolate;
   scroll-margin-top: 4.5rem;
 }
 
 .contact-section::before {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  background:
-    linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 100% 5rem,
-    linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 5rem 100%;
-  content: '';
-  opacity: 0.16;
-  mask-image: linear-gradient(to bottom, transparent, black 12%, black 84%, transparent);
-  pointer-events: none;
+  display: none;
 }
 
 .contact-container {
@@ -107,8 +98,24 @@
 .channel-card,
 .direct-channel-pill,
 .social-tactical-badge {
-  border: 1px solid color-mix(in srgb, var(--ink-faint) 72%, transparent);
-  background: color-mix(in srgb, var(--bg-raised) 90%, transparent);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+:root[data-theme='dark'] .contact-form-card,
+:root[data-theme='dark'] .channel-card,
+:root[data-theme='dark'] .direct-channel-pill,
+:root[data-theme='dark'] .social-tactical-badge {
+  border-color: var(--ithx-theme-border-dark);
+  background: var(--ithx-deep-surface);
+}
+
+:root[data-theme='light'] .contact-form-card,
+:root[data-theme='light'] .channel-card,
+:root[data-theme='light'] .direct-channel-pill,
+:root[data-theme='light'] .social-tactical-badge {
+  border-color: var(--ithx-line-light);
+  background: var(--ithx-white);
 }
 
 .contact-form-card {
@@ -214,7 +221,7 @@
   gap: 0.48rem;
   min-height: 2.45rem;
   padding: 0.55rem 0.78rem;
-  border: 1px solid color-mix(in srgb, var(--ink-faint) 80%, transparent);
+  border: 1px solid var(--color-border);
   border-radius: 0.38rem;
   background: transparent;
   color: var(--ink-muted);
@@ -230,7 +237,7 @@
 .category-chip:focus-visible,
 .category-chip.is-selected {
   border-color: var(--signal);
-  background: color-mix(in srgb, var(--signal) 9%, transparent);
+  background: var(--color-surface-raised);
   color: var(--ink-primary);
 }
 
@@ -260,10 +267,10 @@
 .form-textarea {
   width: 100%;
   padding: 0.82rem 0.92rem;
-  border: 1px solid color-mix(in srgb, var(--ink-faint) 82%, transparent);
+  border: 1px solid var(--color-border);
   border-radius: 0.38rem;
   outline: 0;
-  background: color-mix(in srgb, var(--bg-void) 84%, transparent);
+  background: var(--color-background);
   color: var(--ink-primary);
   font-family: var(--font-body, sans-serif);
   font-size: 0.9rem;

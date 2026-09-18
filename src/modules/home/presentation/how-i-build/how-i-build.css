@@ -11,7 +11,7 @@
   justify-content: center;
   padding: clamp(4rem, 9vh, 7rem) 0;
   box-sizing: border-box;
-  background: var(--bg-void, var(--color-background));
+  background: transparent;
   color: var(--ink-primary, var(--color-foreground));
   overflow: hidden;
   scroll-margin-top: var(--header-offset, 4.5rem);
@@ -199,7 +199,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   align-self: stretch;
-  background: radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--signal) 6%, transparent), transparent 48%);
+  background: radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--signal) 4%, transparent), transparent 52%);
   border-top: 1px solid color-mix(in srgb, var(--ink-muted) 28%, transparent);
 }
 

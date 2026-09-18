@@ -24,6 +24,159 @@ Documentation-only changes, configuration changes, dependency changes, source ch
 - Verification: Commands run and their result, or `Not run` with the reason.
 ```
 
+## 2026-09-19 — Upgrade Capabilities and Solutions to solid matte brand cards & apply itHX branding
+
+- Summary: Per user request ("read new theme and website branding from ithx and apply in the portfolio and then change these grids in cpabilities with card design the cards must be mate brand solid coors not ai opacitry colors"):
+  1. Solid matte brand card design for Capabilities (`Services.jsx` / `services.css`):
+     - Replaced the open wireframe grid table layout (`border-top`, `border-left`, `border-right`, `border-bottom` on `.services-grid` and `.services-item`) with a responsive card grid (`gap: clamp(1.25rem, 2.2vw, 1.75rem)`).
+     - Upgraded `.services-item` into standalone elevated cards using 100% solid, opaque itHX brand surfaces with zero opacity washes:
+       * Dark mode: `--ithx-deep-surface` (`#092322`) card background, `--ithx-theme-border-dark` (`#28514A`) border, and `--ithx-dark-primary-green` (`#0A2C2B`) hover background.
+       * Light mode: `--ithx-white` (`#FCFBF8`) card background, `--ithx-line-light` (`#CBD7D0`) border, and `--ithx-emerald-accent` (`#147A5D`) hover border.
+     - Added a crisp 3px top accent band indicator on each card (`.services-item::before`) that smoothly shifts to the signal color on hover.
+     - Created structured icon badges (`.services-item-icon`): `3.1rem × 3.1rem` solid badge with `--ithx-night-green` (`#08130A`) background, solid border, and `--ithx-mint-signal` (`#52C7A7`) / `--ithx-emerald-accent` (`#147A5D`) icons.
+     - Added agency-grade drop shadows (`box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25)`) and smooth lift micro-interactions (`translateY(-4px)`).
+  2. Solid matte brand card design for Solutions / Domains (`solutions.css`):
+     - Transformed the open wireframe grid in `.solutions-grid` into distinct solid matte itHX brand cards matching Capabilities.
+     - Applied solid deep surface (`#092322`) in dark mode and solid white (`#FCFBF8`) in light mode with 3px top accent lines.
+  3. Contact section solid brand surfaces (`contact.css`):
+     - Replaced semi-transparent `color-mix(... 90%, transparent)` on `.contact-form-card`, `.channel-card`, `.direct-channel-pill`, and `.social-tactical-badge` with solid brand surfaces (`var(--color-surface)` / `#092322`).
+     - Upgraded input fields and category chips to solid background and borders, removing remaining AI opacity washes.
+- Files: `src/modules/home/presentation/services/services.css`, `src/modules/home/presentation/solutions/solutions.css`, `src/modules/contact/presentation/contact.css`, `CHANGE.md`
+- Verification: `npm test` ran with all 80 unit tests passing (100%). `npm run build` compiled cleanly in 8.08s with 0 errors. Visual verification confirmed solid matte brand cards.
+
+## 2026-09-18 — Transform About section KPI cards to solid canonical brand surfaces with zero opacity
+
+- Summary: Per user request ("thes kpi cards are opacity based colors ( make them no opacity ) solid brand colors based"):
+  1. Zero opacity brand surfaces: Replaced all semi-transparent `color-mix(... transparent)` backgrounds on `.about-kpi` with 100% solid, opaque canonical itHX brand tokens:
+     - Dark theme: Standard cards use solid deep surface `--ithx-deep-surface` (`#092322`) with solid border `--ithx-theme-border-dark` (`#28514A`); flagship highlighted card uses solid primary forest green `--ithx-primary-green` (`#0D3736`) with solid emerald accent border `--ithx-emerald-accent` (`#147A5D`).
+     - Light theme: Cards use solid white `--ithx-white` (`#FCFBF8`) with solid border `--ithx-line-light` (`#CBD7D0`); flagship highlighted card uses solid emerald accent border `--ithx-emerald-accent` (`#147A5D`).
+  2. Removed translucent glassmorphic blur: Removed `backdrop-filter: blur(14px)` and `-webkit-backdrop-filter: blur(14px)` to ensure pure opaque rendering without background bleed or performance overhead.
+  3. Solid accent lines & chips:
+     - Top accent line (`.about-kpi::before`) upgraded to a crisp solid 3px bar that cleanly switches to the solid hover/highlight accent color.
+     - Featured badge (`.about-kpi-chip`) updated to solid brand backgrounds and borders (`--ithx-night-green` `#08130A` with `#147A5D` border in dark mode; `--ithx-paper-marble` `#F4F2EA` with `#147A5D` border in light mode).
+     - Divider line (`.about-kpi-desc`) converted from dashed translucent mix to a solid 1px brand border line.
+  4. Clean architecture constants: Added `featuredBadge: 'FEATURED'` to frozen `ABOUT_TEXT` in `src/core/constants/about/aboutText.js` to ensure zero hardcoded presentation strings, strictly adhering to zero `//` guidelines.
+- Files: `src/core/constants/about/aboutText.js`, `src/modules/about/presentation/AboutSection.jsx`, `src/modules/about/presentation/about.css`, `CHANGE.md`
+- Verification: `npm test` ran with 80/80 unit tests passing (100%). `npm run build` compiled 491 modules cleanly in 11.35s with 0 errors. Visual verification via Playwright Edge headless confirmed opaque surfaces in both dark (`kpis_dark.png`) and light (`kpis_light.png`) themes.
+
+## 2026-09-18 — Mobile Projects Showcase card sizing, stacked peeking layout, and touch gestures
+
+- Summary: Per user request ("in projects section for mobile deign see this crd is getting cut and on mobile horizontal scroll is not working and lastly move the card little in other so that stack becomes visible"):
+  1. Fixed card vertical clipping: Replaced the oversized mobile card min-height and media height in `projects-showcase.css`. Calibrated mobile card height to `clamp(26.5rem, 55vh, 30.5rem)` with balanced media scaling (`clamp(10.5rem, 25vh, 13.5rem)`), multi-line text clamping (3 lines), and `margin-top: auto` on platform badges, ensuring mockups, titles, copy, and badges fit comfortably with zero vertical cutoff.
+  2. Implemented touch gesture navigation and tap-to-advance: Added passive touch listeners (`touchstart`, `touchmove`, `touchend`, `touchcancel`) with real-time finger drag translation and a 35px swipe threshold in `ProjectsShowcase.jsx`. Enabled click-to-navigate on peeking cards (`next` and `previous`), and added horizontal trackpad/wheel handling with cooldown.
+  3. Calibrated card offset to reveal the stack: Positioned the mobile active card at `left: 44%` and set `--projects-carousel-offset: calc(var(--projects-card-width) * 0.84 + 0.85rem)`. This leaves ~90px of the next card visibly stacked and peeking from the right edge (`scale(0.91)`, `opacity: 0.74`, `pointer-events: auto`), clearly communicating a swipeable deck.
+  4. Centered mobile carousel controls: Positioned the `<` and `>` arrow buttons below the card stack (`bottom: -0.25rem; left: 50%; transform: translateX(-50%)`) for convenient thumb navigation alongside touch swipe and card tapping.
+  5. Desktop & tablet integrity: Desktop scrub-driven 3D carousel (`> 720px` with fine pointer) remains completely undisturbed and pixel-perfect.
+- Files: `src/modules/home/presentation/command-center/ProjectsShowcase.jsx`, `src/modules/home/presentation/command-center/projects-showcase.css`, `CHANGE.md`
+- Verification: Ran `npm test` with all 80/80 tests passing (100%). Ran `npm run build` with 0 errors. Verified with Playwright on Microsoft Edge at iPhone (390x844), Android (360x740), and Desktop (1440x900) viewports; validated active card containment (no cutoff), next card peeking by ~90px, tap-to-advance, and touch swipe transitions.
+
+## 2026-09-18 — Move Hero marquee ticker to the end of the hero section on mobile viewports
+
+- Summary: Per user request ("while not disturbing other devices move this rliable tixker at the end of the hero section"):
+  1. Positioned `.hero-marquee` absolutely at the bottom/end of the hero section on mobile screens (`@media (max-width: 960px)` and `@media (max-width: 480px)`), removing the prior `position: relative; margin-top: 2rem` rule that positioned it in the middle of the hero between the social links and proof stat cards.
+  2. Calibrated `.hero` bottom padding (`clamp(10.5rem, 22vh, 14rem)`) to prevent content overlap on shorter mobile viewports.
+  3. Re-aligned mobile `.hero-visual-readout` (`bottom: 2.4rem` to `2.5rem`) and `.hero-visual-stats` (`bottom: clamp(4.4rem, 10vh, 6.8rem)`) to maintain clean vertical rhythm above the marquee.
+  4. Preserved desktop and larger device layouts (> 960px) completely undisturbed.
+- Files: `src/modules/home/presentation/hero/hero.css`, `CHANGE.md`
+- Verification: `npm test` ran with 80/80 tests passing (100%). `npm run build` compiled cleanly with 0 errors. Visual verification via Playwright Edge headless on iPhone 390x844, Android 360x740, and Desktop 1440x900 confirmed 0px horizontal overflow and verified visual hierarchy.
+
+## 2026-09-18 — Animate KPI count-up on focus with luminous cyber color glow and tactical bento styling
+
+- Summary: Implemented interactive KPI count-up animation and elevated bento HUD styling per user request and uploaded reference:
+  1. Dedicated focus-based counting: Placed an IntersectionObserver directly on `kpisRef` in `AboutSection.jsx` (triggering at threshold 0.3 when the KPI row enters view), animating counts from 0 to target over a smooth 1200ms cubic-bezier curve (`15+`, `100k+`, `1`).
+  2. Luminous color animation: Added `@keyframes kpiNumberGlow` during count-up (`.is-counting`), cycling the numbers through a radiant emerald/mint phosphor glow (`var(--color-accent)` and `var(--ithx-mint-signal)`) with active text shadows and scaling suffix before settling into crisp typography.
+  3. Tactical bento card style: Transformed plain unboxed numbers into 3-column tactical bento cards (`.about-kpi`) with frosted glass backdrop blur, 1px blueprint borders, top accent hairline gradient, pulsating emerald status beacons (`.about-kpi-beacon`), tags (`01 · SHIPPED`, `02 · REACH`, `03 · FLAGSHIP`), and subtle description dividers.
+- Files: `src/core/constants/about/aboutText.js`, `src/modules/about/presentation/AboutSection.jsx`, `src/modules/about/presentation/about.css`, `CHANGE.md`
+- Verification: `npm test` ran with 80/80 unit tests passing (100%). `npm run build` compiled 106 modules cleanly in 3.24s with 0 errors.
+
+## 2026-09-18 — Position Hero top and bottom name tickers at 15% offset
+
+- Summary: Per user request ("now move hafiz Ali abdullah and flutter ticker that are animating in top and bottom move htme in 15% from top and bottom repsctivel"):
+  1. Updated `.hero-identity-arc--top` to `top: 15%` in `src/modules/home/presentation/hero/hero.css`.
+  2. Updated `.hero-identity-arc--bottom` to `bottom: 15%` in `src/modules/home/presentation/hero/hero.css`.
+  3. Kept all animations, tilt angle (`-2.2deg`), typography, globe, and bottom white marquee ticker completely intact.
+- Files: `src/modules/home/presentation/hero/hero.css`, `CHANGE.md`
+- Verification: `npm test` ran with 80/80 unit tests passing (100%). `npm run build` compiled cleanly in 3.06s with 0 errors.
+
+## 2026-09-18 — Synchronize itHX v1.2.0 canonical color palette into portfolio theme
+
+- Summary: Updated portfolio design tokens, theme controller, and HTML metadata to mirror the canonical itHX v1.2.0 brand and website color system extracted from the ithx brand repository:
+  1. Matte dark background: Updated `--ithx-night-green` from `#041312` to `#08130A` across tokens and theme mappings, providing a softer, authentic matte green-black base.
+  2. Dark border tokens: Introduced `--ithx-theme-border-dark: #28514A` and updated dark theme `--color-border` to reference it, preserving `--ithx-line-dark: #244944` for hairline dividers.
+  3. Status & functional color roles: Added primitive and semantic tokens for `--color-success`, `--color-warning`, `--color-danger`, and `--color-info` across light and dark themes (meeting WCAG >= 4.5:1 contrast).
+  4. System metadata: Updated theme-color meta tag in `index.html` and `THEME_COLORS.dark` in `useTheme.js` to `#08130A`.
+  5. JSON mirror & tests: Added `src/shared/theme/tokens.json` and unit test `tests/theme-palette.test.mjs` to assert token parity and stability.
+- Files: `src/shared/theme/tokens.css`, `src/shared/theme/useTheme.js`, `src/shared/theme/tokens.json`, `index.html`, `tests/theme-palette.test.mjs`, `CHANGE.md`
+- Verification: `node --test tests/theme-palette.test.mjs` passed (1/1), `node --test tests/theme-hook.test.mjs` passed (1/1), `npm run build` compiled 491 modules cleanly in 6.64s with 0 errors.
+
+## 2026-09-18 — Restore bottom white marquee ticker in Hero
+
+- Summary: Per user request ("while keepin the current feign og the hero bring back the bottom white ticker and do not touch any othrr thing"):
+  1. Restored `.hero-marquee` container inside `Hero.jsx` rendering the continuous 60fps infinite white marquee ticker (`HERO_TEXT.marqueeWords` — "Scalable ✦ Reliable ✦ Secure ✦ Maintainable ✦ Fast ✦ Smooth") at `bottom: clamp(0.5rem, 2vh, 1.6rem)` with `-2.2deg` tilt.
+  2. Maintained the Hero ambient name tickers, holographic globe, and layout completely intact without altering any other components or styling.
+- Files: `src/modules/home/presentation/hero/Hero.jsx`, `CHANGE.md`
+- Verification: `npm test` ran with 79/79 unit tests passing (100%). `npm run build` compiled all modules cleanly in 6.54s with 0 errors.
+
+## 2026-09-18 — Resize Selected Work cards to 80% screen size with top nav bar clearance
+
+- Summary: Per user request ("make cards 80% of screen size becuase there is also top nav bar cards are getting cutted by it too"):
+  1. 80% screen card height: Reduced card height from 90dvh to 80dvh (`--projects-card-height: 80dvh; --projects-card-max-height: 80dvh;`) in `projects-showcase.css`, and updated dynamic `measure()` calculation in `ProjectsShowcase.jsx` to `Math.floor(window.innerHeight * 0.80)`.
+  2. Top nav bar clearance: Updated sticky viewport padding to `padding: clamp(5.25rem, 9vh, 6.5rem) 5vw clamp(1.5rem, 3.5vh, 2.5rem)`, creating dedicated clearance below the sticky top navigation bar (`SiteHeader`, height ~4.5rem to 5.5rem) so cards are never obscured or clipped by the floating header.
+  3. Image scaling adjustment: Tuned `.projects-showcase__media img` max-height to `min(100%, clamp(16rem, 42vh, 32rem))` to maintain balanced device mockup proportions inside the 80% height canvas.
+- Files: `src/modules/home/presentation/command-center/ProjectsShowcase.jsx`, `src/modules/home/presentation/command-center/projects-showcase.css`, `tests/projects-showcase.test.mjs`, `CHANGE.md`
+- Verification: `npm test` passed with 79/79 unit tests (100%). `npm run build` compiled 106 modules cleanly in 3.49s with 0 errors.
+
+## 2026-09-18 — Implement Hero dual name ticker and restore Dietify card
+
+- Summary: Per user reference mockup and request:
+  1. Hero dual name ticker: Implemented full-bleed edge-to-edge ambient name tickers (`HAFIZ ALI ABDULLAH • FLUTTER DEVELOPER •`) tilted at `-2.2deg` across both the top and bottom of the Hero canvas matching the uploaded design reference. Applied deep emerald wash typography (`font-weight: 850; font-size: clamp(2.4rem, 4.4vw, 4.4rem); color: color-mix(in srgb, var(--color-accent) 20%, transparent); text-shadow: 0 0 1.6rem color-mix(in srgb, var(--color-accent) 14%, transparent);`) with bullet delimiters (`•`). Wired smooth 60fps infinite marquee sweeps (`heroArcTextSweep` and `heroArcTextSweepReverse`) and subtle organic floating oscillation keyframes (`heroArcRotateTop` and `heroArcRotateBottom`).
+  2. Hero marquee cleanup: Removed the obsolete boxed `.hero-marquee` container (with "Scalable ✦ Reliable ✦ Secure" pill and borders) from `Hero.jsx` so the bottom name ticker spans the footer uninterrupted exactly as shown in the mockup image.
+  3. Dietify card restoration: Verified and confirmed `'dietify'` in `FEATURED_PROJECT_IDS` in `src/modules/home/presentation/command-center/ProjectsShowcase.jsx` to ensure the Dietify card is restored as the first card in the Selected Work showcase sequence.
+- Files: `src/modules/home/presentation/hero/HeroVisual.jsx`, `src/modules/home/presentation/hero/Hero.jsx`, `src/modules/home/presentation/hero/hero.css`, `src/modules/home/presentation/command-center/ProjectsShowcase.jsx`, `CHANGE.md`
+- Verification: `npm test` passed with 79/79 unit tests (100%). `npm run build` compiled all modules cleanly in 4.62s with 0 errors.
+
+## 2026-09-18 — Scale Selected Work cards to 90% screen height with 10% viewport padding
+
+- Summary: Implemented user requested full-screen card scaling and padding in the Selected Work showcase:
+  1. 90% screen card height: Set `--projects-card-height: 90dvh` and `--projects-card-max-height: 90dvh` in CSS, and updated dynamic `measure()` in `ProjectsShowcase.jsx` to `Math.floor(window.innerHeight * 0.90)` (removing the previous 54rem / 864px max-height cap), allowing cards to expand to 90% of screen height on full-screen displays.
+  2. 10% viewport padding: Added `padding: 5vh 5vw` to `.projects-showcase__sticky-viewport` (providing 10% total vertical padding [5% top, 5% bottom] and 10% total horizontal padding [5% left, 5% right]), centering the 90% height cards with clean clearance from the edges.
+  3. Proportional card internal padding: Updated `.projects-showcase__media`, `.projects-showcase__body`, and `.projects-showcase__card--cta` with 10% proportional width clamp padding and elevated image `max-height` (`min(100%, clamp(18rem, 48vh, 36rem))`) so mockups and copy fill the 90vh cards with balanced whitespace.
+- Files: `src/modules/home/presentation/command-center/ProjectsShowcase.jsx`, `src/modules/home/presentation/command-center/projects-showcase.css`, `tests/projects-showcase.test.mjs`, `CHANGE.md`
+- Verification: `npm test` ran with 79/79 unit tests passing (100%). `npm run build` compiled 106 modules cleanly in 3.89s with 0 errors.
+
+## 2026-09-18 — Update Selected Work project sequence to 5-card sequence
+
+- Summary: Updated the Selected Work project card sequence per user request:
+  1. Dietify (`dietify`)
+  2. Speak & Translate (`speak`)
+  3. ExpenseFlow (`expenseflow`)
+  4. WOS (`wos`)
+  5. See all projects (`see-all-projects` CTA card)
+- Files: `src/modules/home/presentation/command-center/ProjectsShowcase.jsx`, `tests/projects-showcase.test.mjs`, `CHANGE.md`
+- Verification: `npm test` ran with 79/79 unit tests passing (100%). `npm run build` compiled 106 modules cleanly in 3.09s with 0 errors.
+
+## 2026-09-18 — Selected Work: Vertical header scroll followed by sticky horizontal card scrub
+
+- Summary: Implemented the requested two-phase scroll behavior for the Selected Work section:
+  1. Header vertical scroll-up: When scrolling down from the Hero section, the header stage ("Selected work / 01" and "Built for the moment after the idea") is positioned in normal document flow (`min-height: 75vh`) and scrolls vertically up out of the viewport.
+  2. Sticky full-viewport cards stage: Once the header scrolls off-screen and the cards reach the main viewport, the `.projects-showcase__sticky-viewport` pins to `top: 0` for `100vh` / `100dvh`.
+  3. Horizontal scrub restored: While pinned in the viewport, downward vertical scroll translates into horizontal scrubbing across cards (Active, Previous, Next, Hidden) using a continuous delta scroll-track (`height: calc(100vh + var(--projects-scroll-distance))`), restoring the original horizontal carousel experience.
+  4. Full vertical card height: Each card expands to take the full vertical length of the screen (`height: min(54rem, calc(100dvh - clamp(2.5rem, 5vh, 4rem)))`), leaving nothing else on screen.
+  5. Removed progress bar and explore text: Completely removed the "Scroll to explore" text, progress rail/fill bar, and slide counter.
+  6. Natural exit: When horizontal card scrub completes, sticky unpins and normal vertical page scrolling resumes into the About section.
+- Files: `src/modules/home/presentation/command-center/ProjectsShowcase.jsx`, `src/modules/home/presentation/command-center/projects-showcase.css`, `src/modules/home/presentation/home.css`, `tests/projects-showcase.test.mjs`, `CHANGE.md`
+- Verification: `npm test` ran with 79/79 unit tests passing (100%). `npm run build` compiled 106 modules cleanly in 3.25s with 0 errors.
+
+## 2026-09-18 — Refactor Selected Work to vertical scroll showcase with full-height cards
+
+- Summary: Converted the Selected Work section from a scroll-jacked horizontal carousel to natural vertical scrolling per user specifications:
+  1. Header scrolls up naturally: Positioned the "Selected work / 01" and "Built for the moment after the idea" header in a dedicated stage (`min-height: 75vh`) that scrolls up smoothly when the user scrolls down, rather than remaining pinned at the top.
+  2. Sequential full-height cards: Placed each project card in its own viewport container (`min-height: 100vh; min-height: 100dvh`), allowing each card to occupy the full vertical length of the screen (`height: min(54rem, calc(100vh - clamp(2.5rem, 5vh, 4.5rem)))`) with generous room for device mockups and unconstrained descriptions.
+  3. Removed horizontal controls and progress area: Completely removed the "Scroll to explore" text, progress rail/fill, "04 / 04" counter, left/right horizontal arrow buttons, and scroll-jacking math (`CAROUSEL_STEP_COUNT`, horizontal offset transforms). Removed `.is-carousel-active` header override.
+  4. Subtle reveal animations and accessibility: Added an IntersectionObserver to gently fade/reveal cards as they enter view, while guaranteeing cards remain visible by default and fully respecting `prefers-reduced-motion`.
+- Files: `src/modules/home/presentation/command-center/ProjectsShowcase.jsx`, `src/modules/home/presentation/command-center/projects-showcase.css`, `src/modules/home/presentation/home.css`, `tests/projects-showcase.test.mjs`, `CHANGE.md`
+- Verification: `npm test` ran with 79/79 unit tests passing (100%). `npm run build` compiled 106 modules cleanly with 0 errors in 3.81s.
+
 ## 2026-09-18 — Elevate Hero background typography visibility and vertical positioning
 
 - Summary: Per user feedback ("lines got too faded barely can see and move it abit top"), elevated the vertical placement of the background typography watermark to `top: 40%` (previously `top: 50%`) across the upper hemisphere of the digital earth globe, and boosted its visibility from 9% to 22% accent opacity (`color: color-mix(in srgb, var(--color-accent) 22%, transparent)`) accompanied by a subtle emerald text glow (`text-shadow: 0 0 1.6rem color-mix(in srgb, var(--color-accent) 18%, transparent)`). Widened the mask fade window (`black 34%, black 94%`) so the typography is clearly discernible and luminous while continuing to sit strictly behind the globe and foreground content.
@@ -422,4 +575,14 @@ Documentation-only changes, configuration changes, dependency changes, source ch
 - Summary: Preserved the desktop 3×4 How I Build grid while turning the mobile layout into an elevated, full-width capability stack. Added keyboard/touch-friendly disclosure controls, one-at-a-time “Applied to” service reveals, subject-aligned motion, official icon color treatment, touch-sized targets, and reduced-motion support.
 - Files: `src/modules/home/presentation/how-i-build/HowIBuild.jsx`, `src/modules/home/presentation/how-i-build/how-i-build.css`, `src/modules/home/presentation/how-i-build/howIBuildData.js`, `tests/how-i-build-mobile.test.mjs`, `CHANGE.md`
 - Verification: Focused How I Build tests passed (6/6). `npm run build` passed. Full suite reports 66 passing and 4 pre-existing content-contract failures in About, Contact, and legacy How I Build data expectations. Browser QA confirmed the desktop grid remains intact and the mobile card reveal expands on tap.
+
+## 2026-09-19 — Unify post-hero portfolio background into single continuous canvas
+
+- Summary: Harmonized the entire portfolio flow after the Hero section so it renders as one continuous, seamless background canvas across both light and dark themes. Removed fragmented, sprint-specific background screens:
+  1. Set section wrappers to transparent (`background: transparent`) in Projects Showcase (`projects-showcase.css`), About Me (`about.css`), Services (`services.css`), Solutions (`solutions.css`), Certifications/Testimonials placeholders (`placeholders.css`), How I Build (`how-i-build.css`), Contact Funnel (`contact.css`), and Site Footer (`footer.css`).
+  2. Removed conflicting sprint-specific wallpaper grids and particle dots from About Me (120px blueprint grid in `about.css`) and Contact (5rem grid overlay in `contact.css`), and removed the harsh inter-section border seam in Solutions (`solutions.css`).
+  3. Preserved all elevated card surfaces, buttons, forms, and interactive states using design tokens (`var(--color-surface)`, `var(--color-surface-raised)`, `var(--color-border)`), allowing the fixed `CosmicBackground` canvas to flow unbroken beneath the entire portfolio experience.
+- Files: `src/modules/home/presentation/command-center/projects-showcase.css`, `src/modules/about/presentation/about.css`, `src/modules/home/presentation/services/services.css`, `src/modules/home/presentation/solutions/solutions.css`, `src/modules/home/presentation/placeholders/placeholders.css`, `src/modules/home/presentation/how-i-build/how-i-build.css`, `src/modules/contact/presentation/contact.css`, `src/modules/footer/presentation/footer.css`, `CHANGE.md`
+- Verification: `npm test` ran with 80/80 unit tests passing (100%). `npm run build` compiled 106 modules cleanly with 0 errors in 4.25s.
+
 

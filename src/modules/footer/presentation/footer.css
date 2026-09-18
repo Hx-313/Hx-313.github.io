@@ -11,19 +11,14 @@
 
   position: relative;
   z-index: 10;
-  border-top: 1px solid var(--footer-line);
-  background: var(--footer-void);
+  border-top: 1px solid var(--color-border);
+  background: transparent;
   color: var(--footer-primary);
   isolation: isolate;
 }
 
 .site-footer::before {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  background: radial-gradient(circle at 88% 0%, color-mix(in srgb, var(--footer-signal) 7%, transparent), transparent 32%);
-  content: '';
-  pointer-events: none;
+  display: none;
 }
 
 .footer-container {

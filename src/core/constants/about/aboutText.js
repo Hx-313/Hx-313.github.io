@@ -16,6 +16,7 @@ export const ABOUT_TEXT = Object.freeze({
   ]),
   featuredProduct: 'OnlineOrder.pk / WOS',
   signalClosing: 'The work connected mobile, backend, and operations.',
+  featuredBadge: 'FEATURED',
   credit: Object.freeze({
     name: 'Hafiz Ali Abdullah',
     title: 'Flutter + Native Mobile · Node.js Backend',
@@ -30,6 +31,8 @@ export const ABOUT_TEXT = Object.freeze({
       suffix: '+',
       label: 'APPS SHIPPED',
       highlight: false,
+      tag: '01 · SHIPPED',
+      description: 'Production mobile & web systems',
     }),
     Object.freeze({
       id: 'downloads',
@@ -37,6 +40,8 @@ export const ABOUT_TEXT = Object.freeze({
       suffix: 'k+',
       label: 'DOWNLOADS',
       highlight: false,
+      tag: '02 · REACH',
+      description: 'Global user engagement',
     }),
     Object.freeze({
       id: 'systems',
@@ -44,6 +49,8 @@ export const ABOUT_TEXT = Object.freeze({
       suffix: '',
       label: 'CONNECTED SYSTEM BUILT',
       highlight: true,
+      tag: '03 · FLAGSHIP',
+      description: 'Full-stack POS & ordering system',
     }),
   ]),
 });

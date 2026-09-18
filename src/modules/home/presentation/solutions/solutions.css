@@ -1,7 +1,7 @@
 .solutions-section {
   padding: clamp(4.5rem, 9vw, 8rem) 0;
-  border-top: 1px solid color-mix(in srgb, var(--color-muted-foreground) 16%, transparent);
-  background: var(--color-background);
+  border-top: none;
+  background: transparent;
   color: var(--color-foreground);
   scroll-margin-top: var(--header-offset, 4.5rem);
 }
@@ -50,28 +50,73 @@
   text-wrap: pretty;
 }
 
+/* Card Grid Layout */
 .solutions-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-top: 1px solid color-mix(in srgb, var(--color-muted-foreground) 24%, transparent);
-  border-left: 1px solid color-mix(in srgb, var(--color-muted-foreground) 24%, transparent);
+  gap: clamp(1.25rem, 2.2vw, 1.75rem);
+  border: none;
 }
 
+/* Distinct Solid Matte Brand Cards */
 .solution-card {
+  position: relative;
   display: flex;
   min-height: 15rem;
   flex-direction: column;
   align-items: flex-start;
-  padding: 1.3rem;
-  border-right: 1px solid color-mix(in srgb, var(--color-muted-foreground) 24%, transparent);
-  border-bottom: 1px solid color-mix(in srgb, var(--color-muted-foreground) 24%, transparent);
-  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+  padding: clamp(1.5rem, 2.2vw, 2rem);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg, 1.25rem);
+  background: var(--color-surface);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  transition: transform 300ms var(--ease-out, ease-out),
+              border-color 300ms var(--ease-out, ease-out),
+              background-color 300ms var(--ease-out, ease-out),
+              box-shadow 300ms var(--ease-out, ease-out);
+}
+
+.solution-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-border);
+  transition: background-color 300ms ease;
+}
+
+:root[data-theme='light'] .solution-card {
+  background: var(--ithx-white);
+  border-color: var(--ithx-line-light);
+  box-shadow: 0 8px 24px rgba(9, 36, 33, 0.06);
+}
+
+:root[data-theme='light'] .solution-card:hover {
+  border-color: var(--ithx-emerald-accent);
+  box-shadow: 0 16px 36px rgba(9, 36, 33, 0.12);
+}
+
+:root[data-theme='dark'] .solution-card {
+  background: var(--ithx-deep-surface);
+  border-color: var(--ithx-theme-border-dark);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+:root[data-theme='dark'] .solution-card:hover {
+  background: var(--ithx-dark-primary-green);
+  border-color: var(--ithx-mint-signal);
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.65);
 }
 
 .solution-card:hover {
-  background: color-mix(in srgb, var(--color-accent) 6%, transparent);
-  border-color: color-mix(in srgb, var(--color-accent) 52%, transparent);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+}
+
+.solution-card:hover::before {
+  background: var(--color-accent);
 }
 
 .solution-card__number,
@@ -87,26 +132,27 @@
 
 .solution-card h3 {
   max-width: 16ch;
-  margin: auto 0 0.7rem;
-  color: var(--color-hero-text);
+  margin: 1.2rem 0 0.7rem;
+  color: var(--color-foreground);
   font-family: var(--font-display);
   font-size: clamp(1.15rem, 1.8vw, 1.55rem);
   font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 1.08;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
 }
 
 .solution-card p {
-  max-width: 30ch;
+  max-width: 32ch;
   margin: 0 0 1.5rem;
   color: var(--color-muted-foreground);
-  font-size: 0.82rem;
-  line-height: 1.55;
+  font-size: 0.85rem;
+  line-height: 1.6;
 }
 
 .solution-card__tags {
+  margin-top: auto;
   color: var(--color-muted-foreground);
-  font-size: 0.57rem;
+  font-size: 0.58rem;
 }
 
 @media (max-width: 800px) {
@@ -117,21 +163,26 @@
 
   .solutions-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
   }
 }
 
 @media (max-width: 500px) {
   .solutions-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .solution-card {
-    min-height: 13rem;
+    min-height: auto;
+    padding: 1.5rem 1.25rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .solution-card {
+  .solution-card,
+  .solution-card::before {
     transition: none;
+    transform: none !important;
   }
 }
