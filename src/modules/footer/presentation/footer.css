@@ -1,12 +1,12 @@
 /* Footer — a quiet, useful directory to end the page */
 
 .site-footer {
-  --footer-void: #0a0d0b;
-  --footer-raised: #101410;
-  --footer-primary: #edefec;
-  --footer-muted: #8a928c;
-  --footer-faint: #4a524c;
-  --footer-signal: #3ecf8e;
+  --footer-void: var(--color-background);
+  --footer-raised: var(--color-surface-raised);
+  --footer-primary: var(--color-foreground);
+  --footer-muted: var(--color-muted-foreground);
+  --footer-faint: color-mix(in srgb, var(--color-muted-foreground) 42%, transparent);
+  --footer-signal: var(--color-accent);
   --footer-line: color-mix(in srgb, var(--footer-faint) 66%, transparent);
 
   position: relative;
@@ -315,13 +315,13 @@
 }
 
 :root[data-theme='light'] .site-footer {
-  --footer-void: #10130f;
-  --footer-raised: #171c17;
-  --footer-primary: #edefec;
-  --footer-muted: #aab5ac;
-  --footer-faint: #67736a;
-  --footer-signal: #62d99a;
-  --footer-line: rgb(164 190 173 / 0.17);
+  --footer-void: var(--color-background);
+  --footer-raised: var(--color-surface);
+  --footer-primary: var(--color-foreground);
+  --footer-muted: var(--color-muted-foreground);
+  --footer-faint: color-mix(in srgb, var(--color-muted-foreground) 42%, transparent);
+  --footer-signal: var(--color-accent);
+  --footer-line: var(--color-line);
 }
 
 @media (max-width: 980px) {

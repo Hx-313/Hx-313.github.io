@@ -184,12 +184,12 @@
 }
 
 .site-header .theme-toggle button:hover {
-  color: #ffffff;
+  color: var(--color-foreground);
 }
 
 .site-header .theme-toggle button.is-active {
   background: rgba(255, 255, 255, 0.92);
-  color: #0b100d;
+  color: var(--color-background);
   box-shadow: none;
 }
 
@@ -202,7 +202,7 @@
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.06);
-  color: #ffffff;
+  color: var(--color-foreground);
   font-family: var(--font-body, system-ui, sans-serif);
   font-size: 0.72rem;
   font-weight: 700;
@@ -521,18 +521,18 @@
 }
 
 :root[data-theme='light'] .header-inner {
-  background: rgba(255, 255, 255, 0.94);
-  border-color: rgba(41, 91, 63, 0.16);
-  box-shadow: 0 4px 8px rgba(0, 59, 47, 0.1);
+  background: color-mix(in srgb, var(--color-surface) 94%, transparent);
+  border-color: color-mix(in srgb, var(--color-border) 72%, transparent);
+  box-shadow: 0 4px 8px color-mix(in srgb, var(--ithx-primary-green) 10%, transparent);
 }
 
 :root[data-theme='light'] .site-header.is-scrolled .header-inner {
-  background: rgba(255, 255, 255, 0.98);
-  border-color: rgba(41, 91, 63, 0.22);
+  background: color-mix(in srgb, var(--color-surface) 98%, transparent);
+  border-color: color-mix(in srgb, var(--color-border) 92%, transparent);
 }
 
 :root[data-theme='light'] .nav-link {
-  color: rgba(24, 33, 27, 0.62);
+  color: color-mix(in srgb, var(--color-muted-foreground) 62%, transparent);
 }
 
 :root[data-theme='light'] .nav-link:hover,
@@ -541,12 +541,12 @@
 }
 
 :root[data-theme='light'] .site-header .theme-toggle {
-  border-color: rgba(41, 91, 63, 0.14);
-  background: rgba(0, 59, 47, 0.04);
+  border-color: color-mix(in srgb, var(--color-border) 72%, transparent);
+  background: color-mix(in srgb, var(--color-accent) 5%, transparent);
 }
 
 :root[data-theme='light'] .site-header .theme-toggle button {
-  color: rgba(24, 33, 27, 0.58);
+  color: color-mix(in srgb, var(--color-muted-foreground) 58%, transparent);
 }
 
 :root[data-theme='light'] .site-header .theme-toggle button:hover {
@@ -555,32 +555,32 @@
 
 :root[data-theme='light'] .site-header .theme-toggle button.is-active {
   background: var(--color-accent);
-  color: #ffffff;
+  color: var(--color-accent-foreground);
 }
 
 :root[data-theme='light'] .header-cta-btn {
-  border-color: rgba(41, 91, 63, 0.2);
-  background: rgba(0, 59, 47, 0.04);
+  border-color: color-mix(in srgb, var(--color-border) 82%, transparent);
+  background: color-mix(in srgb, var(--color-accent) 5%, transparent);
   color: var(--color-ink);
 }
 
 :root[data-theme='light'] .header-cta-btn:hover {
   border-color: var(--color-accent);
-  background: rgba(40, 118, 77, 0.1);
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
   color: var(--color-ink);
 }
 
 :root[data-theme='light'] .header-burger-btn {
-  border-color: rgba(41, 91, 63, 0.16);
-  background: rgba(0, 59, 47, 0.04);
+  border-color: color-mix(in srgb, var(--color-border) 82%, transparent);
+  background: color-mix(in srgb, var(--color-accent) 5%, transparent);
 }
 
 :root[data-theme='light'] .mobile-drawer-backdrop {
-  background: rgba(14, 21, 17, 0.42);
+  background: color-mix(in srgb, var(--ithx-night-green) 42%, transparent);
 }
 
 :root[data-theme='light'] .mobile-drawer-pane {
-  box-shadow: -14px 0 28px rgba(0, 59, 47, 0.16);
+  box-shadow: -14px 0 28px color-mix(in srgb, var(--ithx-primary-green) 16%, transparent);
 }
 
 /* Responsive layout */

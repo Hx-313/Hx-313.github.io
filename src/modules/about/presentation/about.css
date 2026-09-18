@@ -11,22 +11,19 @@
   justify-content: center;
   padding: clamp(2.5rem, 5vh, 4rem) 0;
   box-sizing: border-box;
-  background: var(--bg-void, #0A0D0B);
-  color: var(--ink-primary, #EDEFEC);
+  background: var(--bg-void, var(--color-background));
+  color: var(--ink-primary, var(--color-foreground));
   overflow: hidden;
 
   /* Scoped Tokens */
-  --bg-void: #0A0D0B;
-  --bg-raised: #101410;
-  --ink-primary: #EDEFEC;
-  --ink-muted: #8A928C;
-  --ink-faint: #4A524C;
-  --signal: #3ECF8E;
-  --signal-dim: #1F6B4B;
-  --fault: #C9A227;
-
-  --font-display: 'Archivo Expanded', 'Inter Tight', 'Outfit', sans-serif;
-  --font-body: 'General Sans', 'Suisse Intl', 'Plus Jakarta Sans', sans-serif;
+  --bg-void: var(--color-background);
+  --bg-raised: var(--color-surface-raised);
+  --ink-primary: var(--color-foreground);
+  --ink-muted: var(--color-muted-foreground);
+  --ink-faint: color-mix(in srgb, var(--color-muted-foreground) 42%, transparent);
+  --signal: var(--color-accent);
+  --signal-dim: color-mix(in srgb, var(--color-accent) 70%, var(--color-background));
+  --fault: var(--ithx-warm-brass);
 
   /* Uniform lining numerals across the section */
   font-variant-numeric: lining-nums tabular-nums;

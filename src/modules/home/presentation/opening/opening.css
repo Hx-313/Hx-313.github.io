@@ -409,7 +409,7 @@
   position: relative;
   z-index: 1;
   margin: 0;
-  font-family: var(--font-display, 'Outfit', sans-serif);
+  font-family: var(--font-display, system-ui, sans-serif);
   font-size: clamp(1.45rem, 2.2vw, 2.45rem);
   font-weight: 700;
   line-height: 1.12;
@@ -475,7 +475,7 @@
   width: min(88vw, 520px);
   transform: translateX(-50%);
   text-align: center;
-  font-family: var(--font-display, 'Outfit', sans-serif);
+  font-family: var(--font-display, system-ui, sans-serif);
   font-size: clamp(1.65rem, 4vw, 3rem);
   line-height: 1.02;
   letter-spacing: -.035em;

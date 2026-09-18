@@ -56,7 +56,7 @@
 
 :root[data-theme='light'] .command-center-portal-section {
   background: transparent;
-  border-top: 1px solid rgba(0, 59, 47, 0.1);
+  border-top-color: color-mix(in srgb, var(--color-border) 72%, transparent);
 }
 
 
@@ -70,8 +70,8 @@
 }
 
 :root[data-theme='light'] .theme-toggle {
-  background: rgba(0, 59, 47, 0.05);
-  border-color: rgba(0, 59, 47, 0.15);
+  background: color-mix(in srgb, var(--color-accent) 5%, transparent);
+  border-color: color-mix(in srgb, var(--color-border) 72%, transparent);
 }
 
 .theme-toggle button {
@@ -89,7 +89,7 @@
 }
 
 :root[data-theme='light'] .theme-toggle button {
-  color: #52635d;
+  color: var(--color-muted-foreground);
 }
 
 .theme-toggle button.is-active {
@@ -98,9 +98,9 @@
 }
 
 :root[data-theme='light'] .theme-toggle button.is-active {
-  background: #047857;
-  color: #ffffff;
-  box-shadow: 0 1px 4px rgba(4, 120, 87, 0.3);
+  background: var(--color-accent);
+  color: var(--color-accent-foreground);
+  box-shadow: 0 1px 4px color-mix(in srgb, var(--color-accent) 30%, transparent);
 }
 
 

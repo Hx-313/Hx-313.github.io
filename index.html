@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0b0f0e" />
+    <meta name="theme-color" content="#041312" />
     <meta name="description" content="Hafiz Ali Abdullah builds Flutter and native mobile applications, Node.js backends, APIs, dashboards, and connected operational systems." />
     <meta name="author" content="Hafiz Ali Abdullah" />
     <meta property="og:type" content="website" />
@@ -15,7 +15,19 @@
     <link rel="apple-touch-icon" href="%BASE_URL%brand/ithx-logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <script>
+      (() => {
+        try {
+          const theme = window.localStorage.getItem('portfolio-theme');
+          if (theme === 'light' || theme === 'dark' || theme === 'system') {
+            document.documentElement.dataset.theme = theme;
+          }
+        } catch {
+          // Storage can be unavailable; the dark default remains valid.
+        }
+      })();
+    </script>
     <title>Hafiz Ali Abdullah | Mobile + Node.js Developer</title>
   </head>
   <body>

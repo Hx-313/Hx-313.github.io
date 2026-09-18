@@ -99,7 +99,7 @@ test('how-i-build.css matches About section design tokens and layout rules', () 
     assert.match(css, new RegExp(color), `${color} must be represented in the brand icon palette`);
   }
   assert.match(css, /font-variant-numeric:\s*lining-nums\s+tabular-nums/, 'must declare lining numerals');
-  assert.match(css, /--signal:\s*#3ECF8E/, 'must declare --signal token');
-  assert.match(css, /--bg-void:\s*#0A0D0B/, 'must declare --bg-void token');
+  assert.match(css, /--signal:\s*var\(--color-accent\)/, 'must inherit the semantic theme accent token');
+  assert.match(css, /--bg-void:\s*var\(--color-background\)/, 'must inherit the semantic theme background token');
   assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)/, 'must support reduced motion');
 });

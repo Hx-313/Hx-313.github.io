@@ -1,27 +1,57 @@
 :root {
-  --color-forest: #17382a;
-  --color-emerald: #2f8a5d;
-  --color-lime: #4ebe7a;
-  --color-ink: #18211b;
-  --color-surface: #f1f4ee;
-  --color-night: #0e1511;
-  --color-muted: #647067;
-  --color-line: rgb(155 180 164 / 0.18);
-  --color-background: #0b100d;
-  --color-foreground: #edf1ea;
-  --color-muted-foreground: #a8b3ab;
-  --color-surface-raised: #121b15;
-  --color-border: rgb(164 190 173 / 0.16);
-  --color-accent: #4ebe7a;
-  --color-accent-foreground: #08110c;
-  --color-hero-background: #0b100d;
-  --color-stage-edge: #121b15;
-  --color-hero-text: #edf1ea;
-  --color-glitch: #4ebe7a;
-  --color-glitch-highlight: #1e4b35;
-  --font-display: 'Outfit', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --font-body: 'Plus Jakarta Sans', Inter, system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+  color-scheme: light dark;
+
+  /* Canonical itHX palette — mirrored from branding/visual-identity/brand-colors. */
+  --ithx-primary-green: #0D3736;
+  --ithx-paper-marble: #F4F2EA;
+  --ithx-night-green: #041312;
+  --ithx-deep-surface: #092322;
+  --ithx-dark-primary-green: #0A2C2B;
+  --ithx-emerald-accent: #147A5D;
+  --ithx-mint-signal: #52C7A7;
+  --ithx-warm-brass: #A07B54;
+  --ithx-white: #FCFBF8;
+  --ithx-ink: #092421;
+  --ithx-graphite: #526661;
+  --ithx-mist: #AAB8B0;
+  --ithx-line-light: #CBD7D0;
+  --ithx-line-dark: #244944;
+  --ithx-action-text-dark: #06221F;
+
+  /* Approved typography roles. */
+  --font-display: "Space Grotesk", system-ui, -apple-system, sans-serif;
+  --font-body: Inter, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Consolas, monospace;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Light semantic theme. */
+  --color-background: var(--ithx-paper-marble);
+  --color-surface: var(--ithx-white);
+  --color-surface-raised: var(--ithx-white);
+  --color-foreground: var(--ithx-ink);
+  --color-muted: var(--ithx-graphite);
+  --color-muted-foreground: var(--ithx-graphite);
+  --color-border: var(--ithx-line-light);
+  --color-line: color-mix(in srgb, var(--ithx-graphite) 24%, transparent);
+  --color-accent: var(--ithx-emerald-accent);
+  --color-accent-foreground: var(--ithx-white);
+  --color-hero-background: var(--ithx-paper-marble);
+  --color-stage-edge: var(--ithx-white);
+  --color-hero-text: var(--ithx-ink);
+  --color-glitch: var(--ithx-emerald-accent);
+  --color-glitch-highlight: var(--ithx-primary-green);
+  --color-loader: var(--ithx-warm-brass);
+  --color-ink: var(--ithx-ink);
+
+  /* Compatibility aliases for the existing presentation layers. */
+  --color-forest: var(--ithx-primary-green);
+  --color-emerald: var(--ithx-emerald-accent);
+  --color-lime: var(--ithx-mint-signal);
+  --color-night: var(--ithx-night-green);
+
   --max-width: 1240px;
   --radius-sm: 0.45rem;
   --radius-lg: 1.25rem;
@@ -36,77 +66,54 @@
 }
 
 :root[data-theme='light'] {
-  --color-background: #f3f5ef;
-  --color-foreground: #18211b;
-  --color-muted-foreground: #526057;
-  --color-surface-raised: #ffffff;
-  --color-border: rgb(41 91 63 / 0.16);
-  --color-line: rgb(41 91 63 / 0.12);
-  --color-hero-background: #f3f5ef;
-  --color-hero-text: #18211b;
-  --color-accent: #28764d;
-  --color-accent-foreground: #ffffff;
-  --color-stage-edge: #e4e9e1;
-  --color-glitch: #28764d;
-  --color-glitch-highlight: #1d5939;
-  --color-loader: #ad7745;
-  --story-surface: color-mix(in srgb, var(--color-background) 94%, var(--color-accent));
+  color-scheme: light;
 }
 
 :root[data-theme='dark'] {
-  --color-muted: #a8b3ab;
-  --color-line: rgb(155 180 164 / 0.18);
-  --color-background: #0b100d;
-  --color-foreground: var(--color-surface);
-  --color-muted-foreground: var(--color-muted);
-  --color-surface-raised: var(--color-night);
-  --color-border: rgb(164 190 173 / 0.16);
-  --color-accent: var(--color-emerald);
-  --color-accent-foreground: var(--color-surface);
-  --color-hero-background: #0b100d;
-  --color-stage-edge: #121b15;
-  --color-hero-text: var(--color-surface);
-  --color-glitch: var(--color-lime);
-  --color-glitch-highlight: var(--color-emerald);
-  --color-loader: #f2c14e;
+  color-scheme: dark;
+  --color-background: var(--ithx-night-green);
+  --color-surface: var(--ithx-deep-surface);
+  --color-surface-raised: var(--ithx-deep-surface);
+  --color-foreground: var(--ithx-paper-marble);
+  --color-muted: var(--ithx-mist);
+  --color-muted-foreground: var(--ithx-mist);
+  --color-border: var(--ithx-line-dark);
+  --color-line: color-mix(in srgb, var(--ithx-mist) 24%, transparent);
+  --color-accent: var(--ithx-mint-signal);
+  --color-accent-foreground: var(--ithx-action-text-dark);
+  --color-hero-background: var(--ithx-night-green);
+  --color-stage-edge: var(--ithx-deep-surface);
+  --color-hero-text: var(--ithx-paper-marble);
+  --color-glitch: var(--ithx-mint-signal);
+  --color-glitch-highlight: var(--ithx-dark-primary-green);
+  --color-loader: var(--ithx-mint-signal);
+  --color-ink: var(--ithx-paper-marble);
   --story-surface: color-mix(in srgb, var(--color-background) 88%, var(--color-surface-raised));
 }
 
-@media (prefers-color-scheme: light) {
 :root[data-theme='system'] {
-    --color-background: #f3f5ef;
-    --color-foreground: #18211b;
-    --color-muted-foreground: #526057;
-    --color-surface-raised: #ffffff;
-    --color-border: rgb(41 91 63 / 0.16);
-    --color-line: rgb(41 91 63 / 0.12);
-    --color-hero-background: #f3f5ef;
-    --color-hero-text: #18211b;
-    --color-accent: #28764d;
-    --color-accent-foreground: #ffffff;
-    --color-stage-edge: #e4e9e1;
-    --color-glitch: #28764d;
-    --color-glitch-highlight: #1d5939;
-    --color-loader: #ad7745;
-  }
+  color-scheme: light dark;
 }
 
 @media (prefers-color-scheme: dark) {
-:root[data-theme='system'] {
-    --color-muted: #a8b3ab;
-    --color-line: rgb(155 180 164 / 0.18);
-    --color-background: #0b100d;
-    --color-foreground: var(--color-surface);
-    --color-muted-foreground: var(--color-muted);
-    --color-surface-raised: var(--color-night);
-    --color-border: rgb(164 190 173 / 0.16);
-    --color-accent: var(--color-emerald);
-    --color-accent-foreground: var(--color-surface);
-    --color-hero-background: #0b100d;
-    --color-stage-edge: #121b15;
-    --color-hero-text: var(--color-surface);
-    --color-glitch: var(--color-lime);
-    --color-glitch-highlight: var(--color-emerald);
-    --color-loader: #f2c14e;
+  :root[data-theme='system'] {
+    --color-background: var(--ithx-night-green);
+    --color-surface: var(--ithx-deep-surface);
+    --color-surface-raised: var(--ithx-deep-surface);
+    --color-foreground: var(--ithx-paper-marble);
+    --color-muted: var(--ithx-mist);
+    --color-muted-foreground: var(--ithx-mist);
+    --color-border: var(--ithx-line-dark);
+    --color-line: color-mix(in srgb, var(--ithx-mist) 24%, transparent);
+    --color-accent: var(--ithx-mint-signal);
+    --color-accent-foreground: var(--ithx-action-text-dark);
+    --color-hero-background: var(--ithx-night-green);
+    --color-stage-edge: var(--ithx-deep-surface);
+    --color-hero-text: var(--ithx-paper-marble);
+    --color-glitch: var(--ithx-mint-signal);
+    --color-glitch-highlight: var(--ithx-dark-primary-green);
+    --color-loader: var(--ithx-mint-signal);
+    --color-ink: var(--ithx-paper-marble);
+    --story-surface: color-mix(in srgb, var(--color-background) 88%, var(--color-surface-raised));
   }
 }

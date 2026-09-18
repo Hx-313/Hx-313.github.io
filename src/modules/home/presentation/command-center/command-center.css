@@ -1,12 +1,12 @@
 /* Systems — proof of work, arranged as a calm operating surface */
 
 .command-center {
-  --cc-void: #0a0d0b;
-  --cc-raised: #101410;
-  --cc-primary: #edefec;
-  --cc-muted: #8a928c;
-  --cc-faint: #4a524c;
-  --cc-signal: #3ecf8e;
+  --cc-void: var(--color-background);
+  --cc-raised: var(--color-surface-raised);
+  --cc-primary: var(--color-foreground);
+  --cc-muted: var(--color-muted-foreground);
+  --cc-faint: color-mix(in srgb, var(--color-muted-foreground) 42%, transparent);
+  --cc-signal: var(--color-accent);
   --cc-line: color-mix(in srgb, var(--cc-faint) 72%, transparent);
 
   position: relative;
@@ -535,7 +535,7 @@
 
 :root[data-theme='light'] .command-center {
   --cc-void: var(--color-background);
-  --cc-raised: #ffffff;
+  --cc-raised: var(--color-surface);
   --cc-primary: var(--color-foreground);
   --cc-muted: var(--color-muted-foreground);
   --cc-faint: color-mix(in srgb, var(--color-muted-foreground) 42%, transparent);

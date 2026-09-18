@@ -14,13 +14,12 @@
   overflow: hidden;
   scroll-margin-top: var(--header-offset, 4.5rem);
 
-  --bg-void: #0A0D0B;
-  --ink-primary: #EDEFEC;
-  --ink-muted: #8A928C;
-  --ink-faint: #4A524C;
-  --signal: #3ECF8E;
+  --bg-void: var(--color-background);
+  --ink-primary: var(--color-foreground);
+  --ink-muted: var(--color-muted-foreground);
+  --ink-faint: color-mix(in srgb, var(--color-muted-foreground) 42%, transparent);
+  --signal: var(--color-accent);
   --grid-line: color-mix(in srgb, var(--ink-faint) 72%, transparent);
-  --font-body: 'General Sans', 'Suisse Intl', 'Plus Jakarta Sans', sans-serif;
 
   background: var(--bg-void);
   color: var(--ink-primary);

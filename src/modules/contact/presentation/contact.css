@@ -1,13 +1,13 @@
 /* Contact — one clear action, two fast routes */
 
 .contact-section {
-  --bg-void: #0a0d0b;
-  --bg-raised: #101410;
-  --ink-primary: #edefec;
-  --ink-muted: #8a928c;
-  --ink-faint: #4a524c;
-  --signal: #3ecf8e;
-  --signal-dim: #1f6b4b;
+  --bg-void: var(--color-background);
+  --bg-raised: var(--color-surface-raised);
+  --ink-primary: var(--color-foreground);
+  --ink-muted: var(--color-muted-foreground);
+  --ink-faint: color-mix(in srgb, var(--color-muted-foreground) 42%, transparent);
+  --signal: var(--color-accent);
+  --signal-dim: color-mix(in srgb, var(--color-accent) 70%, var(--color-background));
   --line: color-mix(in srgb, var(--ink-faint) 72%, transparent);
 
   position: relative;
@@ -697,7 +697,7 @@
 
 :root[data-theme='light'] .contact-section {
   --bg-void: var(--color-background);
-  --bg-raised: #ffffff;
+  --bg-raised: var(--color-surface);
   --ink-primary: var(--color-foreground);
   --ink-muted: var(--color-muted-foreground);
   --ink-faint: color-mix(in srgb, var(--color-muted-foreground) 42%, transparent);

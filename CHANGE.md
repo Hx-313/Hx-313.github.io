@@ -362,3 +362,9 @@ Documentation-only changes, configuration changes, dependency changes, source ch
 - Files: `src/modules/home/presentation/hero/hero.css`, `CHANGE.md`
 - Verification: `node --test tests/hero-content.test.mjs tests/holographic-globe.test.mjs` passed (6/6 tests passing). `npm run build` compiled cleanly with 0 errors in 7.43s.
 
+## 2026-09-18 — Align Phase 1 theme tokens and typography with itHX branding
+
+- Summary: Replaced the active theme palette with canonical itHX light/dark semantic tokens, wired section-level colors to theme semantics, loaded Space Grotesk and Inter, and synchronized the theme-color metadata with explicit/system theme selection.
+- Files: `index.html`, `src/shared/theme/tokens.css`, `src/shared/theme/global.css`, `src/shared/theme/useTheme.js`, `src/modules/about/presentation/about.css`, `src/modules/contact/presentation/contact.css`, `src/modules/footer/presentation/footer.css`, `src/modules/home/presentation/command-center/command-center.css`, `src/modules/home/presentation/header/header.css`, `src/modules/home/presentation/home.css`, `src/modules/home/presentation/how-i-build/how-i-build.css`, `src/modules/home/presentation/opening/opening.css`, `src/modules/home/presentation/services/services.css`, `tests/how-i-build-interaction.test.mjs`, `CHANGE.md`
+- Verification: `npm run build` passed. Focused theme/header/footer tests passed. The full suite currently reports 57 passing and 6 unrelated pre-existing content-contract failures (about/client story/contact/how-i-build data).
+
