@@ -30,9 +30,47 @@ function ScopeTag({ tag }) {
   );
 }
 
+function ToolTile({ tool, isActive, onToggle }) {
+  const serviceId = `how-i-build-service-${tool.id}`;
+
+  return (
+    <div className={`how-i-build-tile ${isActive ? 'is-active' : ''}`} role="listitem">
+      <button
+        type="button"
+        className="how-i-build-tile-button"
+        aria-expanded={isActive}
+        aria-controls={serviceId}
+        onClick={() => onToggle(tool.id)}
+      >
+        <span className="tile-icon-wrap" aria-hidden="true">
+          <ToolIcon name={tool.icon} />
+        </span>
+        <span className="tile-content">
+          <span className="tile-name">{tool.name}</span>
+          <span className="tile-description">{tool.description}</span>
+          <span
+            id={serviceId}
+            className="tile-service"
+            aria-hidden={!isActive}
+          >
+            <span className="tile-service-label">Applied to</span>
+            <span className="tile-service-value">{tool.service}</span>
+          </span>
+        </span>
+        <span className="tile-reveal-indicator" aria-hidden="true" />
+      </button>
+    </div>
+  );
+}
+
 export default function HowIBuild() {
   const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [activeToolId, setActiveToolId] = useState(null);
+
+  const handleToolToggle = (toolId) => {
+    setActiveToolId((current) => (current === toolId ? null : toolId));
+  };
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -106,15 +144,12 @@ export default function HowIBuild() {
             aria-label="Technologies and development tools"
           >
             {howIBuildData.tools.map((tool) => (
-              <div key={tool.id} className="how-i-build-tile" role="listitem">
-                <div className="tile-icon-wrap">
-                  <ToolIcon name={tool.icon} />
-                </div>
-                <div className="tile-content">
-                  <h3 className="tile-name">{tool.name}</h3>
-                  <p className="tile-description">{tool.description}</p>
-                </div>
-              </div>
+              <ToolTile
+                key={tool.id}
+                tool={tool}
+                isActive={activeToolId === tool.id}
+                onToggle={handleToolToggle}
+              />
             ))}
           </div>
         </div>

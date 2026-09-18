@@ -213,13 +213,11 @@
 }
 
 .how-i-build-tile {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.8rem;
+  position: relative;
+  display: block;
   min-width: 0;
   min-height: 7.1rem;
-  position: relative;
-  padding: 1.15rem 1rem 1.15rem 0;
+  padding: 0;
   border-bottom: 1px solid color-mix(in srgb, var(--ink-muted) 24%, transparent);
   transition: background-color 180ms ease;
 }
@@ -247,13 +245,38 @@
   transform: scaleX(1);
 }
 
+.how-i-build-tile-button {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  width: 100%;
+  min-height: 7.1rem;
+  padding: 1.15rem 1rem 1.15rem 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.how-i-build-tile-button:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 2px solid color-mix(in srgb, var(--signal) 78%, white);
+  outline-offset: -2px;
+}
+
 .how-i-build-tile:not(:nth-child(3n)) {
   border-right: 1px solid color-mix(in srgb, var(--ink-muted) 20%, transparent);
+}
+
+.how-i-build-tile:not(:nth-child(3n)) .how-i-build-tile-button {
   padding-right: 1rem;
 }
 
-.how-i-build-tile:nth-child(3n + 2),
-.how-i-build-tile:nth-child(3n + 3) {
+.how-i-build-tile:nth-child(3n + 2) .how-i-build-tile-button,
+.how-i-build-tile:nth-child(3n + 3) .how-i-build-tile-button {
   padding-left: 1rem;
 }
 
@@ -321,6 +344,7 @@
 }
 
 .tile-name {
+  display: block;
   margin: 0 0 0.35rem;
   color: var(--ink-primary);
   font-family: var(--font-body);
@@ -330,6 +354,7 @@
 }
 
 .tile-description {
+  display: block;
   margin: 0;
   color: var(--ink-muted);
   font-family: var(--font-body);
@@ -338,12 +363,87 @@
   text-wrap: pretty;
 }
 
+.tile-service {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  max-height: 0;
+  margin-top: 0;
+  overflow: hidden;
+  color: color-mix(in srgb, var(--signal) 100%, transparent);
+  font-family: var(--font-body);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.045em;
+  line-height: 1.35;
+  opacity: 0;
+  transform: translateX(-0.5rem);
+  transition: max-height 220ms ease, margin-top 220ms ease, opacity 220ms ease, transform 220ms ease;
+}
+
+.tile-service-label {
+  color: var(--ink-faint);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tile-service-value {
+  min-width: 0;
+}
+
+.how-i-build-tile:hover .tile-service,
+.how-i-build-tile:focus-within .tile-service,
+.how-i-build-tile.is-active .tile-service {
+  max-height: 2.25rem;
+  margin-top: 0.65rem;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.tile-reveal-indicator {
+  position: relative;
+  flex: 0 0 1.1rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-left: auto;
+  color: var(--ink-muted);
+  transition: transform 220ms ease, color 180ms ease;
+}
+
+.tile-reveal-indicator::before,
+.tile-reveal-indicator::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.65rem;
+  height: 1px;
+  background: currentColor;
+  content: '';
+  transform: translate(-50%, -50%);
+}
+
+.tile-reveal-indicator::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.how-i-build-tile:hover .tile-reveal-indicator,
+.how-i-build-tile:focus-within .tile-reveal-indicator,
+.how-i-build-tile.is-active .tile-reveal-indicator {
+  color: color-mix(in srgb, var(--signal) 100%, transparent);
+  transform: rotate(45deg);
+}
+
 @media (max-width: 960px) {
   .how-i-build-layout {
     gap: 3rem;
   }
 
   .how-i-build-tile {
+    min-height: 6.5rem;
+  }
+
+  .how-i-build-tile-button {
     min-height: 6.5rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -380,40 +480,60 @@
   }
 
   .how-i-build-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    background: none;
+    border-top: 0;
   }
 
+  .how-i-build-grid::before {
+    display: none;
+  }
+
+  .how-i-build-tile,
+  .how-i-build-tile:not(:nth-child(3n)),
   .how-i-build-tile:nth-child(3n + 2),
   .how-i-build-tile:nth-child(3n + 3) {
-    padding-left: 0;
-  }
-
-  .how-i-build-tile:nth-child(even) {
-    padding-left: 1rem;
-  }
-
-  .how-i-build-tile:not(:nth-child(3n)) {
+    min-height: 0;
     border-right: 0;
-    padding-right: 0;
+    border-bottom: 0;
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--bg-raised) 94%, var(--signal) 6%);
+    box-shadow: 0 14px 30px color-mix(in srgb, var(--bg-void) 58%, transparent);
+    overflow: hidden;
   }
 
-  .how-i-build-tile:nth-child(odd) {
-    border-right: 1px solid color-mix(in srgb, var(--ink-muted) 20%, transparent);
-    padding-right: 1rem;
+  .how-i-build-tile:hover {
+    background: color-mix(in srgb, var(--bg-raised) 88%, var(--signal) 12%);
+  }
+
+  .how-i-build-tile.is-active {
+    background: color-mix(in srgb, var(--bg-raised) 88%, var(--signal) 12%);
+    box-shadow: 0 18px 36px color-mix(in srgb, var(--bg-void) 50%, transparent);
+  }
+
+  .how-i-build-tile-button,
+  .how-i-build-tile:not(:nth-child(3n)) .how-i-build-tile-button,
+  .how-i-build-tile:nth-child(3n + 2) .how-i-build-tile-button,
+  .how-i-build-tile:nth-child(3n + 3) .how-i-build-tile-button {
+    min-height: 5.5rem;
+    padding: 1rem;
+  }
+
+  .tile-service {
+    font-size: 0.61rem;
+  }
+
+  .how-i-build-tile::before {
+    top: 0;
+    left: 1rem;
+    width: 3rem;
   }
 }
 
 @media (max-width: 480px) {
-  .how-i-build-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .how-i-build-tile,
-  .how-i-build-tile:nth-child(even),
-  .how-i-build-tile:nth-child(odd) {
-    min-height: auto;
-    padding: 1rem 0;
-    border-right: 0;
+  .how-i-build-tile-button {
+    min-height: 44px;
   }
 }
 
@@ -426,6 +546,9 @@
   .how-i-build-tag,
   .how-i-build-sparkle,
   .how-i-build-tile,
+  .how-i-build-tile-button,
+  .tile-service,
+  .tile-reveal-indicator,
   .how-i-build-tile::before {
     transition: none;
     animation: none;
