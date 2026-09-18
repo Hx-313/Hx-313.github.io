@@ -5,6 +5,10 @@
   --projects-muted: var(--color-muted-foreground);
   --projects-line: var(--color-border);
   --projects-accent: var(--color-accent);
+  --projects-card-width: clamp(22rem, 23vw, 27rem);
+  --projects-carousel-offset: calc(var(--projects-card-width) + clamp(1.5rem, 2.2vw, 2.25rem));
+  --projects-card-max-height: calc(100dvh - clamp(8rem, 14vh, 11rem));
+  --projects-card-height: min(42rem, var(--projects-card-max-height));
   --projects-scroll-distance: 0px;
   height: calc(100vh + var(--projects-scroll-distance));
   position: relative;
@@ -81,6 +85,7 @@
   position: relative;
   display: flex;
   align-items: center;
+  min-height: var(--projects-card-height);
   overflow: hidden;
 }
 
@@ -91,10 +96,10 @@
 }
 
 .projects-showcase__track {
-  --projects-carousel-height: 32rem;
+  --projects-card-height: min(42rem, var(--projects-card-max-height));
   position: relative;
   width: 100%;
-  height: var(--projects-carousel-height);
+  height: var(--projects-card-height);
 }
 
 .projects-showcase__card {
@@ -102,7 +107,11 @@
   top: 0;
   left: 50%;
   z-index: 0;
-  width: clamp(20rem, 20vw, 24rem);
+  width: var(--projects-card-width);
+  height: var(--projects-card-height);
+  max-height: var(--projects-card-max-height);
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   border: 1px solid var(--projects-line);
   border-radius: var(--radius-lg);
@@ -113,7 +122,7 @@
   transform-origin: center bottom;
   filter: blur(8px);
   pointer-events: none;
-  transition: border-color 420ms var(--ease-out), box-shadow 420ms var(--ease-out), opacity 520ms var(--ease-out), transform 520ms var(--ease-out), filter 520ms var(--ease-out);
+  transition: border-color 420ms var(--ease-out), box-shadow 420ms var(--ease-out), opacity 640ms var(--ease-out), transform 640ms var(--ease-out), filter 640ms var(--ease-out);
   will-change: transform, opacity, filter;
 }
 
@@ -134,11 +143,19 @@
 }
 
 .projects-showcase__card[data-carousel-state="previous"] {
-  transform: translate3d(calc(-50% - 50vw), 0, 0) scale(0.88);
+  transform: translate3d(calc(-50% - var(--projects-carousel-offset)), 0, 0) scale(0.88);
 }
 
 .projects-showcase__card[data-carousel-state="next"] {
-  transform: translate3d(calc(-50% + 50vw), 0, 0) scale(0.88);
+  transform: translate3d(calc(-50% + var(--projects-carousel-offset)), 0, 0) scale(0.88);
+}
+
+.projects-showcase__card[data-carousel-state="hidden"] {
+  z-index: 0;
+  opacity: 0;
+  transform: translate3d(-50%, 0, 0) scale(0.78);
+  filter: blur(8px);
+  pointer-events: none;
 }
 
 .projects-showcase__card:hover,
@@ -147,10 +164,48 @@
   box-shadow: 0 1.5rem 3.5rem color-mix(in srgb, var(--projects-accent) 15%, transparent);
 }
 
+.projects-showcase__carousel-controls {
+  position: absolute;
+  top: 50%;
+  right: clamp(1rem, 3vw, 3rem);
+  z-index: 5;
+  display: flex;
+  gap: 0.55rem;
+  transform: translateY(-50%);
+}
+
+.projects-showcase__carousel-button {
+  display: inline-grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border: 1px solid var(--projects-line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--projects-surface) 88%, transparent);
+  color: var(--projects-foreground);
+  cursor: pointer;
+  box-shadow: 0 0.75rem 1.75rem color-mix(in srgb, var(--projects-foreground) 12%, transparent);
+  transition: background-color 220ms var(--ease-out), border-color 220ms var(--ease-out), color 220ms var(--ease-out), transform 220ms var(--ease-out);
+}
+
+.projects-showcase__carousel-button:hover,
+.projects-showcase__carousel-button:focus-visible {
+  border-color: var(--projects-accent);
+  background: var(--projects-accent);
+  color: var(--projects-bg);
+  transform: translateY(-0.15rem);
+}
+
+.projects-showcase__carousel-button:focus-visible {
+  outline: 2px solid var(--projects-accent);
+  outline-offset: 3px;
+}
+
 .projects-showcase__media {
   position: relative;
   display: flex;
-  min-height: clamp(12rem, 28vh, 20rem);
+  min-height: 0;
+  flex: 1 1 auto;
   align-items: end;
   justify-content: center;
   overflow: hidden;
@@ -163,12 +218,14 @@
   z-index: 1;
   display: block;
   width: 100%;
-  max-height: clamp(12rem, 30vh, 21rem);
+  max-height: min(100%, clamp(12rem, 30vh, 21rem));
   object-fit: contain;
   filter: drop-shadow(0 1.5rem 2.25rem color-mix(in srgb, var(--projects-foreground) 26%, transparent));
 }
 
 .projects-showcase__body {
+  flex: 0 0 auto;
+  min-height: 0;
   padding: clamp(1.25rem, 2.6vw, 2rem) clamp(1.25rem, 3.2vw, 2.5rem) clamp(1.5rem, 3vw, 2.15rem);
 }
 
@@ -233,7 +290,7 @@
 
 .projects-showcase__card--cta {
   display: flex;
-  min-height: 100%;
+  min-height: var(--projects-card-height);
   flex-direction: column;
   justify-content: center;
   padding: clamp(1.5rem, 4vw, 3rem);
@@ -342,7 +399,7 @@
 
   .projects-showcase__cards-stage {
     flex: none;
-    overflow: visible;
+    overflow: hidden;
   }
 
   .projects-showcase__header {
@@ -361,30 +418,23 @@
   }
 
   .projects-showcase__viewport {
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    scrollbar-width: none;
-    scroll-snap-type: x proximity;
-  }
-
-  .projects-showcase__viewport::-webkit-scrollbar {
-    display: none;
+    overflow: hidden;
   }
 
   .projects-showcase__track {
-    gap: 1rem;
-    padding-inline: 1.25rem;
-    transform: none !important;
-    transition: none;
-    will-change: auto;
+    width: 100%;
   }
 
   .projects-showcase__card {
-    flex-basis: min(82vw, 31rem);
-    scroll-snap-align: center;
-    opacity: 1;
-    transform: none;
-    transition: border-color 240ms ease, box-shadow 240ms ease;
+    width: min(90vw, 31rem);
+  }
+
+  .projects-showcase__card[data-carousel-state="previous"] {
+    transform: translate3d(calc(-50% - var(--projects-carousel-offset)), 0, 0) scale(0.88);
+  }
+
+  .projects-showcase__card[data-carousel-state="next"] {
+    transform: translate3d(calc(-50% + var(--projects-carousel-offset)), 0, 0) scale(0.88);
   }
 
   .projects-showcase__media {
@@ -397,7 +447,13 @@
 
   .projects-showcase__card--cta {
     min-height: 22rem;
-    scroll-snap-align: center;
+  }
+
+  .projects-showcase__carousel-controls {
+    top: auto;
+    right: 1.25rem;
+    bottom: 1rem;
+    transform: none;
   }
 
   .projects-showcase__progress {
@@ -417,20 +473,9 @@
     min-height: auto;
   }
 
-  .projects-showcase__track {
-    transform: none !important;
-    transition: none;
-    will-change: auto;
-  }
-
   .projects-showcase__card,
   .projects-showcase__cta-link span,
   .projects-showcase__hold-note {
     transition: none;
-  }
-
-  .projects-showcase__card {
-    opacity: 1;
-    transform: none;
   }
 }

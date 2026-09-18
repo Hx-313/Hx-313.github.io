@@ -24,6 +24,12 @@ Documentation-only changes, configuration changes, dependency changes, source ch
 - Verification: Commands run and their result, or `Not run` with the reason.
 ```
 
+## 2026-09-18 — Elevate Hero background typography visibility and vertical positioning
+
+- Summary: Per user feedback ("lines got too faded barely can see and move it abit top"), elevated the vertical placement of the background typography watermark to `top: 40%` (previously `top: 50%`) across the upper hemisphere of the digital earth globe, and boosted its visibility from 9% to 22% accent opacity (`color: color-mix(in srgb, var(--color-accent) 22%, transparent)`) accompanied by a subtle emerald text glow (`text-shadow: 0 0 1.6rem color-mix(in srgb, var(--color-accent) 18%, transparent)`). Widened the mask fade window (`black 34%, black 94%`) so the typography is clearly discernible and luminous while continuing to sit strictly behind the globe and foreground content.
+- Files: `src/modules/home/presentation/hero/hero.css`, `CHANGE.md`
+- Verification: `npm test` ran with 79/79 unit tests passing (100%). `npm run build` compiled 106 modules cleanly with 0 errors in 13.10s.
+
 ## 2026-09-18 — Refactor Hero background typography to subtle dark-green ambient watermark
 
 - Summary: Addressed layout collision and readability issues in the Hero section by refactoring background typography into an ambient background watermark per user specifications:

@@ -33,6 +33,8 @@ test('showcase projects use their app-specific hero asset folders', () => {
 test('projects showcase owns the horizontal behavior and accessible CTA', async () => {
   const component = await readFile(new URL('../src/modules/home/presentation/command-center/ProjectsShowcase.jsx', import.meta.url), 'utf8');
   const styles = await readFile(new URL('../src/modules/home/presentation/command-center/projects-showcase.css', import.meta.url), 'utf8');
+  const homeStyles = await readFile(new URL('../src/modules/home/presentation/home.css', import.meta.url), 'utf8');
+  const headerStyles = await readFile(new URL('../src/modules/home/presentation/header/header.css', import.meta.url), 'utf8');
   const commandCenter = await readFile(new URL('../src/modules/home/presentation/command-center/CommandCenter.jsx', import.meta.url), 'utf8');
 
   assert.match(commandCenter, /ProjectsShowcase/);
@@ -53,6 +55,10 @@ test('projects showcase owns the horizontal behavior and accessible CTA', async 
   assert.match(component, /setActiveIndex/);
   assert.match(component, /projects-showcase__carousel-button/);
   assert.match(component, /% cards\.length/);
+  assert.match(component, /cardsStageRef/);
+  assert.match(component, /--projects-card-max-height/);
+  assert.match(component, /is-carousel-active/);
+  assert.match(component, /window\.innerHeight/);
   assert.match(component, /--projects-scroll-distance/);
   assert.match(component, /clamp\(rawProgress, 0, 1\)/);
 
@@ -66,13 +72,22 @@ test('projects showcase owns the horizontal behavior and accessible CTA', async 
   assert.match(styles, /data-carousel-state="hidden"/);
   assert.match(styles, /filter:\s*blur\(/);
   assert.match(styles, /overflow:\s*hidden/);
-  assert.match(styles, /flex:\s*0 0 clamp\(20rem, 20vw, 24rem\)/);
-  assert.match(styles, /padding-inline:\s*0/);
-  assert.match(styles, /min-height:\s*clamp\(12rem, 28vh, 20rem\)/);
+  assert.match(styles, /--projects-card-width:\s*clamp\(22rem, 23vw, 27rem\)/);
+  assert.match(styles, /--projects-carousel-offset:/);
+  assert.match(styles, /max-height:\s*var\(--projects-card-max-height\)/);
+  assert.match(styles, /100dvh/);
+  assert.match(styles, /translate3d\(calc\(-50% - var\(--projects-carousel-offset\)/);
+  assert.match(styles, /translate3d\(calc\(-50% \+ var\(--projects-carousel-offset\)/);
+  assert.match(styles, /opacity 640ms/);
+  assert.match(styles, /top:\s*50%/);
+  assert.match(styles, /width:\s*100%/);
+  assert.match(styles, /min-height:\s*0/);
   assert.match(styles, /projects-showcase__cards-stage/);
   assert.match(styles, /@media\s*\(min-width:\s*900px\)/);
   assert.doesNotMatch(styles, /overflow-x:\s*auto/);
   assert.match(styles, /var\(--color-background\)/);
   assert.match(styles, /var\(--color-surface/);
   assert.match(styles, /@media\s*\(prefers-reduced-motion:\s*reduce\)/);
+  assert.match(homeStyles, /\.site-experience\.is-carousel-active \.site-header\s*\{\s*position:\s*static/);
+  assert.match(headerStyles, /\.site-header[\s\S]*position:\s*sticky/);
 });

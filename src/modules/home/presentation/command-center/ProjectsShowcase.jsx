@@ -49,7 +49,7 @@ function SeeAllProjectsCard({ carouselState }) {
       <span className="projects-showcase__cta-mark" aria-hidden="true">↗</span>
       <h3>See all projects</h3>
       <p>Browse the wider archive of mobile products, systems, and experiments behind the main sequence.</p>
-      <a className="projects-showcase__cta-link" href="#contact" tabIndex={carouselState === 'hidden' ? -1 : 0}>
+      <a className="projects-showcase__cta-link" href="#contact" tabIndex={carouselState === 'active' ? 0 : -1}>
         Start with a project brief <span aria-hidden="true">↗</span>
       </a>
       <span className="projects-showcase__hold-note">You are here for a moment — choose a direction.</span>
@@ -61,6 +61,7 @@ export default function ProjectsShowcase({ projects = [] }) {
   const sectionRef = useRef(null);
   const viewportRef = useRef(null);
   const trackRef = useRef(null);
+  const cardsStageRef = useRef(null);
   const fillRef = useRef(null);
   const previousButtonRef = useRef(null);
   const nextButtonRef = useRef(null);
@@ -73,13 +74,15 @@ export default function ProjectsShowcase({ projects = [] }) {
     const section = sectionRef.current;
     const viewport = viewportRef.current;
     const track = trackRef.current;
+    const cardsStage = cardsStageRef.current;
     const fill = fillRef.current;
     const previousButton = previousButtonRef.current;
     const nextButton = nextButtonRef.current;
-    if (!section || !viewport || !track || !fill) return undefined;
+    if (!section || !viewport || !track || !cardsStage || !fill) return undefined;
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const finePointer = window.matchMedia('(pointer:fine)');
+    const experience = section.closest('.site-experience') || document.querySelector('.site-experience');
     const cards = [...track.querySelectorAll('[data-project-id]')];
     const CAROUSEL_STEP_COUNT = Math.max(1, cards.length - 1);
     let activeIndex = 0;
@@ -87,6 +90,9 @@ export default function ProjectsShowcase({ projects = [] }) {
 
     const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
     const isScrubMode = () => finePointer.matches && !reducedMotion.matches && window.innerWidth > 720;
+    const setHeaderMode = (active) => {
+      experience?.classList.toggle('is-carousel-active', active);
+    };
     const getStateForCard = (cardIndex, currentIndex) => {
       const relativeIndex = (cardIndex - currentIndex + cards.length) % cards.length;
       if (relativeIndex === 0) return 'active';
@@ -101,7 +107,7 @@ export default function ProjectsShowcase({ projects = [] }) {
         card.dataset.carouselState = state;
         card.setAttribute('aria-hidden', String(state === 'hidden'));
         const link = card.querySelector('a');
-        if (link) link.tabIndex = state === 'hidden' ? -1 : 0;
+        if (link) link.tabIndex = state === 'active' ? 0 : -1;
       });
     };
 
@@ -124,9 +130,53 @@ export default function ProjectsShowcase({ projects = [] }) {
       if (syncScroll) scrollToIndex(activeIndex);
     };
 
+    const measureNaturalCardHeight = () => {
+      const trackHeight = track.style.height;
+      const cardStyles = cards.map((card) => ({
+        height: card.style.height,
+        maxHeight: card.style.maxHeight,
+      }));
+
+      track.style.height = 'auto';
+      cards.forEach((card) => {
+        card.style.height = 'auto';
+        card.style.maxHeight = 'none';
+      });
+
+      const height = cards.reduce((maxHeight, card) => Math.max(maxHeight, card.scrollHeight), 0);
+
+      if (trackHeight) track.style.height = trackHeight;
+      else track.style.removeProperty('height');
+      cards.forEach((card, cardIndex) => {
+        const previousStyle = cardStyles[cardIndex];
+        if (previousStyle.height) card.style.height = previousStyle.height;
+        else card.style.removeProperty('height');
+        if (previousStyle.maxHeight) card.style.maxHeight = previousStyle.maxHeight;
+        else card.style.removeProperty('max-height');
+      });
+
+      return height;
+    };
+
     const measure = () => {
-      const cardHeight = cards.reduce((height, card) => Math.max(height, card.scrollHeight), 0);
-      if (cardHeight > 0) track.style.setProperty('--projects-carousel-height', `${cardHeight}px`);
+      const cardHeight = measureNaturalCardHeight();
+      const stageTop = cardsStage.getBoundingClientRect().top;
+      const sticky = cardsStage.closest('.projects-showcase__sticky');
+      const stickyStyles = sticky ? window.getComputedStyle(sticky) : null;
+      const bottomPadding = Number.parseFloat(stickyStyles?.paddingBottom || '0') || 0;
+      const breathingRoom = Math.max(28, Math.round(window.innerHeight * 0.04));
+      const availableHeight = Math.max(
+        360,
+        Math.floor(window.innerHeight - Math.max(stageTop, 0) - bottomPadding - breathingRoom),
+      );
+      const maxCardHeight = isScrubMode()
+        ? Math.min(cardHeight || availableHeight, availableHeight)
+        : cardHeight;
+
+      if (maxCardHeight > 0) {
+        section.style.setProperty('--projects-card-max-height', `${maxCardHeight}px`);
+        track.style.setProperty('--projects-card-height', `${maxCardHeight}px`);
+      }
 
       const stepDistance = Math.max(220, Math.round(window.innerHeight * 0.42));
       const scrollDistance = isScrubMode() ? stepDistance * CAROUSEL_STEP_COUNT : 0;
@@ -135,6 +185,8 @@ export default function ProjectsShowcase({ projects = [] }) {
 
     const update = () => {
       frame = 0;
+      const sectionBounds = section.getBoundingClientRect();
+      setHeaderMode(sectionBounds.top < window.innerHeight && sectionBounds.bottom > 0);
       measure();
       const scrub = isScrubMode();
       const interaction = scrub ? 'scrub' : 'carousel';
@@ -192,8 +244,10 @@ export default function ProjectsShowcase({ projects = [] }) {
       images.forEach((image) => image.removeEventListener('load', scheduleUpdate));
       previousButton?.removeEventListener('click', handlePrevious);
       nextButton?.removeEventListener('click', handleNext);
+      setHeaderMode(false);
       section.style.removeProperty('--projects-scroll-distance');
-      track.style.removeProperty('--projects-carousel-height');
+      section.style.removeProperty('--projects-card-max-height');
+      track.style.removeProperty('--projects-card-height');
     };
   }, []);
 
@@ -213,7 +267,7 @@ export default function ProjectsShowcase({ projects = [] }) {
           </header>
         </div>
 
-        <div className="projects-showcase__cards-stage">
+        <div className="projects-showcase__cards-stage" ref={cardsStageRef}>
           <div className="projects-showcase__viewport" ref={viewportRef} role="region" aria-label="Selected work carousel">
             <div className="projects-showcase__track" ref={trackRef}>
               {featuredProjects.map((project, index) => (
