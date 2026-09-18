@@ -49,13 +49,14 @@ Node.js 18 or newer is required.
 ## Guardrails
 
 - Preserve the user's uncommitted work and unrelated changes.
+- Zero hardcoded copy in JSX: All user-facing text, section headings, CTAs, button labels, and accessibility aria-labels must be defined under `src/core/constants/<module>/` and imported.
 - Keep project content data-driven and avoid unverified claims.
 - Reuse real project imagery where available.
 - Maintain keyboard access, visible focus, reduced-motion behavior, responsive layouts, and semantic HTML.
 - Use theme tokens instead of scattering hardcoded visual values.
 - Keep motion purposeful and avoid unnecessary continuous animation.
-- Keep contact destinations and external project links centralized in `src/core/constants.js`.
-- Verify meaningful changes with `npm run build` and relevant tests.
+- Keep contact destinations, external project links, and site copy centralized in `src/core/constants/`.
+- Verify meaningful changes with `npm test`, `npm run build`, and relevant tests.
 
 ## Next product milestone
 

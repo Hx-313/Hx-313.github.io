@@ -36,7 +36,7 @@
 
 .site-experience.is-ready {
   opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
+  transform: none;
   filter: none;
   pointer-events: auto;
   transition: opacity 320ms var(--ease-out), transform 320ms var(--ease-out), filter 320ms var(--ease-out);

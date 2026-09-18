@@ -2,19 +2,25 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { HERO_TEXT } from '../src/core/constants/hero/heroText.js';
 
 test('HeroContent presents the approved punchline and conversion paths', () => {
   const content = readFileSync(resolve('src/modules/home/presentation/hero/HeroContent.jsx'), 'utf-8');
 
-  assert.ok(content.includes('Built to'), 'Includes the hero punchline lead');
-  assert.ok(content.includes('hold together.'), 'Includes the hero punchline accent');
-  assert.ok(content.includes('See Work'), 'Includes the work CTA');
-  assert.ok(content.includes("Let's Plan"), 'Includes the planning CTA');
+  assert.equal(HERO_TEXT.title.prefix, 'Built to');
+  assert.equal(HERO_TEXT.title.highlight, 'hold together.');
+  assert.equal(HERO_TEXT.actions.seeWork, 'See Work');
+  assert.equal(HERO_TEXT.actions.letPlan, "Let's Plan");
+
+  assert.ok(content.includes('HERO_TEXT.title.prefix'), 'References hero punchline lead');
+  assert.ok(content.includes('HERO_TEXT.title.highlight'), 'References hero punchline accent');
+  assert.ok(content.includes('HERO_TEXT.actions.seeWork'), 'References work CTA');
+  assert.ok(content.includes('HERO_TEXT.actions.letPlan'), 'References planning CTA');
   assert.ok(content.includes('href="#projects"'), 'Work CTA targets the projects sequence');
   assert.ok(content.includes('href="#contact"'), 'Planning CTA targets contact');
-  assert.ok(content.includes('GitHub'), 'Includes GitHub social link');
-  assert.ok(content.includes('LinkedIn'), 'Includes LinkedIn social link');
-  assert.ok(content.includes('Email'), 'Includes email social link');
+  assert.ok(content.includes('HERO_TEXT.socials.github'), 'Includes GitHub social link');
+  assert.ok(content.includes('HERO_TEXT.socials.linkedin'), 'Includes LinkedIn social link');
+  assert.ok(content.includes('HERO_TEXT.socials.email'), 'Includes email social link');
 });
 
 test('HeroVisual assembles the globe portal and opposing identity arcs', () => {
@@ -22,10 +28,8 @@ test('HeroVisual assembles the globe portal and opposing identity arcs', () => {
   const css = readFileSync(resolve('src/modules/home/presentation/hero/hero.css'), 'utf-8');
 
   assert.ok(visual.includes('GLOBE_FRAMES'), 'Uses the digital earth frame sequence');
-  assert.ok(visual.includes('Hafiz Ali Abdullah'), 'Uses the approved top arc identity');
-  assert.ok(visual.includes('Flutter Developer'), 'Uses the approved role arc');
-  assert.ok(visual.includes('Mobile Application Developer'), 'Uses the mobile role arc');
-  assert.ok(visual.includes('SaaS Developer'), 'Uses the SaaS role arc');
+  assert.ok(visual.includes('HERO_TEXT.orbitVisual.nameArc'), 'Uses the approved top arc identity');
+  assert.ok(visual.includes('HERO_TEXT.orbitVisual.rolesArc'), 'Uses the approved role arc');
   assert.ok(visual.includes('proofMetrics'), 'Uses real proof-point KPI data');
   assert.match(visual, /hero-visual-stats/);
   assert.match(css, /\.hero-visual\s*\{[\s\S]*?position:\s*absolute;[\s\S]*?inset:\s*0;/);

@@ -1,5 +1,5 @@
 import { useContactForm } from '../application/useContactForm.js';
-import { PROJECT_CATEGORIES } from '../domain/contactData.js';
+import { PROJECT_CATEGORIES, CONTACT_TEXT } from '../domain/contactData.js';
 
 export default function ContactForm() {
   const {
@@ -13,14 +13,16 @@ export default function ContactForm() {
     resetForm,
   } = useContactForm();
 
+  const { form } = CONTACT_TEXT;
+
   return (
     <section className="contact-form-card" aria-labelledby="contact-form-title">
       <div className="form-card-header">
         <div className="form-card-title-row">
           <span className="console-led" aria-hidden="true" />
-          <h3 className="form-card-title" id="contact-form-title">Tell me about the project</h3>
+          <h3 className="form-card-title" id="contact-form-title">{form.title}</h3>
         </div>
-        <span className="form-card-subtitle">About 60 seconds · No pitch deck required</span>
+        <span className="form-card-subtitle">{form.subtitle}</span>
       </div>
 
       {isSuccess ? (
@@ -30,18 +32,18 @@ export default function ContactForm() {
               <polyline points="20 6 9 17 4 12" />
             </svg>
           </div>
-          <h4 className="success-heading">Your note is ready</h4>
+          <h4 className="success-heading">{form.success.heading}</h4>
           <p className="success-text">
-            Thanks, <strong>{formData.name}</strong>. Your email app is ready with the details for your <em>{formData.category}</em> project.
+            {form.success.thanksPrefix}<strong>{formData.name}</strong>{form.success.detailsMiddle}<em>{formData.category}</em>{form.success.detailsSuffix}
           </p>
           <div className="success-actions">
             {mailtoUrl && (
               <a
                 href={mailtoUrl}
                 className="success-btn success-btn--primary"
-                aria-label="Open prefilled inquiry in your default email client"
+                aria-label={form.success.emailAria}
               >
-                <span>Open in Email App →</span>
+                <span>{form.success.openEmailBtn}</span>
               </a>
             )}
             <button
@@ -49,7 +51,7 @@ export default function ContactForm() {
               onClick={resetForm}
               className="success-btn success-btn--ghost"
             >
-              Start another note
+              {form.success.startAnotherBtn}
             </button>
           </div>
         </div>
@@ -57,7 +59,7 @@ export default function ContactForm() {
         <form onSubmit={handleSubmit} className="inquiry-form" noValidate>
           <div className="form-group">
             <label className="form-label" id="category-label">
-              What are you building? <span className="field-hint">optional</span>
+              {form.categoryLabel} <span className="field-hint">{form.optionalBadge}</span>
             </label>
             <div
               className="category-chips-grid"
@@ -85,7 +87,7 @@ export default function ContactForm() {
 
           <div className={`form-group ${errors.name ? 'has-error' : ''}`}>
             <label htmlFor="contact-name" className="form-label">
-              Your name <span className="field-req" aria-hidden="true">*</span>
+              {form.nameLabel} <span className="field-req" aria-hidden="true">*</span>
             </label>
             <input
               id="contact-name"
@@ -93,7 +95,7 @@ export default function ContactForm() {
               type="text"
               required
               autoComplete="name"
-              placeholder="e.g. Elena Rostova"
+              placeholder={form.namePlaceholder}
               value={formData.name}
               onChange={(e) => handleChange('name', e.target.value)}
               aria-invalid={Boolean(errors.name)}
@@ -109,7 +111,7 @@ export default function ContactForm() {
 
           <div className={`form-group ${errors.email ? 'has-error' : ''}`}>
             <label htmlFor="contact-email" className="form-label">
-              Best email <span className="field-req" aria-hidden="true">*</span>
+              {form.emailLabel} <span className="field-req" aria-hidden="true">*</span>
             </label>
             <input
               id="contact-email"
@@ -117,7 +119,7 @@ export default function ContactForm() {
               type="email"
               required
               autoComplete="email"
-              placeholder="elena@company.com"
+              placeholder={form.emailPlaceholder}
               value={formData.email}
               onChange={(e) => handleChange('email', e.target.value)}
               aria-invalid={Boolean(errors.email)}
@@ -133,14 +135,14 @@ export default function ContactForm() {
 
           <div className={`form-group ${errors.message ? 'has-error' : ''}`}>
             <label htmlFor="contact-message" className="form-label">
-              What can I help with? <span className="field-req" aria-hidden="true">*</span>
+              {form.messageLabel} <span className="field-req" aria-hidden="true">*</span>
             </label>
             <textarea
               id="contact-message"
               name="message"
               rows={4}
               required
-              placeholder="A link, rough brief, or one sentence is enough."
+              placeholder={form.messagePlaceholder}
               value={formData.message}
               onChange={(e) => handleChange('message', e.target.value)}
               aria-invalid={Boolean(errors.message)}
@@ -163,11 +165,11 @@ export default function ContactForm() {
               {isSubmitting ? (
                 <>
                   <span className="submit-spinner" aria-hidden="true" />
-                  <span>Preparing your email…</span>
+                  <span>{form.submitLoading}</span>
                 </>
               ) : (
                 <>
-                  <span>Send project note</span>
+                  <span>{form.submitIdle}</span>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <line x1="22" y1="2" x2="11" y2="13" />
                     <polygon points="22 2 15 22 11 13 2 9 22 2" />
@@ -176,7 +178,7 @@ export default function ContactForm() {
               )}
             </button>
             <span className="form-footer-note">
-              I’ll reply to this address within 2 hours.
+              {form.footerNote}
             </span>
           </div>
         </form>

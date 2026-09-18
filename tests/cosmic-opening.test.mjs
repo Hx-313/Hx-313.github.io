@@ -13,15 +13,19 @@ const dashPath = path.resolve('src/components/mascots/DashMascot.jsx');
 const homePagePath = path.resolve('src/modules/home/presentation/HomePage.jsx');
 const heroCssPath = path.resolve('src/modules/home/presentation/hero/hero.css');
 
-test('OpeningExperience contains connected-globe sequence led by Dash with Aero support', () => {
+test('OpeningExperience contains connected-globe sequence led by Dash with Aero support', async () => {
   const jsx = fs.readFileSync(openingJsxPath, 'utf8');
   const globe = fs.readFileSync(openingGlobePath, 'utf8');
   const sequence = fs.readFileSync(sequencePath, 'utf8');
+  const { OPENING_STATEMENTS } = await import('../src/modules/home/presentation/opening/openingSequence.js');
 
   // 3 Statements Check
-  assert.match(sequence, /lead:\s*'YOUR USERS ONLY SEE'[\s\S]*?accent:\s*'THE APP\.'/, 'Statement 1 must be present');
-  assert.match(sequence, /lead:\s*'YOUR BUSINESS RELIES ON'[\s\S]*?accent:\s*'EVERYTHING BEHIND IT\.'/, 'Statement 2 must be present');
-  assert.match(sequence, /lead:\s*'WHEN BOTH WORK,'[\s\S]*?accent:\s*'YOUR PRODUCT WORKS\.'/, 'Statement 3 must be present');
+  assert.equal(OPENING_STATEMENTS[0].lead, 'YOUR USERS ONLY SEE');
+  assert.equal(OPENING_STATEMENTS[0].accent, 'THE APP.');
+  assert.equal(OPENING_STATEMENTS[1].lead, 'YOUR BUSINESS RELIES ON');
+  assert.equal(OPENING_STATEMENTS[1].accent, 'EVERYTHING BEHIND IT.');
+  assert.equal(OPENING_STATEMENTS[2].lead, 'WHEN BOTH WORK,');
+  assert.equal(OPENING_STATEMENTS[2].accent, 'YOUR PRODUCT WORKS.');
 
   // Dash leads the A/B/A dialogue and both concept mascots are present.
   assert.match(sequence, /speaker: 'dash'[\s\S]*speaker: 'aero'[\s\S]*speaker: 'dash'/, 'Opening speaker order must be Dash, Aero, Dash');

@@ -1,4 +1,19 @@
 .hero {
+  /* Persistent dark mode canvas across both light and dark themes */
+  color-scheme: dark;
+  --color-background: var(--ithx-night-green);
+  --color-surface: var(--ithx-deep-surface);
+  --color-surface-raised: var(--ithx-deep-surface);
+  --color-foreground: var(--ithx-paper-marble);
+  --color-muted: var(--ithx-mist);
+  --color-muted-foreground: var(--ithx-mist);
+  --color-border: var(--ithx-line-dark);
+  --color-accent: var(--ithx-mint-signal);
+  --color-accent-foreground: var(--ithx-action-text-dark);
+  --color-hero-background: var(--ithx-night-green);
+  --color-hero-text: var(--ithx-paper-marble);
+  --color-ink: var(--ithx-paper-marble);
+
   position: relative;
   display: flex;
   align-items: center;
@@ -276,51 +291,57 @@
 
 .hero-marquee {
   position: absolute;
-  bottom: 0;
-  left: 0;
+  bottom: clamp(0.5rem, 2vh, 1.6rem);
+  left: -6vw;
   z-index: 3;
-  width: 100vw;
+  width: 112vw;
   overflow: hidden;
-  border-top: 1px solid color-mix(in srgb, var(--color-muted-foreground) 16%, transparent);
-  border-bottom: 1px solid color-mix(in srgb, var(--color-muted-foreground) 16%, transparent);
-  background: color-mix(in srgb, var(--color-background) 40%, transparent);
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
-  opacity: 0.88;
+  border-top: 1px solid color-mix(in srgb, var(--color-muted-foreground) 24%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-muted-foreground) 24%, transparent);
+  background: color-mix(in srgb, var(--color-background) 88%, #000);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transform: rotate(-2.2deg);
+  transform-origin: center center;
+  pointer-events: none;
 }
 
 .hero-marquee__track {
   display: flex;
   width: max-content;
-  animation: heroMarqueeSweep 28s linear infinite;
+  animation: heroMarqueeSweep 34s linear infinite;
   will-change: transform;
 }
 
 .hero-marquee__copy {
   display: flex;
-  flex: 0 0 auto;
+  flex-shrink: 0;
   align-items: center;
-  gap: clamp(1.2rem, 2.5vw, 2.8rem);
-  padding: clamp(0.45rem, 0.9vh, 0.75rem) clamp(1.2rem, 2.5vw, 2.8rem);
 }
 
 .hero-marquee__item {
   display: inline-flex;
   align-items: center;
   gap: clamp(1.2rem, 2.5vw, 2.8rem);
-  color: color-mix(in srgb, var(--color-foreground) 80%, transparent);
+  padding-right: clamp(1.2rem, 2.5vw, 2.8rem);
+  color: #FFFFFF;
   font-family: var(--font-display);
-  font-size: clamp(1.1rem, 2vw, 1.6rem);
+  font-size: clamp(1.15rem, 2.2vw, 1.7rem);
   font-weight: 850;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
   line-height: 0.9;
   text-transform: uppercase;
   white-space: nowrap;
 }
 
+.hero-marquee__item strong {
+  font: inherit;
+  color: #FFFFFF;
+}
+
 .hero-marquee__item i {
-  color: var(--color-accent);
-  font-size: 0.62em;
+  color: #FFFFFF;
+  font-size: 0.72em;
   font-style: normal;
 }
 
@@ -430,52 +451,60 @@
 
 .hero-identity-arc {
   position: absolute;
-  left: 50%;
+  top: 50%;
+  left: 62%;
   z-index: 0;
-  width: 120vw;
-  height: 42%;
-  border: 1px solid color-mix(in srgb, var(--color-accent) 22%, transparent);
-  border-radius: 50%;
+  width: min(88vw, 70rem);
+  display: flex;
+  align-items: center;
   pointer-events: none;
-  transform: translateX(-50%);
+  overflow: hidden;
+  transform: translate(-50%, -50%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 26%, black 42%, black 86%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, transparent 26%, black 42%, black 86%, transparent 100%);
   will-change: transform;
-  filter: none;
 }
 
 .hero-identity-arc--top {
-  top: 14%;
-  transform: translateX(-50%) rotate(-8deg);
+  transform: translate(-50%, -50%);
 }
 
 .hero-identity-arc--bottom {
-  bottom: 12%;
-  border-color: color-mix(in srgb, var(--color-muted-foreground) 28%, transparent);
-  transform: translateX(-50%) rotate(8deg);
+  display: none;
 }
 
 .hero-arc-track {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  display: flex;
   width: max-content;
-  color: color-mix(in srgb, var(--color-foreground) 13%, transparent);
+  color: color-mix(in srgb, var(--color-accent) 9%, transparent);
   font-family: var(--font-display);
-  font-size: clamp(3.6rem, 7vw, 7.5rem);
+  font-size: clamp(2.4rem, 4.2vw, 4.5rem);
   font-weight: 900;
-  letter-spacing: -0.075em;
-  line-height: 0.78;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
   text-transform: uppercase;
   white-space: nowrap;
-  text-shadow: 0 0 1.4rem color-mix(in srgb, var(--color-accent) 12%, transparent);
-  transform: translate(38%, -50%);
+  user-select: none;
+  will-change: transform;
 }
 
-.hero-identity-arc--bottom .hero-arc-track {
-  color: color-mix(in srgb, var(--color-accent) 14%, transparent);
-  font-size: clamp(2rem, 4.2vw, 4.6rem);
-  letter-spacing: -0.06em;
-  transform: translate(38%, -50%);
-  filter: none;
+.hero-arc-chunk {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(1.2rem, 2vw, 2.4rem);
+  padding-right: clamp(1.2rem, 2vw, 2.4rem);
+}
+
+.hero-arc-chunk span {
+  display: inline-block;
+  color: inherit;
+}
+
+.hero-arc-separator {
+  color: inherit;
+  font-size: 0.7em;
+  font-style: normal;
+  opacity: 0.65;
 }
 
 .hero-visual-stats {
@@ -576,16 +605,19 @@
 }
 
 .hero.is-revealed:not(.is-transitioning) .hero-identity-arc--top {
-  animation: heroArcRotateTop 20s linear infinite alternate;
+  animation: heroArcRotateTop 14s ease-in-out infinite alternate;
 }
 
 .hero.is-revealed:not(.is-transitioning) .hero-identity-arc--bottom {
-  animation: heroArcRotateBottom 20s linear infinite alternate;
+  animation: heroArcRotateBottom 14s ease-in-out infinite alternate;
 }
 
-.hero.is-revealed:not(.is-transitioning) .hero-identity-arc--top .hero-arc-track,
-.hero.is-revealed:not(.is-transitioning) .hero-identity-arc--bottom .hero-arc-track {
+.hero.is-revealed:not(.is-transitioning) .hero-identity-arc--top .hero-arc-track {
   animation: heroArcTextSweep 13s linear infinite;
+}
+
+.hero.is-revealed:not(.is-transitioning) .hero-identity-arc--bottom .hero-arc-track {
+  animation: heroArcTextSweepReverse 13s linear infinite;
 }
 
 @keyframes heroContentAssemble {
@@ -612,23 +644,54 @@
 }
 
 @keyframes heroArcRotateTop {
-  from { transform: translateX(-50%) rotate(-8deg); }
-  to { transform: translateX(-50%) rotate(-12deg); }
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(-1deg) translateY(-6px);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
 }
 
 @keyframes heroArcRotateBottom {
-  from { transform: translateX(-50%) rotate(8deg); }
-  to { transform: translateX(-50%) rotate(12deg); }
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(1deg) translateY(6px);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
 }
 
 @keyframes heroArcTextSweep {
-  from { transform: translateX(38%); }
-  to { transform: translateX(-138%); }
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes heroArcTextSweepReverse {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 @keyframes heroMarqueeSweep {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
 @media (max-width: 960px) {
@@ -668,7 +731,10 @@
 
   .hero-marquee {
     position: relative;
+    left: -6vw;
+    width: 112vw;
     margin-top: 2rem;
+    transform: rotate(-2.2deg);
   }
 }
 
@@ -724,18 +790,12 @@
   }
 
   .hero-identity-arc {
-    width: 128%;
-    height: 34%;
+    width: 160vw;
   }
 
   .hero-arc-track {
-    font-size: clamp(2.45rem, 10vw, 4rem);
-    letter-spacing: -0.07em;
-  }
-
-  .hero-identity-arc--bottom .hero-arc-track {
-    font-size: clamp(1.35rem, 5.8vw, 2.4rem);
-    letter-spacing: -0.055em;
+    font-size: clamp(2rem, 8vw, 3.2rem);
+    letter-spacing: -0.04em;
   }
 
   .hero-visual-readout {
@@ -762,7 +822,6 @@
     font-size: 0.44rem;
   }
 }
-
 @media (prefers-reduced-motion: reduce) {
   .hero-action,
   .hero-social-link,
@@ -774,7 +833,8 @@
   .hero.is-revealed:not(.is-transitioning) .hero-identity-arc--top,
   .hero.is-revealed:not(.is-transitioning) .hero-identity-arc--bottom,
   .hero.is-revealed:not(.is-transitioning) .hero-identity-arc--top .hero-arc-track,
-  .hero.is-revealed:not(.is-transitioning) .hero-identity-arc--bottom .hero-arc-track {
+  .hero.is-revealed:not(.is-transitioning) .hero-identity-arc--bottom .hero-arc-track,
+  .hero.is-revealed:not(.is-transitioning) .hero-marquee__track {
     animation: none;
   }
 
@@ -784,11 +844,11 @@
   }
 
   .hero.is-revealed:not(.is-transitioning) .hero-identity-arc--top {
-    transform: translateX(-50%) rotate(-8deg);
+    transform: translate(-50%, -50%);
   }
 
   .hero.is-revealed:not(.is-transitioning) .hero-identity-arc--bottom {
-    transform: translateX(-50%) rotate(8deg);
+    transform: translate(-50%, -50%);
   }
 
   .hero.is-revealed:not(.is-transitioning) .hero-arc-track {

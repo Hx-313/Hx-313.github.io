@@ -11,7 +11,7 @@ import {
   FiTool,
   FiZap,
 } from 'react-icons/fi';
-import { servicesData } from './servicesData.js';
+import { servicesData, SERVICES_TEXT } from './servicesData.js';
 import './services.css';
 
 const SERVICE_ICONS = Object.freeze({
@@ -72,7 +72,7 @@ export default function Services() {
           {servicesData.label}
         </h2>
 
-        <div className="services-tabs" role="tablist" aria-label="Service categories">
+        <div className="services-tabs" role="tablist" aria-label={SERVICES_TEXT.aria.tablist}>
           {servicesData.tabs.map((tab, index) => {
             const isActive = index === activeTabIndex;
 
@@ -112,7 +112,7 @@ export default function Services() {
                 aria-hidden={!isActive}
                 tabIndex={isActive ? 0 : -1}
               >
-                <div className="services-grid" role="list" aria-label={`${tab.label} services`}>
+                <div className="services-grid" role="list" aria-label={`${tab.label} ${SERVICES_TEXT.aria.panelPrefix}`}>
                   {tab.items.map((service) => (
                     <article key={service.id} className="services-item" role="listitem">
                       <div className="services-item-icon">

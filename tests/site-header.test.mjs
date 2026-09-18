@@ -5,28 +5,32 @@ import path from 'node:path';
 
 const headerJsxPath = path.resolve('src/modules/home/presentation/header/SiteHeader.jsx');
 const headerCssPath = path.resolve('src/modules/home/presentation/header/header.css');
+const homeCssPath = path.resolve('src/modules/home/presentation/home.css');
 
-test('SiteHeader component contains tactical navigation, live telemetry, socials, and theme controls', () => {
+test('SiteHeader component contains tactical navigation, live telemetry, socials, and theme controls', async () => {
   const jsx = fs.readFileSync(headerJsxPath, 'utf8');
+  const { HEADER_TEXT } = await import('../src/core/constants/navigation/headerText.js');
 
-  // Navigation Items
-  assert.match(jsx, /Overview/, 'should contain Overview nav item');
-  assert.match(jsx, /01 Projects/, 'should contain projects nav item');
-  assert.match(jsx, /02 About/, 'should contain about chapter nav item');
-  assert.match(jsx, /03 Services/, 'should contain services nav item');
-  assert.match(jsx, /04 Domains/, 'should contain domain services nav item');
-  assert.match(jsx, /05 Certifications/, 'should contain certifications nav item');
-  assert.match(jsx, /06 Tools/, 'should contain tools nav item');
-  assert.match(jsx, /Contact/, 'should contain Contact nav item');
-  assert.match(jsx, /08 Testimonials/, 'should contain testimonials nav item');
+  // Navigation Items from constants contract
+  const labels = HEADER_TEXT.navItems.map((item) => item.label);
+  assert.ok(labels.includes('Overview'), 'should contain Overview nav item');
+  assert.ok(labels.includes('01 Projects'), 'should contain projects nav item');
+  assert.ok(labels.includes('02 About'), 'should contain about chapter nav item');
+  assert.ok(labels.includes('03 Services'), 'should contain services nav item');
+  assert.ok(labels.includes('04 Domains'), 'should contain domain services nav item');
+  assert.ok(labels.includes('05 Certifications'), 'should contain certifications nav item');
+  assert.ok(labels.includes('06 Tools'), 'should contain tools nav item');
+  assert.ok(labels.includes('07 Contact'), 'should contain Contact nav item');
+  assert.ok(labels.includes('08 Testimonials'), 'should contain testimonials nav item');
+  assert.match(jsx, /HEADER_TEXT\.navItems/, 'SiteHeader should reference HEADER_TEXT.navItems');
   assert.match(jsx, /aria-current=\{isActive \? 'location' : undefined\}/, 'should set aria-current="location" for active section');
   assert.match(jsx, /IntersectionObserver/, 'should use IntersectionObserver for performant scroll-spying');
   assert.match(jsx, /prefers-reduced-motion/, 'should avoid smooth scrolling for reduced-motion users');
 
   // Telemetry & Status
   assert.match(jsx, /ithx-logo\.png|site-brand-logo-img/, 'should render official itHX brand logo image');
-  assert.match(jsx, /SYS TIME|Live System Time/, 'should contain system time telemetry');
-  assert.match(jsx, /SYS: ONLINE|status-live-dot/, 'should contain online status beacon');
+  assert.match(jsx, /HEADER_TEXT\.mobileDrawer\.sysTimeLabel/, 'should contain system time telemetry');
+  assert.match(jsx, /HEADER_TEXT\.mobileDrawer\.sysOnline|status-live-dot/, 'should contain online status beacon');
 
   // Social Quick Portals
   assert.match(jsx, /siteLinks\.github/, 'should link to GitHub profile');
@@ -61,3 +65,8 @@ test('header.css defines sticky styling, frosted backdrop, light theme tokens, a
   assert.match(css, /height:\s*100dvh/, 'mobile drawer must span the viewport height');
 });
 
+test('ready site does not trap the sticky header inside a transformed experience shell', () => {
+  const css = fs.readFileSync(homeCssPath, 'utf8');
+
+  assert.match(css, /\.site-experience\.is-ready\s*\{[\s\S]*?transform:\s*none/, 'ready experience should release its transform containing block');
+});

@@ -53,7 +53,7 @@ function ToolTile({ tool, isActive, onToggle }) {
             className="tile-service"
             aria-hidden={!isActive}
           >
-            <span className="tile-service-label">Applied to</span>
+            <span className="tile-service-label">{howIBuildData.appliedToLabel}</span>
             <span className="tile-service-value">{tool.service}</span>
           </span>
         </span>
@@ -127,7 +127,7 @@ export default function HowIBuild() {
             <div
               className="how-i-build-tags"
               role="list"
-              aria-label="Engineering competencies"
+              aria-label={howIBuildData.aria.competencies}
             >
               {howIBuildData.tags.map((tag) => (
                 <span key={tag} role="listitem">
@@ -141,7 +141,7 @@ export default function HowIBuild() {
           <div
             className="how-i-build-grid"
             role="list"
-            aria-label="Technologies and development tools"
+            aria-label={howIBuildData.aria.toolGrid}
           >
             {howIBuildData.tools.map((tool) => (
               <ToolTile

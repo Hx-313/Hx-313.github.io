@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { PROJECT_CATEGORIES, CONTACT_CHANNELS } from '../domain/contactData.js';
+import { PROJECT_CATEGORIES, CONTACT_CHANNELS, CONTACT_TEXT } from '../domain/contactData.js';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -8,19 +8,20 @@ export function validateContactForm(formData) {
   const name = (formData.name || '').trim();
   const email = (formData.email || '').trim();
   const message = (formData.message || '').trim();
+  const { validation } = CONTACT_TEXT.form;
 
   if (!name || name.length < 2) {
-    errors.name = 'Please provide your name (at least 2 characters).';
+    errors.name = validation.nameRequired;
   }
 
   if (!email) {
-    errors.email = 'Please provide your email address.';
+    errors.email = validation.emailRequired;
   } else if (!EMAIL_REGEX.test(email)) {
-    errors.email = 'Please enter a valid email address.';
+    errors.email = validation.emailInvalid;
   }
 
   if (!message || message.length < 10) {
-    errors.message = 'Please provide a brief description of your project (at least 10 characters).';
+    errors.message = validation.messageRequired;
   }
 
   return {

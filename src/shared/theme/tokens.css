@@ -67,6 +67,24 @@
 
 :root[data-theme='light'] {
   color-scheme: light;
+  --color-background: var(--ithx-paper-marble);
+  --color-surface: var(--ithx-white);
+  --color-surface-raised: var(--ithx-white);
+  --color-foreground: var(--ithx-ink);
+  --color-muted: var(--ithx-graphite);
+  --color-muted-foreground: var(--ithx-graphite);
+  --color-border: var(--ithx-line-light);
+  --color-line: color-mix(in srgb, var(--ithx-graphite) 24%, transparent);
+  --color-accent: var(--ithx-emerald-accent);
+  --color-accent-foreground: var(--ithx-white);
+  --color-hero-background: var(--ithx-paper-marble);
+  --color-stage-edge: var(--ithx-white);
+  --color-hero-text: var(--ithx-ink);
+  --color-glitch: var(--ithx-emerald-accent);
+  --color-glitch-highlight: var(--ithx-primary-green);
+  --color-loader: var(--ithx-warm-brass);
+  --color-ink: var(--ithx-ink);
+  --story-surface: color-mix(in srgb, var(--color-background) 88%, var(--color-surface-raised));
 }
 
 :root[data-theme='dark'] {

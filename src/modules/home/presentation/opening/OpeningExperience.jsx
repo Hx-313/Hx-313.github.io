@@ -6,6 +6,7 @@ import OpeningNetworkGlobe from './OpeningNetworkGlobe.jsx';
 import OpeningProjection from './OpeningProjection.jsx';
 import { getMobileProjectionBounds, MOBILE_PROJECTION_HEIGHT } from './openingMobileGeometry.js';
 import { OPENING_BEATS, OPENING_STATEMENTS } from './openingSequence.js';
+import { INTRO_TEXT } from '../../../../core/constants/intro/introText.js';
 import './opening.css';
 
 const noop = () => {};
@@ -311,7 +312,7 @@ export default function OpeningExperience({ onHandoff = noop, onComplete = noop 
     : OPENING_STATEMENTS[0];
 
   return (
-    <section ref={openingRef} className="opening" aria-label="HX313 portfolio introduction">
+    <section ref={openingRef} className="opening" aria-label={INTRO_TEXT.aria.portfolioIntro}>
       <canvas ref={starCanvasRef} className="space-star-canvas" aria-hidden="true" />
       <div className="space-celestial-field" aria-hidden="true">
         {backgroundStars.map((star) => (
@@ -335,7 +336,7 @@ export default function OpeningExperience({ onHandoff = noop, onComplete = noop 
         <div className="opening-boot-badge">
           <span className="opening-boot-beacon" />
           <span className="opening-boot-title">
-            {bootProgress >= 100 ? 'SYSTEM READY' : 'INITIALIZING SYSTEM'}
+            {bootProgress >= 100 ? INTRO_TEXT.bootHud.ready : INTRO_TEXT.bootHud.initializing}
           </span>
         </div>
         <div className="opening-boot-meter">
@@ -370,7 +371,7 @@ export default function OpeningExperience({ onHandoff = noop, onComplete = noop 
         {liveStatement?.text ?? ''}
       </p>
       <button className="space-skip-btn" type="button" onClick={skipOpening}>
-        SKIP INTRO <span aria-hidden="true">→</span>
+        {INTRO_TEXT.actions.skipIntro} <span aria-hidden="true">→</span>
       </button>
     </section>
   );

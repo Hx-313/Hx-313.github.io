@@ -1,5 +1,6 @@
 import HeroContent from './HeroContent.jsx';
 import HeroVisual from './HeroVisual.jsx';
+import { HERO_TEXT } from '../../../../core/constants/hero/heroText.js';
 import './hero.css';
 
 export default function Hero({ revealed = false, transitioning = false }) {
@@ -26,9 +27,9 @@ export default function Hero({ revealed = false, transitioning = false }) {
         >
           <div className="hero-marquee__track">
             {[0, 1].map((copy) => (
-              <div className="hero-marquee__copy" key={copy}>
-                {['Scalable', 'Reliable', 'Secure', 'Maintainable', 'Fast', 'Smooth'].map((word) => (
-                  <span className="hero-marquee__item" key={`${copy}-${word}`}>
+              <div className="hero-marquee__copy" key={copy} aria-hidden={copy === 1}>
+                {[...HERO_TEXT.marqueeWords, ...HERO_TEXT.marqueeWords, ...HERO_TEXT.marqueeWords].map((word, index) => (
+                  <span className="hero-marquee__item" key={`${copy}-${index}-${word}`}>
                     <strong>{word}</strong>
                     <i>✦</i>
                   </span>

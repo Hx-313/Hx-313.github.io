@@ -24,9 +24,9 @@ test('howIBuildData exports the final 12-tool benchmark grid and narrative copy'
   );
   assert.deepEqual(howIBuildData.tags, [
     'MOBILE APP',
-    'CROSS-PLATFORM',
+    'NATIVE MOBILE',
     'BACKEND',
-    'SAAS DEVELOPMENT',
+    'SYSTEM DESIGN',
     'DEPLOYMENT',
     'API DESIGN',
     'DATABASE',
@@ -36,9 +36,8 @@ test('howIBuildData exports the final 12-tool benchmark grid and narrative copy'
   // Paragraphs
   assert.equal(howIBuildData.paragraphs.length, 3);
   assert.match(howIBuildData.paragraphs[0], /Every layer gets a tool chosen for what it actually has to survive/);
-  assert.match(howIBuildData.paragraphs[1], /Flutter and native Android for the UI layer/);
-  assert.match(howIBuildData.paragraphs[1], /98\.7% uptime isn’t an accident/);
-  assert.match(howIBuildData.paragraphs[2], /Architecture decides what’s possible\. Tooling decides what’s actually reliable\./);
+  assert.match(howIBuildData.paragraphs[1], /Flutter and native mobile for the interface people use/);
+  assert.match(howIBuildData.paragraphs[2], /Architecture decides what’s possible/);
 
   // Deep freeze verification
   assert.throws(() => {

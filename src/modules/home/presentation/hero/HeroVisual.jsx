@@ -1,30 +1,36 @@
 import FrameSequence from '../../../../shared/media/FrameSequence.jsx';
 import { proofMetrics } from '../../../../data/metrics.js';
 import { GLOBE_FRAMES } from '../media/visualSequences.js';
+import { HERO_TEXT } from '../../../../core/constants/hero/heroText.js';
 
 export default function HeroVisual() {
   return (
     <aside
       className="hero-visual"
-      aria-label="Digital green earth globe for Hafiz Ali Abdullah's systems portfolio"
+      aria-label={HERO_TEXT.aria.globePortal}
     >
       <div className="hero-orbit-scene">
         <div className="hero-identity-arc hero-identity-arc--top" aria-hidden="true">
           <div className="hero-arc-track">
-            <span>Hafiz Ali Abdullah</span>
-          </div>
-        </div>
-
-        <div className="hero-identity-arc hero-identity-arc--bottom" aria-hidden="true">
-          <div className="hero-arc-track">
-            <span>Flutter Developer · Mobile Application Developer · SaaS Developer</span>
+            {[0, 1].map((copy) => (
+              <span className="hero-arc-chunk" key={copy}>
+                <span>{HERO_TEXT.orbitVisual.nameArc}</span>
+                <i className="hero-arc-separator">·</i>
+                <span>{HERO_TEXT.orbitVisual.rolesArc}</span>
+                <i className="hero-arc-separator">·</i>
+                <span>{HERO_TEXT.orbitVisual.nameArc}</span>
+                <i className="hero-arc-separator">·</i>
+                <span>{HERO_TEXT.orbitVisual.rolesArc}</span>
+                <i className="hero-arc-separator">·</i>
+              </span>
+            ))}
           </div>
         </div>
 
         <div
           className="hero-globe-portal"
           role="img"
-          aria-label="Looping digital green earth representing connected products and systems"
+          aria-label={HERO_TEXT.aria.globeSequence}
         >
           <FrameSequence
             frames={GLOBE_FRAMES}
@@ -42,7 +48,7 @@ export default function HeroVisual() {
           className="hero-visual-stats"
           data-hero-enter
           style={{ '--hero-enter-delay': '760ms' }}
-          aria-label="Selected proof points"
+          aria-label={HERO_TEXT.aria.proofMetrics}
         >
           {proofMetrics.slice(0, 2).map(([value, label]) => (
             <li className="hero-stat-card" key={label}>
@@ -58,13 +64,13 @@ export default function HeroVisual() {
           style={{ '--hero-enter-delay': '880ms' }}
           aria-hidden="true"
         >
-          <span>LIVE / CONNECTED</span>
-          <span>GLB—01</span>
+          <span>{HERO_TEXT.orbitVisual.readoutStatus}</span>
+          <span>{HERO_TEXT.orbitVisual.readoutCode}</span>
         </div>
       </div>
 
       <p className="hero-identity-accessible">
-        Hafiz Ali Abdullah. Flutter Developer, Mobile Application Developer, and SaaS Developer.
+        {HERO_TEXT.orbitVisual.accessibleBio}
       </p>
     </aside>
   );

@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { aboutParagraphs, aboutStats } from '../domain/aboutData.js';
+import { aboutParagraphs } from '../domain/aboutData.js';
+import { ABOUT_TEXT } from '../../../core/constants/about/aboutText.js';
 import './about.css';
 
 export default function AboutSection() {
   const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [counts, setCounts] = useState(() => aboutStats.map(() => 0));
+  const [counts, setCounts] = useState(() => ABOUT_TEXT.stats.map(() => 0));
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -14,7 +15,7 @@ export default function AboutSection() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
       setIsVisible(true);
-      setCounts(aboutStats.map((s) => s.targetNumber));
+      setCounts(ABOUT_TEXT.stats.map((s) => s.targetNumber));
       return;
     }
 
@@ -24,20 +25,16 @@ export default function AboutSection() {
         if (entry.isIntersecting) {
           setIsVisible(true);
 
-          // Fast, clean synchronized count-up (350ms) across stat values
           const startTime = performance.now();
-          const duration = 350;
+          const duration = 400;
 
           const animateCounts = (now) => {
             const elapsed = Math.min((now - startTime) / duration, 1);
             const ease = elapsed * (2 - elapsed);
 
             setCounts(
-              aboutStats.map((stat) => {
+              ABOUT_TEXT.stats.map((stat) => {
                 const current = stat.targetNumber * ease;
-                if (stat.id === 'uptime') {
-                  return Number(current.toFixed(1));
-                }
                 return Math.floor(current);
               })
             );
@@ -45,7 +42,7 @@ export default function AboutSection() {
             if (elapsed < 1) {
               requestAnimationFrame(animateCounts);
             } else {
-              setCounts(aboutStats.map((s) => s.targetNumber));
+              setCounts(ABOUT_TEXT.stats.map((s) => s.targetNumber));
             }
           };
 
@@ -54,7 +51,7 @@ export default function AboutSection() {
         }
       },
       {
-        threshold: 0.25,
+        threshold: 0.2,
       }
     );
 
@@ -67,55 +64,49 @@ export default function AboutSection() {
     <section
       id="about"
       ref={sectionRef}
-      className={`about-section ${isVisible ? 'is-visible' : ''}`}
+      className={`about-section about ${isVisible ? 'is-visible' : ''}`}
       aria-labelledby="about-heading"
     >
       <div className="about-container">
-        <div className="about-composition-grid">
-          {/* Left Column: Label + Headline with Signal Split + Body + Name Credit */}
-          <div className="about-narrative-col">
-            <span className="about-label section-heading">About me</span>
+        {/* Accent floating particles */}
+        <span className="about-particle particle" style={{ top: '96px', left: '52%' }} aria-hidden="true" />
+        <span className="about-particle particle" style={{ top: '200px', left: '31%' }} aria-hidden="true" />
+        <span className="about-particle particle" style={{ top: '340px', left: '78%' }} aria-hidden="true" />
 
-            <h2 id="about-heading" className="about-headline">
-              Mobile first,{' '}
-              <span className="about-signal-phrase">systems included</span>,{' '}
-              built for real use.
-            </h2>
+        <p className="about-eyebrow eyebrow">{ABOUT_TEXT.label}</p>
 
-            <div className="about-body">
-              <p className="about-paragraph">{aboutParagraphs[0]}</p>
-              <p className="about-paragraph">{aboutParagraphs[1]}</p>
-              <p className="about-paragraph">
-                <strong className="about-emphasis-product">OnlineOrder.pk / WOS</strong> is a restaurant ordering and POS system I built for Webticians.{' '}
-                <span className="about-signal-closing">The work connected mobile, backend, and operations.</span>
-              </p>
-            </div>
+        <div className="about-grid grid">
+          <h2 id="about-heading" className="about-headline headline">
+            <span className="line">{ABOUT_TEXT.headline.line1}</span>
+            <span className="line">{ABOUT_TEXT.headline.line2}</span>
+            <span className="line soft">{ABOUT_TEXT.headline.line3Soft}</span>
+          </h2>
 
-            {/* Clean Name / Title Credit Line */}
+          <div className="about-copy copy about-body">
+            <p>{aboutParagraphs[0]}</p>
+            <p>{aboutParagraphs[1]}</p>
+            <p>
+              <strong>{ABOUT_TEXT.featuredProduct}</strong> {ABOUT_TEXT.paragraphs[2]}{' '}
+              <a href="#projects" className="about-signal-closing">{ABOUT_TEXT.signalClosing}</a>
+            </p>
+
             <div className="about-credit">
-              <span className="about-credit-name">Hafiz Ali Abdullah</span>
-              <span className="about-credit-title">Flutter + Native Mobile · Node.js Backend</span>
+              <span className="about-credit-name">{ABOUT_TEXT.credit.name}</span>
+              <span className="about-credit-title">{ABOUT_TEXT.credit.title}</span>
             </div>
           </div>
+        </div>
 
-          {/* Right Column: Flat Number + Label Stats (No Icons, No Cards, No Borders) */}
-          <aside className="about-stats-col" aria-label="Key engineering metrics">
-            <div className="about-stats-vertical-list" role="list">
-              {aboutStats.map((stat, idx) => (
-                <div
-                  key={stat.id}
-                  className={`about-stat-item ${stat.highlight ? 'is-highlight' : ''}`}
-                  role="listitem"
-                >
-                  <div className="about-stat-number">
-                    <span className="stat-value">{counts[idx]}</span>
-                    <span className="stat-suffix">{stat.suffix}</span>
-                  </div>
-                  <span className="about-stat-label">{stat.label}</span>
-                </div>
-              ))}
+        <div className="about-kpis kpis" aria-label={ABOUT_TEXT.aria.keyMetrics}>
+          {ABOUT_TEXT.stats.map((stat, idx) => (
+            <div className="about-kpi kpi" key={stat.id}>
+              <div className="about-kpi-num num">
+                <span>{counts[idx]}</span>
+                {stat.suffix && <span className="stat-suffix">{stat.suffix}</span>}
+              </div>
+              <div className="about-kpi-lbl lbl">{stat.label}</div>
             </div>
-          </aside>
+          ))}
         </div>
       </div>
     </section>

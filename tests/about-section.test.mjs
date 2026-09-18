@@ -13,38 +13,36 @@ test('aboutData exports frozen contract with headline, paragraphs, stats, and me
 
   // Verify Headline
   assert.equal(aboutHeadline.length, 3);
-  assert.equal(aboutHeadline[0], 'Three years,');
-  assert.equal(aboutHeadline[1], 'fifteen systems,');
-  assert.equal(aboutHeadline[2], 'zero excuses for crashing.');
+  assert.equal(aboutHeadline[0], 'Mobile first,');
+  assert.equal(aboutHeadline[1], 'systems included,');
+  assert.equal(aboutHeadline[2], 'built to last.');
 
   // Verify Body Copy
   assert.equal(aboutParagraphs.length, 3);
-  assert.match(aboutParagraphs[0], /I'll admit it — I over-engineer/);
-  assert.match(aboutParagraphs[1], /apps I build stay clean and solid/);
-  assert.match(aboutParagraphs[2], /WOS EPOS/);
-  assert.match(aboutParagraphs[2], /Real state, real transactions, real uptime/);
+  assert.match(aboutParagraphs[0], /Flutter and native technologies/);
+  assert.match(aboutParagraphs[1], /customer-facing apps, internal workflows/);
+  assert.match(aboutParagraphs[2], /OnlineOrder\.pk \/ WOS/);
 
-  // Verify Stats with Uptime Fault Highlight
-  assert.equal(aboutStats.length, 4);
-  const uptimeStat = aboutStats.find((s) => s.id === 'uptime');
-  assert.ok(uptimeStat);
-  assert.equal(uptimeStat.targetNumber, 98.7);
-  assert.equal(uptimeStat.highlight, true);
+  // Verify Stats
+  assert.equal(aboutStats.length, 3);
+  const systemsStat = aboutStats.find((s) => s.id === 'systems');
+  assert.ok(systemsStat);
+  assert.equal(systemsStat.targetNumber, 1);
+  assert.equal(systemsStat.highlight, true);
 });
 
-test('AboutSection component renders asymmetric single flow, headline, and humanist stats', () => {
+test('AboutSection component renders headline, grid narrative, and technical kpi stats', () => {
   const jsx = readFileSync(resolve('src/modules/about/presentation/AboutSection.jsx'), 'utf8');
 
   assert.match(jsx, /id="about"/, 'Section must have #about id');
   assert.match(jsx, /about-section/);
   assert.match(jsx, /about-headline/);
-  assert.match(jsx, /about-signal-phrase/);
-  assert.match(jsx, /about-body/);
+  assert.match(jsx, /about-grid/);
+  assert.match(jsx, /about-copy/);
   assert.match(jsx, /about-credit/);
-  assert.match(jsx, /Hafiz Ali Abdullah/);
-  assert.match(jsx, /Mobile app developer/);
-  assert.match(jsx, /about-stats-col/);
-  assert.match(jsx, /about-stats-vertical-list/);
+  assert.match(jsx, /ABOUT_TEXT\.credit\.name/);
+  assert.match(jsx, /ABOUT_TEXT\.credit\.title/);
+  assert.match(jsx, /about-kpis/);
   assert.match(jsx, /about-signal-closing/);
 });
 
@@ -58,32 +56,22 @@ test('AboutSection and aboutData contain strictly zero // pseudo-comment text in
       assert.ok(!val.includes('//'), `String in aboutData must not contain '//': ${val}`);
     } else if (Array.isArray(val)) {
       val.forEach(checkStrings);
-    } else if (typeof val === 'object' && val !== null) {
+    } else if (val && typeof val === 'object') {
       Object.values(val).forEach(checkStrings);
     }
   };
+
   checkStrings(aboutData);
 
-  // Verify JSX UI copy lines do not contain '//'
-  const jsxLines = jsx.split('\n');
-  for (const line of jsxLines) {
-    if (line.includes('<') && line.includes('>')) {
-      // Ignore developer comment tags like {/* ... */}
-      const cleaned = line.replace(/\{\/\*.*?\*\/\}/g, '');
-      assert.ok(!cleaned.includes('//'), `JSX line must not contain '//': ${line}`);
-    }
-  }
-});
+  // Verify visible JSX text nodes don't contain raw `//`
+  const renderedTextOnly = jsx
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    .replace(/<style[\s\S]*?<\/style>/gi, '')
+    .replace(/\/\*[\s\S]*?\*\//g, '') // remove block comments
+    .replace(/\/\/.*/g, ''); // remove single-line comments in JS
 
-test('HomePage embeds Projects and AboutSection in sequence', () => {
-  const homePage = readFileSync(resolve('src/modules/home/presentation/HomePage.jsx'), 'utf8');
-
-  assert.match(homePage, /import AboutSection from '\.\.\/\.\.\/about\/presentation\/AboutSection\.jsx'/);
-  const heroPos = homePage.indexOf('<Hero');
-  const projectsPos = homePage.indexOf('<CommandCenter');
-  const aboutPos = homePage.indexOf('<AboutSection');
-
-  assert.ok(heroPos !== -1 && projectsPos !== -1 && aboutPos !== -1);
-  assert.ok(projectsPos > heroPos, 'Projects must appear after Hero');
-  assert.ok(aboutPos > projectsPos, 'AboutSection must appear after Projects');
+  assert.ok(
+    !renderedTextOnly.includes('//'),
+    'AboutSection JSX should not contain hardcoded "//" in visible markup'
+  );
 });

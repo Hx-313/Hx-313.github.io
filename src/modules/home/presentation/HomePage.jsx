@@ -13,16 +13,13 @@ import TestimonialsSection from './testimonials/TestimonialsSection.jsx';
 import SectionReveal from '../../../shared/motion/SectionReveal.jsx';
 import ContactSection from '../../contact/presentation/ContactSection.jsx';
 import SiteFooter from '../../footer/presentation/SiteFooter.jsx';
-import Mascots from '../../../components/Mascots.jsx';
 import { useTheme } from '../../../shared/theme/useTheme.js';
 import { useCommandCenter } from '../../../hooks/useCommandCenter.js';
 import './home.css';
 import './command-center/command-center.css';
-import '../../../styles/mascots.css';
 
 export default function HomePage() {
   const [experienceState, setExperienceState] = useState('intro');
-  const [isTransitionSettled, setIsTransitionSettled] = useState(false);
   const { theme, setTheme } = useTheme();
   const commandCenter = useCommandCenter();
   const startHandoff = useCallback(() => {
@@ -31,20 +28,6 @@ export default function HomePage() {
   const completeOpening = useCallback(() => setExperienceState('ready'), []);
   const isSiteVisible = experienceState !== 'intro';
   const isSiteReady = experienceState === 'ready';
-
-  useEffect(() => {
-    if (!isSiteReady) {
-      setIsTransitionSettled(false);
-      return undefined;
-    }
-
-    // Wait for the .site-experience.is-ready transition (320ms) to settle completely
-    const timer = setTimeout(() => {
-      setIsTransitionSettled(true);
-    }, 360);
-
-    return () => clearTimeout(timer);
-  }, [isSiteReady]);
 
   useEffect(() => {
     const previousScrollRestoration = window.history.scrollRestoration;
@@ -73,7 +56,6 @@ export default function HomePage() {
           <SectionReveal id="projects" motion="projects" className="portfolio-flow-section">
             <span id="command-center" className="section-anchor-compat" aria-hidden="true" />
             <span id="systems" className="section-anchor-compat" aria-hidden="true" />
-            <Mascots stage="page2" showController={false} active={isTransitionSettled} />
             <CommandCenter controller={commandCenter} />
           </SectionReveal>
 

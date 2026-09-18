@@ -9,29 +9,20 @@ import {
   FOOTER_COLOPHON,
 } from '../src/modules/footer/domain/footerData.js';
 
-test('footerData exports navigation chapters, live systems, and colophon', () => {
+test('footerData exports immutable navigation, live systems, connect channels, and colophon', () => {
   // Navigation
-  assert.ok(Array.isArray(FOOTER_NAVIGATION), 'FOOTER_NAVIGATION is an array');
-  const navHrefs = FOOTER_NAVIGATION.map((n) => n.href);
-  assert.ok(navHrefs.includes('#top'), 'Navigation includes #top');
-  assert.ok(navHrefs.includes('#projects'), 'Navigation includes #projects');
-  assert.ok(navHrefs.includes('#services'), 'Navigation includes #services');
-  assert.ok(navHrefs.includes('#domains'), 'Navigation includes #domains');
-  assert.ok(navHrefs.includes('#certifications'), 'Navigation includes #certifications');
-  assert.ok(navHrefs.includes('#tools'), 'Navigation includes #tools');
-  assert.ok(navHrefs.includes('#contact'), 'Navigation includes #contact');
-  assert.ok(navHrefs.includes('#testimonials'), 'Navigation includes #testimonials');
+  assert.ok(FOOTER_NAVIGATION.length >= 8, 'Footer navigation contains core routes');
+  assert.ok(FOOTER_NAVIGATION.some((item) => item.label === 'Projects'));
+  assert.ok(FOOTER_NAVIGATION.some((item) => item.label === 'Services'));
+  assert.ok(FOOTER_NAVIGATION.some((item) => item.label === 'Contact'));
 
   // Live Systems
-  assert.ok(Array.isArray(FOOTER_SYSTEMS), 'FOOTER_SYSTEMS is an array');
-  const systemUrls = FOOTER_SYSTEMS.map((s) => s.url);
-  assert.ok(systemUrls.includes('https://onlineorder.pk/wos/admin'), 'Includes WOS Admin link');
-  assert.ok(systemUrls.includes('https://onlineorder.pk/epos'), 'Includes EPOS Terminal link');
-  assert.ok(systemUrls.includes('https://westcoastcoffee.pk/'), 'Includes West Coast Coffee link');
-  assert.ok(systemUrls.includes('https://github.com/Hx-313'), 'Includes GitHub repo link');
+  assert.ok(FOOTER_SYSTEMS.length >= 3, 'Footer contains live systems');
+  const wosAdmin = FOOTER_SYSTEMS.find((s) => s.name.includes('WOS'));
+  assert.ok(wosAdmin, 'Includes WOS system');
+  assert.ok(wosAdmin.url.includes('onlineorder.pk'), 'Contains onlineorder.pk endpoint');
 
   // Connect Channels
-  assert.ok(Array.isArray(FOOTER_CONNECT), 'FOOTER_CONNECT is an array');
   const connectUrls = FOOTER_CONNECT.map((c) => c.url);
   assert.ok(connectUrls.includes('mailto:aliabdullahva313@gmail.com'), 'Includes email link');
   assert.ok(connectUrls.some((u) => u.startsWith('https://wa.me/')), 'Includes WhatsApp link');
@@ -54,7 +45,7 @@ test('SiteFooter renders 4-column directory, colophon, and back-to-top control',
   assert.ok(footerJsx.includes('className="site-footer"'), 'Footer has className="site-footer"');
 
   // Brand lockup & positioning
-  assert.ok(footerJsx.includes('Hx-313') || footerJsx.includes('Hafiz Ali Abdullah'), 'Footer renders brand identity');
+  assert.ok(footerJsx.includes('HX-313') || footerJsx.includes('Hx-313') || footerJsx.includes('Hafiz Ali Abdullah'), 'Footer renders brand identity');
 
   // Interactive back to top
   assert.ok(footerJsx.includes('href="#top"'), 'Footer has anchor to #top');

@@ -22,10 +22,10 @@ test('contactData exports immutable channels, categories, and operational teleme
   assert.ok(CONTACT_CHANNELS.socials.some((social) => social.url.includes('instagram.com/ithx313')), 'Includes Instagram profile');
 
   assert.ok(Array.isArray(PROJECT_CATEGORIES), 'Project categories is an array');
-  assert.ok(PROJECT_CATEGORIES.includes('Full-Stack SaaS'));
-  assert.ok(PROJECT_CATEGORIES.includes('Web Application'));
-  assert.ok(PROJECT_CATEGORIES.includes('POS & Systems Architecture'));
-  assert.ok(PROJECT_CATEGORIES.includes('Technical Advisory / Audit'));
+  assert.ok(PROJECT_CATEGORIES.includes('Mobile application'));
+  assert.ok(PROJECT_CATEGORIES.includes('Restaurant ordering / POS'));
+  assert.ok(PROJECT_CATEGORIES.includes('Node.js backend / API'));
+  assert.ok(PROJECT_CATEGORIES.includes('Government / civic system'));
 
   assert.equal(TELEMETRY_DATA.timezone, 'PKT / UTC+5 (Lahore)');
   assert.equal(TELEMETRY_DATA.responseTime, '< 2 hours');

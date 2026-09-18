@@ -25,7 +25,7 @@ export const aboutHooks = Object.freeze([
 export const aboutHeadline = Object.freeze([
   'Mobile first,',
   'systems included,',
-  'built for real use.',
+  'built to last.',
 ]);
 
 export const aboutParagraphs = Object.freeze([

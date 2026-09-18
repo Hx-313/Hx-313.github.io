@@ -1,19 +1,10 @@
 import { useEffect, useState, useCallback } from 'react';
 import { contactLinks, siteLinks } from '../../../../core/constants.js';
+import { HEADER_TEXT } from '../../../../core/constants/navigation/headerText.js';
 import ThemeToggle from '../../../../shared/theme/ThemeToggle.jsx';
 import './header.css';
 
-const NAV_ITEMS = [
-  { id: 'top', label: 'Overview', shortLabel: 'Overview', index: '00', href: '#top' },
-  { id: 'projects', label: '01 Projects', shortLabel: 'Projects', index: '01', href: '#projects' },
-  { id: 'about', label: '02 About', shortLabel: 'About', index: '02', href: '#about' },
-  { id: 'services', label: '03 Services', shortLabel: 'Services', index: '03', href: '#services' },
-  { id: 'domains', label: '04 Domains', shortLabel: 'Domains', index: '04', href: '#domains' },
-  { id: 'certifications', label: '05 Certifications', shortLabel: 'Certifications', index: '05', href: '#certifications' },
-  { id: 'tools', label: '06 Tools', shortLabel: 'Tools', index: '06', href: '#tools' },
-  { id: 'contact', label: '07 Contact', shortLabel: 'Contact', index: '07', href: '#contact' },
-  { id: 'testimonials', label: '08 Testimonials', shortLabel: 'Testimonials', index: '08', href: '#testimonials' },
-];
+const NAV_ITEMS = HEADER_TEXT.navItems;
 
 export default function SiteHeader({ theme, setTheme }) {
   const [sysTime, setSysTime] = useState('');
@@ -137,7 +128,7 @@ export default function SiteHeader({ theme, setTheme }) {
       className={`site-header ${isScrolled ? 'is-scrolled' : ''}`}
       data-hero-enter
       style={{ '--hero-enter-delay': '0ms' }}
-      aria-label="Primary navigation"
+      aria-label={HEADER_TEXT.aria.header}
     >
       <div className="header-inner">
         {/* Left: Brand mark */}
@@ -145,7 +136,7 @@ export default function SiteHeader({ theme, setTheme }) {
           <a
             className="site-mark site-mark--logo"
             href="#top"
-            aria-label="itHX - Hafiz Ali Abdullah"
+            aria-label={HEADER_TEXT.aria.logo}
             onClick={(e) => handleNavClick(e, '#top', 'top')}
           >
             <span className="site-mark-visual">
@@ -156,13 +147,13 @@ export default function SiteHeader({ theme, setTheme }) {
                 width="120"
                 height="35"
               />
-              <span className="status-live-dot" title="Available for hire" aria-hidden="true" />
+              <span className="status-live-dot" title={HEADER_TEXT.brand.titleAvailable} aria-hidden="true" />
             </span>
           </a>
         </div>
 
         {/* Center: Primary navigation */}
-        <nav className="header-desktop-nav" aria-label="Main Navigation">
+        <nav className="header-desktop-nav" aria-label={HEADER_TEXT.aria.mainNav}>
           <div className="nav-rail">
             <ul className="nav-list" role="list">
               {NAV_ITEMS.map((item) => {
@@ -193,9 +184,9 @@ export default function SiteHeader({ theme, setTheme }) {
           <a
             className="header-cta-btn"
             href={contactLinks.email}
-            aria-label="Contact Hafiz Ali Abdullah"
+            aria-label={HEADER_TEXT.aria.contactCta}
           >
-            <span>Start a project</span>
+            <span>{HEADER_TEXT.cta.label}</span>
             <span className="cta-arrow" aria-hidden="true">↗</span>
           </a>
 
@@ -203,7 +194,7 @@ export default function SiteHeader({ theme, setTheme }) {
           <button
             type="button"
             className={`header-burger-btn ${isMobileOpen ? 'is-open' : ''}`}
-            aria-label={isMobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-label={isMobileOpen ? HEADER_TEXT.aria.closeMenu : HEADER_TEXT.aria.openMenu}
             aria-expanded={isMobileOpen}
             aria-controls="mobile-nav-drawer"
             onClick={() => setIsMobileOpen((prev) => !prev)}
@@ -223,26 +214,26 @@ export default function SiteHeader({ theme, setTheme }) {
         inert={!isMobileOpen ? '' : undefined}
       >
         <div className="mobile-drawer-backdrop" onClick={() => setIsMobileOpen(false)} aria-hidden="true" />
-        <div className="mobile-drawer-pane" role="dialog" aria-modal="true" aria-label="Navigation menu">
+        <div className="mobile-drawer-pane" role="dialog" aria-modal="true" aria-label={HEADER_TEXT.aria.mobileDialog}>
           <div className="mobile-drawer-header">
             <div className="mobile-drawer-identity">
               <span className="mobile-status-pill" title="Live System Time">
                 <span className="status-live-dot" aria-hidden="true" />
-                <span>SYS: ONLINE</span>
+                <span>{HEADER_TEXT.mobileDrawer.sysOnline}</span>
               </span>
-              <span className="mobile-drawer-kicker">MAIN NAVIGATION</span>
+              <span className="mobile-drawer-kicker">{HEADER_TEXT.mobileDrawer.mainNavKicker}</span>
             </div>
             <button
               type="button"
               className="mobile-close-btn"
-              aria-label="Close navigation"
+              aria-label={HEADER_TEXT.aria.closeBtn}
               onClick={() => setIsMobileOpen(false)}
             >
               <span aria-hidden="true">×</span>
             </button>
           </div>
 
-          <nav className="mobile-nav-links" aria-label="Mobile Navigation">
+          <nav className="mobile-nav-links" aria-label={HEADER_TEXT.aria.mobileNav}>
             <ul role="list">
               {NAV_ITEMS.map((item) => (
                 <li key={item.id}>
@@ -266,7 +257,7 @@ export default function SiteHeader({ theme, setTheme }) {
             </div>
 
             <div className="mobile-telemetry-row" title="Live System Time">
-              <span className="lbl">SYS TIME</span>
+              <span className="lbl">{HEADER_TEXT.mobileDrawer.sysTimeLabel}</span>
               <span className="val">{sysTime || '12:00:00 AM'}</span>
             </div>
 
@@ -286,7 +277,7 @@ export default function SiteHeader({ theme, setTheme }) {
             </div>
 
             <a className="mobile-cta-btn" href={contactLinks.email} onClick={() => setIsMobileOpen(false)}>
-              Start a project ↗
+              {HEADER_TEXT.cta.mobileLabel}
             </a>
           </div>
         </div>

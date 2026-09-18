@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { CONTACT_CHANNELS, TELEMETRY_DATA } from '../domain/contactData.js';
+import { CONTACT_CHANNELS, CONTACT_TEXT, TELEMETRY_DATA } from '../domain/contactData.js';
 
 export default function ContactChannels() {
   const [copied, setCopied] = useState(false);
@@ -20,10 +20,10 @@ export default function ContactChannels() {
   }, [email.address, email.mailto]);
 
   return (
-    <aside className="contact-channels" aria-label="Direct Communication Channels & Fast-Track Booking">
+    <aside className="contact-channels" aria-label={CONTACT_TEXT.aria.channels}>
       <div className="contact-channels__intro">
-        <span className="contact-channels__eyebrow">Prefer a direct route?</span>
-        <p>Skip the form and choose one of these.</p>
+        <span className="contact-channels__eyebrow">{CONTACT_TEXT.channelsIntro.eyebrow}</span>
+        <p>{CONTACT_TEXT.channelsIntro.description}</p>
       </div>
 
       <div className="channel-card channel-card--meeting">
@@ -38,7 +38,7 @@ export default function ContactChannels() {
               </svg>
               {meeting.duration}
             </span>
-            <span className="channel-badge channel-badge--status">FAST TRACK</span>
+            <span className="channel-badge channel-badge--status">{CONTACT_TEXT.channelsIntro.fastTrackBadge}</span>
           </div>
           <h3 className="channel-card__title">{meeting.title}</h3>
         </div>
@@ -60,7 +60,7 @@ export default function ContactChannels() {
 
       <div className="channel-card channel-card--telemetry">
         <div className="telemetry-item">
-          <span className="telemetry-label">OPERATIONAL STATUS</span>
+          <span className="telemetry-label">{CONTACT_TEXT.telemetryLabels.operationalStatus}</span>
           <div className="telemetry-status-row">
             <span className="status-beacon" aria-hidden="true" />
             <span className="telemetry-value">{TELEMETRY_DATA.status}</span>
@@ -68,11 +68,11 @@ export default function ContactChannels() {
         </div>
         <div className="telemetry-grid">
           <div className="telemetry-item">
-            <span className="telemetry-label">LOCAL BASE / TIMEZONE</span>
+            <span className="telemetry-label">{CONTACT_TEXT.telemetryLabels.timezone}</span>
             <span className="telemetry-value">{TELEMETRY_DATA.timezone}</span>
           </div>
           <div className="telemetry-item">
-            <span className="telemetry-label">RESPONSE LATENCY</span>
+            <span className="telemetry-label">{CONTACT_TEXT.telemetryLabels.latency}</span>
             <span className="telemetry-value">{TELEMETRY_DATA.responseTime}</span>
           </div>
         </div>

@@ -53,15 +53,13 @@ test('CSS styles provide proper dialog sizing, no squashing, and light theme sup
   assert.ok(mascotsCss.includes(":root[data-theme='light'] .mischief-bubble"), 'mascots.css provides full light theme support');
 });
 
-test('dashboard mascots wait for transition to settle while the hero stays conversion-focused', () => {
+test('project showcase keeps the hero visual focused while mascot interactions remain available', () => {
   const homePage = readFileSync(resolve('src/modules/home/presentation/HomePage.jsx'), 'utf-8');
   const hero = readFileSync(resolve('src/modules/home/presentation/hero/Hero.jsx'), 'utf-8');
   const mascots = readFileSync(resolve('src/components/Mascots.jsx'), 'utf-8');
 
-  // HomePage must track transition settlement and gate dashboard mascots.
-  assert.ok(homePage.includes('isTransitionSettled'), 'HomePage tracks when the transition has settled');
-  assert.ok(homePage.includes('stage="page2"'), 'Dashboard retains the mascot interaction space');
-  assert.ok(homePage.includes('active={isTransitionSettled}'), 'Dashboard mascots wait for the settled state');
+  // The project sequence should keep the supplied product images as the visual subject.
+  assert.ok(!homePage.includes('stage="page2"'), 'Project showcase does not mount mascot overlays');
 
   // The first screen should not have a mascot dialog competing with the offer.
   assert.ok(!hero.includes("import Mascots"), 'Hero does not import the mascot experience');

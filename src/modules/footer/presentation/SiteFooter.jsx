@@ -4,6 +4,7 @@ import {
   FOOTER_SYSTEMS,
   FOOTER_CONNECT,
   FOOTER_COLOPHON,
+  FOOTER_TEXT,
 } from '../domain/footerData.js';
 import './footer.css';
 
@@ -14,13 +15,13 @@ export default function SiteFooter() {
   }, []);
 
   return (
-    <footer className="site-footer" role="contentinfo" aria-label="Site Footer and Navigation Directory">
+    <footer className="site-footer" role="contentinfo" aria-label={FOOTER_TEXT.aria.footer}>
       <div className="footer-container">
         <div className="footer-directory-grid">
           <div className="footer-col footer-col--brand">
             <div className="footer-brand-lockup">
               <img src="/brand/ithx-logo.png" alt="itHX" className="footer-brand-logo" width="120" height="35" />
-              <span className="footer-monogram" aria-label="Hx-313 Insignia">HX-313</span>
+              <span className="footer-monogram" aria-label={FOOTER_TEXT.aria.monogram}>HX-313</span>
             </div>
             <h2 className="footer-author-name">{FOOTER_COLOPHON.author}</h2>
             <p className="footer-author-title">{FOOTER_COLOPHON.title}</p>
@@ -31,8 +32,8 @@ export default function SiteFooter() {
             </div>
           </div>
 
-          <nav className="footer-col footer-col--nav" aria-label="Footer Sitemap">
-            <h3 className="footer-col-heading">Explore</h3>
+          <nav className="footer-col footer-col--nav" aria-label={FOOTER_TEXT.aria.sitemap}>
+            <h3 className="footer-col-heading">{FOOTER_TEXT.headings.explore}</h3>
             <ul className="footer-link-list">
               {FOOTER_NAVIGATION.map((item) => (
                 <li key={item.href}>
@@ -45,7 +46,7 @@ export default function SiteFooter() {
           </nav>
 
           <div className="footer-col footer-col--systems">
-            <h3 className="footer-col-heading">Systems</h3>
+            <h3 className="footer-col-heading">{FOOTER_TEXT.headings.systems}</h3>
             <ul className="footer-link-list">
               {FOOTER_SYSTEMS.map((system) => (
                 <li key={system.name} className="footer-system-item">
@@ -71,8 +72,8 @@ export default function SiteFooter() {
           </div>
 
           <div className="footer-col footer-col--connect">
-            <h3 className="footer-col-heading">Contact</h3>
-            <p className="footer-contact-note">Available for select product builds, system reviews, and technical advisory.</p>
+            <h3 className="footer-col-heading">{FOOTER_TEXT.headings.contact}</h3>
+            <p className="footer-contact-note">{FOOTER_TEXT.contactNote}</p>
             <ul className="footer-link-list">
               {FOOTER_CONNECT.map((channel) => (
                 <li key={channel.label}>
@@ -89,9 +90,9 @@ export default function SiteFooter() {
               ))}
             </ul>
             <div className="footer-location-card">
-              <span>Based in</span>
-              <strong>Lahore, Pakistan</strong>
-              <small>Working worldwide</small>
+              <span>{FOOTER_TEXT.location.basedIn}</span>
+              <strong>{FOOTER_TEXT.location.cityCountry}</strong>
+              <small>{FOOTER_TEXT.location.workingScope}</small>
             </div>
           </div>
         </div>
@@ -115,9 +116,9 @@ export default function SiteFooter() {
               href="#top"
               onClick={scrollToTop}
               className="back-to-top-btn"
-              aria-label="Back to top of page"
+              aria-label={FOOTER_TEXT.aria.backToTop}
             >
-              <span>Back to top</span>
+              <span>{FOOTER_TEXT.backToTop}</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <line x1="12" y1="19" x2="12" y2="5" />
                 <polyline points="5 12 12 5 19 12" />
