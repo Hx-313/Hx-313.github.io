@@ -23,12 +23,15 @@
   /* Solid matte brand card tokens (Zero Opacity) */
   --services-card-bg: var(--color-surface);
   --services-card-border: var(--color-border);
-  --services-card-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  --services-card-shadow: 0 4px 20px rgba(0, 0, 0, 0.18), 0 1px 4px rgba(0, 0, 0, 0.1);
   --services-card-hover-bg: var(--color-surface-raised);
   --services-card-hover-border: var(--color-accent);
-  --services-card-hover-shadow: 0 16px 36px rgba(0, 0, 0, 0.38);
+  --services-card-hover-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
   --services-icon-bg: var(--color-background);
   --services-icon-border: var(--color-border);
+  --services-icon-hover-bg: var(--color-surface);
+  --services-icon-glow: transparent;
+  --services-icon-glow-active: transparent;
   --services-tab-border: var(--color-border);
 
   background: transparent;
@@ -45,12 +48,15 @@
   /* Solid matte itHX Light Tokens */
   --services-card-bg: var(--ithx-white);
   --services-card-border: var(--ithx-line-light);
-  --services-card-shadow: 0 8px 24px rgba(9, 36, 33, 0.06);
+  --services-card-shadow: 0 4px 20px rgba(9, 36, 33, 0.06), 0 1px 4px rgba(9, 36, 33, 0.04);
   --services-card-hover-bg: var(--ithx-white);
   --services-card-hover-border: var(--ithx-emerald-accent);
-  --services-card-hover-shadow: 0 16px 36px rgba(9, 36, 33, 0.12);
+  --services-card-hover-shadow: 0 12px 36px rgba(9, 36, 33, 0.11), 0 4px 10px rgba(20, 122, 93, 0.08);
   --services-icon-bg: var(--ithx-paper-marble);
   --services-icon-border: var(--ithx-line-light);
+  --services-icon-hover-bg: color-mix(in srgb, var(--ithx-emerald-accent) 8%, var(--ithx-paper-marble));
+  --services-icon-glow: color-mix(in srgb, var(--ithx-emerald-accent) 6%, transparent);
+  --services-icon-glow-active: color-mix(in srgb, var(--ithx-emerald-accent) 12%, transparent);
   --services-tab-border: var(--ithx-line-light);
 }
 
@@ -63,12 +69,15 @@
   /* Solid matte itHX Dark Tokens */
   --services-card-bg: var(--ithx-deep-surface);
   --services-card-border: var(--ithx-theme-border-dark);
-  --services-card-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  --services-card-shadow: 0 4px 24px rgba(0, 0, 0, 0.4), 0 1px 4px rgba(0, 0, 0, 0.25);
   --services-card-hover-bg: var(--ithx-dark-primary-green);
   --services-card-hover-border: var(--ithx-mint-signal);
-  --services-card-hover-shadow: 0 20px 42px rgba(0, 0, 0, 0.65);
+  --services-card-hover-shadow: 0 16px 42px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(82, 199, 167, 0.08);
   --services-icon-bg: var(--ithx-night-green);
   --services-icon-border: var(--ithx-line-dark);
+  --services-icon-hover-bg: color-mix(in srgb, var(--ithx-mint-signal) 10%, var(--ithx-night-green));
+  --services-icon-glow: color-mix(in srgb, var(--ithx-mint-signal) 8%, transparent);
+  --services-icon-glow-active: color-mix(in srgb, var(--ithx-mint-signal) 16%, transparent);
   --services-tab-border: var(--ithx-theme-border-dark);
 }
 
@@ -156,93 +165,127 @@
 .services-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1.25rem, 2.2vw, 1.75rem);
+  gap: clamp(1.25rem, 2.2vw, 1.5rem);
   border: none;
 }
 
-/* Distinct Solid Matte Brand Cards */
+/* Premium Solid Brand Cards */
 .services-item {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   min-width: 0;
-  min-height: clamp(15rem, 20vw, 18rem);
-  padding: clamp(1.6rem, 2.4vw, 2.25rem);
+  min-height: clamp(14rem, 19vw, 17rem);
+  padding: clamp(1.75rem, 2.6vw, 2.4rem) clamp(1.5rem, 2.2vw, 2rem);
   border: 1px solid var(--services-card-border);
-  border-radius: var(--radius-lg, 1.25rem);
+  border-radius: 1rem;
   background: var(--services-card-bg);
   box-shadow: var(--services-card-shadow);
   overflow: hidden;
-  transition: transform 300ms var(--ease-out, ease-out),
-              border-color 300ms var(--ease-out, ease-out),
-              background-color 300ms var(--ease-out, ease-out),
-              box-shadow 300ms var(--ease-out, ease-out);
+  cursor: default;
+  transition: transform 320ms var(--ease-out, ease-out),
+              border-color 320ms var(--ease-out, ease-out),
+              background-color 320ms var(--ease-out, ease-out),
+              box-shadow 320ms var(--ease-out, ease-out);
 }
 
+/* Accent top band */
 .services-item::before {
   content: '';
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--services-card-border);
-  transition: background-color 300ms ease;
+  left: 1.5rem;
+  right: 1.5rem;
+  height: 2px;
+  border-radius: 0 0 4px 4px;
+  background: var(--signal);
+  opacity: 0.35;
+  transition: opacity 320ms ease, left 320ms ease, right 320ms ease;
+}
+
+/* Corner glow accent */
+.services-item::after {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: var(--signal);
+  opacity: 0.035;
+  pointer-events: none;
+  transition: opacity 320ms ease, transform 320ms ease;
+  will-change: opacity, transform;
 }
 
 .services-item:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
   background: var(--services-card-hover-bg);
   border-color: var(--services-card-hover-border);
   box-shadow: var(--services-card-hover-shadow);
 }
 
 .services-item:hover::before {
-  background: var(--services-card-hover-border);
+  opacity: 1;
+  left: 0;
+  right: 0;
+  border-radius: 0;
 }
 
-/* Solid Brand Icon Badge */
+.services-item:hover::after {
+  opacity: 0.07;
+  transform: scale(1.25);
+}
+
+/* Icon Badge — larger, visually distinct */
 .services-item-icon {
-  display: grid;
-  width: 3.1rem;
-  height: 3.1rem;
-  margin-bottom: clamp(1.4rem, 2.5vh, 2rem);
-  place-items: center;
-  border: 1px solid var(--services-icon-border);
-  border-radius: var(--radius-sm, 0.45rem);
+  display: flex;
+  width: 3.4rem;
+  height: 3.4rem;
+  margin-bottom: clamp(1.25rem, 2.2vh, 1.75rem);
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1.5px solid var(--services-icon-border);
+  border-radius: 0.6rem;
   background: var(--services-icon-bg);
   color: var(--signal);
-  font-size: 1.45rem;
-  transition: border-color 240ms ease, color 240ms ease, transform 240ms ease, background-color 240ms ease;
+  font-size: 1.5rem;
+  box-shadow: 0 0 0 4px var(--services-icon-glow, transparent);
+  transition: border-color 280ms ease, color 280ms ease, transform 280ms ease,
+              background-color 280ms ease, box-shadow 280ms ease;
 }
 
 .services-item:hover .services-item-icon {
   border-color: var(--services-card-hover-border);
-  color: var(--signal);
-  transform: scale(1.08);
+  background: var(--services-icon-hover-bg);
+  box-shadow: 0 0 0 5px var(--services-icon-glow-active, transparent);
+  transform: scale(1.07) rotate(-2deg);
 }
 
 .services-item-name {
   max-width: 22ch;
-  margin: 0 0 0.85rem;
+  margin: 0 0 0.7rem;
   color: var(--ink-primary);
   font-family: var(--font-display);
-  font-size: clamp(1.2rem, 1.7vw, 1.55rem);
+  font-size: clamp(1.1rem, 1.55vw, 1.45rem);
   font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.025em;
+  line-height: 1.18;
+  letter-spacing: -0.03em;
   text-wrap: balance;
 }
 
 .services-item-description {
-  max-width: 34ch;
+  max-width: 36ch;
   margin: 0;
+  margin-top: auto;
   color: var(--ink-muted);
   font-family: var(--font-body);
-  font-size: clamp(0.88rem, 1.1vw, 1rem);
+  font-size: clamp(0.85rem, 1.05vw, 0.95rem);
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.65;
   text-wrap: pretty;
 }
 

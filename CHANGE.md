@@ -24,6 +24,24 @@ Documentation-only changes, configuration changes, dependency changes, source ch
 - Verification: Commands run and their result, or `Not run` with the reason.
 ```
 
+## 2026-09-19 — Premium card design refinement for Capabilities and Solutions sections
+
+- Summary: Per user request ("cards design is not good") — upgraded the visual quality of all service and solution cards:
+  1. **Capabilities section (`services.css`)** — complete card visual overhaul:
+     - Reduced border-radius from `1.25rem` to `1rem` for a crisper HUD/tech aesthetic
+     - Replaced the flat 3px full-width top band with an inset, thinner `2px` accent strip that animates out to full-width on hover (opacity 0.35 → 1)
+     - Added a `::after` corner glow using `--signal` color at very low opacity that scales up on hover for subtle depth
+     - Icon badge upgraded: 1.5px border, icon rotation on hover (`scale(1.07) rotate(-2deg)`), icon glow ring via `box-shadow` using new `--services-icon-glow` and `--services-icon-glow-active` tokens
+     - Description text pushed to card bottom via `margin-top: auto` for consistent card layout
+     - Added explicit icon glow tokens to all three theme contexts (base, light, dark) using only solid or `color-mix(... transparent)` patterns — no direct opacity values
+  2. **Solutions section (`solutions.css`)** — matching visual upgrade:
+     - Same `1rem` border-radius, inset accent band animation, and corner glow treatment
+     - `.solution-card__number` redesigned as a small bordered badge (`2.1rem × 2.1rem`, `1.5px border`, `0.5rem border-radius`) instead of plain mono text — visually grounding each card
+     - `.solution-card__tags` now displays accent mono text with `padding-top: 1.25rem` for proper separation, using `--color-accent` with 0.7 opacity instead of muted foreground
+     - `h3` title font size and spacing tuned for better rhythm
+- Files: `src/modules/home/presentation/services/services.css`, `src/modules/home/presentation/solutions/solutions.css`, `CHANGE.md`
+- Verification: `npm test` — 80/80 tests passing. `npm run build` — clean, 0 errors (3.60s).
+
 ## 2026-09-19 — Upgrade Capabilities and Solutions to solid matte brand cards & apply itHX branding
 
 - Summary: Per user request ("read new theme and website branding from ithx and apply in the portfolio and then change these grids in cpabilities with card design the cards must be mate brand solid coors not ai opacitry colors"):

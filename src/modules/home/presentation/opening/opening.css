@@ -564,7 +564,7 @@
   .opening-network-globe {
     width: min(86vw, 54vh);
   }
-  .opening-mascot { top: 48%; width: clamp(116px, 34vw, 148px); }
+  .opening-mascot { top: 46%; width: clamp(116px, 34vw, 148px); }
   .opening-mascot--dash { left: 80%; }
   .opening-mascot--aero { left: 20%; }
   .opening-projector { position: absolute; right: auto; top: 135%; width: 90vw; transform: none; translate: none; }
@@ -579,21 +579,49 @@
     width: var(--mobile-projection-width, 90vw);
     transform: none;
     translate: none;
+    transform-origin: 50% 50%;
+    --projection-origin: 50% 50%;
   }
-  .opening-projection { width: 100%; max-width: none; transform-origin: 50% 0; }
+  .opening-projection {
+    width: 100%;
+    max-width: none;
+    transform-origin: 50% 0;
+    align-items: center;
+    text-align: center;
+    padding: clamp(1.2rem, 3.5vw, 1.7rem) clamp(1.4rem, 4vw, 2rem);
+  }
+  .opening-projection-speaker {
+    align-self: center;
+    margin-bottom: 0.5rem;
+  }
+  .opening-projection-copy {
+    font-size: clamp(1.35rem, 6.2vw, 2rem);
+    text-align: center;
+    width: 100%;
+  }
   .opening-emitter, .opening-beam { display: none; }
   .opening-mobile-projections .opening-emitter,
   .opening-mobile-projections .opening-beam { display: block; }
-  .opening-mobile-projections .opening-projector--aero .opening-beam {
-    left: 0;
-    width: 22%;
+  .opening-mobile-projections .opening-emitter,
+  .opening-mobile-projections .opening-projector--aero .opening-emitter,
+  .opening-mobile-projections .opening-projector--dash .opening-emitter {
+    top: -5px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
   }
+  .opening-mobile-projections .opening-beam,
+  .opening-mobile-projections .opening-projector--aero .opening-beam,
   .opening-mobile-projections .opening-projector--dash .opening-beam {
-    right: 0;
-    width: 22%;
+    top: -16px;
+    left: 50%;
+    right: auto;
+    width: 32%;
+    height: 18px;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at 50% 100%, rgba(25, 230, 140, .62), transparent 70%);
   }
-  .opening-projection-copy { font-size: clamp(1.45rem, 7vw, 2.15rem); }
-  .opening-duo-connection { top: 46%; left: 28%; width: 40%; }
+  .opening-duo-connection { top: 46%; left: 28%; width: 44%; }
   .opening-reduced-statement { top: 67%; }
   .space-skip-btn { right: max(1rem, env(safe-area-inset-right)); bottom: max(1rem, env(safe-area-inset-bottom)); font-size: .58rem; }
 }
