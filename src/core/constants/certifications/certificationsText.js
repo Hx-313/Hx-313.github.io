@@ -1,10 +1,12 @@
 export const CERTIFICATIONS_TEXT = Object.freeze({
-  heading: 'Certifications will live here when the record is ready.',
+  kicker: 'Credential archive',
+  heading: 'The work leaves a record.',
   aria: Object.freeze({
-    frame: 'Certification archive placeholder',
+    section: 'Certifications and lifetime achievements',
+    professionalRail: 'Professional certifications archive',
+    lifetimeRail: 'Lifetime achievements archive',
   }),
-  archiveIndex: 'CERT / 00',
-  archiveTitle: 'Verification archive',
-  placeholderStatus: 'Content placeholder',
-  description: 'Verified credentials will be added with issuer, date, and evidence.',
+  professionalHeading: 'Professional certifications',
+  lifetimeHeading: 'Lifetime achievements',
+  description: 'A quiet record of formal training, earned milestones, and the work that came before the work.',
 });
