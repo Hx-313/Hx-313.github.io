@@ -40,7 +40,7 @@ export default function CertificationCard({ record, isActive = false }) {
 
   return (
     <article
-      className={`certification-card certification-card--${record.category}`}
+      className="certification-card"
       data-certification-card={record.id}
       data-active={isActive ? 'true' : 'false'}
     >

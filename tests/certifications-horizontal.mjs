@@ -40,16 +40,17 @@ await page.locator('.section-reveal--certifications.is-visible').waitFor({ state
 await page.waitForTimeout(900);
 await page.screenshot({ path: 'test-artifacts/certifications-desktop.png' });
 assert.equal(await page.locator('#certifications').isVisible(), true);
-assert.equal(await page.locator('.certification-rail').count(), 2);
-assert.equal(await page.getByRole('heading', { name: 'Professional certifications' }).isVisible(), true);
-assert.equal(await page.getByRole('heading', { name: 'Lifetime achievements' }).isVisible(), true);
+assert.equal(await page.locator('.certification-rail').count(), 1);
+assert.equal(await page.getByRole('heading', { name: 'The work leaves a record.' }).isVisible(), true);
+assert.equal(await page.getByRole('heading', { name: 'Professional certifications' }).count(), 0);
+assert.equal(await page.getByRole('heading', { name: 'Lifetime achievements' }).count(), 0);
 assert.equal(await page.locator('button').filter({ hasText: 'Professional' }).count(), 0);
 assert.equal(
   await page.locator('.certification-rail__track').first().evaluate(
     (element) => element.scrollWidth > element.clientWidth
   ),
   true,
-  'professional rail should overflow horizontally'
+  'certification archive should overflow horizontally'
 );
 
 const link = page.locator('.certification-card a').first();
@@ -82,7 +83,7 @@ await reduced.page.locator('#certifications').evaluate(
   (element) => element.scrollIntoView({ behavior: 'auto', block: 'start' })
 );
 await reduced.page.locator('.section-reveal--certifications.is-visible').waitFor({ state: 'attached', timeout: 2_000 });
-assert.equal(await reduced.page.locator('.certification-rail').count(), 2);
+assert.equal(await reduced.page.locator('.certification-rail').count(), 1);
 assert.equal(
   await reduced.page.locator('.certification-card').first().evaluate(
     (element) => getComputedStyle(element).transitionDuration === '0s'

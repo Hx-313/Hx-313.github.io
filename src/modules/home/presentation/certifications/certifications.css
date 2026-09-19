@@ -1,6 +1,4 @@
 .certifications-section {
-  --certification-professional: var(--color-accent);
-  --certification-lifetime: var(--ithx-warm-brass);
   padding: clamp(4.75rem, 9vw, 7.5rem) 0;
   background: transparent;
   color: var(--color-foreground);
@@ -52,47 +50,12 @@
   text-wrap: pretty;
 }
 
-.certifications-rails {
-  display: grid;
-  gap: clamp(2.75rem, 5vw, 4.75rem);
+.certifications-archive {
+  display: block;
 }
 
 .certification-rail {
   min-width: 0;
-}
-
-.certification-rail__header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1.5rem;
-  margin-bottom: 1.15rem;
-}
-
-.certification-rail__header h3 {
-  margin: 0;
-  color: var(--color-foreground);
-  font-family: var(--font-display);
-  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: -0.025em;
-}
-
-.certification-rail--professional .certification-rail__header h3 {
-  color: var(--certification-professional);
-}
-
-.certification-rail--lifetime .certification-rail__header h3 {
-  color: var(--certification-lifetime);
-}
-
-.certification-rail__count {
-  color: var(--color-muted-foreground);
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
 }
 
 .certification-rail__track {
@@ -100,11 +63,10 @@
   min-width: 0;
   gap: clamp(0.85rem, 2vw, 1.35rem);
   overflow-x: auto;
-  padding: 0.35rem 0.15rem 1.25rem;
+  padding: 0.35rem 0.15rem 0.45rem;
   scroll-padding-inline: 0.15rem;
   scroll-snap-type: x proximity;
-  scrollbar-color: var(--color-border) transparent;
-  scrollbar-width: thin;
+  scrollbar-width: none;
 }
 
 .certification-rail__track:focus-visible {
@@ -113,16 +75,9 @@
 }
 
 .certification-rail__track::-webkit-scrollbar {
-  height: 0.45rem;
-}
-
-.certification-rail__track::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.certification-rail__track::-webkit-scrollbar-thumb {
-  border-radius: 999px;
-  background: var(--color-border);
+  display: none;
+  height: 0;
+  width: 0;
 }
 
 .certification-card {
@@ -143,19 +98,11 @@
   transition: border-color 280ms var(--ease-out), box-shadow 280ms var(--ease-out), transform 280ms var(--ease-out);
 }
 
-.certification-card--lifetime {
-  --cert-line: color-mix(in srgb, var(--ithx-warm-brass) 78%, transparent);
-}
-
 :root[data-theme='dark'] .certification-card {
   --cert-paper: color-mix(in srgb, var(--ithx-deep-surface) 88%, var(--ithx-paper-marble));
   --cert-ink: var(--ithx-paper-marble);
   --cert-line: color-mix(in srgb, var(--ithx-warm-brass) 72%, var(--color-border));
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.26);
-}
-
-:root[data-theme='dark'] .certification-card--professional {
-  --cert-line: color-mix(in srgb, var(--ithx-mint-signal) 60%, var(--color-border));
 }
 
 .certification-card:hover,
@@ -164,12 +111,6 @@
   border-color: color-mix(in srgb, var(--color-accent) 70%, var(--color-border));
   box-shadow: 0 12px 30px color-mix(in srgb, var(--color-foreground) 14%, transparent);
   transform: translateY(-3px);
-}
-
-.certification-card--lifetime:hover,
-.certification-card--lifetime:focus-within,
-.certification-card--lifetime[data-active='true'] {
-  border-color: color-mix(in srgb, var(--ithx-warm-brass) 76%, var(--color-border));
 }
 
 .certification-card__preview {
@@ -229,10 +170,6 @@
   opacity: 0.88;
 }
 
-.certification-card--lifetime .certification-card__fallback-seal {
-  fill: var(--ithx-warm-brass);
-}
-
 .certification-card__fallback-seal--inner {
   fill: none;
   stroke: var(--cert-ink);
@@ -252,10 +189,6 @@
 .certification-card__fallback-ribbon {
   fill: var(--color-accent);
   opacity: 0.78;
-}
-
-.certification-card--lifetime .certification-card__fallback-ribbon {
-  fill: var(--ithx-warm-brass);
 }
 
 .certification-card__status {
@@ -284,10 +217,6 @@
   font-size: 0.8rem;
 }
 
-.certification-card--lifetime .certification-card__status > span {
-  color: var(--ithx-warm-brass);
-}
-
 .certification-card__action {
   position: absolute;
   bottom: 0.85rem;
@@ -307,12 +236,6 @@
   pointer-events: none;
   transform: translateY(0.4rem);
   transition: opacity 220ms ease, transform 220ms var(--ease-out);
-}
-
-.certification-card--lifetime .certification-card__action {
-  border-color: color-mix(in srgb, var(--ithx-warm-brass) 35%, transparent);
-  background: var(--ithx-warm-brass);
-  color: var(--ithx-white);
 }
 
 .certification-card:hover .certification-card__action,
@@ -366,11 +289,6 @@
   font-size: 0.57rem;
   font-weight: var(--font-weight-bold);
   letter-spacing: -0.03em;
-}
-
-.certification-card--lifetime .certification-card__issuer-mark {
-  background: color-mix(in srgb, var(--ithx-warm-brass) 16%, transparent);
-  color: var(--ithx-warm-brass);
 }
 
 .certification-card__issuer {
@@ -429,12 +347,6 @@
 
   .certifications-heading {
     font-size: clamp(2rem, 12vw, 3.25rem);
-  }
-
-  .certification-rail__header {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 0.45rem;
   }
 
   .certification-card {

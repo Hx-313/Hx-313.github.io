@@ -5,35 +5,28 @@ import { resolve } from 'node:path';
 
 const certificationsDirectory = resolve('src/modules/home/presentation/certifications');
 
-test('certification groups preserve professional-first order and immutable records', async () => {
-  const { CERTIFICATION_GROUPS } = await import(
+test('certification records preserve manifest order and immutable records', async () => {
+  const { CERTIFICATION_RECORDS } = await import(
     '../src/modules/home/presentation/certifications/certificationsData.js'
   );
 
-  assert.deepEqual(
-    CERTIFICATION_GROUPS.map((group) => group.id),
-    ['professional', 'lifetime']
-  );
-  assert.ok(Object.isFrozen(CERTIFICATION_GROUPS));
-  assert.ok(CERTIFICATION_GROUPS.every((group) => Object.isFrozen(group.records)));
-  assert.ok(CERTIFICATION_GROUPS.every((group) => group.records.length > 0));
-
-  const records = CERTIFICATION_GROUPS.flatMap((group) => group.records);
-  assert.equal(records.length, 11);
-  assert.equal(records.length, new Set(records.map((record) => record.id)).size);
+  assert.ok(Object.isFrozen(CERTIFICATION_RECORDS));
+  assert.equal(CERTIFICATION_RECORDS.length, 11);
+  assert.equal(CERTIFICATION_RECORDS.length, new Set(CERTIFICATION_RECORDS.map((record) => record.id)).size);
+  assert.equal(CERTIFICATION_RECORDS[0].id, 'certiport-java');
+  assert.equal(CERTIFICATION_RECORDS.at(-1).id, 'wifaq-ul-madaris-hifz');
 });
 
-test('records separate image previews from PDF documents and enumerate status values', async () => {
-  const { CERTIFICATION_GROUPS } = await import(
+test('records use the new PNG assets for both previews and credential links', async () => {
+  const { CERTIFICATION_RECORDS } = await import(
     '../src/modules/home/presentation/certifications/certificationsData.js'
   );
-  const records = CERTIFICATION_GROUPS.flatMap((group) => group.records);
+  const records = CERTIFICATION_RECORDS;
 
-  assert.ok(records.some((record) => record.preview?.type === 'image'));
-  assert.ok(records.some((record) => record.preview === null));
+  assert.ok(records.every((record) => record.preview?.type === 'image'));
   assert.ok(records.every((record) => ['verified', 'documented'].includes(record.status)));
-  assert.ok(records.every((record) => record.document?.type === 'pdf'));
-  assert.ok(records.every((record) => record.document?.href));
+  assert.ok(records.every((record) => record.document?.type === 'image'));
+  assert.ok(records.every((record) => record.document?.href.endsWith('.png')));
   assert.ok(records.every((record) => !record.title.includes('/') && !record.issuer.includes('/')));
 });
 
@@ -63,15 +56,20 @@ test('CertificationRail tracks active cards and supports keyboard scrolling', ()
   assert.doesNotMatch(railSource, /position:\s*sticky|ScrollTrigger/);
 });
 
-test('CertificationsSection renders two rails without placeholder or filter controls', () => {
+test('CertificationsSection renders one sequential rail without categories or filter controls', () => {
   const sectionSource = readFileSync(resolve(certificationsDirectory, 'CertificationsSection.jsx'), 'utf8');
+  const railSource = readFileSync(resolve(certificationsDirectory, 'CertificationRail.jsx'), 'utf8');
   const styles = readFileSync(resolve(certificationsDirectory, 'certifications.css'), 'utf8');
 
   assert.match(sectionSource, /id="certifications"/);
-  assert.match(sectionSource, /CERTIFICATION_GROUPS/);
+  assert.match(sectionSource, /CERTIFICATION_RECORDS/);
   assert.match(sectionSource, /<CertificationRail/);
+  assert.doesNotMatch(sectionSource, /professional|lifetime/i);
+  assert.doesNotMatch(railSource, /group|Professional certifications|Lifetime achievements/);
   assert.doesNotMatch(sectionSource, /portfolio-placeholder|filter|button/);
   assert.match(styles, /overflow-x:\s*auto/);
+  assert.match(styles, /scrollbar-width:\s*none/);
+  assert.match(styles, /::-webkit-scrollbar[\s\S]*display:\s*none/);
   assert.match(styles, /scroll-snap-type:\s*x\s+proximity/);
   assert.match(styles, /var\(--color-surface/);
   assert.match(styles, /var\(--color-accent/);

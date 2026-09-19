@@ -34,8 +34,9 @@ test('portfolio sections are honest, accessible, and motion-addressable', () => 
   assert.match(certifications, /<section/, 'certifications must be a semantic section');
   assert.match(certifications, /aria-labelledby=/, 'certifications must have an accessible heading relationship');
   assert.match(certifications, /data-section=/, 'certifications must expose a navigation section hook');
-  assert.match(certifications, /CERTIFICATION_GROUPS/);
+  assert.match(certifications, /CERTIFICATION_RECORDS/);
   assert.match(certifications, /<CertificationRail/);
+  assert.doesNotMatch(certifications, /professional|lifetime/i, 'certifications should remain one sequential archive');
   assert.doesNotMatch(certifications, /placeholder|coming soon/i, 'certifications should render real archive content');
   assert.match(certifications, /data-motion=/, 'certifications must declare its subject motion');
 

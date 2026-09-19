@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import CertificationCard from './CertificationCard.jsx';
 
-export default function CertificationRail({ group }) {
+export default function CertificationRail({ records, ariaLabel }) {
   const railRef = useRef(null);
   const [activeId, setActiveId] = useState(null);
 
@@ -28,7 +28,7 @@ export default function CertificationRail({ group }) {
 
     cards.forEach((card) => observer.observe(card));
     return () => observer.disconnect();
-  }, [group.records]);
+  }, [records]);
 
   const handleKeyDown = (event) => {
     if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
@@ -46,26 +46,19 @@ export default function CertificationRail({ group }) {
   };
 
   return (
-    <section className={`certification-rail certification-rail--${group.id}`} aria-labelledby={`${group.id}-certifications-heading`}>
-      <header className="certification-rail__header">
-        <h3 id={`${group.id}-certifications-heading`}>{group.heading}</h3>
-        <span className="certification-rail__count" aria-hidden="true">
-          {String(group.records.length).padStart(2, '0')} records
-        </span>
-      </header>
-
+    <div className="certification-rail">
       <div
         ref={railRef}
         className="certification-rail__track"
         tabIndex={0}
         role="region"
-        aria-label={group.ariaLabel}
+        aria-label={ariaLabel}
         onKeyDown={handleKeyDown}
       >
-        {group.records.map((record) => (
+        {records.map((record) => (
           <CertificationCard key={record.id} record={record} isActive={record.id === activeId} />
         ))}
       </div>
-    </section>
+    </div>
   );
 }
