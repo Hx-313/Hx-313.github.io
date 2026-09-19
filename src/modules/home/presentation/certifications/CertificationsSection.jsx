@@ -1,31 +1,31 @@
 import { CERTIFICATIONS_TEXT } from '../../../../core/constants/certifications/certificationsText.js';
-import '../placeholders/placeholders.css';
+import { CERTIFICATION_GROUPS } from './certificationsData.js';
+import CertificationRail from './CertificationRail.jsx';
+import './certifications.css';
 
 export default function CertificationsSection() {
   return (
     <section
       id="certifications"
-      className="portfolio-placeholder-section certifications-section"
+      className="certifications-section"
       aria-labelledby="certifications-heading"
+      aria-label={CERTIFICATIONS_TEXT.aria.section}
       data-section="certifications"
       data-motion="certifications"
     >
-      <div className="portfolio-placeholder-container">
-        <h2 id="certifications-heading" className="portfolio-placeholder-heading">
+      <div className="certifications-container">
+        <header className="certifications-header">
+          <p className="certifications-kicker">{CERTIFICATIONS_TEXT.kicker}</p>
+          <h2 id="certifications-heading" className="certifications-heading">
           {CERTIFICATIONS_TEXT.heading}
-        </h2>
-        <div className="certifications-placeholder__frame" aria-label={CERTIFICATIONS_TEXT.aria.frame}>
-          <div className="certifications-placeholder__line">
-            <span className="portfolio-placeholder-index">{CERTIFICATIONS_TEXT.archiveIndex}</span>
-            <strong>{CERTIFICATIONS_TEXT.archiveTitle}</strong>
-          </div>
-          <div className="certifications-placeholder__line">
-            <span className="portfolio-placeholder-status">{CERTIFICATIONS_TEXT.placeholderStatus}</span>
-            <span>{CERTIFICATIONS_TEXT.description}</span>
-          </div>
-          <div className="certifications-placeholder__line">
-            <span className="portfolio-placeholder-rule" aria-hidden="true" />
-          </div>
+          </h2>
+          <p className="certifications-intro">{CERTIFICATIONS_TEXT.description}</p>
+        </header>
+
+        <div className="certifications-rails">
+          {CERTIFICATION_GROUPS.map((group) => (
+            <CertificationRail key={group.id} group={group} />
+          ))}
         </div>
       </div>
     </section>

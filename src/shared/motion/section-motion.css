@@ -69,7 +69,8 @@
 .section-reveal.is-visible .about-headline,
 .section-reveal.is-visible .services-tabs,
 .section-reveal.is-visible .solutions-header,
-.section-reveal.is-visible .certifications-placeholder__frame,
+.section-reveal.is-visible .certifications-header,
+.section-reveal.is-visible .certification-rail,
 .section-reveal.is-visible .how-i-build-narrative,
 .section-reveal.is-visible .contact-header,
 .section-reveal.is-visible .testimonials-placeholder__frame {
@@ -78,6 +79,7 @@
 
 .section-reveal.is-visible .project-card,
 .section-reveal.is-visible .solution-card,
+.section-reveal.is-visible .certification-card,
 .section-reveal.is-visible .how-i-build-tile,
 .section-reveal.is-visible .form-group,
 .section-reveal.is-visible .channel-card {
@@ -86,6 +88,7 @@
 
 .section-reveal--projects.is-visible .project-card:nth-child(2),
 .section-reveal--domains.is-visible .solution-card:nth-child(2),
+.section-reveal--certifications.is-visible .certification-card:nth-child(2),
 .section-reveal--tools.is-visible .how-i-build-tile:nth-child(2),
 .section-reveal--contact.is-visible .form-group:nth-child(2),
 .section-reveal--contact.is-visible .channel-card:nth-child(2) {
@@ -94,6 +97,7 @@
 
 .section-reveal--projects.is-visible .project-card:nth-child(3),
 .section-reveal--domains.is-visible .solution-card:nth-child(3),
+.section-reveal--certifications.is-visible .certification-card:nth-child(3),
 .section-reveal--tools.is-visible .how-i-build-tile:nth-child(3),
 .section-reveal--contact.is-visible .form-group:nth-child(3),
 .section-reveal--contact.is-visible .channel-card:nth-child(3) {
@@ -102,6 +106,7 @@
 
 .section-reveal--projects.is-visible .project-card:nth-child(4),
 .section-reveal--domains.is-visible .solution-card:nth-child(4),
+.section-reveal--certifications.is-visible .certification-card:nth-child(4),
 .section-reveal--tools.is-visible .how-i-build-tile:nth-child(4),
 .section-reveal--contact.is-visible .form-group:nth-child(4) {
   animation-delay: 210ms;
@@ -109,6 +114,7 @@
 
 .section-reveal--projects.is-visible .project-card:nth-child(5),
 .section-reveal--domains.is-visible .solution-card:nth-child(5),
+.section-reveal--certifications.is-visible .certification-card:nth-child(5),
 .section-reveal--tools.is-visible .how-i-build-tile:nth-child(5) {
   animation-delay: 280ms;
 }
@@ -143,17 +149,14 @@
   animation-delay: 770ms;
 }
 
-.section-reveal--certifications.is-visible .certifications-placeholder__line,
 .section-reveal--testimonials.is-visible .testimonials-placeholder__line {
   animation: portfolio-line-draw 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.section-reveal--certifications.is-visible .certifications-placeholder__line:nth-child(2),
 .section-reveal--testimonials.is-visible .testimonials-placeholder__line:nth-child(2) {
   animation-delay: 120ms;
 }
 
-.section-reveal--certifications.is-visible .certifications-placeholder__line:nth-child(3),
 .section-reveal--testimonials.is-visible .testimonials-placeholder__line:nth-child(3) {
   animation-delay: 240ms;
 }
@@ -213,16 +216,17 @@
   .section-reveal.is-visible .about-headline,
   .section-reveal.is-visible .services-tabs,
   .section-reveal.is-visible .solutions-header,
-  .section-reveal.is-visible .certifications-placeholder__frame,
+  .section-reveal.is-visible .certifications-header,
+  .section-reveal.is-visible .certification-rail,
   .section-reveal.is-visible .how-i-build-narrative,
   .section-reveal.is-visible .contact-header,
   .section-reveal.is-visible .testimonials-placeholder__frame,
   .section-reveal.is-visible .project-card,
   .section-reveal.is-visible .solution-card,
+  .section-reveal.is-visible .certification-card,
   .section-reveal.is-visible .how-i-build-tile,
   .section-reveal.is-visible .form-group,
   .section-reveal.is-visible .channel-card,
-  .section-reveal.is-visible .certifications-placeholder__line,
   .section-reveal.is-visible .testimonials-placeholder__line {
     animation: none;
     opacity: 1;
