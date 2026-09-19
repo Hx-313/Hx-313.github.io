@@ -1,7 +1,7 @@
 const assets = Object.freeze({
   cert5816324103Pdf: new URL('../../../../../certifications/Cert5816324103.pdf', import.meta.url).href,
   courseraGgPdf: new URL('../../../../../certifications/Coursera GG2Y2MZOL6ZU.pdf', import.meta.url).href,
-  courseraGgPreview: new URL('../../../../../certifications/Coursera GG2Y2MZOL6ZU.png', import.meta.url).href,
+  courseraGgPreview: new URL('../../../../../certifications/Coursera GG2Y2MZOL6ZU-1.png', import.meta.url).href,
   courseraTuPdf: new URL('../../../../../certifications/Coursera TUZAVQAMZ1G1.pdf', import.meta.url).href,
   courseraTuPreview: new URL('../../../../../certifications/Coursera TUZAVQAMZ1G1.png', import.meta.url).href,
   navttcPdf: new URL('../../../../../certifications/navttc.pdf', import.meta.url).href,

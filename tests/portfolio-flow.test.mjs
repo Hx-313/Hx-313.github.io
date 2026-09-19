@@ -27,17 +27,23 @@ test('HomePage follows the approved post-hero portfolio sequence', () => {
   assert.doesNotMatch(homePage, /<ClientStory/, 'the thesis story is not presented as a portfolio testimonial');
 });
 
-test('portfolio placeholders are honest, accessible, and motion-addressable', () => {
+test('portfolio sections are honest, accessible, and motion-addressable', () => {
   const certifications = read('src/modules/home/presentation/certifications/CertificationsSection.jsx');
   const testimonials = read('src/modules/home/presentation/testimonials/TestimonialsSection.jsx');
 
-  for (const component of [certifications, testimonials]) {
-    assert.match(component, /<section/, 'placeholder must be a semantic section');
-    assert.match(component, /aria-labelledby=/, 'placeholder must have an accessible heading relationship');
-    assert.match(component, /data-section=/, 'placeholder must expose a navigation section hook');
-    assert.match(component, /placeholder|coming soon/i, 'placeholder must not imply missing content is real');
-    assert.match(component, /data-motion=/, 'placeholder must declare its subject motion');
-  }
+  assert.match(certifications, /<section/, 'certifications must be a semantic section');
+  assert.match(certifications, /aria-labelledby=/, 'certifications must have an accessible heading relationship');
+  assert.match(certifications, /data-section=/, 'certifications must expose a navigation section hook');
+  assert.match(certifications, /CERTIFICATION_GROUPS/);
+  assert.match(certifications, /<CertificationRail/);
+  assert.doesNotMatch(certifications, /placeholder|coming soon/i, 'certifications should render real archive content');
+  assert.match(certifications, /data-motion=/, 'certifications must declare its subject motion');
+
+  assert.match(testimonials, /<section/, 'testimonial placeholder must be a semantic section');
+  assert.match(testimonials, /aria-labelledby=/, 'testimonial placeholder must have an accessible heading relationship');
+  assert.match(testimonials, /data-section=/, 'testimonial placeholder must expose a navigation section hook');
+  assert.match(testimonials, /placeholder|coming soon/i, 'testimonial placeholder must not imply missing content is real');
+  assert.match(testimonials, /data-motion=/, 'testimonial placeholder must declare its subject motion');
 });
 
 test('section motion exposes subject-specific choreography with a reduced-motion path', () => {

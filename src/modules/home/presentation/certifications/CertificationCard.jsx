@@ -1,10 +1,11 @@
+import { useState } from 'react';
+
 function CertificateFallback() {
   return (
     <svg
       className="certification-card__fallback"
       viewBox="0 0 400 300"
-      role="img"
-      aria-label="Certificate preview illustration"
+      aria-hidden="true"
     >
       <rect className="certification-card__fallback-paper" width="400" height="300" rx="10" />
       <rect
@@ -35,6 +36,7 @@ function CertificateFallback() {
 
 export default function CertificationCard({ record, isActive = false }) {
   const statusLabel = record.status === 'verified' ? 'Verified' : 'Documented';
+  const [hasPreview, setHasPreview] = useState(record.preview?.type === 'image');
 
   return (
     <article
@@ -43,8 +45,12 @@ export default function CertificationCard({ record, isActive = false }) {
       data-active={isActive ? 'true' : 'false'}
     >
       <div className="certification-card__preview">
-        {record.preview?.type === 'image' ? (
-          <img src={record.preview.src} alt={record.preview.alt} />
+        {record.preview?.type === 'image' && hasPreview ? (
+          <img
+            src={record.preview.src}
+            alt={record.preview.alt}
+            onError={() => setHasPreview(false)}
+          />
         ) : (
           <CertificateFallback />
         )}

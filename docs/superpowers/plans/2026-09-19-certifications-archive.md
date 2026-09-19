@@ -103,7 +103,7 @@ Use literal Vite `new URL` expressions so the bundler can discover every file wi
 const assets = Object.freeze({
   cert5816324103Pdf: new URL('../../../../../certifications/Cert5816324103.pdf', import.meta.url).href,
   courseraGgPdf: new URL('../../../../../certifications/Coursera GG2Y2MZOL6ZU.pdf', import.meta.url).href,
-  courseraGgPreview: new URL('../../../../../certifications/Coursera GG2Y2MZOL6ZU.png', import.meta.url).href,
+  courseraGgPreview: new URL('../../../../../certifications/Coursera GG2Y2MZOL6ZU-1.png', import.meta.url).href,
   courseraTuPdf: new URL('../../../../../certifications/Coursera TUZAVQAMZ1G1.pdf', import.meta.url).href,
   courseraTuPreview: new URL('../../../../../certifications/Coursera TUZAVQAMZ1G1.png', import.meta.url).href,
   navttcPdf: new URL('../../../../../certifications/navttc.pdf', import.meta.url).href,
@@ -133,7 +133,7 @@ Use these source files without moving them:
 Professional records:
 
 - `Cert5816324103.pdf`
-- `Coursera GG2Y2MZOL6ZU.pdf` with `Coursera GG2Y2MZOL6ZU.png` as its preview
+- `Coursera GG2Y2MZOL6ZU.pdf` with `Coursera GG2Y2MZOL6ZU-1.png` as its preview; the same-name `.png` file is a PDF with the wrong extension and is not a valid image
 - `Coursera TUZAVQAMZ1G1.pdf` with `Coursera TUZAVQAMZ1G1.png` as its preview
 - `navttc.pdf`
 
@@ -147,7 +147,7 @@ Lifetime achievement records:
 - `participate in cricket.pdf`
 - `wafaq ul madaris.pdf`
 
-Use the inspected first-page text to map each record to a clear title and issuer label. Keep all records in explicit manifest order. Mark professional records `verified` only when the artifact contains a certificate identity or issuer evidence; mark school, club, and competition records `documented`. Use `preview: null` when no trusted image preview exists. Do not use the duplicate `Coursera GG2Y2MZOL6ZU-1.png` in the manifest; leave it untouched on disk.
+Use the inspected first-page text to map each record to a clear title and issuer label. Keep all records in explicit manifest order. Mark professional records `verified` only when the artifact contains a certificate identity or issuer evidence; mark school, club, and competition records `documented`. Use `preview: null` when no trusted image preview exists. Use the valid `Coursera GG2Y2MZOL6ZU-1.png` preview and leave the invalid same-name `.png` source file untouched on disk.
 
 Freeze the record objects, record arrays, groups, and exported group array.
 
@@ -393,7 +393,7 @@ git commit -m "feat: render certifications archive section"
 ### Task 5: Verify themes, rails, asset links, and responsive behavior
 
 **Files:**
-- Create: `tests/certifications-horizontal.py`
+- Create: `tests/certifications-horizontal.mjs`
 - Modify: `tests/certifications.test.mjs`
 
 **Interfaces:**
@@ -401,38 +401,7 @@ git commit -m "feat: render certifications archive section"
 
 - [ ] **Step 1: Add the Playwright behavior test**
 
-Create a concise Playwright script that checks the section after the opening experience is skipped:
-
-```python
-from playwright.sync_api import expect, sync_playwright
-
-VIEWPORTS = ((1440, 900), (768, 1024), (390, 844))
-
-with sync_playwright() as playwright:
-    browser = playwright.chromium.launch(headless=True)
-    page = browser.new_page(viewport={"width": 1440, "height": 900})
-    page.goto("http://127.0.0.1:4173", wait_until="networkidle")
-    page.locator(".space-skip-btn").click()
-    expect(page.locator("#certifications")).to_be_visible(timeout=2_000)
-    expect(page.locator(".certification-rail")).to_have_count(2)
-    expect(page.get_by_role("heading", name="Professional certifications")).to_be_visible()
-    expect(page.get_by_role("heading", name="Lifetime achievements")).to_be_visible()
-    assert page.locator("button").filter(has_text="Professional").count() == 0
-    assert page.locator(".certification-rail__track").first.evaluate("element => element.scrollWidth > element.clientWidth")
-    link = page.locator(".certification-card a").first
-    expect(link).to_have_attribute("target", "_blank")
-    assert link.get_attribute("href")
-    page.get_by_role("button", name="Light").click()
-    expect(page.locator("html[data-theme=light]")).to_have_count(1)
-    page.get_by_role("button", name="Dark").click()
-    expect(page.locator("html[data-theme=dark]")).to_have_count(1)
-    for width, height in VIEWPORTS:
-        page.set_viewport_size({"width": width, "height": height})
-        assert page.locator("body").evaluate("element => element.scrollWidth <= window.innerWidth + 1")
-    browser.close()
-```
-
-Use the class names defined in Task 4: `.certifications-section`, `.certification-rail`, `.certification-rail__track`, and `.certification-card`. Preserve the assertions and do not reintroduce filter behavior.
+Create a concise Node Playwright script in `tests/certifications-horizontal.mjs`. It checks the section after the opening experience is skipped, verifies both rails and their horizontal overflow, confirms credential links have document targets, toggles light and dark themes, checks desktop/tablet/mobile page overflow, and asserts reduced-motion transition behavior. Use the class names defined in Task 4: `.certifications-section`, `.certification-rail`, `.certification-rail__track`, and `.certification-card`. Preserve the assertions and do not reintroduce filter behavior.
 
 - [ ] **Step 2: Run automated checks**
 
@@ -449,7 +418,7 @@ Expected: Vite completes without unresolved asset imports or chunk errors.
 Run from a second terminal while Vite is serving on port 4173:
 
 ```powershell
-python tests/certifications-horizontal.py
+python .agents/skills/webapp-testing/scripts/with_server.py --server "npm run dev -- --host 0.0.0.0 --port 4173" --port 4173 -- node tests/certifications-horizontal.mjs
 ```
 
 Expected: both rails are visible, the rails overflow horizontally without page-level overflow, both themes render, credential links have document targets, and the filter count remains zero.
@@ -461,7 +430,7 @@ Run a Playwright context with `reduced_motion="reduce"` and assert the rail stil
 - [ ] **Step 5: Commit verification coverage**
 
 ```bash
-git add tests/certifications.test.mjs tests/certifications-horizontal.py
+git add tests/certifications.test.mjs tests/certifications-horizontal.mjs
 git commit -m "test: verify certifications archive behavior"
 ```
 
