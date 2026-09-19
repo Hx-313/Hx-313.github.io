@@ -34,6 +34,8 @@ test('mobile capability tiles use an elevated surface and preserve reduced motio
   assert.match(stylesheet, /\.how-i-build-tile-button\s*\{/, 'tile button needs a dedicated surface reset');
   assert.match(stylesheet, /box-shadow:/, 'mobile tiles need depth');
   assert.match(stylesheet, /\.how-i-build-tile\.is-active[\s\S]*\.tile-service/, 'active tiles reveal service copy');
+  assert.match(stylesheet, /\.how-i-build-tile\.is-active[\s\S]*max-height:\s*8rem/, 'expanded tiles must leave room for wrapped service copy');
+  assert.match(stylesheet, /\.tile-service-value[\s\S]*overflow-wrap:\s*anywhere/, 'service copy must wrap instead of clipping');
   assert.match(stylesheet, /@media\s*\(max-width:\s*480px\)/, 'mobile-specific card rules must exist');
   assert.match(stylesheet, /min-height:\s*44px/, 'interactive affordance must meet touch target guidance');
   assert.match(stylesheet, /@media\s*\(prefers-reduced-motion:\s*reduce\)/, 'motion must be suppressible');

@@ -390,12 +390,13 @@
 
 .tile-service-value {
   min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .how-i-build-tile:hover .tile-service,
 .how-i-build-tile:focus-within .tile-service,
 .how-i-build-tile.is-active .tile-service {
-  max-height: 2.25rem;
+  max-height: 8rem;
   margin-top: 0.65rem;
   opacity: 1;
   transform: translateX(0);
