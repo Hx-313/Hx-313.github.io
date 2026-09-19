@@ -14,11 +14,11 @@ Replace the certifications placeholder on the home page with a restrained horizo
   1. Professional certifications
   2. Lifetime achievements
 - Each rail scrolls horizontally. On wide screens, several cards are visible at once; on narrow screens, the rail becomes a natural swipe row.
-- Cards use the pasted mockup's 4:3 certificate preview, verified marker, issuer mark, metadata row, and quiet credential action.
+- Cards use the pasted mockup's 4:3 certificate preview, status marker, issuer mark, metadata row, and quiet credential action.
 - The card rail uses gentle `scroll-snap-type: x proximity`; it does not pin to the viewport, expand into a hero, or take over the page like the project showcase.
 - Active-card feedback is intentionally small: the most visible card may reveal an attached action pill for opening the credential. This pill contains only an action such as “View credential” and never repeats the card's title, issuer, or date.
 - The action pill is also available on hover and keyboard focus. It must not be the only way to reach a credential.
-- Do not use slash characters as visible labels or separators. Use spacing, rules, dots, or line breaks where a relationship needs to be shown.
+- Do not use slash characters as visible labels or separators. When a compact metadata separator is required, use a middot (`·`); use spacing, rules, or line breaks for larger relationships.
 
 ## Information architecture
 
@@ -32,11 +32,13 @@ Each record has:
 - issuer or awarding body;
 - a date label;
 - a short issuer mark;
-- a local asset path;
-- an optional credential URL;
-- a verification state used by the badge.
+- a preview reference, which is either a local image path or `null`;
+- a document reference, which is a local PDF path or an external credential URL;
+- a status of `verified` or `documented`, used to select the badge label and color.
 
-The local files in `/certifications` are the source artifacts. A small data manifest will map those files to display metadata so the JSX remains declarative and easy to update.
+The local files in `/certifications` are the source artifacts. A small data manifest will map those files to display metadata so the JSX remains declarative and easy to update. The manifest array is the explicit display order within each category; no runtime sort is applied. Professional records appear in their authored manifest order, followed by lifetime achievements in their authored manifest order.
+
+The preview and document references are intentionally separate. A PNG can be used as the 4:3 preview while the matching PDF remains the document opened by the credential action. When a record has no preview image, the card renders a theme-aware inline SVG certificate illustration using CSS custom properties rather than a flat raster placeholder. The SVG must remain legible in both light and dark themes.
 
 ## Component boundaries
 
@@ -44,7 +46,7 @@ Create a focused certifications presentation module:
 
 - `CertificationsSection.jsx` owns the section heading, the two category rails, and shared active-card behavior.
 - `CertificationRail.jsx` owns one titled horizontal rail and reports the currently visible card.
-- `CertificationCard.jsx` renders a single certificate card and its optional credential action.
+- `CertificationCard.jsx` renders a single certificate card, its preview image or themed SVG fallback, its status badge, and its document action.
 - `certificationsData.js` contains the categorized record manifest.
 - `certifications.css` contains the section, rail, card, responsive, theme, focus, and reduced-motion styles.
 
@@ -54,6 +56,7 @@ The existing placeholder stylesheet remains available to Testimonials and is not
 
 - Use semantic `<section>`, headings, `<article>`, links, and buttons. Do not use click handlers on non-interactive containers.
 - Every credential link opens the local PDF or credential URL in a new tab with an accessible label that includes the certificate title.
+- `verified` renders a “Verified” badge; `documented` renders a “Documented” badge. There is no pending state until the data model gains a real verification workflow.
 - Keyboard focus must reveal the same action affordance as pointer hover.
 - The rail itself is keyboard-scrollable. Card links must be reachable without requiring drag or precise pointer positioning.
 - Use an `IntersectionObserver` scoped to each rail to identify the most visible card for the small action-pill state. The observer is for presentation state only; certificate metadata remains derived from the data manifest.
@@ -70,8 +73,8 @@ The existing placeholder stylesheet remains available to Testimonials and is not
 
 ## Failure and content handling
 
-- Broken or missing local assets must fall back to a themed certificate placeholder rather than collapsing the card.
-- Records without a credential URL omit the action pill and remain fully readable.
+- Broken or missing preview assets must fall back to the same themed inline SVG rather than collapsing the card.
+- Records without a document reference omit the action pill and remain fully readable.
 - Metadata is rendered from the manifest; no runtime network request is required.
 
 ## Verification
