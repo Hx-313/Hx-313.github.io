@@ -183,12 +183,13 @@
 .inquiry-form {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.25rem 1rem;
+  gap: 1.2rem 1rem;
 }
 
-.inquiry-form > .form-group:first-child,
-.inquiry-form > .form-group:nth-child(4),
-.inquiry-form > .form-actions {
+.inquiry-form > .form-group--category,
+.inquiry-form > .form-group--message,
+.inquiry-form > .form-actions,
+.inquiry-form > .form-draft-status {
   grid-column: 1 / -1;
 }
 
@@ -807,6 +808,111 @@
   .direct-channel-copy-btn,
   .direct-channel-action {
     align-self: flex-start;
+  }
+}
+
+.form-card-subtitle {
+  max-width: 34ch;
+  margin: 0.55rem 0 0 1rem;
+  color: var(--ink-muted);
+  font-family: var(--font-body, sans-serif);
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+.form-group--category {
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.form-label-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.form-label-row .field-hint {
+  margin-left: 0;
+}
+
+.form-help {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.category-chips-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin-top: 0.15rem;
+}
+
+.category-chip {
+  width: 100%;
+  min-height: 3rem;
+  align-items: center;
+  gap: 0.62rem;
+  padding: 0.65rem 0.8rem;
+  border-color: color-mix(in srgb, var(--color-on-surface-muted) 24%, transparent);
+  border-radius: 0.45rem;
+  background: color-mix(in srgb, var(--color-surface-strong) 42%, transparent);
+  line-height: 1.35;
+}
+
+.category-chip:hover,
+.category-chip:focus-visible,
+.category-chip.is-selected {
+  background: color-mix(in srgb, var(--signal) 11%, var(--color-surface));
+}
+
+.category-chip:focus-visible,
+.form-submit-btn:focus-visible {
+  outline: 2px solid var(--color-focus-on-surface);
+  outline-offset: 3px;
+}
+
+.form-textarea {
+  min-height: 6rem;
+}
+
+.form-footer-note {
+  max-width: 39ch;
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.form-draft-status {
+  padding: 0.8rem 0.95rem;
+  border: 1px solid color-mix(in srgb, var(--signal) 32%, transparent);
+  border-radius: 0.45rem;
+  background: color-mix(in srgb, var(--signal) 7%, var(--color-surface));
+  color: var(--ink-muted);
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.form-draft-status p {
+  margin: 0;
+}
+
+.form-draft-status p + p {
+  margin-top: 0.35rem;
+}
+
+.form-draft-status a {
+  color: var(--ink-primary);
+  font-weight: 600;
+  text-underline-offset: 0.16em;
+}
+
+@media (max-width: 620px) {
+  .category-chips-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

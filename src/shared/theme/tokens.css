@@ -33,6 +33,11 @@
   --icon-brand-vercel: #000000;
   --icon-brand-hostinger: #673DE6;
   --icon-brand-github: #181717;
+  --social-brand-github: #181717;
+  --social-brand-linkedin: #0A66C2;
+  --social-brand-instagram: linear-gradient(135deg, #FEDA75 0%, #FA7E1E 25%, #D62976 55%, #962FBF 78%, #4F5BD5 100%);
+  --social-brand-whatsapp: #25D366;
+  --social-brand-foreground: #FFFFFF;
   --icon-brand-vscode: #007ACC;
   --icon-brand-postman: #FF6C37;
   --icon-brand-insomnia: #4000BF;

@@ -24,6 +24,12 @@ Documentation-only changes, configuration changes, dependency changes, source ch
 - Verification: Commands run and their result, or `Not run` with the reason.
 ```
 
+## 2026-09-20 — Connect portfolio booking actions to Cal.com
+
+- Summary: Updated the shared booking URL to the Cal.com username shown in the user's profile screenshot. Existing contact and footer booking actions use this constant.
+- Files: `src/core/constants/links.js`, `CHANGE.md`
+- Verification: Not run; the user asked for implementation, not test or build verification.
+
 ## 2026-09-19 — Premium card design refinement for Capabilities and Solutions sections
 
 - Summary: Per user request ("cards design is not good") — upgraded the visual quality of all service and solution cards:
@@ -604,3 +610,8 @@ Documentation-only changes, configuration changes, dependency changes, source ch
 - Verification: `npm test` ran with 80/80 unit tests passing (100%). `npm run build` compiled 106 modules cleanly with 0 errors in 4.25s.
 
 
+## 2026-09-20 — Rebuild the portfolio footer as a contact directory
+
+- Summary: Reshaped the main footer into clear brand, selected systems, company, contact, and base columns. Added official GitHub, LinkedIn, Instagram, and WhatsApp marks with theme-token brand colors; surfaced the available profile handles, direct contact routes, Rawalpindi base, and a project callout.
+- Files: `src/core/constants/navigation/footerText.js`, `src/modules/footer/domain/footerData.js`, `src/modules/footer/presentation/SiteFooter.jsx`, `src/modules/footer/presentation/footer.css`, `src/shared/theme/tokens.css`, `src/shared/theme/tokens.json`, `CHANGE.md`
+- Verification: `npm run build` passed; `git diff --check` passed; `tokens.json` parsed successfully; browser preview reviewed at desktop width in light mode.

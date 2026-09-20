@@ -2,187 +2,130 @@ import { useContactForm } from '../application/useContactForm.js';
 import { PROJECT_CATEGORIES, CONTACT_TEXT } from '../domain/contactData.js';
 
 export default function ContactForm() {
-  const {
-    formData,
-    errors,
-    mailtoUrl,
-    isSubmitting,
-    isSuccess,
-    handleChange,
-    handleSubmit,
-    resetForm,
-  } = useContactForm();
-
+  const { formData, errors, isDraftReady, handleChange, handleSubmit } = useContactForm();
   const { form } = CONTACT_TEXT;
 
   return (
     <section className="contact-form-card" aria-labelledby="contact-form-title">
       <div className="form-card-header">
-        <div className="form-card-title-row">
-          <span className="console-led" aria-hidden="true" />
-          <h3 className="form-card-title" id="contact-form-title">{form.title}</h3>
+        <div>
+          <div className="form-card-title-row">
+            <span className="console-led" aria-hidden="true" />
+            <h3 className="form-card-title" id="contact-form-title">{form.title}</h3>
+          </div>
+          <p className="form-card-subtitle">{form.subtitle}</p>
         </div>
-        <span className="form-card-subtitle">{form.subtitle}</span>
       </div>
 
-      {isSuccess ? (
-        <div className="form-success-banner" role="status" aria-live="polite">
-          <div className="success-icon-badge" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
+      <form onSubmit={handleSubmit} className="inquiry-form" noValidate>
+        <div className="form-group">
+          <div className="form-label-row">
+            <label htmlFor="contact-name" className="form-label">{form.nameLabel}</label>
+            <span className="field-hint">{form.optionalBadge}</span>
           </div>
-          <h4 className="success-heading">{form.success.heading}</h4>
-          <p className="success-text">
-            {form.success.thanksPrefix}<strong>{formData.name}</strong>{form.success.detailsMiddle}<em>{formData.category}</em>{form.success.detailsSuffix}
-          </p>
-          <div className="success-actions">
-            {mailtoUrl && (
-              <a
-                href={mailtoUrl}
-                className="success-btn success-btn--primary"
-                aria-label={form.success.emailAria}
-              >
-                <span>{form.success.openEmailBtn}</span>
-              </a>
-            )}
-            <button
-              type="button"
-              onClick={resetForm}
-              className="success-btn success-btn--ghost"
-            >
-              {form.success.startAnotherBtn}
-            </button>
-          </div>
+          <input
+            id="contact-name"
+            name="name"
+            type="text"
+            autoComplete="name"
+            placeholder={form.namePlaceholder}
+            value={formData.name}
+            onChange={(event) => handleChange('name', event.target.value)}
+            className="form-input"
+          />
         </div>
-      ) : (
-        <form onSubmit={handleSubmit} className="inquiry-form" noValidate>
-          <div className="form-group">
-            <label className="form-label" id="category-label">
-              {form.categoryLabel} <span className="field-hint">{form.optionalBadge}</span>
-            </label>
-            <div
-              className="category-chips-grid"
-              role="radiogroup"
-              aria-labelledby="category-label"
-            >
-              {PROJECT_CATEGORIES.map((category) => {
-                const isSelected = formData.category === category;
-                return (
-                  <button
-                    key={category}
-                    type="button"
-                    role="radio"
-                    aria-checked={isSelected}
-                    onClick={() => handleChange('category', category)}
-                    className={`category-chip ${isSelected ? 'is-selected' : ''}`}
-                  >
-                    <span className="chip-indicator" aria-hidden="true" />
-                    <span className="chip-label">{category}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
 
-          <div className={`form-group ${errors.name ? 'has-error' : ''}`}>
-            <label htmlFor="contact-name" className="form-label">
-              {form.nameLabel} <span className="field-req" aria-hidden="true">*</span>
-            </label>
-            <input
-              id="contact-name"
-              name="name"
-              type="text"
-              required
-              autoComplete="name"
-              placeholder={form.namePlaceholder}
-              value={formData.name}
-              onChange={(e) => handleChange('name', e.target.value)}
-              aria-invalid={Boolean(errors.name)}
-              aria-describedby={errors.name ? 'contact-name-error' : undefined}
-              className="form-input"
-            />
-            {errors.name && (
-              <span id="contact-name-error" className="field-error" role="alert">
-                {errors.name}
-              </span>
-            )}
-          </div>
-
-          <div className={`form-group ${errors.email ? 'has-error' : ''}`}>
+        <div className={`form-group ${errors.email ? 'has-error' : ''}`}>
+          <div className="form-label-row">
             <label htmlFor="contact-email" className="form-label">
               {form.emailLabel} <span className="field-req" aria-hidden="true">*</span>
             </label>
-            <input
-              id="contact-email"
-              name="email"
-              type="email"
-              required
-              autoComplete="email"
-              placeholder={form.emailPlaceholder}
-              value={formData.email}
-              onChange={(e) => handleChange('email', e.target.value)}
-              aria-invalid={Boolean(errors.email)}
-              aria-describedby={errors.email ? 'contact-email-error' : undefined}
-              className="form-input"
-            />
-            {errors.email && (
-              <span id="contact-email-error" className="field-error" role="alert">
-                {errors.email}
-              </span>
-            )}
+            <span className="field-hint">{form.requiredBadge}</span>
           </div>
-
-          <div className={`form-group ${errors.message ? 'has-error' : ''}`}>
-            <label htmlFor="contact-message" className="form-label">
-              {form.messageLabel} <span className="field-req" aria-hidden="true">*</span>
-            </label>
-            <textarea
-              id="contact-message"
-              name="message"
-              rows={4}
-              required
-              placeholder={form.messagePlaceholder}
-              value={formData.message}
-              onChange={(e) => handleChange('message', e.target.value)}
-              aria-invalid={Boolean(errors.message)}
-              aria-describedby={errors.message ? 'contact-message-error' : undefined}
-              className="form-textarea"
-            />
-            {errors.message && (
-              <span id="contact-message-error" className="field-error" role="alert">
-                {errors.message}
-              </span>
-            )}
-          </div>
-
-          <div className="form-actions">
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className={`form-submit-btn ${isSubmitting ? 'is-loading' : ''}`}
-            >
-              {isSubmitting ? (
-                <>
-                  <span className="submit-spinner" aria-hidden="true" />
-                  <span>{form.submitLoading}</span>
-                </>
-              ) : (
-                <>
-                  <span>{form.submitIdle}</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <line x1="22" y1="2" x2="11" y2="13" />
-                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
-                  </svg>
-                </>
-              )}
-            </button>
-            <span className="form-footer-note">
-              {form.footerNote}
+          <input
+            id="contact-email"
+            name="email"
+            type="email"
+            required
+            autoComplete="email"
+            inputMode="email"
+            placeholder={form.emailPlaceholder}
+            value={formData.email}
+            onChange={(event) => handleChange('email', event.target.value)}
+            aria-invalid={Boolean(errors.email)}
+            aria-describedby={errors.email ? 'contact-email-error' : undefined}
+            className="form-input"
+          />
+          {errors.email && (
+            <span id="contact-email-error" className="field-error" role="alert">
+              {errors.email}
             </span>
+          )}
+        </div>
+
+        <fieldset className="form-group form-group--category">
+          <legend className="form-label">
+            {form.categoryLabel} <span className="field-hint">{form.optionalBadge}</span>
+          </legend>
+          <p id="contact-category-help" className="form-help">{form.categoryHelp}</p>
+          <div className="category-chips-grid" aria-describedby="contact-category-help">
+            {PROJECT_CATEGORIES.map((category) => {
+              const isSelected = formData.category === category;
+              return (
+                <button
+                  key={category}
+                  type="button"
+                  aria-pressed={isSelected}
+                  onClick={() => handleChange('category', isSelected ? '' : category)}
+                  className={`category-chip ${isSelected ? 'is-selected' : ''}`}
+                >
+                  <span className="chip-indicator" aria-hidden="true" />
+                  <span className="chip-label">{category}</span>
+                </button>
+              );
+            })}
           </div>
-        </form>
-      )}
+        </fieldset>
+
+        <div className="form-group form-group--message">
+          <div className="form-label-row">
+            <label htmlFor="contact-message" className="form-label">{form.messageLabel}</label>
+            <span className="field-hint">{form.optionalBadge}</span>
+          </div>
+          <textarea
+            id="contact-message"
+            name="message"
+            rows={3}
+            maxLength={1000}
+            placeholder={form.messagePlaceholder}
+            value={formData.message}
+            onChange={(event) => handleChange('message', event.target.value)}
+            className="form-textarea"
+          />
+          <p className="form-help">{form.messageHelp}</p>
+        </div>
+
+        <div className="form-actions">
+          <button type="submit" className="form-submit-btn">
+            <span>{form.submitIdle}</span>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2" />
+              <path d="m3 7 9 6 9-6" />
+            </svg>
+          </button>
+          <p className="form-footer-note">{form.footerNote}</p>
+        </div>
+
+        {isDraftReady && (
+          <div className="form-draft-status" role="status" aria-live="polite">
+            <p>{form.draftReady}</p>
+            <p>
+              {form.draftFallback}{' '}
+              <a href={CONTACT_TEXT.channels.email.mailto}>{form.emailMeDirectly}</a>
+            </p>
+          </div>
+        )}
+      </form>
     </section>
   );
 }

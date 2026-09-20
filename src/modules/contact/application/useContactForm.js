@@ -1,27 +1,17 @@
 import { useState, useCallback } from 'react';
-import { PROJECT_CATEGORIES, CONTACT_CHANNELS, CONTACT_TEXT } from '../domain/contactData.js';
+import { CONTACT_CHANNELS, CONTACT_TEXT } from '../domain/contactData.js';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function validateContactForm(formData) {
-  const errors = {};
-  const name = (formData.name || '').trim();
   const email = (formData.email || '').trim();
-  const message = (formData.message || '').trim();
   const { validation } = CONTACT_TEXT.form;
-
-  if (!name || name.length < 2) {
-    errors.name = validation.nameRequired;
-  }
+  const errors = {};
 
   if (!email) {
     errors.email = validation.emailRequired;
   } else if (!EMAIL_REGEX.test(email)) {
     errors.email = validation.emailInvalid;
-  }
-
-  if (!message || message.length < 10) {
-    errors.message = validation.messageRequired;
   }
 
   return {
@@ -31,92 +21,62 @@ export function validateContactForm(formData) {
 }
 
 export function buildMailtoUrl(formData) {
-  const { name, email, category, message } = formData;
+  const name = (formData.name || '').trim();
+  const email = (formData.email || '').trim();
+  const category = (formData.category || '').trim();
+  const message = (formData.message || '').trim();
   const recipient = CONTACT_CHANNELS.email.address;
-  const subject = `[Project Inquiry] ${category || 'Software Engineering'} - ${name}`;
+  const subject = ['Project conversation', category, name].filter(Boolean).join(' — ');
   const body = [
-    `Hi Hafiz,`,
-    ``,
-    `Name: ${name}`,
+    'Hi Hafiz,',
+    '',
+    ...(name ? [`Name: ${name}`] : []),
     `Email: ${email}`,
-    `Project Scope: ${category || 'General Inquiry'}`,
-    ``,
-    `Project Details:`,
-    `${message}`,
-    ``,
-    `---`,
-    `Sent from portfolio direct inquiry console`,
+    `Project type: ${category || 'Not sure yet'}`,
+    '',
+    'A little about the project:',
+    message || 'I have an idea I would like to talk through and work out the next step.',
   ].join('\n');
 
   return `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
-export function useContactForm(initialCategory = PROJECT_CATEGORIES[0]) {
+export function useContactForm() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    category: initialCategory,
+    category: '',
     message: '',
   });
   const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState('idle'); // 'idle' | 'submitting' | 'success' | 'error'
-  const [mailtoUrl, setMailtoUrl] = useState('');
+  const [isDraftReady, setIsDraftReady] = useState(false);
 
   const handleChange = useCallback((field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-    setErrors((prev) => {
-      if (!prev[field]) return prev;
-      const next = { ...prev };
+    setFormData((previous) => ({ ...previous, [field]: value }));
+    setIsDraftReady(false);
+    setErrors((previous) => {
+      if (!previous[field]) return previous;
+      const next = { ...previous };
       delete next[field];
       return next;
     });
   }, []);
 
-  const handleSubmit = useCallback(async (e) => {
-    if (e && e.preventDefault) {
-      e.preventDefault();
-    }
+  const handleSubmit = useCallback((event) => {
+    event.preventDefault();
 
     const validation = validateContactForm(formData);
     if (!validation.isValid) {
       setErrors(validation.errors);
+      document.getElementById('contact-email')?.focus();
       return false;
     }
 
     setErrors({});
-    setStatus('submitting');
-
-    const generatedMailto = buildMailtoUrl(formData);
-    setMailtoUrl(generatedMailto);
-
-    // Simulated network dispatch (450ms) to ensure reassuring feedback
-    await new Promise((resolve) => setTimeout(resolve, 450));
-
-    setStatus('success');
+    setIsDraftReady(true);
+    window.location.href = buildMailtoUrl(formData);
     return true;
   }, [formData]);
 
-  const resetForm = useCallback(() => {
-    setFormData({
-      name: '',
-      email: '',
-      category: initialCategory,
-      message: '',
-    });
-    setErrors({});
-    setStatus('idle');
-    setMailtoUrl('');
-  }, [initialCategory]);
-
-  return {
-    formData,
-    status,
-    errors,
-    mailtoUrl,
-    isSubmitting: status === 'submitting',
-    isSuccess: status === 'success',
-    handleChange,
-    handleSubmit,
-    resetForm,
-  };
+  return { formData, errors, isDraftReady, handleChange, handleSubmit };
 }
