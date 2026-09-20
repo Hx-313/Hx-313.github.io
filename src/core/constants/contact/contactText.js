@@ -64,7 +64,7 @@ export const CONTACT_TEXT = Object.freeze({
     'Full-time role',
   ]),
   telemetry: Object.freeze({
-    timezone: 'PKT / UTC+5 (Lahore)',
+    timezone: 'PKT / UTC+5 (Rawalpindi)',
     responseTime: '< 2 hours',
     status: '🟢 Available for project conversations & selected roles',
   }),

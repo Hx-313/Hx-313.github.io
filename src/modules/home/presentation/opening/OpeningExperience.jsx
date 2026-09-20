@@ -10,6 +10,7 @@ import { INTRO_TEXT } from '../../../../core/constants/intro/introText.js';
 import './opening.css';
 
 const noop = () => {};
+const readThemeColor = (token) => getComputedStyle(document.documentElement).getPropertyValue(token).trim();
 
 const callOnce = (callback, guard) => {
   if (guard.current) return;
@@ -40,9 +41,14 @@ export default function OpeningExperience({ onHandoff = noop, onComplete = noop 
     const duration = OPENING_BEATS[0].end;
     let frame = 0;
     const startedAt = performance.now();
+    let lastUpdatedAt = startedAt;
     const update = (now) => {
       const progress = Math.min(1, (now - startedAt) / duration);
-      setBootProgress(Math.round(progress * 100));
+      const nextProgress = Math.round(progress * 100);
+      if (now - lastUpdatedAt >= 100 || nextProgress === 100) {
+        setBootProgress(nextProgress);
+        lastUpdatedAt = now;
+      }
       if (progress < 1) frame = window.requestAnimationFrame(update);
     };
 
@@ -134,20 +140,19 @@ export default function OpeningExperience({ onHandoff = noop, onComplete = noop 
 
     const timeline = createTimeline({ defaults: { ease: 'outCubic' } });
     timeline
-      // Beat 0: splash (0 - 6,000ms) - Initializing system while the globe breathes
-      .add(globe, { scale: [1.02, 1], opacity: [0.76, 1], duration: 400 }, OPENING_BEATS[0].start)
+      // Beat 0: splash — let the globe settle before the mascots arrive.
+      .add(globe, { scale: [1.02, 1], opacity: [0.76, 1], duration: 520, ease: 'outCubic' }, OPENING_BEATS[0].start)
       .call(() => {
         if (!disposed) setBootProgress(100);
       }, OPENING_BEATS[0].end - 100)
 
-      // Beat 1: settle (6,000 - 6,400ms) - Mascots ease in, globe blurs to background
-      .add(bootHud, { opacity: [1, 0], y: [0, -12], duration: 380 }, OPENING_BEATS[1].start)
+      // Beat 1: bring the mascot pair into the center of the stage.
+      .add(bootHud, { opacity: [1, 0], y: [0, -12], duration: 480, ease: 'outCubic' }, OPENING_BEATS[1].start)
       .add(globe, {
-        scale: [1, 0.94],
-        opacity: [1, 0.72],
-        filter: ['blur(0px) brightness(1)', 'blur(8px) brightness(0.65)'],
+        scale: [1, 0.96],
+        opacity: [1, 0.78],
         duration: OPENING_BEATS[1].end - OPENING_BEATS[1].start,
-        ease: 'outQuad',
+        ease: 'outCubic',
       }, OPENING_BEATS[1].start)
       const isMobile = window.innerWidth <= 600;
 
@@ -156,130 +161,137 @@ export default function OpeningExperience({ onHandoff = noop, onComplete = noop 
           opacity: [0, 1],
           x: (_, index) => {
             if (isMobile) {
-              return index === 0 ? ['-10vw', '-30vw'] : ['-10vw', '-10vw'];
+              return index === 0 ? ['20vw', '0vw'] : ['-20vw', '0vw'];
             }
             return index === 0 ? ['-30vw', 0] : ['30vw', 0];
           },
           y: ['14vh', '0vh'],
           scale: [0.7, 1],
           duration: OPENING_BEATS[1].end - OPENING_BEATS[1].start,
-          ease: 'outQuad',
+          ease: 'outCubic',
         }, OPENING_BEATS[1].start)
 
-        // Beat 2: card-one (2,400 - 4,100ms) - Dash statement 1
+        // Beat 2: Dash steps to center and introduces the first statement.
         .call(() => setStatement(OPENING_STATEMENTS[0]), OPENING_BEATS[2].start)
         .add(dash, {
-          x: isMobile ? '-30vw' : [0, '-4vw'],
-          scale: 1,
+          x: isMobile ? ['-6vw', '0vw'] : ['0vw', '-8vw'],
+          scale: [1, 1.04],
           opacity: 1,
-          filter: 'blur(0px) brightness(1.15) drop-shadow(0 0 24px rgba(25, 230, 140, .45))',
-          duration: 520,
+          duration: 620,
+          ease: 'outCubic',
         }, OPENING_BEATS[2].start)
         .add(aero, {
-          scale: 1,
-          opacity: isMobile ? 0 : 0.62,
-          filter: 'blur(1px) brightness(.82)',
-          duration: 300,
+          x: isMobile ? '6vw' : 0,
+          scale: isMobile ? 0.88 : 0.94,
+          opacity: isMobile ? 0.5 : 0.62,
+          duration: 520,
+          ease: 'outCubic',
         }, OPENING_BEATS[2].start)
-        .add(dashArm, { rotate: [0, 16], duration: 400 }, OPENING_BEATS[2].start)
-        .add(dashProjectionTargets, { opacity: [0, 1], scale: [0.94, 1], duration: 460 }, OPENING_BEATS[2].start + 80)
-        .add(dashProjectionCopy, { opacity: [0, 1], y: [8, 0], delay: stagger(60), duration: 360 }, OPENING_BEATS[2].start + 80)
+        .add(dashArm, { rotate: [0, 14], duration: 520, ease: 'outCubic' }, OPENING_BEATS[2].start)
+        .add(dashProjectionTargets, { opacity: [0, 1], scale: [0.97, 1], duration: 560, ease: 'outCubic' }, OPENING_BEATS[2].start + 80)
+        .add(dashProjectionCopy, { opacity: [0, 1], y: [10, 0], delay: stagger(80), duration: 480, ease: 'outCubic' }, OPENING_BEATS[2].start + 80)
 
-        // Beat 3: card-two-transition (4,100 - 4,400ms) - Crossfade between cards
-        .add(dashProjectionTargets, { opacity: [1, 0], scale: [1, 0.9], duration: 250 }, OPENING_BEATS[3].start)
-        .add(dashArm, { rotate: [16, 0], duration: 250 }, OPENING_BEATS[3].start)
+        // Beat 3: crossfade the first projection as Dash eases aside.
+        .add(dashProjectionTargets, { opacity: [1, 0], scale: [1, 0.97], duration: 480, ease: 'outCubic' }, OPENING_BEATS[3].start)
+        .add(dashArm, { rotate: [14, 0], duration: 480, ease: 'outCubic' }, OPENING_BEATS[3].start)
         .add(dash, {
-          x: isMobile ? '-30vw' : ['-4vw', 0],
-          opacity: isMobile ? [1, 0] : 1,
-          duration: 300,
+          x: isMobile ? ['0vw', '-6vw'] : ['-8vw', '0vw'],
+          opacity: isMobile ? [1, 0.5] : 1,
+          scale: isMobile ? [1.04, 0.92] : 1,
+          duration: 520,
+          ease: 'outCubic',
         }, OPENING_BEATS[3].start)
 
-        // Beat 4: card-two (4,400 - 6,100ms) - Aero statement 2
+        // Beat 4: Aero takes center for the second statement.
         .call(() => setStatement(OPENING_STATEMENTS[1]), OPENING_BEATS[4].start)
         .add(aero, {
-          x: isMobile ? '30vw' : [0, '4vw'],
-          scale: 1,
+          x: isMobile ? ['6vw', '0vw'] : ['0vw', '8vw'],
+          scale: [0.94, 1.04],
           opacity: 1,
-          filter: 'blur(0px) brightness(1.15) drop-shadow(0 0 24px rgba(98, 232, 232, .45))',
+          duration: 620,
+          ease: 'outCubic',
+        }, OPENING_BEATS[4].start)
+        .add(dash, {
+          x: isMobile ? '-6vw' : 0,
+          scale: isMobile ? 0.92 : 1,
+          opacity: isMobile ? 0.5 : 0.62,
           duration: 520,
+          ease: 'outCubic',
         }, OPENING_BEATS[4].start)
-        .add(dash, {
-          x: isMobile ? '-30vw' : 0,
-          scale: 1,
-          opacity: isMobile ? 0 : 0.62,
-          filter: 'blur(1px) brightness(.82)',
-          duration: 300,
-        }, OPENING_BEATS[4].start)
-        .add(aeroArm, { rotate: [0, -14], duration: 400 }, OPENING_BEATS[4].start)
-        .add(aeroProjectionTargets, { opacity: [0, 1], scale: [0.94, 1], duration: 460 }, OPENING_BEATS[4].start + 80)
-        .add(aeroProjectionCopy, { opacity: [0, 1], x: [10, 0], delay: stagger(60), duration: 360 }, OPENING_BEATS[4].start + 80)
+        .add(aeroArm, { rotate: [0, -12], duration: 520, ease: 'outCubic' }, OPENING_BEATS[4].start)
+        .add(aeroProjectionTargets, { opacity: [0, 1], scale: [0.97, 1], duration: 560, ease: 'outCubic' }, OPENING_BEATS[4].start + 80)
+        .add(aeroProjectionCopy, { opacity: [0, 1], x: [8, 0], delay: stagger(80), duration: 480, ease: 'outCubic' }, OPENING_BEATS[4].start + 80)
 
-        // Beat 5: breather (6,100 - 6,400ms) - Aero card closes, mascots idle
-        .add(aeroProjectionTargets, { opacity: [1, 0], scale: [1, 0.9], duration: 250 }, OPENING_BEATS[5].start)
-        .add(aeroArm, { rotate: [-14, 0], duration: 250 }, OPENING_BEATS[5].start)
+        // Beat 5: both mascots settle into a balanced, quiet pair.
+        .add(aeroProjectionTargets, { opacity: [1, 0], scale: [1, 0.97], duration: 480, ease: 'outCubic' }, OPENING_BEATS[5].start)
+        .add(aeroArm, { rotate: [-12, 0], duration: 480, ease: 'outCubic' }, OPENING_BEATS[5].start)
         .add(aero, {
-          x: isMobile ? '30vw' : ['4vw', 0],
-          opacity: isMobile ? [1, 0] : 0.75,
-          filter: 'blur(0px) brightness(1)',
-          duration: 300,
+          x: isMobile ? ['0vw', '6vw'] : ['8vw', '0vw'],
+          scale: isMobile ? 0.92 : 1,
+          opacity: isMobile ? [1, 0.5] : 0.72,
+          duration: 520,
+          ease: 'outCubic',
         }, OPENING_BEATS[5].start)
         .add(dash, {
-          scale: 1,
-          opacity: isMobile ? 0 : 0.75,
-          filter: 'blur(0px) brightness(1)',
-          duration: 250,
+          x: isMobile ? '-6vw' : 0,
+          scale: isMobile ? 0.92 : 1,
+          opacity: isMobile ? 0.5 : 0.72,
+          duration: 520,
+          ease: 'outCubic',
         }, OPENING_BEATS[5].start)
 
-        // Beat 6: card-three (6,400 - 8,400ms) - Dash statement 3
+        // Beat 6: Dash returns to center for the final statement.
         .call(() => setStatement(OPENING_STATEMENTS[2]), OPENING_BEATS[6].start)
         .add(dash, {
-          x: isMobile ? '-30vw' : [0, '-4vw'],
-          scale: 1,
+          x: isMobile ? ['-6vw', '0vw'] : ['0vw', '-8vw'],
+          scale: [0.92, 1.04],
           opacity: 1,
-          filter: 'blur(0px) brightness(1.15) drop-shadow(0 0 24px rgba(25, 230, 140, .45))',
+          duration: 620,
+          ease: 'outCubic',
+        }, OPENING_BEATS[6].start)
+        .add(aero, {
+          x: isMobile ? '6vw' : 0,
+          scale: isMobile ? 0.92 : 1,
+          opacity: isMobile ? 0.5 : 0.62,
           duration: 520,
+          ease: 'outCubic',
         }, OPENING_BEATS[6].start)
-        .add(aero, {
-          scale: 1,
-          opacity: isMobile ? 0 : 0.62,
-          filter: 'blur(1px) brightness(.82)',
-          duration: 300,
-        }, OPENING_BEATS[6].start)
-        .add(dashArm, { rotate: [0, 16], duration: 400 }, OPENING_BEATS[6].start)
-        .add(dashProjectionTargets, { opacity: [0, 1], scale: [0.94, 1], duration: 460 }, OPENING_BEATS[6].start + 80)
-        .add(dashProjectionCopy, { opacity: [0, 1], y: [8, 0], delay: stagger(60), duration: 360 }, OPENING_BEATS[6].start + 80)
+        .add(dashArm, { rotate: [0, 14], duration: 520, ease: 'outCubic' }, OPENING_BEATS[6].start)
+        .add(dashProjectionTargets, { opacity: [0, 1], scale: [0.97, 1], duration: 560, ease: 'outCubic' }, OPENING_BEATS[6].start + 80)
+        .add(dashProjectionCopy, { opacity: [0, 1], y: [10, 0], delay: stagger(80), duration: 480, ease: 'outCubic' }, OPENING_BEATS[6].start + 80)
 
-        // Beat 7: exit (8,400 - 9,200ms) - Cards close, duo connection pulses, globe focuses, mascots slide down
-        .add(dashProjectionTargets, { opacity: [1, 0], scale: [1, 0.9], duration: 250 }, OPENING_BEATS[7].start)
-        .add(dashArm, { rotate: [16, 0], duration: 250 }, OPENING_BEATS[7].start)
+        // Beat 7: close the transmission and reunite the pair.
+        .add(dashProjectionTargets, { opacity: [1, 0], scale: [1, 0.97], duration: 480, ease: 'outCubic' }, OPENING_BEATS[7].start)
+        .add(dashArm, { rotate: [14, 0], duration: 480, ease: 'outCubic' }, OPENING_BEATS[7].start)
         .add(dash, {
-          x: isMobile ? ['-30vw', '-14vw'] : ['-4vw', 0],
-          duration: 300,
+          x: isMobile ? ['0vw', '-6vw'] : ['-8vw', '0vw'],
+          duration: 520,
+          ease: 'outCubic',
         }, OPENING_BEATS[7].start)
         .add(aero, {
-          x: isMobile ? '14vw' : 0,
+          x: isMobile ? '6vw' : 0,
           opacity: 1,
-          duration: 300,
+          duration: 520,
+          ease: 'outCubic',
         }, OPENING_BEATS[7].start)
-        .add([dash, aero], { scale: 1, opacity: 1, filter: 'blur(0px) brightness(1)', duration: 250 }, OPENING_BEATS[7].start)
-        .add(root.querySelector('[data-duo-connection]'), { opacity: [0, 0.7, 0], scaleX: [0.4, 1, 1], duration: 500 }, OPENING_BEATS[7].start + 50)
+        .add([dash, aero], { scale: 1, opacity: 1, duration: 520, ease: 'outCubic' }, OPENING_BEATS[7].start)
+        .add(root.querySelector('[data-duo-connection]'), { opacity: [0, 0.7, 0], scaleX: [0.4, 1, 1], duration: 680, ease: 'outCubic' }, OPENING_BEATS[7].start + 50)
         .add(globe, {
-          scale: [0.94, 1],
-          opacity: [0.72, 1],
-          filter: ['blur(8px) brightness(0.65)', 'blur(0px) brightness(1)'],
-          duration: 550,
-          ease: 'outQuad',
+          scale: [0.96, 1],
+          opacity: [0.78, 1],
+          duration: 720,
+          ease: 'outCubic',
         }, OPENING_BEATS[7].start + 200)
         .add([dash, aero], {
           y: ['0vh', '45vh'],
           opacity: [1, 0],
-          duration: 600,
-          ease: 'inQuad',
+          duration: 720,
+          ease: 'inOutCubic',
         }, OPENING_BEATS[7].start + 200)
 
-      // Beat 8: transition (9,200 - 9,800ms) - Smooth crossfade into hero
+      // Beat 8: fade smoothly into the main hero without blocking its content.
       .call(handoff, OPENING_BEATS[8].start)
-      .add(root, { opacity: [1, 0], duration: 600, ease: 'outQuad' }, OPENING_BEATS[8].start)
+      .add(root, { opacity: [1, 0], duration: 600, ease: 'outCubic' }, OPENING_BEATS[8].start)
       .call(complete, OPENING_BEATS[8].end);
 
     timelineRef.current = timeline;
@@ -308,7 +320,7 @@ export default function OpeningExperience({ onHandoff = noop, onComplete = noop 
     const resize = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
-      const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.25);
       canvas.width = Math.round(width * pixelRatio);
       canvas.height = Math.round(height * pixelRatio);
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
@@ -317,7 +329,7 @@ export default function OpeningExperience({ onHandoff = noop, onComplete = noop 
         y: Math.random() * height,
         radius: Math.random() * 1.25 + 0.35,
         speed: Math.random() * 0.16 + 0.04,
-        color: index % 7 === 0 ? '#19e68c' : '#dffcf6',
+        color: index % 7 === 0 ? readThemeColor('--color-accent') : readThemeColor('--color-foreground'),
         alpha: Math.random() * 0.45 + 0.14,
       }));
     };

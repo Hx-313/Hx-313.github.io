@@ -1,34 +1,64 @@
 :root {
   color-scheme: light dark;
-
-  /* Canonical itHX palette — mirrored from branding/visual-identity/brand-colors (v1.2.0). */
-  --ithx-primary-green: #0D3736;
-  --ithx-paper-marble: #F4F2EA;
+  /* itHX Palette System 2.0.0 */
+  --ithx-primary-green: #0F352E;
+  --ithx-deep-surface: #092420;
   --ithx-night-green: #08130A;
-  --ithx-deep-surface: #092322;
-  --ithx-dark-primary-green: #0A2C2B;
-  --ithx-emerald-accent: #147A5D;
-  --ithx-mint-signal: #52C7A7;
-  --ithx-warm-brass: #A07B54;
-  --ithx-white: #FCFBF8;
-  --ithx-ink: #092421;
-  --ithx-graphite: #526661;
-  --ithx-mist: #AAB8B0;
-  --ithx-line-light: #CBD7D0;
-  --ithx-line-dark: #244944;
-  --ithx-theme-border-dark: #28514A;
-  --ithx-action-text-dark: #06221F;
-  --ithx-danger: #9B4E45;
-
-  /* Functional status tokens (v1.2) */
-  --ithx-warning-light: #8C5800;
-  --ithx-warning-dark: #FFB951;
-  --ithx-danger-light: #9B4E45;
-  --ithx-danger-dark: #FFB4AB;
-  --ithx-info-light: #0B4F6C;
-  --ithx-info-dark: #82CFFF;
-
-  /* Approved typography roles. */
+  --ithx-paper-marble: #F3F4EE;
+  --ithx-action-cream: #F5EAD7;
+  --ithx-sage-mist: #93B2A8;
+  --ithx-edge-green: #205047;
+  --ithx-border-light: #D4DED7;
+  --ithx-border-dark: #1A2E28;
+  --ithx-canvas-muted: #4F6B63;
+  --ithx-on-surface: #FFFFFF;
+  --ithx-shadow-color: #000000;
+  --ithx-success-canvas: #147A5D;
+  --ithx-warning-canvas: #8C5800;
+  --ithx-danger-canvas: #BA1A1A;
+  --ithx-info-canvas: #0B4F6C;
+  --ithx-success-surface: #71DAAB;
+  --ithx-warning-surface: #FFB74D;
+  --ithx-danger-surface: #FF6B5F;
+  --ithx-info-surface: #82CFFF;
+  /* Third-party marks retain their recognizable brand colors. */
+  --icon-brand-flutter: #54C5F8;
+  --icon-brand-android: #3DDC84;
+  --icon-brand-firebase-orange: #FF9100;
+  --icon-brand-firebase-yellow: #FFC400;
+  --icon-brand-firebase-red: #DD2C00;
+  --icon-brand-nodejs: #5FA04E;
+  --icon-brand-mongodb: #47A248;
+  --icon-brand-sqlite: #44A9D8;
+  --icon-brand-vercel: #000000;
+  --icon-brand-hostinger: #673DE6;
+  --icon-brand-github: #181717;
+  --icon-brand-vscode: #007ACC;
+  --icon-brand-postman: #FF6C37;
+  --icon-brand-insomnia: #4000BF;
+  --icon-brand-slack-red: #E01E5A;
+  --icon-brand-slack-blue: #36C5F0;
+  --icon-brand-slack-green: #2EB67D;
+  --icon-brand-slack-yellow: #ECB22E;
+  --ithx-dark-primary-green: var(--ithx-deep-surface);
+  --ithx-emerald-accent: var(--ithx-edge-green);
+  --ithx-mint-signal: var(--ithx-sage-mist);
+  --ithx-warm-brass: var(--ithx-action-cream);
+  --ithx-white: var(--ithx-on-surface);
+  --ithx-ink: var(--ithx-primary-green);
+  --ithx-graphite: var(--ithx-canvas-muted);
+  --ithx-mist: var(--ithx-sage-mist);
+  --ithx-line-light: var(--ithx-border-light);
+  --ithx-line-dark: var(--ithx-border-dark);
+  --ithx-theme-border-dark: var(--ithx-edge-green);
+  --ithx-action-text-dark: var(--ithx-primary-green);
+  --ithx-danger: var(--ithx-danger-canvas);
+  --ithx-warning-light: var(--ithx-warning-canvas);
+  --ithx-warning-dark: var(--ithx-warning-surface);
+  --ithx-danger-light: var(--ithx-danger-canvas);
+  --ithx-danger-dark: var(--ithx-danger-surface);
+  --ithx-info-light: var(--ithx-info-canvas);
+  --ithx-info-dark: var(--ithx-info-surface);
   --font-display: "Space Grotesk", system-ui, -apple-system, sans-serif;
   --font-body: Inter, system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", "SF Mono", Consolas, monospace;
@@ -36,43 +66,46 @@
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
-
-  /* Light semantic theme. */
-  --color-background: var(--ithx-paper-marble);
-  --color-surface: var(--ithx-white);
-  --color-surface-raised: var(--ithx-white);
-  --color-foreground: var(--ithx-ink);
-  --color-muted: var(--ithx-graphite);
-  --color-muted-foreground: var(--ithx-graphite);
-  --color-border: var(--ithx-line-light);
-  --color-hairline: var(--ithx-line-light);
-  --color-line: color-mix(in srgb, var(--ithx-graphite) 24%, transparent);
-  --color-accent: var(--ithx-emerald-accent);
-  --color-accent-foreground: var(--ithx-white);
-  --color-hero-background: var(--ithx-paper-marble);
-  --color-stage-edge: var(--ithx-white);
-  --color-hero-text: var(--ithx-ink);
-  --color-glitch: var(--ithx-emerald-accent);
-  --color-glitch-highlight: var(--ithx-primary-green);
-  --color-loader: var(--ithx-warm-brass);
-  --color-ink: var(--ithx-ink);
-
-  /* Status semantic roles */
-  --color-success: var(--ithx-emerald-accent);
-  --color-warning: var(--ithx-warning-light);
-  --color-danger: var(--ithx-danger-light);
-  --color-info: var(--ithx-info-light);
-
-  /* Compatibility aliases for the existing presentation layers. */
   --color-forest: var(--ithx-primary-green);
-  --color-emerald: var(--ithx-emerald-accent);
-  --color-lime: var(--ithx-mint-signal);
+  --color-emerald: var(--ithx-edge-green);
+  --color-lime: var(--ithx-sage-mist);
   --color-night: var(--ithx-night-green);
-
   --max-width: 1240px;
   --radius-sm: 0.45rem;
+  --radius-card: 0.75rem;
   --radius-lg: 1.25rem;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --color-background: var(--ithx-paper-marble);
+  --color-surface: var(--ithx-primary-green);
+  --color-surface-raised: var(--ithx-primary-green);
+  --color-surface-strong: var(--ithx-deep-surface);
+  --color-surface-border: var(--ithx-edge-green);
+  --color-foreground: var(--ithx-primary-green);
+  --color-muted: var(--ithx-canvas-muted);
+  --color-muted-foreground: var(--ithx-canvas-muted);
+  --color-on-surface: var(--ithx-on-surface);
+  --color-on-surface-muted: var(--ithx-sage-mist);
+  --color-border: var(--ithx-border-light);
+  --color-hairline: var(--ithx-border-light);
+  --color-accent: var(--ithx-action-cream);
+  --color-accent-foreground: var(--ithx-primary-green);
+  --color-canvas-action: var(--ithx-primary-green);
+  --color-canvas-action-foreground: var(--ithx-action-cream);
+  --color-focus: var(--ithx-primary-green);
+  --color-focus-on-surface: var(--ithx-action-cream);
+  --color-hero-background: var(--ithx-paper-marble);
+  --color-stage-edge: var(--ithx-paper-marble);
+  --color-hero-text: var(--ithx-primary-green);
+  --color-glitch: var(--ithx-edge-green);
+  --color-glitch-highlight: var(--ithx-primary-green);
+  --color-loader: var(--ithx-action-cream);
+  --color-ink: var(--ithx-primary-green);
+  --color-shadow: var(--ithx-shadow-color);
+  --color-success: var(--ithx-success-canvas);
+  --color-warning: var(--ithx-warning-canvas);
+  --color-danger: var(--ithx-danger-canvas);
+  --color-info: var(--ithx-info-canvas);
+  --color-line: color-mix(in srgb, var(--color-muted-foreground) 24%, transparent);
   --story-surface: color-mix(in srgb, var(--color-background) 88%, var(--color-surface-raised));
   --story-foreground: var(--color-foreground);
   --story-muted: var(--color-muted-foreground);
@@ -81,89 +114,80 @@
   --story-rail-muted: color-mix(in srgb, var(--color-muted-foreground) 72%, transparent);
   --story-space: clamp(4rem, 11vw, 10rem);
 }
-
-:root[data-theme='light'] {
-  color-scheme: light;
-  --color-background: var(--ithx-paper-marble);
-  --color-surface: var(--ithx-white);
-  --color-surface-raised: var(--ithx-white);
-  --color-foreground: var(--ithx-ink);
-  --color-muted: var(--ithx-graphite);
-  --color-muted-foreground: var(--ithx-graphite);
-  --color-border: var(--ithx-line-light);
-  --color-hairline: var(--ithx-line-light);
-  --color-line: color-mix(in srgb, var(--ithx-graphite) 24%, transparent);
-  --color-accent: var(--ithx-emerald-accent);
-  --color-accent-foreground: var(--ithx-white);
-  --color-hero-background: var(--ithx-paper-marble);
-  --color-stage-edge: var(--ithx-white);
-  --color-hero-text: var(--ithx-ink);
-  --color-glitch: var(--ithx-emerald-accent);
-  --color-glitch-highlight: var(--ithx-primary-green);
-  --color-loader: var(--ithx-warm-brass);
-  --color-ink: var(--ithx-ink);
-  --color-success: var(--ithx-emerald-accent);
-  --color-warning: var(--ithx-warning-light);
-  --color-danger: var(--ithx-danger-light);
-  --color-info: var(--ithx-info-light);
-  --story-surface: color-mix(in srgb, var(--color-background) 88%, var(--color-surface-raised));
-}
-
+:root[data-theme='light'] { color-scheme: light; }
 :root[data-theme='dark'] {
   color-scheme: dark;
+  --icon-brand-vercel: #FFFFFF;
+  --icon-brand-github: #F0F6FC;
   --color-background: var(--ithx-night-green);
-  --color-surface: var(--ithx-deep-surface);
-  --color-surface-raised: var(--ithx-deep-surface);
+  --color-surface: var(--ithx-primary-green);
+  --color-surface-raised: var(--ithx-primary-green);
+  --color-surface-strong: var(--ithx-deep-surface);
+  --color-surface-border: var(--ithx-edge-green);
   --color-foreground: var(--ithx-paper-marble);
-  --color-muted: var(--ithx-mist);
-  --color-muted-foreground: var(--ithx-mist);
-  --color-border: var(--ithx-theme-border-dark);
-  --color-hairline: var(--ithx-line-dark);
-  --color-line: color-mix(in srgb, var(--ithx-mist) 24%, transparent);
-  --color-accent: var(--ithx-mint-signal);
-  --color-accent-foreground: var(--ithx-action-text-dark);
+  --color-muted: var(--ithx-sage-mist);
+  --color-muted-foreground: var(--ithx-sage-mist);
+  --color-on-surface: var(--ithx-on-surface);
+  --color-on-surface-muted: var(--ithx-sage-mist);
+  --color-border: var(--ithx-border-dark);
+  --color-hairline: var(--ithx-border-dark);
+  --color-accent: var(--ithx-action-cream);
+  --color-accent-foreground: var(--ithx-primary-green);
+  --color-canvas-action: var(--ithx-action-cream);
+  --color-canvas-action-foreground: var(--ithx-primary-green);
+  --color-focus: var(--ithx-action-cream);
+  --color-focus-on-surface: var(--ithx-action-cream);
   --color-hero-background: var(--ithx-night-green);
-  --color-stage-edge: var(--ithx-deep-surface);
+  --color-stage-edge: var(--ithx-primary-green);
   --color-hero-text: var(--ithx-paper-marble);
-  --color-glitch: var(--ithx-mint-signal);
-  --color-glitch-highlight: var(--ithx-dark-primary-green);
-  --color-loader: var(--ithx-mint-signal);
+  --color-glitch: var(--ithx-action-cream);
+  --color-glitch-highlight: var(--ithx-deep-surface);
+  --color-loader: var(--ithx-action-cream);
   --color-ink: var(--ithx-paper-marble);
-  --color-success: var(--ithx-mint-signal);
-  --color-warning: var(--ithx-warning-dark);
-  --color-danger: var(--ithx-danger-dark);
-  --color-info: var(--ithx-info-dark);
+  --color-shadow: var(--ithx-shadow-color);
+  --color-success: var(--ithx-success-surface);
+  --color-warning: var(--ithx-warning-surface);
+  --color-danger: var(--ithx-danger-surface);
+  --color-info: var(--ithx-info-surface);
+  --color-line: color-mix(in srgb, var(--color-muted-foreground) 24%, transparent);
   --story-surface: color-mix(in srgb, var(--color-background) 88%, var(--color-surface-raised));
 }
-
-:root[data-theme='system'] {
-  color-scheme: light dark;
-}
-
+:root[data-theme='system'] { color-scheme: light dark; }
 @media (prefers-color-scheme: dark) {
   :root[data-theme='system'] {
-    --color-background: var(--ithx-night-green);
-    --color-surface: var(--ithx-deep-surface);
-    --color-surface-raised: var(--ithx-deep-surface);
-    --color-foreground: var(--ithx-paper-marble);
-    --color-muted: var(--ithx-mist);
-    --color-muted-foreground: var(--ithx-mist);
-    --color-border: var(--ithx-theme-border-dark);
-    --color-hairline: var(--ithx-line-dark);
-    --color-line: color-mix(in srgb, var(--ithx-mist) 24%, transparent);
-    --color-accent: var(--ithx-mint-signal);
-    --color-accent-foreground: var(--ithx-action-text-dark);
-    --color-hero-background: var(--ithx-night-green);
-    --color-stage-edge: var(--ithx-deep-surface);
-    --color-hero-text: var(--ithx-paper-marble);
-    --color-glitch: var(--ithx-mint-signal);
-    --color-glitch-highlight: var(--ithx-dark-primary-green);
-    --color-loader: var(--ithx-mint-signal);
-    --color-ink: var(--ithx-paper-marble);
-    --color-success: var(--ithx-mint-signal);
-    --color-warning: var(--ithx-warning-dark);
-    --color-danger: var(--ithx-danger-dark);
-    --color-info: var(--ithx-info-dark);
-    --story-surface: color-mix(in srgb, var(--color-background) 88%, var(--color-surface-raised));
+  --icon-brand-vercel: #FFFFFF;
+  --icon-brand-github: #F0F6FC;
+  --color-background: var(--ithx-night-green);
+  --color-surface: var(--ithx-primary-green);
+  --color-surface-raised: var(--ithx-primary-green);
+  --color-surface-strong: var(--ithx-deep-surface);
+  --color-surface-border: var(--ithx-edge-green);
+  --color-foreground: var(--ithx-paper-marble);
+  --color-muted: var(--ithx-sage-mist);
+  --color-muted-foreground: var(--ithx-sage-mist);
+  --color-on-surface: var(--ithx-on-surface);
+  --color-on-surface-muted: var(--ithx-sage-mist);
+  --color-border: var(--ithx-border-dark);
+  --color-hairline: var(--ithx-border-dark);
+  --color-accent: var(--ithx-action-cream);
+  --color-accent-foreground: var(--ithx-primary-green);
+  --color-canvas-action: var(--ithx-action-cream);
+  --color-canvas-action-foreground: var(--ithx-primary-green);
+  --color-focus: var(--ithx-action-cream);
+  --color-focus-on-surface: var(--ithx-action-cream);
+  --color-hero-background: var(--ithx-night-green);
+  --color-stage-edge: var(--ithx-primary-green);
+  --color-hero-text: var(--ithx-paper-marble);
+  --color-glitch: var(--ithx-action-cream);
+  --color-glitch-highlight: var(--ithx-deep-surface);
+  --color-loader: var(--ithx-action-cream);
+  --color-ink: var(--ithx-paper-marble);
+  --color-shadow: var(--ithx-shadow-color);
+  --color-success: var(--ithx-success-surface);
+  --color-warning: var(--ithx-warning-surface);
+  --color-danger: var(--ithx-danger-surface);
+  --color-info: var(--ithx-info-surface);
+  --color-line: color-mix(in srgb, var(--color-muted-foreground) 24%, transparent);
+  --story-surface: color-mix(in srgb, var(--color-background) 88%, var(--color-surface-raised));
   }
 }

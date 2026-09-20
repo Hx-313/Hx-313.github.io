@@ -34,7 +34,11 @@ function ToolTile({ tool, isActive, onToggle }) {
   const serviceId = `how-i-build-service-${tool.id}`;
 
   return (
-    <div className={`how-i-build-tile ${isActive ? 'is-active' : ''}`} role="listitem">
+    <div
+      className={`how-i-build-tile ${isActive ? 'is-active' : ''}`}
+      data-icon={tool.icon}
+      role="listitem"
+    >
       <button
         type="button"
         className="how-i-build-tile-button"
@@ -45,6 +49,7 @@ function ToolTile({ tool, isActive, onToggle }) {
         <span className="tile-icon-wrap" aria-hidden="true">
           <ToolIcon name={tool.icon} />
         </span>
+        <span className="tile-kind">{tool.kind}</span>
         <span className="tile-content">
           <span className="tile-name">{tool.name}</span>
           <span className="tile-description">{tool.description}</span>

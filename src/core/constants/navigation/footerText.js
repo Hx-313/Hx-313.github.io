@@ -15,7 +15,7 @@ export const FOOTER_TEXT = Object.freeze({
   contactNote: 'Available for select product builds, system reviews, and technical advisory.',
   location: Object.freeze({
     basedIn: 'Based in',
-    cityCountry: 'Lahore, Pakistan',
+    cityCountry: 'Rawalpindi, Pakistan',
     workingScope: 'Working worldwide',
   }),
   backToTop: 'Back to top',
@@ -91,7 +91,7 @@ export const FOOTER_TEXT = Object.freeze({
     positioning:
       'Building mobile applications, APIs, dashboards, and operational systems for teams that need the whole workflow to work.',
     status: 'Available for project conversations & selected roles',
-    timezone: 'PKT / UTC+5 (Lahore)',
+    timezone: 'PKT / UTC+5 (Rawalpindi)',
     craft: 'Engineered with React, Vite, Motion & Three.js',
     copyright: '© 2026 Hafiz Ali Abdullah. All rights reserved.',
   }),

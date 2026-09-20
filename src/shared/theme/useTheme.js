@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 
 const THEME_VALUES = new Set(['system', 'light', 'dark']);
-const THEME_COLORS = Object.freeze({
-  light: '#F4F2EA',
-  dark: '#08130A',
-});
 
 function getInitialTheme() {
   try {
@@ -19,18 +15,25 @@ export function useTheme() {
   const [theme, setTheme] = useState(getInitialTheme);
 
   useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-
+    const root = document.documentElement;
+    root.dataset.theme = theme;
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const resolvedTheme = theme === 'system' ? (mediaQuery.matches ? 'dark' : 'light') : theme;
-    document.documentElement.style.colorScheme = resolvedTheme;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', THEME_COLORS[resolvedTheme]);
 
+    const updateThemeColor = () => {
+      const resolvedTheme = theme === 'system' ? (mediaQuery.matches ? 'dark' : 'light') : theme;
+      root.style.colorScheme = resolvedTheme;
+      const background = getComputedStyle(root).getPropertyValue('--color-background').trim();
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', background);
+    };
+
+    updateThemeColor();
+    mediaQuery.addEventListener('change', updateThemeColor);
     try {
       window.localStorage.setItem('portfolio-theme', theme);
     } catch {
       // A blocked storage API should not prevent the theme from applying.
     }
+    return () => mediaQuery.removeEventListener('change', updateThemeColor);
   }, [theme]);
 
   return { theme, setTheme };

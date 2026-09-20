@@ -19,17 +19,20 @@
   --ink-primary: var(--color-foreground);
   --ink-muted: var(--color-muted-foreground);
   --signal: var(--color-accent);
+  --services-card-foreground: var(--color-on-surface);
+  --services-card-muted: var(--color-on-surface-muted);
+  --services-icon-color: var(--color-on-surface);
 
   /* Solid matte brand card tokens (Zero Opacity) */
   --services-card-bg: var(--color-surface);
-  --services-card-border: var(--color-border);
-  --services-card-shadow: 0 4px 20px rgba(0, 0, 0, 0.18), 0 1px 4px rgba(0, 0, 0, 0.1);
-  --services-card-hover-bg: var(--color-surface-raised);
-  --services-card-hover-border: var(--color-accent);
-  --services-card-hover-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
-  --services-icon-bg: var(--color-background);
-  --services-icon-border: var(--color-border);
-  --services-icon-hover-bg: var(--color-surface);
+  --services-card-border: var(--color-surface-border);
+  --services-card-shadow: 0 4px 20px color-mix(in srgb, var(--ithx-shadow-color) 18%, transparent), 0 1px 4px color-mix(in srgb, var(--ithx-shadow-color) 10%, transparent);
+  --services-card-hover-bg: var(--color-surface-strong);
+  --services-card-hover-border: var(--color-focus-on-surface);
+  --services-card-hover-shadow: 0 12px 36px color-mix(in srgb, var(--ithx-shadow-color) 28%, transparent);
+  --services-icon-bg: color-mix(in srgb, var(--color-on-surface) 7%, var(--color-surface));
+  --services-icon-border: color-mix(in srgb, var(--color-on-surface) 14%, var(--color-surface-border));
+  --services-icon-hover-bg: var(--color-surface-strong);
   --services-icon-glow: transparent;
   --services-icon-glow-active: transparent;
   --services-tab-border: var(--color-border);
@@ -37,48 +40,6 @@
   background: transparent;
   color: var(--ink-primary);
   font-variant-numeric: lining-nums tabular-nums;
-}
-
-:root[data-theme='light'] .services-section {
-  --bg-void: var(--ithx-paper-marble);
-  --ink-primary: var(--ithx-ink);
-  --ink-muted: var(--ithx-graphite);
-  --signal: var(--ithx-emerald-accent);
-
-  /* Solid matte itHX Light Tokens */
-  --services-card-bg: var(--ithx-white);
-  --services-card-border: var(--ithx-line-light);
-  --services-card-shadow: 0 4px 20px rgba(9, 36, 33, 0.06), 0 1px 4px rgba(9, 36, 33, 0.04);
-  --services-card-hover-bg: var(--ithx-white);
-  --services-card-hover-border: var(--ithx-emerald-accent);
-  --services-card-hover-shadow: 0 12px 36px rgba(9, 36, 33, 0.11), 0 4px 10px rgba(20, 122, 93, 0.08);
-  --services-icon-bg: var(--ithx-paper-marble);
-  --services-icon-border: var(--ithx-line-light);
-  --services-icon-hover-bg: color-mix(in srgb, var(--ithx-emerald-accent) 8%, var(--ithx-paper-marble));
-  --services-icon-glow: color-mix(in srgb, var(--ithx-emerald-accent) 6%, transparent);
-  --services-icon-glow-active: color-mix(in srgb, var(--ithx-emerald-accent) 12%, transparent);
-  --services-tab-border: var(--ithx-line-light);
-}
-
-:root[data-theme='dark'] .services-section {
-  --bg-void: var(--ithx-night-green);
-  --ink-primary: var(--ithx-paper-marble);
-  --ink-muted: var(--ithx-mist);
-  --signal: var(--ithx-mint-signal);
-
-  /* Solid matte itHX Dark Tokens */
-  --services-card-bg: var(--ithx-deep-surface);
-  --services-card-border: var(--ithx-theme-border-dark);
-  --services-card-shadow: 0 4px 24px rgba(0, 0, 0, 0.4), 0 1px 4px rgba(0, 0, 0, 0.25);
-  --services-card-hover-bg: var(--ithx-dark-primary-green);
-  --services-card-hover-border: var(--ithx-mint-signal);
-  --services-card-hover-shadow: 0 16px 42px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(82, 199, 167, 0.08);
-  --services-icon-bg: var(--ithx-night-green);
-  --services-icon-border: var(--ithx-line-dark);
-  --services-icon-hover-bg: color-mix(in srgb, var(--ithx-mint-signal) 10%, var(--ithx-night-green));
-  --services-icon-glow: color-mix(in srgb, var(--ithx-mint-signal) 8%, transparent);
-  --services-icon-glow-active: color-mix(in srgb, var(--ithx-mint-signal) 16%, transparent);
-  --services-tab-border: var(--ithx-theme-border-dark);
 }
 
 .services-container {
@@ -179,7 +140,7 @@
   min-height: clamp(14rem, 19vw, 17rem);
   padding: clamp(1.75rem, 2.6vw, 2.4rem) clamp(1.5rem, 2.2vw, 2rem);
   border: 1px solid var(--services-card-border);
-  border-radius: 1rem;
+  border-radius: var(--radius-card, 0.75rem);
   background: var(--services-card-bg);
   box-shadow: var(--services-card-shadow);
   overflow: hidden;
@@ -251,7 +212,7 @@
   border: 1.5px solid var(--services-icon-border);
   border-radius: 0.6rem;
   background: var(--services-icon-bg);
-  color: var(--signal);
+  color: var(--services-icon-color);
   font-size: 1.5rem;
   box-shadow: 0 0 0 4px var(--services-icon-glow, transparent);
   transition: border-color 280ms ease, color 280ms ease, transform 280ms ease,
@@ -268,7 +229,7 @@
 .services-item-name {
   max-width: 22ch;
   margin: 0 0 0.7rem;
-  color: var(--ink-primary);
+  color: var(--services-card-foreground);
   font-family: var(--font-display);
   font-size: clamp(1.1rem, 1.55vw, 1.45rem);
   font-weight: 700;
@@ -281,7 +242,7 @@
   max-width: 36ch;
   margin: 0;
   margin-top: auto;
-  color: var(--ink-muted);
+  color: var(--services-card-muted);
   font-family: var(--font-body);
   font-size: clamp(0.85rem, 1.05vw, 0.95rem);
   font-weight: 400;

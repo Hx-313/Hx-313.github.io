@@ -120,7 +120,7 @@
 }
 
 .how-i-build-tag:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--signal) 75%, white);
+  outline: 2px solid color-mix(in srgb, var(--signal) 75%, var(--ithx-white));
   outline-offset: 3px;
 }
 
@@ -192,124 +192,150 @@
   }
 }
 
-/* Right column: 3 columns × 4 rows with benchmark-style dividers */
+/* Right column: compact brand-tinted tool cards. */
 .how-i-build-grid {
   position: relative;
   isolation: isolate;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-self: stretch;
-  background: radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--signal) 4%, transparent), transparent 52%);
-  border-top: 1px solid color-mix(in srgb, var(--ink-muted) 28%, transparent);
-}
-
-.how-i-build-grid::before {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  border: 1px solid color-mix(in srgb, var(--ink-muted) 8%, transparent);
-  content: '';
-  pointer-events: none;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-self: center;
+  gap: 0.55rem;
 }
 
 .how-i-build-tile {
+  --tool-brand: var(--color-accent);
+  --tool-card-background: color-mix(in srgb, var(--color-background) 82%, var(--tool-brand) 18%);
+  --tool-card-foreground: var(--color-foreground);
   position: relative;
-  display: block;
+  isolation: isolate;
   min-width: 0;
-  min-height: 7.1rem;
-  padding: 0;
-  border-bottom: 1px solid color-mix(in srgb, var(--ink-muted) 24%, transparent);
-  transition: background-color 180ms ease;
+  min-height: 6.65rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--tool-brand) 26%, var(--color-border));
+  border-radius: var(--radius-card);
+  background: var(--tool-card-background);
+  color: var(--tool-card-foreground);
+  box-shadow: 0 5px 14px color-mix(in srgb, var(--color-shadow) 8%, transparent);
+  transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out), border-color 220ms ease;
 }
 
-.how-i-build-tile::before {
+.how-i-build-tile::after {
   position: absolute;
-  top: 1px;
-  left: 0;
-  width: 2.5rem;
-  height: 1px;
-  background: var(--signal);
+  z-index: -1;
+  top: -1.8rem;
+  right: -1.8rem;
+  width: 5.5rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-on-surface) 13%, transparent);
   content: '';
-  opacity: 0;
-  transform: scaleX(0.6);
-  transform-origin: left;
-  transition: opacity 180ms ease, transform 180ms ease;
+  transition: transform 300ms var(--ease-out);
 }
 
-.how-i-build-tile:hover {
-  background: color-mix(in srgb, var(--signal) 3%, transparent);
+.how-i-build-tile:hover,
+.how-i-build-tile:focus-within,
+.how-i-build-tile.is-active {
+  border-color: color-mix(in srgb, var(--tool-brand) 52%, var(--color-border));
+  box-shadow: 0 12px 24px color-mix(in srgb, var(--color-shadow) 15%, transparent);
+  transform: translateY(-2px);
 }
 
-.how-i-build-tile:hover::before {
-  opacity: 0.72;
-  transform: scaleX(1);
+.how-i-build-tile:hover::after,
+.how-i-build-tile:focus-within::after,
+.how-i-build-tile.is-active::after {
+  transform: scale(1.25);
 }
 
 .how-i-build-tile-button {
+  position: relative;
+  z-index: 1;
   display: flex;
-  align-items: flex-start;
-  gap: 0.8rem;
+  min-height: 6.65rem;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 0.35rem;
   width: 100%;
-  min-height: 7.1rem;
-  padding: 1.15rem 1rem 1.15rem 0;
+  padding: 0.7rem 0.75rem 0.72rem;
   border: 0;
   background: transparent;
-  color: inherit;
+  color: var(--tool-card-foreground);
   cursor: pointer;
   font: inherit;
   text-align: left;
 }
 
 .how-i-build-tile-button:focus-visible {
-  position: relative;
-  z-index: 1;
-  outline: 2px solid color-mix(in srgb, var(--signal) 78%, white);
-  outline-offset: -2px;
+  outline: 2px solid var(--color-focus);
+  outline-offset: -4px;
 }
 
-.how-i-build-tile:not(:nth-child(3n)) {
-  border-right: 1px solid color-mix(in srgb, var(--ink-muted) 20%, transparent);
-}
-
-.how-i-build-tile:not(:nth-child(3n)) .how-i-build-tile-button {
-  padding-right: 1rem;
-}
-
-.how-i-build-tile:nth-child(3n + 2) .how-i-build-tile-button,
-.how-i-build-tile:nth-child(3n + 3) .how-i-build-tile-button {
-  padding-left: 1rem;
-}
+.how-i-build-tile[data-icon='flutter'] { --tool-brand: var(--icon-brand-flutter); }
+.how-i-build-tile[data-icon='android'] { --tool-brand: var(--icon-brand-android); }
+.how-i-build-tile[data-icon='firebase'] { --tool-brand: var(--icon-brand-firebase-orange); }
+.how-i-build-tile[data-icon='nodejs'] { --tool-brand: var(--icon-brand-nodejs); }
+.how-i-build-tile[data-icon='mongodb'] { --tool-brand: var(--icon-brand-mongodb); }
+.how-i-build-tile[data-icon='sqlite'] { --tool-brand: var(--icon-brand-sqlite); }
+.how-i-build-tile[data-icon='vercel'] { --tool-brand: var(--icon-brand-vercel); }
+.how-i-build-tile[data-icon='hostinger'] { --tool-brand: var(--icon-brand-hostinger); }
+.how-i-build-tile[data-icon='github'] { --tool-brand: var(--icon-brand-github); }
+.how-i-build-tile[data-icon='vscode'] { --tool-brand: var(--icon-brand-vscode); }
+.how-i-build-tile[data-icon='postman'] { --tool-brand: var(--icon-brand-postman); }
+.how-i-build-tile[data-icon='slack'] { --tool-brand: var(--icon-brand-slack-green); }
 
 .tile-icon-wrap {
   display: grid;
-  flex: 0 0 2.25rem;
-  width: 2.25rem;
-  height: 2.25rem;
+  flex: 0 0 1.9rem;
+  width: 1.9rem;
+  height: 1.9rem;
   place-items: center;
+  border: 1px solid color-mix(in srgb, var(--color-border) 55%, transparent);
+  border-radius: var(--radius-sm);
+  background: var(--color-on-surface);
+  box-shadow: 0 4px 10px color-mix(in srgb, var(--color-shadow) 12%, transparent);
+  transition: transform 220ms var(--ease-out);
+}
+
+:root[data-theme='dark'] .tile-icon-wrap {
+  border-color: var(--color-surface-border);
+  background: var(--color-surface-strong);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-theme='system'] .tile-icon-wrap {
+    border-color: var(--color-surface-border);
+    background: var(--color-surface-strong);
+  }
+}
+
+.how-i-build-tile:hover .tile-icon-wrap,
+.how-i-build-tile:focus-within .tile-icon-wrap,
+.how-i-build-tile.is-active .tile-icon-wrap {
+  transform: rotate(-5deg) scale(1.04);
 }
 
 .tool-icon {
   display: block;
-  width: 1.45rem;
-  height: 1.45rem;
+  width: 1.2rem;
+  height: 1.2rem;
 }
 
 /* Brand marks keep their own official color instead of inheriting the page accent. */
-.tool-icon--flutter { color: #54C5F8; }
-.tool-icon--android { color: #3DDC84; }
-.tool-icon--nodejs { color: #5FA04E; }
-.tool-icon--mongodb { color: #47A248; }
-.tool-icon--sqlite { color: #44A9D8; }
-.tool-icon--vercel { color: #FFFFFF; }
-.tool-icon--hostinger { color: #673DE6; }
-.tool-icon--github { color: #F0F6FC; }
-.tool-icon--vscode { color: #007ACC; }
-.tool-icon--postman { color: #FF6C37; }
+.tool-icon--flutter { color: var(--icon-brand-flutter); }
+.tool-icon--android { color: var(--icon-brand-android); }
+.tool-icon--nodejs { color: var(--icon-brand-nodejs); }
+.tool-icon--mongodb { color: var(--icon-brand-mongodb); }
+.tool-icon--sqlite { color: var(--icon-brand-sqlite); }
+.tool-icon--vercel { color: var(--icon-brand-vercel); }
+.tool-icon--hostinger { color: var(--icon-brand-hostinger); }
+.tool-icon--github { color: var(--icon-brand-github); }
+.tool-icon--vscode { color: var(--icon-brand-vscode); }
+.tool-icon--postman { color: var(--icon-brand-postman); }
 
 .tool-icon--postman-insomnia {
   position: relative;
-  width: 1.7rem;
-  height: 1.45rem;
+  width: 1.45rem;
+  height: 1.2rem;
   overflow: visible;
 }
 
@@ -319,38 +345,59 @@
 }
 
 .tool-sub-icon--postman {
-  top: 0.18rem;
+  top: 0.15rem;
   left: 0;
-  width: 1.12rem;
-  height: 1.12rem;
-  color: #FF6C37;
+  width: 0.95rem;
+  height: 0.95rem;
+  color: var(--icon-brand-postman);
   z-index: 1;
 }
 
 .tool-sub-icon--insomnia {
-  top: -0.12rem;
+  top: -0.1rem;
   right: -0.02rem;
-  width: 1.05rem;
-  height: 1.05rem;
-  padding: 0.1rem;
+  width: 0.9rem;
+  height: 0.9rem;
+  padding: 0.08rem;
   border-radius: 50%;
   background: var(--bg-void);
-  color: #4000BF;
+  color: var(--icon-brand-insomnia);
   z-index: 2;
 }
 
 .tile-content {
   min-width: 0;
+  padding-right: 1.15rem;
+}
+
+.tile-kind {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.65rem;
+  max-width: 76%;
+  overflow: hidden;
+  padding: 0.18rem 0.42rem;
+  border: 1px solid color-mix(in srgb, var(--tool-card-foreground) 10%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--tool-card-foreground) 9%, transparent);
+  color: var(--tool-card-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.46rem;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .tile-name {
   display: block;
-  margin: 0 0 0.35rem;
-  color: var(--ink-primary);
+  margin: 0 0 0.12rem;
+  color: var(--tool-card-foreground);
   font-family: var(--font-body);
-  font-size: 0.82rem;
-  font-weight: 700;
-  line-height: 1.2;
+  font-size: 0.76rem;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.15;
 }
 
 .tile-description {
@@ -358,8 +405,8 @@
   margin: 0;
   color: var(--ink-muted);
   font-family: var(--font-body);
-  font-size: 0.72rem;
-  line-height: 1.45;
+  font-size: 0.62rem;
+  line-height: 1.3;
   text-wrap: pretty;
 }
 
@@ -370,7 +417,7 @@
   max-height: 0;
   margin-top: 0;
   overflow: hidden;
-  color: color-mix(in srgb, var(--signal) 100%, transparent);
+  color: var(--tool-card-foreground);
   font-family: var(--font-body);
   font-size: 0.58rem;
   font-weight: 600;
@@ -382,7 +429,7 @@
 }
 
 .tile-service-label {
-  color: var(--ink-faint);
+  color: color-mix(in srgb, var(--tool-card-foreground) 72%, var(--tool-card-background));
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -403,13 +450,18 @@
 }
 
 .tile-reveal-indicator {
-  position: relative;
-  flex: 0 0 1.1rem;
-  width: 1.1rem;
-  height: 1.1rem;
-  margin-left: auto;
+  position: absolute;
+  top: 2.75rem;
+  right: 0.7rem;
+  display: grid;
+  width: 0.85rem;
+  height: 0.85rem;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--tool-card-foreground) 35%, transparent);
+  border-radius: 50%;
   color: var(--ink-muted);
-  transition: transform 220ms ease, color 180ms ease;
+  opacity: 0.8;
+  transition: transform 220ms ease, color 180ms ease, opacity 180ms ease;
 }
 
 .tile-reveal-indicator::before,
@@ -417,7 +469,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 0.65rem;
+  width: 0.48rem;
   height: 1px;
   background: currentColor;
   content: '';
@@ -431,7 +483,9 @@
 .how-i-build-tile:hover .tile-reveal-indicator,
 .how-i-build-tile:focus-within .tile-reveal-indicator,
 .how-i-build-tile.is-active .tile-reveal-indicator {
-  color: color-mix(in srgb, var(--signal) 100%, transparent);
+  border-color: var(--color-focus);
+  color: var(--color-focus);
+  opacity: 1;
   transform: rotate(45deg);
 }
 
@@ -441,28 +495,15 @@
   }
 
   .how-i-build-tile {
-    min-height: 6.5rem;
+    min-height: 6.35rem;
   }
 
   .how-i-build-tile-button {
-    min-height: 6.5rem;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    min-height: 6.35rem;
+    padding: 0.62rem;
   }
 
-  .tile-icon-wrap {
-    flex-basis: 2rem;
-    width: 2rem;
-    height: 2rem;
-  }
-
-  .tile-name {
-    font-size: 0.76rem;
-  }
-
-  .tile-description {
-    font-size: 0.68rem;
-  }
+  .how-i-build-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 @media (max-width: 720px) {
@@ -481,55 +522,36 @@
   }
 
   .how-i-build-grid {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-    background: none;
-    border-top: 0;
-  }
-
-  .how-i-build-grid::before {
-    display: none;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.55rem;
   }
 
   .how-i-build-tile,
-  .how-i-build-tile:not(:nth-child(3n)),
-  .how-i-build-tile:nth-child(3n + 2),
-  .how-i-build-tile:nth-child(3n + 3) {
-    min-height: 0;
-    border-right: 0;
-    border-bottom: 0;
-    border-radius: 14px;
-    background: color-mix(in srgb, var(--bg-raised) 94%, var(--signal) 6%);
-    box-shadow: 0 14px 30px color-mix(in srgb, var(--bg-void) 58%, transparent);
-    overflow: hidden;
-  }
-
-  .how-i-build-tile:hover {
-    background: color-mix(in srgb, var(--bg-raised) 88%, var(--signal) 12%);
-  }
-
-  .how-i-build-tile.is-active {
-    background: color-mix(in srgb, var(--bg-raised) 88%, var(--signal) 12%);
-    box-shadow: 0 18px 36px color-mix(in srgb, var(--bg-void) 50%, transparent);
-  }
-
-  .how-i-build-tile-button,
-  .how-i-build-tile:not(:nth-child(3n)) .how-i-build-tile-button,
-  .how-i-build-tile:nth-child(3n + 2) .how-i-build-tile-button,
-  .how-i-build-tile:nth-child(3n + 3) .how-i-build-tile-button {
-    min-height: 5.5rem;
-    padding: 1rem;
+  .how-i-build-tile-button {
+    min-height: 6.35rem;
   }
 
   .tile-service {
     font-size: 0.61rem;
   }
+}
 
-  .how-i-build-tile::before {
-    top: 0;
-    left: 1rem;
-    width: 3rem;
+@media (max-width: 540px) {
+  .how-i-build-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .how-i-build-tile,
+  .how-i-build-tile-button {
+    min-height: 6.8rem;
   }
+
+  .tile-kind {
+    top: 0.55rem;
+    right: 0.55rem;
+    max-width: 62%;
+  }
+
+  .tile-name { font-size: 0.72rem; }
+  .tile-description { font-size: 0.6rem; }
 }
 
 @media (max-width: 480px) {
@@ -550,7 +572,8 @@
   .how-i-build-tile-button,
   .tile-service,
   .tile-reveal-indicator,
-  .how-i-build-tile::before {
+  .how-i-build-tile::after,
+  .tile-icon-wrap {
     transition: none;
     animation: none;
   }

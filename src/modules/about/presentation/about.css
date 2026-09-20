@@ -20,10 +20,10 @@
 
   /* Solid Brand KPI Card Tokens (Zero Opacity) */
   --about-kpi-bg: var(--color-surface);
-  --about-kpi-border: var(--color-border);
-  --about-kpi-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  --about-kpi-border: var(--color-surface-border);
+  --about-kpi-shadow: 0 10px 30px color-mix(in srgb, var(--ithx-shadow-color) 25%, transparent);
   --about-kpi-hover-border: var(--color-accent);
-  --about-kpi-hover-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+  --about-kpi-hover-shadow: 0 16px 36px color-mix(in srgb, var(--ithx-shadow-color) 35%, transparent);
 
   --about-kpi-highlight-bg: var(--ithx-primary-green);
   --about-kpi-highlight-border: var(--color-accent);
@@ -50,18 +50,18 @@
   --about-faint: var(--ithx-graphite);
 
   /* Solid Brand KPI Card Tokens (Zero Opacity) */
-  --about-kpi-bg: var(--ithx-white);
-  --about-kpi-border: var(--ithx-line-light);
-  --about-kpi-shadow: 0 8px 24px rgba(9, 36, 33, 0.06);
+  --about-kpi-bg: var(--ithx-primary-green);
+  --about-kpi-border: var(--color-surface-border);
+  --about-kpi-shadow: 0 8px 24px color-mix(in srgb, var(--ithx-deep-surface) 6%, transparent);
   --about-kpi-hover-border: var(--ithx-emerald-accent);
-  --about-kpi-hover-shadow: 0 16px 36px rgba(9, 36, 33, 0.12);
+  --about-kpi-hover-shadow: 0 16px 36px color-mix(in srgb, var(--ithx-deep-surface) 12%, transparent);
 
-  --about-kpi-highlight-bg: var(--ithx-white);
+  --about-kpi-highlight-bg: var(--ithx-primary-green);
   --about-kpi-highlight-border: var(--ithx-emerald-accent);
 
   --about-kpi-chip-bg: var(--ithx-paper-marble);
   --about-kpi-chip-border: var(--ithx-emerald-accent);
-  --about-kpi-chip-text: var(--ithx-emerald-accent);
+  --about-kpi-chip-text: var(--ithx-primary-green);
 
   --about-kpi-tag-text: var(--ithx-graphite);
   --about-kpi-lbl-text: var(--ithx-graphite);
@@ -70,18 +70,18 @@
 }
 
 :root[data-theme='dark'] .about-section {
-  --about-grid: rgba(255, 255, 255, 0.05);
+  --about-grid: color-mix(in srgb, var(--ithx-white) 5%, transparent);
   --about-particle: var(--ithx-mint-signal);
   --about-fg: var(--ithx-paper-marble);
   --about-dim: var(--ithx-mist);
   --about-faint: var(--ithx-mist);
 
   /* Solid Brand KPI Card Tokens (Zero Opacity) */
-  --about-kpi-bg: var(--ithx-deep-surface);
-  --about-kpi-border: var(--ithx-theme-border-dark);
-  --about-kpi-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  --about-kpi-bg: var(--ithx-primary-green);
+  --about-kpi-border: var(--color-surface-border);
+  --about-kpi-shadow: 0 12px 32px color-mix(in srgb, var(--ithx-shadow-color) 45%, transparent);
   --about-kpi-hover-border: var(--ithx-mint-signal);
-  --about-kpi-hover-shadow: 0 18px 42px rgba(0, 0, 0, 0.65);
+  --about-kpi-hover-shadow: 0 18px 42px color-mix(in srgb, var(--ithx-shadow-color) 65%, transparent);
 
   --about-kpi-highlight-bg: var(--ithx-primary-green);
   --about-kpi-highlight-border: var(--ithx-emerald-accent);
@@ -236,6 +236,12 @@
 }
 
 .about-kpi {
+  --about-fg: var(--color-on-surface);
+  --about-dim: var(--color-on-surface-muted);
+  --about-faint: var(--color-on-surface-muted);
+  --about-kpi-tag-text: var(--color-on-surface-muted);
+  --about-kpi-lbl-text: var(--color-on-surface-muted);
+  --about-kpi-desc-text: var(--color-on-surface-muted);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -243,7 +249,7 @@
   min-height: clamp(12rem, 16vw, 15rem);
   padding: clamp(1.6rem, 2.4vw, 2.25rem);
   border: 1px solid var(--about-kpi-border);
-  border-radius: var(--radius-lg, 1.25rem);
+  border-radius: var(--radius-card, var(--radius-lg, 1.25rem));
   background: var(--about-kpi-bg);
   box-shadow: var(--about-kpi-shadow);
   overflow: hidden;
@@ -258,7 +264,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
+  height: 1px;
   background: var(--about-kpi-border);
   transition: background-color 300ms ease;
 }

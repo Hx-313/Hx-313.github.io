@@ -110,13 +110,13 @@
   text-align: center;
   color: var(--story-accent);
   text-shadow:
-    0 0 25px rgba(16, 185, 129, 0.45),
-    0 0 60px rgba(16, 185, 129, 0.18);
+    0 0 25px color-mix(in srgb, var(--color-accent) 45%, transparent),
+    0 0 60px color-mix(in srgb, var(--color-accent) 18%, transparent);
   will-change: transform, opacity, filter;
 }
 
 :root[data-theme='light'] .client-story__statement {
-  text-shadow: 0 0 20px rgba(4, 120, 87, 0.22);
+  text-shadow: 0 0 20px color-mix(in srgb, var(--ithx-edge-green) 22%, transparent);
 }
 
 /* Responsive Breakpoint */
@@ -167,7 +167,7 @@
     flex-direction: column !important;
     gap: 1.5rem;
     padding: 2.5rem 0 !important;
-    border-bottom: 1px solid rgba(16, 185, 129, 0.15);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-accent) 15%, transparent);
     pointer-events: auto !important;
   }
 

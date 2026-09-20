@@ -99,6 +99,18 @@ export function latLngToVector3(lat, lng, radius, out = { x: 0, y: 0, z: 0 }) {
   return out;
 }
 
+function readThemeColor(token) {
+  return getComputedStyle(document.documentElement).getPropertyValue(token).trim();
+}
+
+function themeColorWithAlpha(token, alpha) {
+  const value = readThemeColor(token).replace('#', '');
+  const channels = value.length === 3
+    ? value.split('').map((part) => Number.parseInt(part + part, 16))
+    : [0, 2, 4].map((index) => Number.parseInt(value.slice(index, index + 2), 16));
+  return 'rgba(' + channels.join(', ') + ', ' + alpha + ')';
+}
+
 /**
  * Creates the high-resolution procedural world map texture for Three.js
  */
@@ -114,15 +126,15 @@ export function createWorldMapTexture(width = 2048, height = 1024) {
     width * 0.45, height * 0.4, width * 0.1,
     width * 0.5, height * 0.5, width * 0.65
   );
-  oceanGrad.addColorStop(0, '#0d3540');
-  oceanGrad.addColorStop(0.55, '#04191d');
-  oceanGrad.addColorStop(1, '#01090c');
+  oceanGrad.addColorStop(0, readThemeColor('--ithx-primary-green'));
+  oceanGrad.addColorStop(0.55, readThemeColor('--ithx-deep-surface'));
+  oceanGrad.addColorStop(1, readThemeColor('--ithx-night-green'));
   ctx.fillStyle = oceanGrad;
   ctx.fillRect(0, 0, width, height);
 
   // 2. Coordinate Grid (Latitude & Longitude lines)
   ctx.save();
-  ctx.strokeStyle = 'rgba(109, 236, 228, 0.14)';
+  ctx.strokeStyle = themeColorWithAlpha('--ithx-sage-mist', 0.14);
   ctx.lineWidth = 1.2;
   ctx.setLineDash([4, 6]);
 
@@ -151,12 +163,12 @@ export function createWorldMapTexture(width = 2048, height = 1024) {
   patternCanvas.height = 12;
   const pCtx = patternCanvas.getContext('2d');
   if (pCtx) {
-    pCtx.fillStyle = 'rgba(231, 199, 125, 0.85)'; // Amber/Gold dot 1
+    pCtx.fillStyle = themeColorWithAlpha('--ithx-action-cream', 0.85); // Amber/Gold dot 1
     pCtx.beginPath();
     pCtx.arc(3, 4, 1.4, 0, Math.PI * 2);
     pCtx.fill();
 
-    pCtx.fillStyle = 'rgba(255, 240, 189, 0.55)'; // Soft starlight dot 2
+    pCtx.fillStyle = themeColorWithAlpha('--ithx-paper-marble', 0.55); // Soft starlight dot 2
     pCtx.beginPath();
     pCtx.arc(9, 10, 0.9, 0, Math.PI * 2);
     pCtx.fill();
@@ -184,15 +196,15 @@ export function createWorldMapTexture(width = 2048, height = 1024) {
     }
 
     // Outer glow for coastlines
-    ctx.strokeStyle = 'rgba(231, 199, 125, 0.88)';
+    ctx.strokeStyle = themeColorWithAlpha('--ithx-action-cream', 0.88);
     ctx.lineWidth = 2.4;
-    ctx.shadowColor = 'rgba(217, 185, 110, 0.65)';
+    ctx.shadowColor = themeColorWithAlpha('--ithx-action-cream', 0.65);
     ctx.shadowBlur = 8;
     ctx.stroke();
 
     // Sharp inner line
     ctx.shadowBlur = 0;
-    ctx.strokeStyle = 'rgba(255, 240, 189, 0.95)';
+    ctx.strokeStyle = themeColorWithAlpha('--ithx-paper-marble', 0.95);
     ctx.lineWidth = 1;
     ctx.stroke();
   });

@@ -2,7 +2,17 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 // Procedural soft glow starlight sprite
-function createPointTexture() {
+const readThemeColor = (token) => getComputedStyle(document.documentElement).getPropertyValue(token).trim();
+
+function colorWithAlpha(hex, alpha) {
+  const value = hex.replace('#', '');
+  const channels = value.length === 3
+    ? value.split('').map((part) => Number.parseInt(part + part, 16))
+    : [0, 2, 4].map((index) => Number.parseInt(value.slice(index, index + 2), 16));
+  return 'rgba(' + channels.join(', ') + ', ' + alpha + ')';
+}
+
+function createPointTexture(palette) {
   const canvas = document.createElement('canvas');
   canvas.width = 128;
   canvas.height = 128;
@@ -10,11 +20,11 @@ function createPointTexture() {
   if (!ctx) return null;
 
   const gradient = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
-  gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-  gradient.addColorStop(0.18, 'rgba(110, 231, 183, 0.95)');
-  gradient.addColorStop(0.42, 'rgba(16, 185, 129, 0.6)');
-  gradient.addColorStop(0.72, 'rgba(0, 242, 254, 0.2)');
-  gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+  gradient.addColorStop(0, colorWithAlpha(palette.foreground, 1));
+  gradient.addColorStop(0.18, colorWithAlpha(palette.surfaceMuted, 0.95));
+  gradient.addColorStop(0.42, colorWithAlpha(palette.accent, 0.6));
+  gradient.addColorStop(0.72, colorWithAlpha(palette.secondary, 0.2));
+  gradient.addColorStop(1, colorWithAlpha(palette.shadow, 0));
 
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, 128, 128);
@@ -51,7 +61,7 @@ export default function HolographicGlobe({ className = '', active = true }) {
       alpha: true,
       powerPreference: 'high-performance',
     });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.25));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.25;
 
@@ -78,7 +88,17 @@ export default function HolographicGlobe({ className = '', active = true }) {
     globeRoot.rotation.y = -0.15;
     universe.add(globeRoot);
 
-    const pointTex = createPointTexture();
+    const palette = {
+      primary: readThemeColor('--ithx-primary-green'),
+      night: readThemeColor('--ithx-night-green'),
+      accent: readThemeColor('--color-accent'),
+      secondary: readThemeColor('--ithx-sage-mist'),
+      surfaceMuted: readThemeColor('--color-on-surface-muted'),
+      foreground: readThemeColor('--color-foreground'),
+      shadow: readThemeColor('--ithx-shadow-color'),
+      success: readThemeColor('--color-success'),
+    };
+    const pointTex = createPointTexture(palette);
 
     // -------------------------------------------------------------
     // 1. BACKGROUND: 3D HOLOGRAPHIC RADAR & CELESTIAL GRID
@@ -90,19 +110,19 @@ export default function HolographicGlobe({ className = '', active = true }) {
     // Outer Range Radar Ring 1
     const radarRing1 = new THREE.Mesh(
       new THREE.RingGeometry(2.7, 2.715, 96),
-      new THREE.MeshBasicMaterial({ color: 0x10b981, transparent: true, opacity: 0.22, side: THREE.DoubleSide })
+      new THREE.MeshBasicMaterial({ color: palette.accent, transparent: true, opacity: 0.22, side: THREE.DoubleSide })
     );
     backdropGroup.add(radarRing1);
 
     // Outer Range Radar Ring 2
     const radarRing2 = new THREE.Mesh(
       new THREE.RingGeometry(3.3, 3.312, 128),
-      new THREE.MeshBasicMaterial({ color: 0x00f2fe, transparent: true, opacity: 0.14, side: THREE.DoubleSide })
+      new THREE.MeshBasicMaterial({ color: palette.secondary, transparent: true, opacity: 0.14, side: THREE.DoubleSide })
     );
     backdropGroup.add(radarRing2);
 
     // Subtle Radial Radar Crosshairs
-    const crosshairMat = new THREE.LineBasicMaterial({ color: 0x10b981, transparent: true, opacity: 0.12 });
+    const crosshairMat = new THREE.LineBasicMaterial({ color: palette.accent, transparent: true, opacity: 0.12 });
     const crosshairGeo = new THREE.BufferGeometry().setFromPoints([
       new THREE.Vector3(-3.5, 0, 0),
       new THREE.Vector3(3.5, 0, 0),
@@ -112,8 +132,8 @@ export default function HolographicGlobe({ className = '', active = true }) {
     const crosshairs = new THREE.LineSegments(crosshairGeo, crosshairMat);
     backdropGroup.add(crosshairs);
 
-    // Ambient Floating Deep-Space Stardust (360 particles)
-    const dustCount = 360;
+    // Ambient Floating Deep-Space Stardust (280 particles)
+    const dustCount = 280;
     const dustGeo = new THREE.BufferGeometry();
     const dustPos = new Float32Array(dustCount * 3);
     for (let i = 0; i < dustCount; i += 1) {
@@ -125,7 +145,7 @@ export default function HolographicGlobe({ className = '', active = true }) {
     const dustMat = new THREE.PointsMaterial({
       size: 0.035,
       map: pointTex,
-      color: 0x6ee7b7,
+      color: palette.surfaceMuted,
       transparent: true,
       opacity: 0.35,
       blending: THREE.AdditiveBlending,
@@ -138,15 +158,15 @@ export default function HolographicGlobe({ className = '', active = true }) {
     // 2. THE 3D HOLOGRAPHIC FIBONACCI POINT-MESH SPHERE (Image 2)
     // -------------------------------------------------------------
     const sphereRadius = 1.75;
-    const numPoints = 1200;
+    const numPoints = 1000;
     const spherePoints = [];
     const positions = new Float32Array(numPoints * 3);
     const colors = new Float32Array(numPoints * 3);
 
-    const colorA = new THREE.Color('#10b981'); // Emerald
-    const colorB = new THREE.Color('#00f2fe'); // Electric cyan
-    const colorC = new THREE.Color('#a7f3d0'); // Bright mint
-    const colorD = new THREE.Color('#f8fafc'); // Pure starlight
+    const colorA = new THREE.Color(palette.accent); // Emerald
+    const colorB = new THREE.Color(palette.secondary); // Electric cyan
+    const colorC = new THREE.Color(palette.success); // Bright mint
+    const colorD = new THREE.Color(palette.foreground); // Pure starlight
 
     // Generate Golden Spiral / Fibonacci Sphere distribution
     for (let i = 0; i < numPoints; i += 1) {
@@ -215,7 +235,7 @@ export default function HolographicGlobe({ className = '', active = true }) {
     const lineGeo = new THREE.BufferGeometry();
     lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(lineIndices, 3));
     const lineMat = new THREE.LineBasicMaterial({
-      color: 0x10b981,
+      color: palette.accent,
       transparent: true,
       opacity: 0.18,
       blending: THREE.AdditiveBlending,
@@ -230,9 +250,9 @@ export default function HolographicGlobe({ className = '', active = true }) {
     const coreMat = new THREE.ShaderMaterial({
       uniforms: {
         time: { value: 0 },
-        color1: { value: new THREE.Color('#052e16') },
-        color2: { value: new THREE.Color('#064e3b') },
-        color3: { value: new THREE.Color('#00f2fe') },
+        color1: { value: new THREE.Color(palette.night) },
+        color2: { value: new THREE.Color(palette.primary) },
+        color3: { value: new THREE.Color(palette.secondary) },
       },
       vertexShader: `
         varying vec3 vNormal;
@@ -273,14 +293,14 @@ export default function HolographicGlobe({ className = '', active = true }) {
     // Great Circle Longitude & Latitude Wireframe Rings
     const latRing1 = new THREE.Mesh(
       new THREE.TorusGeometry(sphereRadius * 1.01, 0.006, 12, 128),
-      new THREE.MeshBasicMaterial({ color: 0x10b981, transparent: true, opacity: 0.35, blending: THREE.AdditiveBlending })
+      new THREE.MeshBasicMaterial({ color: palette.accent, transparent: true, opacity: 0.35, blending: THREE.AdditiveBlending })
     );
     latRing1.rotation.x = Math.PI / 2;
     globeRoot.add(latRing1);
 
     const longRing1 = new THREE.Mesh(
       new THREE.TorusGeometry(sphereRadius * 1.01, 0.005, 12, 128),
-      new THREE.MeshBasicMaterial({ color: 0x00f2fe, transparent: true, opacity: 0.25, blending: THREE.AdditiveBlending })
+      new THREE.MeshBasicMaterial({ color: palette.secondary, transparent: true, opacity: 0.25, blending: THREE.AdditiveBlending })
     );
     globeRoot.add(longRing1);
 
@@ -293,7 +313,7 @@ export default function HolographicGlobe({ className = '', active = true }) {
     // Outer Gyro Ring (Inclined 45°)
     const gyroRing1 = new THREE.Mesh(
       new THREE.TorusGeometry(sphereRadius * 1.28, 0.007, 12, 128),
-      new THREE.MeshBasicMaterial({ color: 0x10b981, transparent: true, opacity: 0.45, blending: THREE.AdditiveBlending })
+      new THREE.MeshBasicMaterial({ color: palette.accent, transparent: true, opacity: 0.45, blending: THREE.AdditiveBlending })
     );
     gyroRing1.rotation.x = Math.PI / 4;
     gimbalGroup.add(gyroRing1);
@@ -301,7 +321,7 @@ export default function HolographicGlobe({ className = '', active = true }) {
     // Outer Gyro Ring (Inclined -60°)
     const gyroRing2 = new THREE.Mesh(
       new THREE.TorusGeometry(sphereRadius * 1.42, 0.006, 12, 128),
-      new THREE.MeshBasicMaterial({ color: 0x00f2fe, transparent: true, opacity: 0.35, blending: THREE.AdditiveBlending })
+      new THREE.MeshBasicMaterial({ color: palette.secondary, transparent: true, opacity: 0.35, blending: THREE.AdditiveBlending })
     );
     gyroRing2.rotation.y = Math.PI / 3;
     gyroRing2.rotation.x = -Math.PI / 6;
@@ -310,13 +330,13 @@ export default function HolographicGlobe({ className = '', active = true }) {
     // Satellite Data Nodes
     const satellite1 = new THREE.Mesh(
       new THREE.SphereGeometry(0.045, 16, 16),
-      new THREE.MeshBasicMaterial({ color: 0x34d399, blending: THREE.AdditiveBlending })
+      new THREE.MeshBasicMaterial({ color: palette.success, blending: THREE.AdditiveBlending })
     );
     gimbalGroup.add(satellite1);
 
     const satellite2 = new THREE.Mesh(
       new THREE.SphereGeometry(0.038, 16, 16),
-      new THREE.MeshBasicMaterial({ color: 0x00f2fe, blending: THREE.AdditiveBlending })
+      new THREE.MeshBasicMaterial({ color: palette.secondary, blending: THREE.AdditiveBlending })
     );
     gimbalGroup.add(satellite2);
 

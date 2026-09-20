@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 export default function FrameSequence({
   frames = [],
@@ -7,18 +7,18 @@ export default function FrameSequence({
   className = '',
   ...imageProps
 }) {
-  const [frameIndex, setFrameIndex] = useState(0);
-  const frameIndexRef = useRef(0);
+  const imageRef = useRef(null);
 
   useEffect(() => {
-    frameIndexRef.current = 0;
-    setFrameIndex(0);
+    const imageElement = imageRef.current;
+    if (!imageElement) return undefined;
 
+    let frameIndex = 0;
+    imageElement.src = frames[0] || '';
     if (frames.length < 2) return undefined;
 
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    let animationFrame = 0;
-    let startedAt = performance.now();
+    let timerId = 0;
     let disposed = false;
 
     const preload = frames.map((src) => {
@@ -28,27 +28,23 @@ export default function FrameSequence({
       return image;
     });
 
-    const tick = (now) => {
+    const tick = () => {
       if (disposed || mediaQuery.matches || document.hidden) return;
 
-      const nextIndex = Math.floor((now - startedAt) / frameDuration) % frames.length;
-      if (nextIndex !== frameIndexRef.current) {
-        frameIndexRef.current = nextIndex;
-        setFrameIndex(nextIndex);
-      }
-      animationFrame = window.requestAnimationFrame(tick);
+      frameIndex = (frameIndex + 1) % frames.length;
+      imageElement.src = frames[frameIndex];
+      timerId = window.setTimeout(tick, frameDuration);
     };
 
     const start = () => {
-      if (disposed || mediaQuery.matches || document.hidden || animationFrame) return;
-      startedAt = performance.now() - frameIndexRef.current * frameDuration;
-      animationFrame = window.requestAnimationFrame(tick);
+      if (disposed || mediaQuery.matches || document.hidden || timerId) return;
+      timerId = window.setTimeout(tick, frameDuration);
     };
 
     const stop = () => {
-      if (animationFrame) {
-        window.cancelAnimationFrame(animationFrame);
-        animationFrame = 0;
+      if (timerId) {
+        window.clearTimeout(timerId);
+        timerId = 0;
       }
     };
 
@@ -59,7 +55,12 @@ export default function FrameSequence({
 
     const handleMotionChange = () => {
       stop();
-      if (!mediaQuery.matches) start();
+      if (mediaQuery.matches) {
+        frameIndex = 0;
+        imageElement.src = frames[0] || '';
+      } else {
+        start();
+      }
     };
 
     document.addEventListener('visibilitychange', handleVisibility);
@@ -81,8 +82,9 @@ export default function FrameSequence({
   return (
     <img
       {...imageProps}
+      ref={imageRef}
       className={className}
-      src={frames[frameIndex] || frames[0]}
+      src={frames[0] || ''}
       alt={alt}
       draggable="false"
     />

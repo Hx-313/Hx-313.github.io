@@ -19,6 +19,9 @@
 }
 
 .header-inner {
+  --color-foreground: var(--color-on-surface);
+  --color-muted-foreground: var(--color-on-surface-muted);
+  --color-border: var(--color-surface-border);
   display: grid;
   grid-template-columns: minmax(9rem, 1fr) auto minmax(9rem, 1fr);
   align-items: center;
@@ -27,18 +30,18 @@
   min-height: 4.25rem;
   margin: 0 auto;
   padding: 0.62rem 0.9rem 0.62rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid color-mix(in srgb, var(--ithx-white) 14%, transparent);
   border-radius: 1.25rem;
-  background: rgba(3, 7, 13, 0.94);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.24);
+  background: color-mix(in srgb, var(--ithx-night-green) 94%, transparent);
+  box-shadow: 0 4px 8px color-mix(in srgb, var(--ithx-shadow-color) 24%, transparent);
   backdrop-filter: blur(18px) saturate(120%);
   -webkit-backdrop-filter: blur(18px) saturate(120%);
   transition: background-color 240ms ease, border-color 240ms ease, box-shadow 240ms ease;
 }
 
 .site-header.is-scrolled .header-inner {
-  background: rgba(3, 7, 13, 0.98);
-  border-color: rgba(255, 255, 255, 0.18);
+  background: color-mix(in srgb, var(--ithx-night-green) 98%, transparent);
+  border-color: color-mix(in srgb, var(--ithx-white) 18%, transparent);
 }
 
 /* Brand mark */
@@ -51,7 +54,7 @@
   align-items: center;
   gap: 0.52rem;
   min-width: 0;
-  color: #ffffff;
+  color: var(--ithx-white);
   text-decoration: none;
 }
 
@@ -67,13 +70,13 @@
   width: 7.15rem;
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 0 9px rgba(16, 185, 129, 0.3));
+  filter: drop-shadow(0 0 9px color-mix(in srgb, var(--color-accent) 30%, transparent));
   transition: filter 180ms ease, transform 180ms ease;
 }
 
 .site-mark:hover .site-brand-logo-img {
   transform: translateY(-1px);
-  filter: drop-shadow(0 0 13px rgba(16, 185, 129, 0.55));
+  filter: drop-shadow(0 0 13px color-mix(in srgb, var(--color-accent) 55%, transparent));
 }
 
 .status-live-dot {
@@ -82,8 +85,8 @@
   height: 0.42rem;
   flex: 0 0 auto;
   border-radius: 50%;
-  background: #22c55e;
-  box-shadow: 0 0 8px #22c55e;
+  background: var(--color-success);
+  box-shadow: 0 0 8px var(--color-success);
   animation: pulseBeacon 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
@@ -121,7 +124,7 @@
   align-items: center;
   min-height: 2.2rem;
   padding: 0.5rem 0.08rem;
-  color: rgba(237, 241, 234, 0.62);
+  color: color-mix(in srgb, var(--color-on-surface) 84%, transparent);
   font-family: var(--font-body, system-ui, sans-serif);
   font-size: 0.72rem;
   font-weight: 600;
@@ -131,12 +134,12 @@
 }
 
 .nav-link:hover {
-  color: #ffffff;
+  color: var(--ithx-white);
   transform: translateY(-1px);
 }
 
 .nav-link.is-active {
-  color: #ffffff;
+  color: var(--ithx-white);
 }
 
 .nav-link.is-active::after {
@@ -163,9 +166,9 @@
   display: inline-flex;
   gap: 0.12rem;
   padding: 0.16rem;
-  border: 1px solid rgba(255, 255, 255, 0.11);
+  border: 1px solid color-mix(in srgb, var(--ithx-white) 11%, transparent);
   border-radius: 0.58rem;
-  background: rgba(255, 255, 255, 0.04);
+  background: color-mix(in srgb, var(--ithx-white) 4%, transparent);
 }
 
 .site-header .theme-toggle button {
@@ -174,7 +177,7 @@
   border: 0;
   border-radius: 0.4rem;
   background: transparent;
-  color: rgba(237, 241, 234, 0.55);
+  color: color-mix(in srgb, var(--color-on-surface) 78%, transparent);
   cursor: pointer;
   font-size: 0.52rem;
   font-weight: 800;
@@ -188,8 +191,8 @@
 }
 
 .site-header .theme-toggle button.is-active {
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--color-background);
+  background: var(--color-accent);
+  color: var(--color-accent-foreground);
   box-shadow: none;
 }
 
@@ -199,10 +202,10 @@
   gap: 0.46rem;
   min-height: 2.25rem;
   padding: 0.48rem 0.88rem;
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  border: 1px solid var(--color-accent);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--color-foreground);
+  background: var(--color-accent);
+  color: var(--color-accent-foreground);
   font-family: var(--font-body, system-ui, sans-serif);
   font-size: 0.72rem;
   font-weight: 700;
@@ -214,21 +217,26 @@
 }
 
 .header-cta-btn .cta-arrow {
-  color: var(--color-accent);
+  color: var(--color-accent-foreground);
   font-size: 0.86rem;
   line-height: 1;
   transition: transform 180ms ease;
 }
 
 .header-cta-btn:hover {
-  border-color: color-mix(in srgb, var(--color-accent) 72%, white);
-  background: color-mix(in srgb, var(--color-accent) 18%, rgba(255, 255, 255, 0.06));
-  color: #ffffff;
+  border-color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 86%, var(--color-surface-strong));
+  color: var(--color-accent-foreground);
   transform: translateY(-1px);
 }
 
 .header-cta-btn:hover .cta-arrow {
   transform: translate(2px, -2px);
+}
+
+.header-cta-btn:focus-visible {
+  outline: 2px solid var(--color-focus-on-surface);
+  outline-offset: 3px;
 }
 
 /* Mobile trigger */
@@ -241,17 +249,17 @@
   width: 2.65rem;
   height: 2.65rem;
   padding: 0.6rem;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid color-mix(in srgb, var(--ithx-white) 16%, transparent);
   border-radius: 0.62rem;
-  background: rgba(255, 255, 255, 0.04);
+  background: color-mix(in srgb, var(--ithx-white) 4%, transparent);
   cursor: pointer;
   transition: background-color 180ms ease, border-color 180ms ease;
 }
 
 .header-burger-btn:hover,
 .header-burger-btn.is-open {
-  border-color: rgba(78, 190, 122, 0.72);
-  background: rgba(78, 190, 122, 0.12);
+  border-color: color-mix(in srgb, var(--color-success) 72%, transparent);
+  background: color-mix(in srgb, var(--color-success) 12%, transparent);
 }
 
 .burger-bar {
@@ -296,7 +304,7 @@
 .mobile-drawer-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(3, 7, 13, 0.78);
+  background: color-mix(in srgb, var(--ithx-night-green) 78%, transparent);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -311,7 +319,7 @@
   overflow-y: auto;
   padding: 1.35rem clamp(1.25rem, 5vw, 2rem);
   background: var(--color-background);
-  box-shadow: -14px 0 28px rgba(0, 0, 0, 0.34);
+  box-shadow: -14px 0 28px color-mix(in srgb, var(--ithx-shadow-color) 34%, transparent);
   transform: translateX(100%);
   transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -337,7 +345,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.42rem;
-  color: #22c55e;
+  color: var(--color-success);
   font-family: var(--font-mono, monospace);
   font-size: 0.64rem;
   font-weight: 800;
@@ -532,12 +540,12 @@
 }
 
 :root[data-theme='light'] .nav-link {
-  color: color-mix(in srgb, var(--color-muted-foreground) 62%, transparent);
+  color: var(--color-on-surface-muted);
 }
 
 :root[data-theme='light'] .nav-link:hover,
 :root[data-theme='light'] .nav-link.is-active {
-  color: var(--color-ink);
+  color: var(--color-on-surface);
 }
 
 :root[data-theme='light'] .site-header .theme-toggle {
@@ -546,11 +554,11 @@
 }
 
 :root[data-theme='light'] .site-header .theme-toggle button {
-  color: color-mix(in srgb, var(--color-muted-foreground) 58%, transparent);
+  color: var(--color-on-surface-muted);
 }
 
 :root[data-theme='light'] .site-header .theme-toggle button:hover {
-  color: var(--color-ink);
+  color: var(--color-on-surface);
 }
 
 :root[data-theme='light'] .site-header .theme-toggle button.is-active {
@@ -559,15 +567,15 @@
 }
 
 :root[data-theme='light'] .header-cta-btn {
-  border-color: color-mix(in srgb, var(--color-border) 82%, transparent);
-  background: color-mix(in srgb, var(--color-accent) 5%, transparent);
-  color: var(--color-ink);
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-accent-foreground);
 }
 
 :root[data-theme='light'] .header-cta-btn:hover {
   border-color: var(--color-accent);
-  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
-  color: var(--color-ink);
+  background: color-mix(in srgb, var(--color-accent) 86%, var(--color-surface-strong));
+  color: var(--color-accent-foreground);
 }
 
 :root[data-theme='light'] .header-burger-btn {

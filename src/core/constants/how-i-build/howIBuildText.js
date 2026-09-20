@@ -34,6 +34,7 @@ export const HOW_I_BUILD_TEXT = deepFreeze({
     {
       id: 'flutter',
       name: 'Flutter',
+      kind: 'Mobile app',
       description: 'Cross-platform mobile development',
       service: 'Mobile product delivery',
       icon: 'flutter',
@@ -41,6 +42,7 @@ export const HOW_I_BUILD_TEXT = deepFreeze({
     {
       id: 'android',
       name: 'Android Native',
+      kind: 'Native mobile',
       description: 'Platform-specific builds',
       service: 'Platform-specific product builds',
       icon: 'android',
@@ -48,6 +50,7 @@ export const HOW_I_BUILD_TEXT = deepFreeze({
     {
       id: 'firebase',
       name: 'Firebase',
+      kind: 'Backend',
       description: 'Backend and authentication',
       service: 'Auth, data, and realtime services',
       icon: 'firebase',
@@ -56,6 +59,7 @@ export const HOW_I_BUILD_TEXT = deepFreeze({
     {
       id: 'nodejs',
       name: 'Node.js',
+      kind: 'API design',
       description: 'Server-side runtime',
       service: 'API and backend systems',
       icon: 'nodejs',
@@ -63,6 +67,7 @@ export const HOW_I_BUILD_TEXT = deepFreeze({
     {
       id: 'mongodb-sql',
       name: 'MongoDB + SQL',
+      kind: 'Database',
       description: 'Document and relational data',
       service: 'Product data architecture',
       icon: 'mongodb',
@@ -70,6 +75,7 @@ export const HOW_I_BUILD_TEXT = deepFreeze({
     {
       id: 'sqlite',
       name: 'SQLite',
+      kind: 'Database',
       description: 'Local data storage',
       service: 'Local-first mobile storage',
       icon: 'sqlite',
@@ -78,6 +84,7 @@ export const HOW_I_BUILD_TEXT = deepFreeze({
     {
       id: 'vercel',
       name: 'Vercel',
+      kind: 'Deployment',
       description: 'Frontend deployment',
       service: 'Web product deployment',
       icon: 'vercel',
@@ -85,6 +92,7 @@ export const HOW_I_BUILD_TEXT = deepFreeze({
     {
       id: 'hostinger',
       name: 'Hostinger',
+      kind: 'Deployment',
       description: 'Backend hosting',
       service: 'Backend hosting and operations',
       icon: 'hostinger',
@@ -92,6 +100,7 @@ export const HOW_I_BUILD_TEXT = deepFreeze({
     {
       id: 'github',
       name: 'GitHub',
+      kind: 'Version control',
       description: 'Version control and collaboration',
       service: 'Source control and team delivery',
       icon: 'github',
@@ -100,6 +109,7 @@ export const HOW_I_BUILD_TEXT = deepFreeze({
     {
       id: 'vscode',
       name: 'VS Code',
+      kind: 'Editor',
       description: 'Code editor',
       service: 'Daily engineering workflow',
       icon: 'vscode',
@@ -107,6 +117,7 @@ export const HOW_I_BUILD_TEXT = deepFreeze({
     {
       id: 'postman-insomnia',
       name: 'Postman + Insomnia',
+      kind: 'API design',
       description: 'API testing and documentation',
       service: 'API quality and documentation',
       icon: 'postman',
@@ -114,6 +125,7 @@ export const HOW_I_BUILD_TEXT = deepFreeze({
     {
       id: 'slack',
       name: 'Slack',
+      kind: 'Collaboration',
       description: 'Messaging and collaboration',
       service: 'Team communication',
       icon: 'slack',

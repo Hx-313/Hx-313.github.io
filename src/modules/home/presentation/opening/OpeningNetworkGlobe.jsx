@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import FrameSequence from '../../../../shared/media/FrameSequence.jsx';
 import { ORB_FRAMES } from '../media/visualSequences.js';
 
@@ -14,7 +15,7 @@ const NODES = [
   [212,287],[241,331],[284,252],[250,408],[324,480],[520,246],[590,315],[606,251],[566,438],[616,404],[518,484],[405,352],[455,289],[362,420]
 ];
 
-export default function OpeningNetworkGlobe() {
+function OpeningNetworkGlobe() {
   return (
     <div className="opening-network-globe" data-opening-globe aria-hidden="true">
       {/* Crop the animation frames to the spherical core; the surrounding artwork is intentionally not shown. */}
@@ -22,7 +23,7 @@ export default function OpeningNetworkGlobe() {
         <div className="opening-asset-globe-crop">
           <FrameSequence
             frames={ORB_FRAMES}
-            frameDuration={150}
+            frameDuration={90}
             className="opening-asset-globe-frame"
             alt=""
           />
@@ -32,18 +33,18 @@ export default function OpeningNetworkGlobe() {
       <svg viewBox="0 0 800 800" role="img" aria-label="Connected global software network" className="opening-svg-overlay">
         <defs>
           <radialGradient id="earthOcean" cx="42%" cy="35%" r="65%">
-            <stop offset="0" stopColor="#0d3540" />
-            <stop offset=".58" stopColor="#04191d" />
-            <stop offset="1" stopColor="#01090c" />
+            <stop offset="0" stopColor="var(--ithx-primary-green)" />
+            <stop offset=".58" stopColor="var(--ithx-deep-surface)" />
+            <stop offset="1" stopColor="var(--ithx-night-green)" />
           </radialGradient>
           <radialGradient id="earthAtmosphere">
-            <stop offset=".72" stopColor="#0fd9bd" stopOpacity="0" />
-            <stop offset=".92" stopColor="#6dece4" stopOpacity=".18" />
-            <stop offset="1" stopColor="#b8fff6" stopOpacity=".55" />
+            <stop offset=".72" stopColor="var(--ithx-sage-mist)" stopOpacity="0" />
+            <stop offset=".92" stopColor="var(--ithx-sage-mist)" stopOpacity=".18" />
+            <stop offset="1" stopColor="var(--ithx-sage-mist)" stopOpacity=".55" />
           </radialGradient>
           <pattern id="cityLights" width="10" height="10" patternUnits="userSpaceOnUse">
-            <circle cx="2" cy="3" r="1" fill="#e7c77d" opacity=".85" />
-            <circle cx="8" cy="7" r=".65" fill="#fff0bd" opacity=".55" />
+            <circle cx="2" cy="3" r="1" fill="var(--ithx-action-cream)" opacity=".85" />
+            <circle cx="8" cy="7" r=".65" fill="var(--ithx-action-cream)" opacity=".55" />
           </pattern>
           <clipPath id="earthClip"><circle cx="400" cy="380" r="316" /></clipPath>
           <filter id="nodeGlow" x="-200%" y="-200%" width="500%" height="500%">
@@ -64,7 +65,7 @@ export default function OpeningNetworkGlobe() {
 
         <g className="opening-globe-rotor" data-globe-rotation>
           <circle className="opening-earth-halo" cx="400" cy="380" r="324" filter="url(#earthGlow)" />
-          <circle cx="400" cy="380" r="316" fill="url(#earthOcean)" stroke="#6dece4" strokeOpacity=".58" strokeWidth="2" opacity="0.12" />
+          <circle cx="400" cy="380" r="316" fill="url(#earthOcean)" stroke="var(--ithx-sage-mist)" strokeOpacity=".58" strokeWidth="2" opacity="0.12" />
 
           <g clipPath="url(#earthClip)" className="opening-earth-grid" data-globe-grid transform="translate(400 380) scale(1.18) translate(-400 -380)" opacity="0.45">
             <ellipse cx="400" cy="380" rx="260" ry="58" />
@@ -100,3 +101,5 @@ export default function OpeningNetworkGlobe() {
     </div>
   );
 }
+
+export default memo(OpeningNetworkGlobe);

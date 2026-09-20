@@ -106,16 +106,25 @@
 :root[data-theme='dark'] .channel-card,
 :root[data-theme='dark'] .direct-channel-pill,
 :root[data-theme='dark'] .social-tactical-badge {
-  border-color: var(--ithx-theme-border-dark);
-  background: var(--ithx-deep-surface);
+  border-color: var(--ithx-edge-green);
+  background: var(--ithx-primary-green);
 }
 
 :root[data-theme='light'] .contact-form-card,
 :root[data-theme='light'] .channel-card,
 :root[data-theme='light'] .direct-channel-pill,
 :root[data-theme='light'] .social-tactical-badge {
-  border-color: var(--ithx-line-light);
-  background: var(--ithx-white);
+  border-color: var(--ithx-edge-green);
+  background: var(--ithx-primary-green);
+}
+
+.contact-form-card,
+.channel-card,
+.direct-channel-pill,
+.social-tactical-badge {
+  --ink-primary: var(--color-on-surface);
+  --ink-muted: var(--color-on-surface-muted);
+  --ink-faint: color-mix(in srgb, var(--color-on-surface-muted) 42%, transparent);
 }
 
 .contact-form-card {
@@ -271,7 +280,7 @@
   border-radius: 0.38rem;
   outline: 0;
   background: var(--color-background);
-  color: var(--ink-primary);
+  color: var(--color-foreground);
   font-family: var(--font-body, sans-serif);
   font-size: 0.9rem;
   line-height: 1.45;
@@ -289,7 +298,7 @@
 
 .form-input::placeholder,
 .form-textarea::placeholder {
-  color: color-mix(in srgb, var(--ink-muted) 72%, transparent);
+  color: color-mix(in srgb, var(--color-muted-foreground) 72%, transparent);
 }
 
 .form-input:hover,
@@ -305,11 +314,11 @@
 
 .has-error .form-input,
 .has-error .form-textarea {
-  border-color: #d97777;
+  border-color: var(--color-danger);
 }
 
 .field-error {
-  color: #e9a0a0;
+  color: var(--ithx-danger-surface);
   font-size: 0.72rem;
   line-height: 1.4;
 }
@@ -334,7 +343,7 @@
   border: 1px solid var(--signal);
   border-radius: 0.38rem;
   background: var(--signal);
-  color: #07130d;
+  color: var(--color-accent-foreground);
   cursor: pointer;
   font-family: var(--font-body, sans-serif);
   font-size: 0.82rem;
@@ -346,8 +355,8 @@
 .form-submit-btn:hover:not(:disabled),
 .channel-action-btn:hover,
 .success-btn--primary:hover {
-  border-color: #69e3aa;
-  background: #69e3aa;
+  border-color: var(--color-success);
+  background: var(--color-success);
   transform: translateY(-2px);
 }
 
@@ -365,8 +374,8 @@
 .submit-spinner {
   width: 0.95rem;
   height: 0.95rem;
-  border: 2px solid color-mix(in srgb, #07130d 35%, transparent);
-  border-top-color: #07130d;
+  border: 2px solid color-mix(in srgb, var(--ithx-night-green) 35%, transparent);
+  border-top-color: var(--ithx-night-green);
   border-radius: 50%;
   animation: contact-spin 700ms linear infinite;
 }
@@ -608,7 +617,7 @@
 
 .direct-channel-copy-btn:hover {
   background: var(--signal);
-  color: #07130d;
+  color: var(--ithx-night-green);
 }
 
 .channel-socials-row {

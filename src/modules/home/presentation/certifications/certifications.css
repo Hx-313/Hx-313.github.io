@@ -81,8 +81,12 @@
 }
 
 .certification-card {
+  --color-foreground: var(--color-on-surface);
+  --color-muted-foreground: var(--color-on-surface-muted);
+  --color-border: var(--color-surface-border);
+  --cert-copy-muted: color-mix(in srgb, var(--color-on-surface) 84%, var(--color-surface));
   --cert-paper: color-mix(in srgb, var(--ithx-paper-marble) 90%, var(--color-surface));
-  --cert-ink: var(--ithx-primary-green);
+  --cert-ink: var(--color-on-surface);
   --cert-line: color-mix(in srgb, var(--ithx-warm-brass) 68%, transparent);
   position: relative;
   display: flex;
@@ -100,9 +104,9 @@
 
 :root[data-theme='dark'] .certification-card {
   --cert-paper: color-mix(in srgb, var(--ithx-deep-surface) 88%, var(--ithx-paper-marble));
-  --cert-ink: var(--ithx-paper-marble);
+  --cert-ink: var(--color-on-surface);
   --cert-line: color-mix(in srgb, var(--ithx-warm-brass) 72%, var(--color-border));
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.26);
+  box-shadow: 0 8px 25px color-mix(in srgb, var(--ithx-shadow-color) 26%, transparent);
 }
 
 .certification-card:hover,
@@ -199,17 +203,17 @@
   align-items: center;
   gap: 0.35rem;
   padding: 0.35rem 0.6rem;
-  border: 1px solid color-mix(in srgb, var(--color-foreground) 18%, transparent);
+  border: 1px solid var(--color-surface-border);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--color-background) 88%, transparent);
-  color: var(--color-foreground);
+  background: var(--color-surface-strong);
+  color: var(--color-on-surface);
   font-family: var(--font-mono);
   font-size: 0.59rem;
   font-weight: var(--font-weight-semibold);
   letter-spacing: 0.06em;
   line-height: 1;
   text-transform: uppercase;
-  backdrop-filter: blur(7px);
+  box-shadow: 0 5px 16px color-mix(in srgb, var(--color-shadow) 24%, transparent);
 }
 
 .certification-card__status > span {
@@ -283,8 +287,8 @@
   justify-content: center;
   flex: 0 0 auto;
   border-radius: 50%;
-  background: color-mix(in srgb, var(--color-accent) 14%, transparent);
-  color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-accent-foreground);
   font-family: var(--font-display);
   font-size: 0.57rem;
   font-weight: var(--font-weight-bold);
@@ -293,7 +297,7 @@
 
 .certification-card__issuer {
   overflow: hidden;
-  color: var(--color-muted-foreground);
+  color: var(--cert-copy-muted);
   font-size: 0.79rem;
   line-height: 1.35;
   text-overflow: ellipsis;
@@ -307,7 +311,7 @@
   margin-top: auto;
   padding-top: 0.9rem;
   border-top: 1px solid var(--color-hairline);
-  color: var(--color-muted-foreground);
+  color: var(--cert-copy-muted);
   font-family: var(--font-mono);
   font-size: 0.58rem;
   line-height: 1.45;
