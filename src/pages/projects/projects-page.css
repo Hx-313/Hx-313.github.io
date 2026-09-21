@@ -25,16 +25,14 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
-  min-height: 100svh;
   margin: 0;
   font-family: var(--body);
   background: var(--d-bg);
   color: var(--d-ink);
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-  overscroll-behavior: none;
-  transition: background-color 0.6s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
-              color 0.6s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
+  overflow-x: clip;
+  transition: background-color 0.5s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+              color 0.5s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
 }
 
 .projects-page[data-theme="dark"] {
@@ -50,6 +48,16 @@
 }
 
 /* --------------------------------------------------------------------------
+   Sticky Floating Header (Identical to Home Page)
+   -------------------------------------------------------------------------- */
+.projects-page .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
    Project Card Sections (1 Card = 1 Viewport Screen)
    -------------------------------------------------------------------------- */
 .projects-page__section {
@@ -60,8 +68,12 @@
   grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: 6vw;
-  padding: 110px 6vw 70px;
+  padding: 5.75rem 6vw 40px;
   overflow: hidden;
+}
+
+.projects-page__section:first-of-type {
+  margin-top: -5.75rem;
 }
 
 .projects-page__section.light {
@@ -220,7 +232,7 @@
   pointer-events: none;
   background: var(--ithx-night-green, #08130A);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: opacity 0.4s var(--ease-out, ease);
+  transition: opacity 0.3s ease;
 }
 
 .projects-page__layer {
@@ -290,7 +302,7 @@
   z-index: 30;
   width: 100%;
   min-height: 100vh;
-  transition: background-color 0.6s ease;
+  transition: background-color 0.5s ease;
 }
 
 .projects-page__contact-wrap.dark {

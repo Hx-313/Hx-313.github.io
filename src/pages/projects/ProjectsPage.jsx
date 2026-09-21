@@ -72,8 +72,10 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
     let busy = false;
     let animating = false;
     let lastActive = -1;
-    let current = 0;
-    let target = 0;
+    let lastProgrammaticY = 0;
+    let animRafId = null;
+    let scrollRafId = null;
+    let dwellTimer = null;
     const geo = { tops: [] };
 
     function put(el, prop, v) {
@@ -90,7 +92,7 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
       const vh = window.innerHeight;
       const barH = 72; // SiteHeader height
       geo.mobile = stackMQ.matches;
-      geo.tops = sections.map((s) => s.offsetTop);
+      geo.tops = sections.map((s, sIdx) => (sIdx === 0 ? 0 : s.offsetTop));
       geo.tops.push(document.documentElement.scrollHeight || vh * totalSections);
 
       if (geo.mobile) {
@@ -118,14 +120,38 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
       stage.style.height = `${geo.h}px`;
     }
 
+    function progressAt(y) {
+      if (y <= 0) return 0;
+      for (let k = 0; k < projectCount - 1; k++) {
+        const topK = geo.tops[k] ?? (k * window.innerHeight);
+        const topNext = geo.tops[k + 1] ?? ((k + 1) * window.innerHeight);
+        if (y < topNext) {
+          const span = topNext - topK || window.innerHeight;
+          return k + clamp((y - topK) / span, 0, 1);
+        }
+      }
+
+      // Between last project card (projectCount - 1) and contact section (projectCount)
+      const topLastCard = geo.tops[projectCount - 1] ?? ((projectCount - 1) * window.innerHeight);
+      const topContact = geo.tops[projectCount] ?? (projectCount * window.innerHeight);
+      if (y < topContact) {
+        const span = topContact - topLastCard || window.innerHeight;
+        return (projectCount - 1) + clamp((y - topLastCard) / span, 0, 1);
+      }
+
+      return projectCount;
+    }
+
     function render(t) {
       const isPastProjects = t >= projectCount - 0.15;
       // Fade out stage when arriving at contact section
       if (isPastProjects) {
         const fade = clamp(1 - (t - (projectCount - 1)) * 1.6);
         put(stage, 'opacity', fade.toFixed(3));
+        put(stage, 'pointerEvents', 'none');
       } else {
         put(stage, 'opacity', '1');
+        put(stage, 'pointerEvents', 'none');
       }
 
       const i = Math.min(Math.floor(t), projectCount - 2);
@@ -183,7 +209,7 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
         put(copy, 'transform', `translate3d(${shift.toFixed(3)}vw, ${lift.toFixed(2)}px, 0)`);
       }
 
-      const active = Math.round(t);
+      const active = Math.min(Math.round(t), totalSections - 1);
       if (active !== lastActive) {
         lastActive = active;
         setActiveIdx(active);
@@ -193,57 +219,105 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
     }
 
     function goTo(k) {
-      if (busy || k < 0 || k >= totalSections || k === idx) return;
+      if (k < 0 || k >= totalSections) return;
+      if (busy && k === idx) return;
+
       busy = true;
       animating = true;
-      const from = geo.tops[idx] || 0;
-      const to = geo.tops[k] || 0;
+      if (animRafId) cancelAnimationFrame(animRafId);
+      if (dwellTimer) clearTimeout(dwellTimer);
+
+      const fromY = window.scrollY;
+      const toY = geo.tops[k] ?? (k * window.innerHeight);
+      const fromT = progressAt(fromY);
+      const toT = k;
       const dur = reduce ? 250 : DUR;
       let startTime = null;
 
-      function frame(now) {
+      function step(now) {
+        if (!animating) return;
         if (startTime === null) startTime = now;
-        const p = clamp((now - startTime) / dur);
-        const y = from + (to - from) * ease(p);
-        window.scrollTo(0, y);
-        current = target = clamp(idx + ((y - from) / ((to - from) || 1)) * (k - idx), 0, totalSections - 1);
-        render(current);
+        const elapsed = now - startTime;
+        const p = clamp(elapsed / dur);
+        const easedP = ease(p);
+
+        const currentY = fromY + (toY - fromY) * easedP;
+        const currentT = fromT + (toT - fromT) * easedP;
+
+        lastProgrammaticY = currentY;
+        window.scrollTo(0, currentY);
+        render(currentT);
 
         if (p < 1) {
-          requestAnimationFrame(frame);
+          animRafId = requestAnimationFrame(step);
           return;
         }
 
+        lastProgrammaticY = toY;
+        window.scrollTo(0, toY);
         idx = k;
-        current = target = k;
         render(k);
         animating = false;
-        setTimeout(() => {
+
+        dwellTimer = setTimeout(() => {
           busy = false;
         }, reduce ? 0 : DWELL); // Exactly 1.5 sec total lock (1200 + 300)
       }
 
-      requestAnimationFrame(frame);
+      animRafId = requestAnimationFrame(step);
     }
 
-    let lastWheel = 0;
+    function handleScroll() {
+      if (animating) {
+        // If window.scrollY matches programmatic animation, continue without interference
+        if (Math.abs(window.scrollY - lastProgrammaticY) <= 12) {
+          return;
+        }
+        // Manual scrollbar drag detected! Cancel programmatic animation and synchronize
+        if (animRafId) cancelAnimationFrame(animRafId);
+        if (dwellTimer) clearTimeout(dwellTimer);
+        animating = false;
+        busy = false;
+      }
+
+      if (scrollRafId) cancelAnimationFrame(scrollRafId);
+      scrollRafId = requestAnimationFrame(() => {
+        const p = progressAt(window.scrollY);
+        render(p);
+        idx = Math.min(Math.round(p), totalSections - 1);
+      });
+    }
+
+    let lastWheelTime = 0;
     function handleWheel(e) {
       if (e.ctrlKey) return;
-      // Allow natural scrolling inside contact/footer section unless scrolling up at the top of contact
-      if (idx === projectCount) {
-        if (window.scrollY <= (geo.tops[projectCount] || 0) + 10 && e.deltaY < -15) {
+
+      const contactTop = geo.tops[projectCount] ?? (projectCount * window.innerHeight);
+      if (window.scrollY >= contactTop - 10) {
+        // Allow natural scrolling inside contact/footer section
+        if (window.scrollY <= contactTop + 10 && e.deltaY < -15) {
           e.preventDefault();
-          goTo(projectCount - 1);
+          if (!busy) {
+            goTo(projectCount - 1);
+          }
         }
         return;
       }
 
       e.preventDefault();
       const now = performance.now();
-      const gap = now - lastWheel;
-      lastWheel = now;
+      const gap = now - lastWheelTime;
+      lastWheelTime = now;
       if (busy || gap < WHEEL_GAP || Math.abs(e.deltaY) < 8) return;
-      goTo(idx + (e.deltaY > 0 ? 1 : -1));
+
+      const currentP = progressAt(window.scrollY);
+      if (e.deltaY > 0) {
+        const nextIdx = Math.min(Math.floor(currentP + 0.05) + 1, totalSections - 1);
+        goTo(nextIdx);
+      } else {
+        const prevIdx = Math.max(Math.ceil(currentP - 0.05) - 1, 0);
+        goTo(prevIdx);
+      }
     }
 
     let touchStartY = null;
@@ -252,13 +326,19 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
     }
 
     function handleTouchMove(e) {
-      if (idx === projectCount) return; // Allow natural touch scrolling on contact/footer
+      const contactTop = geo.tops[projectCount] ?? (projectCount * window.innerHeight);
+      if (window.scrollY >= contactTop - 10) return;
       e.preventDefault();
       if (touchStartY === null || busy) return;
       const dy = touchStartY - e.touches[0].clientY;
       if (Math.abs(dy) > 36) {
         touchStartY = null;
-        goTo(idx + (dy > 0 ? 1 : -1));
+        const currentP = progressAt(window.scrollY);
+        if (dy > 0) {
+          goTo(Math.min(Math.floor(currentP + 0.05) + 1, totalSections - 1));
+        } else {
+          goTo(Math.max(Math.ceil(currentP - 0.05) - 1, 0));
+        }
       }
     }
 
@@ -272,15 +352,22 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
       const onControl = tag === 'a' || tag === 'button' || tag === 'input' || tag === 'textarea';
       if (onControl) return;
 
+      const contactTop = geo.tops[projectCount] ?? (projectCount * window.innerHeight);
       const next = k === 'ArrowDown' || k === 'PageDown' || (k === ' ' && !e.shiftKey);
       const prev = k === 'ArrowUp' || k === 'PageUp' || (k === ' ' && e.shiftKey);
 
       if (next) {
-        e.preventDefault();
-        goTo(idx + 1);
+        if (window.scrollY < contactTop - 10) {
+          e.preventDefault();
+          const currentP = progressAt(window.scrollY);
+          goTo(Math.min(Math.floor(currentP + 0.05) + 1, totalSections - 1));
+        }
       } else if (prev) {
-        e.preventDefault();
-        goTo(idx - 1);
+        if (window.scrollY < contactTop - 10) {
+          e.preventDefault();
+          const currentP = progressAt(window.scrollY);
+          goTo(Math.max(Math.ceil(currentP - 0.05) - 1, 0));
+        }
       } else if (k === 'Home') {
         e.preventDefault();
         goTo(0);
@@ -296,13 +383,15 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
       resizeTimer = setTimeout(() => {
         reduce = reduceMotionMQ.matches;
         measure();
-        window.scrollTo(0, geo.tops[idx] || 0);
-        render(idx);
+        const p = progressAt(window.scrollY);
+        render(p);
+        idx = Math.min(Math.round(p), totalSections - 1);
       }, 50);
     }
 
     container._goTo = goTo;
 
+    window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('touchstart', handleTouchStart, { passive: true });
     window.addEventListener('touchmove', handleTouchMove, { passive: false });
@@ -313,9 +402,15 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
     window.addEventListener('orientationchange', handleResize);
 
     measure();
-    render(0);
+    const initialP = progressAt(window.scrollY);
+    render(initialP);
+    idx = Math.min(Math.round(initialP), totalSections - 1);
 
     return () => {
+      if (animRafId) cancelAnimationFrame(animRafId);
+      if (scrollRafId) cancelAnimationFrame(scrollRafId);
+      if (dwellTimer) clearTimeout(dwellTimer);
+      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('wheel', handleWheel);
       window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchmove', handleTouchMove);
