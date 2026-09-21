@@ -49,13 +49,17 @@ function SeeAllProjectsCard({ carouselState }) {
     >
       <span className="projects-showcase__tag">Next build</span>
       <span className="projects-showcase__cta-mark" aria-hidden="true">↗</span>
-      <h3>See all projects</h3>
+      <h3>
+        <a href="#/projects" tabIndex={carouselState === 'active' ? 0 : -1} style={{ color: 'inherit', textDecoration: 'none' }}>
+          See all projects
+        </a>
+      </h3>
       <p>Browse the wider archive of mobile products, systems, and experiments behind the main sequence.</p>
-      <a className="projects-showcase__cta-link" href="#contact" tabIndex={carouselState === 'active' ? 0 : -1}>
-        Start with a project brief <span aria-hidden="true">↗</span>
+      <a className="projects-showcase__cta-link" href="#/projects" tabIndex={carouselState === 'active' ? 0 : -1}>
+        Explore full project gallery <span aria-hidden="true">↗</span>
       </a>
-      <a className="projects-showcase__gallery-link" href="#/projects" tabIndex={carouselState === 'active' ? 0 : -1} style={{ marginTop: '0.6rem', display: 'inline-block', fontSize: '0.88rem', opacity: 0.85 }}>
-        Or explore full interactive gallery →
+      <a className="projects-showcase__contact-link" href="#contact" tabIndex={carouselState === 'active' ? 0 : -1} style={{ marginTop: '0.8rem', display: 'inline-block', fontSize: '0.88rem', opacity: 0.85, color: 'var(--projects-muted)', textDecoration: 'none' }}>
+        Start with a project brief →
       </a>
       <span className="projects-showcase__hold-note">You are here for a moment — choose a direction.</span>
     </article>
@@ -224,7 +228,7 @@ export default function ProjectsShowcase({ projects = [] }) {
       isHorizontalGesture = false;
     };
 
-    // Tap peeking card to navigate
+    // Tap peeking card to navigate, or tap active CTA card to open gallery
     const handleCardClick = (e) => {
       const card = e.target.closest('.projects-showcase__card');
       if (!card) return;
@@ -235,6 +239,8 @@ export default function ProjectsShowcase({ projects = [] }) {
       } else if (state === 'previous') {
         e.preventDefault();
         handlePrevious();
+      } else if (state === 'active' && card.dataset.projectId === 'see-all-projects' && !e.target.closest('a')) {
+        window.location.hash = '#/projects';
       }
     };
 
