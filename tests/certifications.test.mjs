@@ -26,7 +26,7 @@ test('records use the new PNG assets for both previews and credential links', as
   assert.ok(records.every((record) => record.preview?.type === 'image'));
   assert.ok(records.every((record) => ['verified', 'documented'].includes(record.status)));
   assert.ok(records.every((record) => record.document?.type === 'image'));
-  assert.ok(records.every((record) => record.document?.href.endsWith('.png')));
+  assert.ok(records.every((record) => /\.(webp|png)$/.test(record.document?.href)));
   assert.ok(records.every((record) => !record.title.includes('/') && !record.issuer.includes('/')));
 });
 

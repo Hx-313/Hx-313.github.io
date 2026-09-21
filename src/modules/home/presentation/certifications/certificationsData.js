@@ -1,15 +1,15 @@
 const assets = Object.freeze({
-  certiportJava: new URL('../../../../../certifications/Cert5816324103-1.png', import.meta.url).href,
-  courseraGg: new URL('../../../../../certifications/Coursera GG2Y2MZOL6ZU-1.png', import.meta.url).href,
-  courseraTu: new URL('../../../../../certifications/Coursera TUZAVQAMZ1G1-1.png', import.meta.url).href,
-  navttc: new URL('../../../../../certifications/navttc-1.png', import.meta.url).href,
-  ssc: new URL('../../../../../certifications/1 pos in ssc1-1.png', import.meta.url).href,
-  urduSpeech: new URL('../../../../../certifications/2nd pos in Urdu soeach-1.png', import.meta.url).href,
-  ics: new URL('../../../../../certifications/best achievement in ics-1.png', import.meta.url).href,
-  readersClub: new URL('../../../../../certifications/g sec of readers club-1.png', import.meta.url).href,
-  classSix: new URL('../../../../../certifications/merit in 6 class pos 1-1.png', import.meta.url).href,
-  cricket: new URL('../../../../../certifications/participate in cricket-1.png', import.meta.url).href,
-  wafaq: new URL('../../../../../certifications/wafaq ul madaris-1.png', import.meta.url).href,
+  certiportJava: new URL('../../../../../certifications/Cert5816324103-1.webp', import.meta.url).href,
+  courseraGg: new URL('../../../../../certifications/Coursera GG2Y2MZOL6ZU-1.webp', import.meta.url).href,
+  courseraTu: new URL('../../../../../certifications/Coursera TUZAVQAMZ1G1-1.webp', import.meta.url).href,
+  navttc: new URL('../../../../../certifications/navttc-1.webp', import.meta.url).href,
+  ssc: new URL('../../../../../certifications/1 pos in ssc1-1.webp', import.meta.url).href,
+  urduSpeech: new URL('../../../../../certifications/2nd pos in Urdu soeach-1.webp', import.meta.url).href,
+  ics: new URL('../../../../../certifications/best achievement in ics-1.webp', import.meta.url).href,
+  readersClub: new URL('../../../../../certifications/g sec of readers club-1.webp', import.meta.url).href,
+  classSix: new URL('../../../../../certifications/merit in 6 class pos 1-1.webp', import.meta.url).href,
+  cricket: new URL('../../../../../certifications/participate in cricket-1.webp', import.meta.url).href,
+  wafaq: new URL('../../../../../certifications/wafaq ul madaris-1.webp', import.meta.url).href,
 });
 
 const preview = (src, alt) => Object.freeze({ type: 'image', src, alt });

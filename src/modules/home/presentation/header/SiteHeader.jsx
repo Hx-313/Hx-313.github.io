@@ -141,7 +141,7 @@ export default function SiteHeader({ theme, setTheme }) {
           >
             <span className="site-mark-visual">
               <img
-                src="/brand/ithx-logo.png"
+                src="/brand/ithx-logo.webp"
                 alt="itHX Logo"
                 className="site-brand-logo-img"
                 width="120"

@@ -36,7 +36,7 @@ export default function SiteFooter() {
         <div className="footer-directory-grid">
           <div className="footer-col footer-col--brand">
             <div className="footer-brand-lockup">
-              <img src="/brand/ithx-logo.png" alt="itHX" className="footer-brand-logo" width="120" height="35" />
+              <img src="/brand/ithx-logo.webp" alt="itHX" className="footer-brand-logo" width="120" height="35" />
               <span className="footer-monogram" aria-label={FOOTER_TEXT.aria.monogram}>HX-313</span>
             </div>
             <h2 className="footer-author-name">{FOOTER_COLOPHON.author}</h2>

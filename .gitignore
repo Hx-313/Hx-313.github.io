@@ -25,6 +25,10 @@ pnpm-debug.log*
 
 # private source material
 assets/source/documents/
+assets/reserves/source/documents/
+
+# ide
+.idea/
 
 # os
 .DS_Store

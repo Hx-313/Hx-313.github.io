@@ -23,7 +23,7 @@ test('showcase projects use their app-specific hero asset folders', () => {
     const projectEnd = projectsSource.indexOf('\n  },', projectStart);
     const projectSource = projectsSource.slice(projectStart, projectEnd === -1 ? undefined : projectEnd);
 
-    assert.match(projectSource, new RegExp(`/assets/${assetFolder}/hero\\.png`));
+    assert.match(projectSource, new RegExp(`/assets/${assetFolder}/hero\\.(webp|png)`));
     assert.match(projectSource, /imageAlt:/);
     assert.match(projectSource, /description:/);
     assert.match(projectSource, /platforms:\s*\[[^\]]{2,}\]/);

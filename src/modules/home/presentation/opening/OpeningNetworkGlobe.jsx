@@ -1,6 +1,6 @@
 import { memo } from 'react';
-import FrameSequence from '../../../../shared/media/FrameSequence.jsx';
-import { ORB_FRAMES } from '../media/visualSequences.js';
+import LoopVideo from '../../../../shared/media/LoopVideo.jsx';
+import { OPENING_ORB_VIDEO } from '../media/visualSequences.js';
 
 const ROUTES = [
   'M212 287 Q350 120 520 246',
@@ -21,11 +21,9 @@ function OpeningNetworkGlobe() {
       {/* Crop the animation frames to the spherical core; the surrounding artwork is intentionally not shown. */}
       <div className="opening-asset-globe-layer">
         <div className="opening-asset-globe-crop">
-          <FrameSequence
-            frames={ORB_FRAMES}
-            frameDuration={90}
+          <LoopVideo
+            src={OPENING_ORB_VIDEO}
             className="opening-asset-globe-frame"
-            alt=""
           />
         </div>
       </div>

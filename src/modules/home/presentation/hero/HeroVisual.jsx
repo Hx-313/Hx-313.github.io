@@ -1,6 +1,6 @@
-import FrameSequence from '../../../../shared/media/FrameSequence.jsx';
+import LoopVideo from '../../../../shared/media/LoopVideo.jsx';
 import { proofMetrics } from '../../../../data/metrics.js';
-import { GLOBE_FRAMES } from '../media/visualSequences.js';
+import { HERO_GLOBE_VIDEO } from '../media/visualSequences.js';
 import { HERO_TEXT } from '../../../../core/constants/hero/heroText.js';
 
 export default function HeroVisual() {
@@ -66,11 +66,9 @@ export default function HeroVisual() {
           role="img"
           aria-label={HERO_TEXT.aria.globeSequence}
         >
-          <FrameSequence
-            frames={GLOBE_FRAMES}
-            frameDuration={112}
+          <LoopVideo
+            src={HERO_GLOBE_VIDEO}
             className="hero-globe-sequence"
-            alt=""
           />
           <span className="hero-globe-portal__veil" />
           <span className="hero-globe-portal__ring" />
