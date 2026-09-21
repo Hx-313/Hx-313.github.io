@@ -49,18 +49,20 @@ function SeeAllProjectsCard({ carouselState }) {
     >
       <span className="projects-showcase__tag">Next build</span>
       <span className="projects-showcase__cta-mark" aria-hidden="true">↗</span>
-      <h3>
-        <a href="#/projects" tabIndex={carouselState === 'active' ? 0 : -1} style={{ color: 'inherit', textDecoration: 'none' }}>
-          See all projects
-        </a>
-      </h3>
+      <h3>See all projects</h3>
       <p>Browse the wider archive of mobile products, systems, and experiments behind the main sequence.</p>
-      <a className="projects-showcase__cta-link" href="#/projects" tabIndex={carouselState === 'active' ? 0 : -1}>
-        Explore full project gallery <span aria-hidden="true">↗</span>
-      </a>
-      <a className="projects-showcase__contact-link" href="#contact" tabIndex={carouselState === 'active' ? 0 : -1} style={{ marginTop: '0.8rem', display: 'inline-block', fontSize: '0.88rem', opacity: 0.85, color: 'var(--projects-muted)', textDecoration: 'none' }}>
-        Start with a project brief →
-      </a>
+
+      <div className="projects-showcase__cta-actions">
+        <a className="projects-showcase__cta-link" href="#contact" tabIndex={carouselState === 'active' ? 0 : -1}>
+          <span>Start with a project brief</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+        <a className="projects-showcase__secondary-link" href="#/projects" tabIndex={carouselState === 'active' ? 0 : -1}>
+          <span>Explore project gallery</span>
+          <span className="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+
       <span className="projects-showcase__hold-note">You are here for a moment — choose a direction.</span>
     </article>
   );
