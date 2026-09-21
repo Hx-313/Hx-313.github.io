@@ -54,6 +54,9 @@ function SeeAllProjectsCard({ carouselState }) {
       <a className="projects-showcase__cta-link" href="#contact" tabIndex={carouselState === 'active' ? 0 : -1}>
         Start with a project brief <span aria-hidden="true">↗</span>
       </a>
+      <a className="projects-showcase__gallery-link" href="#/projects" tabIndex={carouselState === 'active' ? 0 : -1} style={{ marginTop: '0.6rem', display: 'inline-block', fontSize: '0.88rem', opacity: 0.85 }}>
+        Or explore full interactive gallery →
+      </a>
       <span className="projects-showcase__hold-note">You are here for a moment — choose a direction.</span>
     </article>
   );

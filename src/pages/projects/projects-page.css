@@ -1,0 +1,413 @@
+/* ==========================================================================
+   itHX Portfolio — Dedicated Projects Page Styles
+   Tokens: itHX Palette System 2.0.0 & Space Grotesk / Inter / JetBrains Mono
+   ========================================================================== */
+
+.projects-page {
+  --l-bg: var(--ithx-paper-marble, #F3F4EE);
+  --l-ink: var(--ithx-primary-green, #0F352E);
+  --l-mute: var(--ithx-canvas-muted, #4F6B63);
+  --l-line: var(--ithx-border-light, #D4DED7);
+
+  --d-bg: var(--ithx-night-green, #08130A);
+  --d-ink: var(--ithx-paper-marble, #F3F4EE);
+  --d-mute: var(--ithx-sage-mist, #93B2A8);
+  --d-line: var(--ithx-edge-green, #205047);
+
+  --display: var(--font-display, "Space Grotesk", sans-serif);
+  --body: var(--font-body, "Inter", sans-serif);
+  --mono: var(--font-mono, "JetBrains Mono", monospace);
+  --action-accent: var(--ithx-action-cream, #F5EAD7);
+
+  --copy-top: 44vh;
+
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0;
+  font-family: var(--body);
+  background: var(--l-bg);
+  color: var(--l-ink);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  overscroll-behavior: none;
+  transition: background-color 0.6s var(--ease-out, ease), color 0.6s var(--ease-out, ease);
+}
+
+.projects-page[data-theme="dark"] {
+  background: var(--d-bg);
+  color: var(--d-ink);
+  --ink: var(--d-ink);
+}
+
+.projects-page[data-theme="light"] {
+  background: var(--l-bg);
+  color: var(--l-ink);
+  --ink: var(--l-ink);
+}
+
+/* --------------------------------------------------------------------------
+   Top Bar Navigation
+   -------------------------------------------------------------------------- */
+.projects-page__bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: calc(env(safe-area-inset-top, 0px) + 20px) 6vw 20px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--ink, var(--l-ink));
+  pointer-events: none;
+  transition: color 0.6s ease;
+}
+
+.projects-page__bar a,
+.projects-page__bar button {
+  pointer-events: auto;
+  color: inherit;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  backdrop-filter: blur(12px);
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.projects-page__bar a:hover,
+.projects-page__bar button:hover {
+  background: color-mix(in srgb, var(--ink) 12%, transparent);
+  transform: translateY(-1px);
+}
+
+.projects-page__bar-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.85;
+}
+
+/* --------------------------------------------------------------------------
+   Project Card Sections
+   -------------------------------------------------------------------------- */
+.projects-page__section {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 6vw;
+  padding: 110px 6vw 70px;
+  overflow: hidden;
+}
+
+.projects-page__section.light {
+  background: var(--l-bg);
+  color: var(--l-ink);
+  --mute: var(--l-mute);
+  --line: var(--l-line);
+  --bgc: var(--l-bg);
+}
+
+.projects-page__section.dark {
+  background: var(--d-bg);
+  color: var(--d-ink);
+  --mute: var(--d-mute);
+  --line: var(--d-line);
+  --bgc: var(--d-bg);
+}
+
+.projects-page__section .projects-page__copy {
+  grid-column: 2;
+}
+
+.projects-page__section.flip .projects-page__copy {
+  grid-column: 1;
+}
+
+.projects-page__copy {
+  max-width: 36rem;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  z-index: 10;
+}
+
+.projects-page__eyebrow {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: clamp(0.68rem, 0.9vw, 0.78rem);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: clamp(0.5rem, 1.2vh, 0.85rem);
+}
+
+.projects-page__copy h2 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(2.3rem, min(5.5vw, 9vh), 5rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  margin: 0 0 clamp(0.8rem, 2vh, 1.3rem);
+}
+
+.projects-page__copy p {
+  font-size: clamp(0.95rem, min(1.25vw, 2.2vh), 1.15rem);
+  line-height: 1.55;
+  color: var(--mute);
+  margin: 0 0 clamp(1rem, 2.8vh, 1.8rem);
+  max-width: 44ch;
+}
+
+/* Structured Metadata Ledger */
+.projects-page__meta {
+  margin: 0 0 clamp(1.1rem, 3.2vh, 2rem);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 1.6rem;
+  font-size: clamp(0.82rem, min(1.05vw, 1.8vh), 0.95rem);
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--line);
+}
+
+.projects-page__meta dt {
+  color: var(--mute);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.projects-page__meta dd {
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Actions & Platform Badges */
+.projects-page__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.1rem 1.8rem;
+}
+
+.projects-page__platforms {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.projects-page__pf-link {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line);
+  display: grid;
+  place-items: center;
+  color: inherit;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.projects-page__pf-link:hover {
+  background: currentColor;
+  border-color: currentColor;
+  transform: translateY(-2px);
+}
+
+.projects-page__pf-link:hover svg {
+  color: var(--bgc);
+}
+
+.projects-page__action-link {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: border-bottom-width 0.15s ease, padding-bottom 0.15s ease;
+}
+
+.projects-page__action-link:hover {
+  border-bottom-width: 4px;
+  padding-bottom: 1px;
+}
+
+/* --------------------------------------------------------------------------
+   The Traveling Fixed Stage
+   -------------------------------------------------------------------------- */
+.projects-page__stage {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 25;
+  border-radius: 12px;
+  overflow: hidden;
+  will-change: transform;
+  backface-visibility: hidden;
+  box-shadow: 0 24px 48px -18px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+  background: var(--ithx-night-green, #08130A);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.projects-page__layer {
+  position: absolute;
+  inset: 0;
+  will-change: opacity, clip-path;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #08130A;
+}
+
+.projects-page__layer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   Side Navigation Dots
+   -------------------------------------------------------------------------- */
+.projects-page__dots {
+  position: fixed;
+  right: 2.2vw;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.projects-page__dots button {
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid var(--ink, var(--l-ink));
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.3s ease, border-color 0.6s ease, transform 0.2s ease;
+}
+
+.projects-page__dots button:hover {
+  transform: scale(1.25);
+}
+
+.projects-page__dots button[aria-current="true"] {
+  background: var(--ink, var(--l-ink));
+  transform: scale(1.15);
+}
+
+/* Focus Outlines */
+.projects-page a:focus-visible,
+.projects-page button:focus-visible {
+  outline: 3px solid var(--action-accent);
+  outline-offset: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Layout (Mobile & Tablets)
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) and (min-height: 521px) {
+  .projects-page__section {
+    grid-template-columns: 1fr;
+    gap: 0;
+    align-content: center;
+    align-items: start;
+    padding: var(--copy-top) max(8vw, 28px) calc(3vh + env(safe-area-inset-bottom, 0px)) 8vw;
+  }
+
+  .projects-page__section .projects-page__copy,
+  .projects-page__section.flip .projects-page__copy {
+    grid-column: 1;
+    max-width: 32rem;
+  }
+
+  .projects-page__copy h2 {
+    font-size: clamp(2rem, min(10vw, 6vh), 3.4rem);
+  }
+
+  .projects-page__copy p {
+    font-size: clamp(0.92rem, 2.1vh, 1.05rem);
+  }
+
+  .projects-page__dots {
+    right: 10px;
+  }
+
+  .projects-page__bar {
+    padding: calc(env(safe-area-inset-top, 0px) + 14px) 5vw 14px;
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-height: 520px) {
+  .projects-page__section {
+    padding: 72px 6vw 20px;
+    gap: 5vw;
+  }
+  .projects-page__copy h2 {
+    margin-bottom: 0.45rem;
+  }
+  .projects-page__copy p {
+    line-height: 1.4;
+    margin-bottom: 0.85rem;
+  }
+  .projects-page__meta {
+    padding-top: 0.55rem;
+    margin-bottom: 0.85rem;
+    gap: 0.25rem 1.2rem;
+  }
+  .projects-page__pf-link {
+    width: 38px;
+    height: 38px;
+  }
+  .projects-page__bar {
+    padding-bottom: 12px;
+    font-size: 0.88rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Reduced Motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .projects-page,
+  .projects-page__bar,
+  .projects-page__stage,
+  .projects-page__layer,
+  .projects-page__copy,
+  .projects-page__dots button {
+    transition: none !important;
+    animation: none !important;
+  }
+}
