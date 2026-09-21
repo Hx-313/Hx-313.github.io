@@ -1,6 +1,7 @@
 /* ==========================================================================
    itHX Portfolio — Dedicated Projects Page Styles
    Tokens: itHX Palette System 2.0.0 & Space Grotesk / Inter / JetBrains Mono
+   Polish: /impeccable craft rules (contrast, typography ceilings, fluid rhythm)
    ========================================================================== */
 
 .projects-page {
@@ -27,12 +28,13 @@
   min-height: 100svh;
   margin: 0;
   font-family: var(--body);
-  background: var(--l-bg);
-  color: var(--l-ink);
+  background: var(--d-bg);
+  color: var(--d-ink);
   -webkit-font-smoothing: antialiased;
-  overflow: hidden;
+  overflow-x: hidden;
   overscroll-behavior: none;
-  transition: background-color 0.6s var(--ease-out, ease), color 0.6s var(--ease-out, ease);
+  transition: background-color 0.6s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+              color 0.6s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
 }
 
 .projects-page[data-theme="dark"] {
@@ -48,64 +50,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   Top Bar Navigation
-   -------------------------------------------------------------------------- */
-.projects-page__bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 40;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: calc(env(safe-area-inset-top, 0px) + 20px) 6vw 20px;
-  font-family: var(--display);
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: var(--ink, var(--l-ink));
-  pointer-events: none;
-  transition: color 0.6s ease;
-}
-
-.projects-page__bar a,
-.projects-page__bar button {
-  pointer-events: auto;
-  color: inherit;
-  text-decoration: none;
-  background: transparent;
-  border: none;
-  font: inherit;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 0.75rem;
-  border-radius: 9999px;
-  backdrop-filter: blur(12px);
-  background: color-mix(in srgb, var(--ink) 6%, transparent);
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.projects-page__bar a:hover,
-.projects-page__bar button:hover {
-  background: color-mix(in srgb, var(--ink) 12%, transparent);
-  transform: translateY(-1px);
-}
-
-.projects-page__bar-title {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  opacity: 0.85;
-}
-
-/* --------------------------------------------------------------------------
-   Project Card Sections
+   Project Card Sections (1 Card = 1 Viewport Screen)
    -------------------------------------------------------------------------- */
 .projects-page__section {
   position: relative;
@@ -153,9 +98,9 @@
 .projects-page__eyebrow {
   display: inline-block;
   font-family: var(--mono);
-  font-size: clamp(0.68rem, 0.9vw, 0.78rem);
+  font-size: clamp(0.68rem, 0.85vw, 0.76rem);
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--mute);
   margin-bottom: clamp(0.5rem, 1.2vh, 0.85rem);
@@ -164,27 +109,28 @@
 .projects-page__copy h2 {
   font-family: var(--display);
   font-weight: 700;
-  font-size: clamp(2.3rem, min(5.5vw, 9vh), 5rem);
-  line-height: 0.98;
-  letter-spacing: -0.04em;
-  margin: 0 0 clamp(0.8rem, 2vh, 1.3rem);
+  font-size: clamp(2.2rem, min(5vw, 8vh), 4.6rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  margin: 0 0 clamp(0.8rem, 1.8vh, 1.25rem);
 }
 
 .projects-page__copy p {
-  font-size: clamp(0.95rem, min(1.25vw, 2.2vh), 1.15rem);
-  line-height: 1.55;
+  font-size: clamp(0.95rem, min(1.2vw, 2.1vh), 1.12rem);
+  line-height: 1.6;
   color: var(--mute);
-  margin: 0 0 clamp(1rem, 2.8vh, 1.8rem);
-  max-width: 44ch;
+  margin: 0 0 clamp(1rem, 2.6vh, 1.75rem);
+  max-width: 48ch;
 }
 
 /* Structured Metadata Ledger */
 .projects-page__meta {
-  margin: 0 0 clamp(1.1rem, 3.2vh, 2rem);
+  margin: 0 0 clamp(1.1rem, 3vh, 1.9rem);
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 0.5rem 1.6rem;
-  font-size: clamp(0.82rem, min(1.05vw, 1.8vh), 0.95rem);
+  font-size: clamp(0.82rem, min(1vw, 1.75vh), 0.95rem);
   padding-top: 1.1rem;
   border-top: 1px solid var(--line);
 }
@@ -192,9 +138,10 @@
 .projects-page__meta dt {
   color: var(--mute);
   font-family: var(--mono);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  font-weight: 600;
 }
 
 .projects-page__meta dd {
@@ -265,14 +212,15 @@
   left: 0;
   top: 0;
   z-index: 25;
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
-  will-change: transform;
+  will-change: transform, opacity;
   backface-visibility: hidden;
   box-shadow: 0 24px 48px -18px rgba(0, 0, 0, 0.45);
   pointer-events: none;
   background: var(--ithx-night-green, #08130A);
   border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: opacity 0.4s var(--ease-out, ease);
 }
 
 .projects-page__layer {
@@ -289,7 +237,7 @@
 .projects-page__layer img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 
@@ -298,7 +246,7 @@
    -------------------------------------------------------------------------- */
 .projects-page__dots {
   position: fixed;
-  right: 2.2vw;
+  right: 2vw;
   top: 50%;
   transform: translateY(-50%);
   z-index: 40;
@@ -335,6 +283,32 @@
 }
 
 /* --------------------------------------------------------------------------
+   Contact & Footer Wrap (Section 4)
+   -------------------------------------------------------------------------- */
+.projects-page__contact-wrap {
+  position: relative;
+  z-index: 30;
+  width: 100%;
+  min-height: 100vh;
+  transition: background-color 0.6s ease;
+}
+
+.projects-page__contact-wrap.dark {
+  background: var(--d-bg);
+  color: var(--d-ink);
+}
+
+.projects-page__contact-wrap.light {
+  background: var(--l-bg);
+  color: var(--l-ink);
+}
+
+.projects-page__contact-wrap .contact-section {
+  padding-top: clamp(6rem, 11vh, 9rem);
+  padding-bottom: clamp(4rem, 8vh, 6rem);
+}
+
+/* --------------------------------------------------------------------------
    Responsive Layout (Mobile & Tablets)
    -------------------------------------------------------------------------- */
 @media (max-width: 900px) and (min-height: 521px) {
@@ -353,20 +327,15 @@
   }
 
   .projects-page__copy h2 {
-    font-size: clamp(2rem, min(10vw, 6vh), 3.4rem);
+    font-size: clamp(2rem, min(10vw, 5.8vh), 3.2rem);
   }
 
   .projects-page__copy p {
-    font-size: clamp(0.92rem, 2.1vh, 1.05rem);
+    font-size: clamp(0.92rem, 2vh, 1.05rem);
   }
 
   .projects-page__dots {
     right: 10px;
-  }
-
-  .projects-page__bar {
-    padding: calc(env(safe-area-inset-top, 0px) + 14px) 5vw 14px;
-    font-size: 0.88rem;
   }
 }
 
@@ -391,18 +360,13 @@
     width: 38px;
     height: 38px;
   }
-  .projects-page__bar {
-    padding-bottom: 12px;
-    font-size: 0.88rem;
-  }
 }
 
 /* --------------------------------------------------------------------------
-   Reduced Motion
+   Reduced Motion Guardrail
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   .projects-page,
-  .projects-page__bar,
   .projects-page__stage,
   .projects-page__layer,
   .projects-page__copy,

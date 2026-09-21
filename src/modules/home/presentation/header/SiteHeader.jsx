@@ -6,7 +6,7 @@ import './header.css';
 
 const NAV_ITEMS = HEADER_TEXT.navItems;
 
-export default function SiteHeader({ theme, setTheme }) {
+export default function SiteHeader({ theme, setTheme, onNavigate, activeSectionOverride }) {
   const [sysTime, setSysTime] = useState('');
   const [activeSection, setActiveSection] = useState('top');
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -117,11 +117,15 @@ export default function SiteHeader({ theme, setTheme }) {
       if (target) {
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+      } else if (onNavigate) {
+        onNavigate(e, href, id);
+      } else {
+        window.location.hash = href;
       }
     } else {
       setIsMobileOpen(false);
     }
-  }, []);
+  }, [onNavigate]);
 
   return (
     <header
@@ -157,7 +161,8 @@ export default function SiteHeader({ theme, setTheme }) {
           <div className="nav-rail">
             <ul className="nav-list" role="list">
               {NAV_ITEMS.map((item) => {
-                const isActive = activeSection === item.id;
+                const currentActive = activeSectionOverride || activeSection;
+                const isActive = currentActive === item.id;
                 return (
                   <li key={item.id} className="nav-item">
                     <a
@@ -239,7 +244,7 @@ export default function SiteHeader({ theme, setTheme }) {
                 <li key={item.id}>
                   <a
                     href={item.href}
-                    className={`mobile-nav-link ${activeSection === item.id ? 'is-active' : ''}`}
+                    className={`mobile-nav-link ${(activeSectionOverride || activeSection) === item.id ? 'is-active' : ''}`}
                     aria-label={item.shortLabel}
                     onClick={(e) => handleNavClick(e, item.href, item.id)}
                   >
