@@ -18,8 +18,8 @@ import { useCommandCenter } from '../../../hooks/useCommandCenter.js';
 import './home.css';
 import './command-center/command-center.css';
 
-export default function HomePage() {
-  const [experienceState, setExperienceState] = useState('intro');
+export default function HomePage({ initialExperienceState = 'intro', targetSection = null }) {
+  const [experienceState, setExperienceState] = useState(initialExperienceState);
   const { theme, setTheme } = useTheme();
   const commandCenter = useCommandCenter();
   const startHandoff = useCallback(() => {
@@ -32,12 +32,32 @@ export default function HomePage() {
   useEffect(() => {
     const previousScrollRestoration = window.history.scrollRestoration;
     window.history.scrollRestoration = 'manual';
+
+    if (initialExperienceState === 'ready') {
+      const hash = targetSection || window.location.hash;
+      if (hash && hash !== '#top') {
+        const scrollToTarget = () => {
+          const target = document.querySelector(hash);
+          if (target) {
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+          }
+        };
+        scrollToTarget();
+        const timer = setTimeout(scrollToTarget, 60);
+        return () => {
+          clearTimeout(timer);
+          window.history.scrollRestoration = previousScrollRestoration;
+        };
+      }
+    }
+
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
 
     return () => {
       window.history.scrollRestoration = previousScrollRestoration;
     };
-  }, []);
+  }, [initialExperienceState, targetSection]);
 
   return (
     <div className="home-page">

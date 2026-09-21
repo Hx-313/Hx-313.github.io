@@ -18,11 +18,17 @@ function isProjectsRoute() {
 
 export default function App() {
   const [route, setRoute] = useState(isProjectsRoute() ? 'projects' : 'home');
+  const [targetSection, setTargetSection] = useState(null);
+  const [initialExperienceState, setInitialExperienceState] = useState(isProjectsRoute() ? 'ready' : 'intro');
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     const handleLocationChange = () => {
-      setRoute(isProjectsRoute() ? 'projects' : 'home');
+      const isProjects = isProjectsRoute();
+      setRoute(isProjects ? 'projects' : 'home');
+      if (!isProjects) {
+        setInitialExperienceState('ready');
+      }
     };
 
     window.addEventListener('hashchange', handleLocationChange);
@@ -40,6 +46,8 @@ export default function App() {
     }
     const targetHash = href || '#top';
     window.location.hash = targetHash;
+    setTargetSection(targetHash);
+    setInitialExperienceState('ready');
     setRoute('home');
     setTimeout(() => {
       const target = document.querySelector(targetHash);
@@ -60,5 +68,10 @@ export default function App() {
     );
   }
 
-  return <HomePage />;
+  return (
+    <HomePage
+      initialExperienceState={initialExperienceState}
+      targetSection={targetSection}
+    />
+  );
 }

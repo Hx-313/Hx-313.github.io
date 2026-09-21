@@ -113,12 +113,14 @@ export default function SiteHeader({ theme, setTheme, onNavigate, activeSectionO
       e.preventDefault();
       setIsMobileOpen(false);
       setActiveSection(id);
+      if (typeof onNavigate === 'function') {
+        onNavigate(e, href, id);
+        return;
+      }
       const target = document.querySelector(href);
       if (target) {
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
-      } else if (onNavigate) {
-        onNavigate(e, href, id);
       } else {
         window.location.hash = href;
       }

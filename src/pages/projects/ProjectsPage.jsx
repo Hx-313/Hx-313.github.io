@@ -429,11 +429,7 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
   };
 
   const handleHeaderNavigate = (e, href, id) => {
-    if (id === 'projects') {
-      handleDotClick(0);
-    } else if (id === 'contact') {
-      handleDotClick(projectCount);
-    } else if (typeof onNavigate === 'function') {
+    if (typeof onNavigate === 'function') {
       onNavigate(e, href, id);
     }
   };
