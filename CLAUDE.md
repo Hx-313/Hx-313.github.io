@@ -62,5 +62,11 @@ Node.js 18 or newer is required.
 - Keep contact destinations, external project links, and site copy centralized in `src/core/constants/`.
 - Verify meaningful changes with `npm test`, `npm run build`, and relevant tests.
 
+## Branching Convention
+- `main` is the stable baseline.
+- `release/v<major>.<minor>.<patch>` is a release snapshot of `main` before the release cycle and is not an active work branch.
+- `development` is the active integration branch for current and future edits.
+- Follow normal GitHub review/merge conventions and never push directly from an agent.
+
 ## Next Product Milestone
 Connect the command center's case-study action to a content-rich WOS flagship case study (`src/pages/projects/wos.jsx`). It should present the problem, Hafiz's role, system architecture, real interfaces, engineering decisions, verified outcomes, and live product surfaces before expanding into services, additional project stories, and conversion sections.

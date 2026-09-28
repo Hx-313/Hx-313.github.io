@@ -22,6 +22,19 @@ export const HEADER_TEXT = Object.freeze({
     mainNavKicker: 'MAIN NAVIGATION',
     sysTimeLabel: 'SYS TIME',
   }),
+  topLevelNavIds: Object.freeze(['top', 'projects', 'contact']),
+  navGroups: Object.freeze([
+    Object.freeze({
+      id: 'capabilities',
+      label: 'Capabilities',
+      itemIds: Object.freeze(['services', 'domains', 'tools']),
+    }),
+    Object.freeze({
+      id: 'about',
+      label: 'About',
+      itemIds: Object.freeze(['about', 'certifications', 'testimonials']),
+    }),
+  ]),
   navItems: Object.freeze([
     Object.freeze({ id: 'top', label: 'Overview', shortLabel: 'Overview', index: '00', href: '#top' }),
     Object.freeze({ id: 'projects', label: '01 Projects', shortLabel: 'Projects', index: '01', href: '#projects' }),

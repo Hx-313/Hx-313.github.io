@@ -1,7 +1,7 @@
 .portfolio-placeholder-section {
   background: transparent;
   color: var(--color-foreground);
-  padding: clamp(5.5rem, 10vw, 9rem) clamp(1.25rem, 5vw, 4.5rem);
+  padding: clamp(4.25rem, 7vw, 6.5rem) clamp(1.25rem, 5vw, 4.5rem);
 }
 
 .portfolio-placeholder-container {

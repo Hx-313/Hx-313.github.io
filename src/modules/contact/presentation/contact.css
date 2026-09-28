@@ -11,7 +11,7 @@
   --line: color-mix(in srgb, var(--ink-faint) 72%, transparent);
 
   position: relative;
-  padding: clamp(5rem, 11vw, 9rem) 0 clamp(5.5rem, 10vw, 8rem);
+  padding: clamp(4rem, 8vw, 6.25rem) 0 clamp(4.5rem, 8vw, 6.5rem);
   overflow: hidden;
   background: transparent;
   color: var(--ink-primary);

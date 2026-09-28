@@ -5,11 +5,11 @@
 .how-i-build-section {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  min-height: 86vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(4rem, 9vh, 7rem) 0;
+  padding: clamp(3.5rem, 7vh, 5.5rem) 0;
   box-sizing: border-box;
   background: transparent;
   color: var(--ink-primary, var(--color-foreground));
@@ -509,7 +509,7 @@
 @media (max-width: 720px) {
   .how-i-build-section {
     min-height: auto;
-    padding: 4.5rem 0;
+    padding: 3.75rem 0;
   }
 
   .how-i-build-layout {

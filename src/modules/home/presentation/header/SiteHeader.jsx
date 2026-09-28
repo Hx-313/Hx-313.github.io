@@ -1,16 +1,24 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { contactLinks, siteLinks } from '../../../../core/constants.js';
 import { HEADER_TEXT } from '../../../../core/constants/navigation/headerText.js';
 import ThemeToggle from '../../../../shared/theme/ThemeToggle.jsx';
 import './header.css';
 
 const NAV_ITEMS = HEADER_TEXT.navItems;
+const NAV_ITEM_BY_ID = Object.freeze(Object.fromEntries(NAV_ITEMS.map((item) => [item.id, item])));
+const PRIMARY_NAV_ITEMS = HEADER_TEXT.topLevelNavIds.map((id) => NAV_ITEM_BY_ID[id]).filter(Boolean);
+const NAV_GROUPS = HEADER_TEXT.navGroups.map((group) => ({
+  ...group,
+  items: group.itemIds.map((id) => NAV_ITEM_BY_ID[id]).filter(Boolean),
+}));
 
 export default function SiteHeader({ theme, setTheme, onNavigate, activeSectionOverride }) {
   const [sysTime, setSysTime] = useState('');
   const [activeSection, setActiveSection] = useState('top');
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [openNavGroup, setOpenNavGroup] = useState(null);
+  const desktopNavRef = useRef(null);
 
   useEffect(() => {
     const updateClock = () => {
@@ -85,16 +93,30 @@ export default function SiteHeader({ theme, setTheme, onNavigate, activeSectionO
     };
   }, []);
 
-  // Close mobile menu on Escape key
+  // Close open navigation surfaces on Escape key
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape' && isMobileOpen) {
+      if (e.key !== 'Escape') return;
+      if (isMobileOpen) {
         setIsMobileOpen(false);
+      }
+      if (openNavGroup) {
+        setOpenNavGroup(null);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isMobileOpen]);
+  }, [isMobileOpen, openNavGroup]);
+
+  useEffect(() => {
+    const handlePointerDown = (event) => {
+      if (desktopNavRef.current && !desktopNavRef.current.contains(event.target)) {
+        setOpenNavGroup(null);
+      }
+    };
+    document.addEventListener('pointerdown', handlePointerDown);
+    return () => document.removeEventListener('pointerdown', handlePointerDown);
+  }, []);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -112,6 +134,7 @@ export default function SiteHeader({ theme, setTheme, onNavigate, activeSectionO
     if (href.startsWith('#')) {
       e.preventDefault();
       setIsMobileOpen(false);
+      setOpenNavGroup(null);
       setActiveSection(id);
       if (typeof onNavigate === 'function') {
         onNavigate(e, href, id);
@@ -128,6 +151,27 @@ export default function SiteHeader({ theme, setTheme, onNavigate, activeSectionO
       setIsMobileOpen(false);
     }
   }, [onNavigate]);
+
+  const currentActive = activeSectionOverride || activeSection;
+
+  const renderNavLink = (item, { mobile = false, menuItem = false } = {}) => {
+    const isActive = currentActive === item.id;
+    const linkClassName = mobile ? 'mobile-nav-link' : 'nav-dropdown-link';
+
+    return (
+      <a
+        href={item.href}
+        className={`${linkClassName} ${isActive ? 'is-active' : ''}`}
+        role={menuItem ? 'menuitem' : undefined}
+        aria-label={item.shortLabel}
+        aria-current={isActive ? 'location' : undefined}
+        onClick={(e) => handleNavClick(e, item.href, item.id)}
+      >
+        <span className={mobile ? 'mobile-nav-text' : 'nav-dropdown-text'}>{item.shortLabel}</span>
+        <span className={mobile ? 'mobile-nav-arrow' : 'nav-dropdown-arrow'} aria-hidden="true">↗</span>
+      </a>
+    );
+  };
 
   return (
     <header
@@ -159,11 +203,10 @@ export default function SiteHeader({ theme, setTheme, onNavigate, activeSectionO
         </div>
 
         {/* Center: Primary navigation */}
-        <nav className="header-desktop-nav" aria-label={HEADER_TEXT.aria.mainNav}>
+        <nav ref={desktopNavRef} className="header-desktop-nav" aria-label={HEADER_TEXT.aria.mainNav}>
           <div className="nav-rail">
             <ul className="nav-list" role="list">
-              {NAV_ITEMS.map((item) => {
-                const currentActive = activeSectionOverride || activeSection;
+              {PRIMARY_NAV_ITEMS.map((item) => {
                 const isActive = currentActive === item.id;
                 return (
                   <li key={item.id} className="nav-item">
@@ -176,6 +219,36 @@ export default function SiteHeader({ theme, setTheme, onNavigate, activeSectionO
                     >
                       <span className="nav-label">{item.shortLabel}</span>
                     </a>
+                  </li>
+                );
+              })}
+              {NAV_GROUPS.map((group) => {
+                const isOpen = openNavGroup === group.id;
+                const isActive = group.items.some((item) => item.id === currentActive);
+
+                return (
+                  <li key={group.id} className={`nav-item nav-item--group ${isOpen ? 'is-open' : ''}`}>
+                    <button
+                      type="button"
+                      className={`nav-group-trigger ${isActive ? 'is-active' : ''}`}
+                      aria-haspopup="menu"
+                      aria-expanded={isOpen}
+                      aria-controls={`nav-dropdown-${group.id}`}
+                      onClick={() => setOpenNavGroup((current) => (current === group.id ? null : group.id))}
+                    >
+                      <span>{group.label}</span>
+                      <span className="nav-group-chevron" aria-hidden="true">⌄</span>
+                    </button>
+
+                    <div id={`nav-dropdown-${group.id}`} className="nav-dropdown" hidden={!isOpen}>
+                      <ul className="nav-dropdown-list" role="menu">
+                        {group.items.map((item) => (
+                          <li key={item.id} role="none">
+                            {renderNavLink(item, { menuItem: true })}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </li>
                 );
               })}
@@ -242,17 +315,17 @@ export default function SiteHeader({ theme, setTheme, onNavigate, activeSectionO
 
           <nav className="mobile-nav-links" aria-label={HEADER_TEXT.aria.mobileNav}>
             <ul role="list">
-              {NAV_ITEMS.map((item) => (
+              {PRIMARY_NAV_ITEMS.map((item) => (
                 <li key={item.id}>
-                  <a
-                    href={item.href}
-                    className={`mobile-nav-link ${(activeSectionOverride || activeSection) === item.id ? 'is-active' : ''}`}
-                    aria-label={item.shortLabel}
-                    onClick={(e) => handleNavClick(e, item.href, item.id)}
-                  >
-                    <span className="mobile-nav-text">{item.shortLabel}</span>
-                    <span className="mobile-nav-arrow" aria-hidden="true">↗</span>
-                  </a>
+                  {renderNavLink(item, { mobile: true })}
+                </li>
+              ))}
+              {NAV_GROUPS.map((group) => (
+                <li key={group.id} className="mobile-nav-group" role="presentation">
+                  <span className="mobile-nav-group-label">{group.label}</span>
+                  {group.items.map((item) => (
+                    <span key={item.id}>{renderNavLink(item, { mobile: true })}</span>
+                  ))}
                 </li>
               ))}
             </ul>
