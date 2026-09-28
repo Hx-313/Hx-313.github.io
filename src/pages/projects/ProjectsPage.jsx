@@ -1,3 +1,4 @@
+import { animate } from 'animejs';
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { FaApple, FaGooglePlay } from 'react-icons/fa6';
 import { FiArrowUpRight } from 'react-icons/fi';
@@ -9,9 +10,12 @@ import SiteFooter from '../../modules/footer/presentation/SiteFooter.jsx';
 import './projects-page.css';
 
 const STACK_QUERY = '(max-width: 900px) and (min-height: 521px)';
-const DUR = 1200; // ms: image travel duration
-const DWELL = 300; // ms: quiet pause after landing (Total lock = 1200 + 300 = 1500ms = 1.5s)
-const WHEEL_GAP = 120; // ms: quiet period for trackpad gating
+const WHEEL_GESTURE_GAP = 180; // ms of wheel silence separates distinct gestures
+const PROJECT_TRANSITIONS = Object.freeze([
+  { reveal: 'radial', duration: 680, ease: 'outCubic', lift: 12, tilt: 2.2, scale: 0.035, copyAxis: 'y', copyDistance: 18 },
+  { reveal: 'horizontal', duration: 720, ease: 'inOutCubic', lift: 20, tilt: 3.4, scale: 0.05, copyAxis: 'x', copyDistance: 6 },
+  { reveal: 'vertical', duration: 760, ease: 'inOutQuint', lift: 15, tilt: 2.6, scale: 0.04, copyAxis: 'y', copyDistance: 22 },
+]);
 
 function clamp(v, a = 0, b = 1) {
   return Math.max(a, Math.min(b, v));
@@ -22,13 +26,10 @@ function smooth(a, b, v) {
   return t * t * (3 - 2 * t);
 }
 
-function ease(p) {
-  return 0.5 - 0.5 * Math.cos(Math.PI * p);
-}
-
 export default function ProjectsPage({ theme, setTheme, onNavigate }) {
   const containerRef = useRef(null);
   const stageRef = useRef(null);
+  const goToRef = useRef(null);
   const [activeIdx, setActiveIdx] = useState(0);
 
   const projects = showcaseProjects;
@@ -72,10 +73,15 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
     let busy = false;
     let animating = false;
     let lastActive = -1;
+    let lastRenderedT = 0;
     let lastProgrammaticY = 0;
-    let animRafId = null;
+    let activeAnimation = null;
     let scrollRafId = null;
-    let dwellTimer = null;
+    let resizeTimer = null;
+    let wheelGestureResetTimer = null;
+    let lastWheelTime = 0;
+    let wheelGestureConsumed = false;
+    const pendingWheelDirections = [];
     const geo = { tops: [] };
 
     function put(el, prop, v) {
@@ -142,7 +148,9 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
       return projectCount;
     }
 
-    function render(t) {
+    function render(t, targetProjectIndex = null, directionHint = null) {
+      const previousT = lastRenderedT;
+      lastRenderedT = t;
       const isPastProjects = t >= projectCount - 0.15;
       // Fade out stage when arriving at contact section
       if (isPastProjects) {
@@ -159,13 +167,20 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
       const e = clamp((u - 0.03) / 0.94);
       const fromX = i % 2 === 0 ? geo.xL : geo.xR;
       const toX = i % 2 === 0 ? geo.xR : geo.xL;
-      const dir = toX > fromX ? 1 : -1;
+      const travelDirection = toX > fromX ? 1 : -1;
+      const scrollDirection = directionHint ?? (t < previousT ? -1 : 1);
+      const motionIndex = clamp(
+        Number.isInteger(targetProjectIndex) ? targetProjectIndex : i + 1,
+        0,
+        projectCount - 1
+      );
+      const motion = PROJECT_TRANSITIONS[motionIndex];
       const arc = Math.sin(Math.PI * e);
 
       const x = geo.mobile ? geo.xL : fromX + (toX - fromX) * e;
-      const y = geo.y - (geo.mobile ? 0 : arc * 16);
-      const rot = reduce ? 0 : dir * arc * 3.5;
-      const sc = reduce ? 1 : 1 - arc * 0.05;
+      const y = geo.y - (geo.mobile ? 0 : arc * motion.lift);
+      const rot = reduce ? 0 : travelDirection * arc * motion.tilt;
+      const sc = reduce ? 1 : 1 - arc * motion.scale;
 
       put(
         stage,
@@ -184,7 +199,22 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
         } else if (k === i + 1) {
           const cut = (1 - m) * 100;
           put(l, 'opacity', Math.min(1, 0.2 + m * 1.2).toFixed(3));
-          put(l, 'clipPath', m >= 1 ? 'none' : dir > 0 ? `inset(0 ${cut.toFixed(2)}% 0 0)` : `inset(0 0 0 ${cut.toFixed(2)}%)`);
+          let clipPath = 'none';
+          if (m < 1) {
+            if (motion.reveal === 'radial') {
+              clipPath = `circle(${(m * 150).toFixed(2)}% at 50% 50%)`;
+            } else if (motion.reveal === 'vertical') {
+              clipPath = scrollDirection >= 0
+                ? `inset(${cut.toFixed(2)}% 0 0 0)`
+                : `inset(0 0 ${cut.toFixed(2)}% 0)`;
+            } else {
+              const revealFromLeft = scrollDirection === travelDirection;
+              const insetLeft = revealFromLeft ? 0 : cut;
+              const insetRight = revealFromLeft ? cut : 0;
+              clipPath = `inset(0 ${insetRight.toFixed(2)}% 0 ${insetLeft.toFixed(2)}%)`;
+            }
+          }
+          put(l, 'clipPath', clipPath);
           put(l, 'zIndex', '2');
         } else {
           put(l, 'opacity', '0');
@@ -203,8 +233,9 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
         }
         const side = s % 2 === 0 ? 1 : -1;
         const vis = 1 - smooth(0.15, 0.85, a);
-        const shift = geo.mobile || reduce ? 0 : side * (1 - vis) * 7 * (d < 0 ? -1 : 1);
-        const lift = geo.mobile && !reduce ? (1 - vis) * 20 : 0;
+        const distance = (1 - vis) * motion.copyDistance * (d < 0 ? -1 : 1);
+        const shift = geo.mobile || reduce || motion.copyAxis !== 'x' ? 0 : side * distance;
+        const lift = reduce ? 0 : geo.mobile ? (1 - vis) * 20 : motion.copyAxis === 'y' ? distance : 0;
         put(copy, 'opacity', vis.toFixed(3));
         put(copy, 'transform', `translate3d(${shift.toFixed(3)}vw, ${lift.toFixed(2)}px, 0)`);
       }
@@ -218,53 +249,70 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
       }
     }
 
-    function goTo(k) {
+    function drainPendingWheel() {
+      if (busy || pendingWheelDirections.length === 0) return;
+      const direction = pendingWheelDirections.shift();
+      const next = clamp(idx + direction, 0, totalSections - 1);
+      if (next === idx) {
+        drainPendingWheel();
+        return;
+      }
+      goTo(next, true);
+    }
+
+    function goTo(k, preservePendingWheel = false) {
       if (k < 0 || k >= totalSections) return;
-      if (busy && k === idx) return;
+      if (!preservePendingWheel) pendingWheelDirections.length = 0;
+      if (!animating && k === idx) return;
 
       busy = true;
       animating = true;
-      if (animRafId) cancelAnimationFrame(animRafId);
-      if (dwellTimer) clearTimeout(dwellTimer);
+      activeAnimation?.pause();
+      activeAnimation = null;
 
       const fromY = window.scrollY;
       const toY = geo.tops[k] ?? (k * window.innerHeight);
       const fromT = progressAt(fromY);
       const toT = k;
-      const dur = reduce ? 250 : DUR;
-      let startTime = null;
+      const targetProjectIndex = Math.min(k, projectCount - 1);
+      const transition = PROJECT_TRANSITIONS[targetProjectIndex];
+      const direction = Math.sign(toT - fromT);
 
-      function step(now) {
-        if (!animating) return;
-        if (startTime === null) startTime = now;
-        const elapsed = now - startTime;
-        const p = clamp(elapsed / dur);
-        const easedP = ease(p);
-
-        const currentY = fromY + (toY - fromY) * easedP;
-        const currentT = fromT + (toT - fromT) * easedP;
-
-        lastProgrammaticY = currentY;
-        window.scrollTo(0, currentY);
-        render(currentT);
-
-        if (p < 1) {
-          animRafId = requestAnimationFrame(step);
-          return;
-        }
-
+      if (reduce) {
         lastProgrammaticY = toY;
         window.scrollTo(0, toY);
         idx = k;
-        render(k);
+        render(k, targetProjectIndex, direction);
         animating = false;
-
-        dwellTimer = setTimeout(() => {
-          busy = false;
-        }, reduce ? 0 : DWELL); // Exactly 1.5 sec total lock (1200 + 300)
+        busy = false;
+        drainPendingWheel();
+        return;
       }
 
-      animRafId = requestAnimationFrame(step);
+      const animationProgress = { value: 0 };
+      activeAnimation = animate(animationProgress, {
+        value: [0, 1],
+        duration: transition.duration,
+        ease: transition.ease,
+        onUpdate: () => {
+          const progress = animationProgress.value;
+          const currentY = fromY + (toY - fromY) * progress;
+          const currentT = fromT + (toT - fromT) * progress;
+          lastProgrammaticY = currentY;
+          window.scrollTo(0, currentY);
+          render(currentT, targetProjectIndex, direction);
+        },
+        onComplete: () => {
+          lastProgrammaticY = toY;
+          window.scrollTo(0, toY);
+          idx = k;
+          render(k, targetProjectIndex, direction);
+          animating = false;
+          busy = false;
+          activeAnimation = null;
+          drainPendingWheel();
+        },
+      });
     }
 
     function handleScroll() {
@@ -274,8 +322,9 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
           return;
         }
         // Manual scrollbar drag detected! Cancel programmatic animation and synchronize
-        if (animRafId) cancelAnimationFrame(animRafId);
-        if (dwellTimer) clearTimeout(dwellTimer);
+        activeAnimation?.pause();
+        activeAnimation = null;
+        pendingWheelDirections.length = 0;
         animating = false;
         busy = false;
       }
@@ -288,7 +337,19 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
       });
     }
 
-    let lastWheelTime = 0;
+    function queueWheelStep(direction) {
+      if (busy) {
+        if (pendingWheelDirections.length < totalSections) pendingWheelDirections.push(direction);
+        return;
+      }
+
+      const currentP = progressAt(window.scrollY);
+      const nextIdx = direction > 0
+        ? Math.min(Math.floor(currentP + 0.05) + 1, totalSections - 1)
+        : Math.max(Math.ceil(currentP - 0.05) - 1, 0);
+      goTo(nextIdx);
+    }
+
     function handleWheel(e) {
       if (e.ctrlKey) return;
 
@@ -297,27 +358,25 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
         // Allow natural scrolling inside contact/footer section
         if (window.scrollY <= contactTop + 10 && e.deltaY < -15) {
           e.preventDefault();
-          if (!busy) {
-            goTo(projectCount - 1);
-          }
+        } else {
+          return;
         }
-        return;
-      }
-
-      e.preventDefault();
-      const now = performance.now();
-      const gap = now - lastWheelTime;
-      lastWheelTime = now;
-      if (busy || gap < WHEEL_GAP || Math.abs(e.deltaY) < 8) return;
-
-      const currentP = progressAt(window.scrollY);
-      if (e.deltaY > 0) {
-        const nextIdx = Math.min(Math.floor(currentP + 0.05) + 1, totalSections - 1);
-        goTo(nextIdx);
       } else {
-        const prevIdx = Math.max(Math.ceil(currentP - 0.05) - 1, 0);
-        goTo(prevIdx);
+        e.preventDefault();
       }
+
+      const now = performance.now();
+      if (now - lastWheelTime > WHEEL_GESTURE_GAP) wheelGestureConsumed = false;
+      lastWheelTime = now;
+      if (wheelGestureResetTimer) clearTimeout(wheelGestureResetTimer);
+      wheelGestureResetTimer = setTimeout(() => {
+        wheelGestureConsumed = false;
+        wheelGestureResetTimer = null;
+      }, WHEEL_GESTURE_GAP);
+      if (wheelGestureConsumed || Math.abs(e.deltaY) < 8) return;
+
+      wheelGestureConsumed = true;
+      queueWheelStep(e.deltaY > 0 ? 1 : -1);
     }
 
     let touchStartY = null;
@@ -377,10 +436,14 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
       }
     }
 
-    let resizeTimer = null;
     function handleResize() {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(() => {
+        activeAnimation?.pause();
+        activeAnimation = null;
+        animating = false;
+        busy = false;
+        pendingWheelDirections.length = 0;
         reduce = reduceMotionMQ.matches;
         measure();
         const p = progressAt(window.scrollY);
@@ -389,7 +452,7 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
       }, 50);
     }
 
-    container._goTo = goTo;
+    goToRef.current = goTo;
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('wheel', handleWheel, { passive: false });
@@ -407,9 +470,11 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
     idx = Math.min(Math.round(initialP), totalSections - 1);
 
     return () => {
-      if (animRafId) cancelAnimationFrame(animRafId);
+      if (goToRef.current === goTo) goToRef.current = null;
+      activeAnimation?.pause();
       if (scrollRafId) cancelAnimationFrame(scrollRafId);
-      if (dwellTimer) clearTimeout(dwellTimer);
+      if (resizeTimer) clearTimeout(resizeTimer);
+      if (wheelGestureResetTimer) clearTimeout(wheelGestureResetTimer);
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('wheel', handleWheel);
       window.removeEventListener('touchstart', handleTouchStart);
@@ -423,9 +488,7 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
   }, [totalSections, projectCount]);
 
   const handleDotClick = (i) => {
-    if (containerRef.current && typeof containerRef.current._goTo === 'function') {
-      containerRef.current._goTo(i);
-    }
+    goToRef.current?.(i);
   };
 
   const handleHeaderNavigate = (e, href, id) => {

@@ -57,8 +57,21 @@ test('section motion exposes subject-specific choreography with a reduced-motion
   }
 
   assert.match(jsx, /IntersectionObserver/);
+  assert.match(jsx, /setIsVisible\(entry\.isIntersecting\)/, 'section choreography should replay when sections re-enter the viewport');
   assert.match(jsx, /prefers-reduced-motion/);
   assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)/);
   assert.match(css, /animation-delay/);
+});
+
+test('project gallery assigns distinct transitions and removes the post-transition dwell', () => {
+  const jsx = read('src/pages/projects/ProjectsPage.jsx');
+
+  assert.match(jsx, /from 'animejs'/, 'Anime.js should drive the gallery transition');
+  assert.match(jsx, /reveal: 'radial'/);
+  assert.match(jsx, /reveal: 'horizontal'/);
+  assert.match(jsx, /reveal: 'vertical'/);
+  assert.match(jsx, /WHEEL_GESTURE_GAP/);
+  assert.doesNotMatch(jsx, /DWELL/, 'the old fixed post-transition lock should be removed');
+  assert.match(jsx, /prefers-reduced-motion/);
 });
 
