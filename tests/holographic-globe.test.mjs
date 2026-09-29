@@ -14,7 +14,7 @@ test('HolographicGlobe component has required canvas lifecycle and accessibility
   assert.ok(content.includes('aria-label') || content.includes('role="img"'), 'Includes accessibility label for canvas');
   assert.ok(content.includes('IntersectionObserver'), 'Suspends detailed rendering while the globe is off-screen');
   assert.ok(content.includes('clock.getDelta'), 'Uses frame-time deltas for consistent globe motion');
-  assert.ok(content.includes('Math.min(window.devicePixelRatio || 1, 1.5)'), 'Caps render resolution for smooth animation');
+  assert.ok(content.includes('Math.min(window.devicePixelRatio || 1, 1.25)'), 'Caps render resolution for smooth animation');
 });
 
 test('dashboard reuses the hero holographic globe and anchors clear the sticky header', () => {

@@ -21,7 +21,7 @@ test('cosmic-background.css defines mature tinted surfaces without neon effects'
 
   assert.match(css, /position:\s*fixed/, 'Must stay fixed across the site');
   assert.match(css, /var\(--color-background\)/, 'Must inherit the theme canvas color');
-  assert.match(css, /rgb\(61 112 79 \/ 0\.16\)/, 'Must use the muted forest wash');
+  assert.match(css, /color-mix\(in srgb,\s*var\(--ithx-canvas-muted\)\s*16%,\s*transparent\)/, 'Must use the muted forest wash');
   assert.match(css, /cosmic-grain/, 'Must include subtle texture');
   assert.doesNotMatch(css, /#00f2fe|twinkleCosmicStar|nebulaPulsePage/, 'Must not retain cyan or animated cosmic effects');
 });

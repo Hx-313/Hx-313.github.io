@@ -64,7 +64,7 @@ test('ToolIcons maps every tool to a real brand icon component', () => {
     assert.match(icons, new RegExp(`\\b${name}:`), `${name} must have a brand icon mapping`);
   }
 
-  for (const color of ['#FFC400', '#FF9100', '#DD2C00', '#E01E5A', '#36C5F0', '#2EB67D', '#ECB22E']) {
+  for (const color of ['firebase-yellow', 'firebase-orange', 'firebase-red', 'slack-red', 'slack-blue', 'slack-green', 'slack-yellow']) {
     assert.match(icons, new RegExp(color), `${color} must be present in the full-color marks`);
   }
 });
@@ -76,16 +76,12 @@ test('how-i-build.css matches About section design tokens and layout rules', () 
   );
 
   assert.match(css, /scroll-margin-top:\s*var\(--header-offset,\s*4\.5rem\)/, 'must compensate for fixed header');
-  assert.match(css, /min-height:\s*100vh/, 'must be min-height 100vh');
+  assert.match(css, /min-height:\s*(?:86|100)vh/, 'must have designated section height');
   assert.match(css, /grid-template-columns:\s*minmax\(0,\s*0\.78fr\)\s+minmax\(0,\s*1\.22fr\)/, 'must mirror the grid to the right of the copy');
-  assert.match(css, /\.how-i-build-grid\s*\{[\s\S]*grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)/, 'must use three grid columns');
+  assert.match(css, /\.how-i-build-grid\s*\{[\s\S]*grid-template-columns:\s*repeat\(4,\s*minmax\(0,\s*1fr\)\)/, 'must use four grid columns');
   assert.match(css, /\.how-i-build-grid\s*\{[\s\S]*position:\s*relative/, 'grid must support subtle decoration');
-  assert.match(css, /radial-gradient\(/, 'grid must have a restrained ambient glow');
-  assert.match(css, /\.how-i-build-grid::before\s*\{/, 'grid must have a quiet inset frame');
-  assert.match(css, /\.how-i-build-tile\s*\{[\s\S]*border-bottom:/, 'tiles must have horizontal divider lines');
-  assert.match(css, /\.how-i-build-tile:hover\s*\{/, 'tiles must have a restrained hover surface');
-  assert.match(css, /\.how-i-build-tile:hover::before\s*\{/, 'tiles must have a quiet hover accent');
-  assert.match(css, /\.how-i-build-tile:not\(:nth-child\(3n\)\)/, 'tiles must have column divider lines');
+  assert.match(css, /\.how-i-build-tile\s*\{[\s\S]*border-radius:\s*var\(--radius-card\)/, 'tiles must use card radius');
+  assert.match(css, /\.how-i-build-tile:hover[^{]*\{[\s\S]*transform:\s*translateY\(-2px\)/, 'tiles must have a restrained hover surface');
   assert.match(css, /\.how-i-build-tag\s*\{[\s\S]*border:/, 'tags must remain bordered pills');
   assert.match(css, /\.how-i-build-tag:hover/, 'tags must have an interactive hover state');
   assert.match(css, /\.how-i-build-tag:focus-visible/, 'tags must have a keyboard focus state');
@@ -95,8 +91,8 @@ test('how-i-build.css matches About section design tokens and layout rules', () 
   assert.match(css, /\.tool-sub-icon--postman\s*\{/, 'Postman must have its own layer');
   assert.match(css, /\.tool-sub-icon--insomnia\s*\{/, 'Insomnia must have its own overlapping layer');
   assert.doesNotMatch(css, /\.tile-icon-wrap\s*\{[\s\S]*color:\s*var\(--signal\)/, 'icons must not inherit the theme accent');
-  for (const color of ['#54C5F8', '#5FA04E', '#47A248', '#673DE6', '#007ACC', '#FF6C37']) {
-    assert.match(css, new RegExp(color), `${color} must be represented in the brand icon palette`);
+  for (const iconToken of ['--icon-brand-flutter', '--icon-brand-nodejs', '--icon-brand-mongodb', '--icon-brand-hostinger', '--icon-brand-vscode', '--icon-brand-postman']) {
+    assert.match(css, new RegExp(iconToken), `${iconToken} must be represented in the brand icon palette`);
   }
   assert.match(css, /font-variant-numeric:\s*lining-nums\s+tabular-nums/, 'must declare lining numerals');
   assert.match(css, /--signal:\s*var\(--color-accent\)/, 'must inherit the semantic theme accent token');

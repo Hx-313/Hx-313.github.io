@@ -55,6 +55,6 @@ test('SiteFooter renders 4-column directory, colophon, and back-to-top control',
   assert.ok(footerCss.includes('.site-footer'), 'CSS defines .site-footer');
   assert.ok(footerCss.includes('.footer-directory-grid'), 'CSS defines .footer-directory-grid');
   assert.ok(footerCss.includes(':focus-visible'), 'CSS defines focus visible outline');
-  assert.ok(footerCss.includes(":root[data-theme='light']"), 'CSS defines light theme styles');
+  assert.ok(footerCss.includes('var(--color-surface)'), 'CSS anchors dark surface across themes');
   assert.ok(footerCss.includes('prefers-reduced-motion'), 'CSS supports reduced motion');
 });
