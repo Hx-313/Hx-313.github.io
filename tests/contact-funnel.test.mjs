@@ -22,12 +22,12 @@ test('contactData exports immutable channels, categories, and operational teleme
   assert.ok(CONTACT_CHANNELS.socials.some((social) => social.url.includes('instagram.com/ithx313')), 'Includes Instagram profile');
 
   assert.ok(Array.isArray(PROJECT_CATEGORIES), 'Project categories is an array');
-  assert.ok(PROJECT_CATEGORIES.includes('Mobile application'));
-  assert.ok(PROJECT_CATEGORIES.includes('Restaurant ordering / POS'));
-  assert.ok(PROJECT_CATEGORIES.includes('Node.js backend / API'));
-  assert.ok(PROJECT_CATEGORIES.includes('Government / civic system'));
+  assert.ok(PROJECT_CATEGORIES.includes('Mobile app'));
+  assert.ok(PROJECT_CATEGORIES.includes('Website or store'));
+  assert.ok(PROJECT_CATEGORIES.includes('Business tool'));
+  assert.ok(PROJECT_CATEGORIES.includes('Connect existing tools'));
 
-  assert.equal(TELEMETRY_DATA.timezone, 'PKT / UTC+5 (Lahore)');
+  assert.equal(TELEMETRY_DATA.timezone, 'PKT / UTC+5 (Rawalpindi)');
   assert.equal(TELEMETRY_DATA.responseTime, '< 2 hours');
   assert.ok(TELEMETRY_DATA.status.includes('Available'));
 });
@@ -35,9 +35,9 @@ test('contactData exports immutable channels, categories, and operational teleme
 test('validateContactForm checks required fields and formats', () => {
   const emptyResult = validateContactForm({ name: '', email: '', message: '' });
   assert.equal(emptyResult.isValid, false);
-  assert.ok(emptyResult.errors.name, 'Name is required');
   assert.ok(emptyResult.errors.email, 'Email is required');
-  assert.ok(emptyResult.errors.message, 'Message is required');
+  assert.equal(emptyResult.errors.name, undefined, 'Name is optional');
+  assert.equal(emptyResult.errors.message, undefined, 'Message is optional');
 
   const invalidEmailResult = validateContactForm({
     name: 'Ada Lovelace',
@@ -50,7 +50,7 @@ test('validateContactForm checks required fields and formats', () => {
   const validResult = validateContactForm({
     name: 'Ada Lovelace',
     email: 'ada@example.com',
-    category: 'Full-Stack SaaS',
+    category: 'Business tool',
     message: 'We are building a distributed POS platform and need technical leadership.',
   });
   assert.equal(validResult.isValid, true);

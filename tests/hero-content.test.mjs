@@ -27,7 +27,7 @@ test('HeroVisual assembles the globe portal and opposing identity arcs', () => {
   const visual = readFileSync(resolve('src/modules/home/presentation/hero/HeroVisual.jsx'), 'utf-8');
   const css = readFileSync(resolve('src/modules/home/presentation/hero/hero.css'), 'utf-8');
 
-  assert.ok(visual.includes('GLOBE_FRAMES'), 'Uses the digital earth frame sequence');
+  assert.ok(visual.includes('HERO_GLOBE_VIDEO'), 'Uses the digital earth video loop');
   assert.ok(visual.includes('HERO_TEXT.orbitVisual.nameArc'), 'Uses the approved top arc identity');
   assert.ok(visual.includes('HERO_TEXT.orbitVisual.rolesArc'), 'Uses the approved role arc');
   assert.ok(visual.includes('proofMetrics'), 'Uses real proof-point KPI data');
@@ -48,6 +48,6 @@ test('HeroVisual assembles the globe portal and opposing identity arcs', () => {
 test('HomePage starts with opening intro hook experience', () => {
   const homePage = readFileSync(resolve('src/modules/home/presentation/HomePage.jsx'), 'utf-8');
 
-  assert.ok(homePage.includes("useState('intro')"), 'Starts with the intro hook experience');
+  assert.ok(homePage.includes("initialExperienceState = 'intro'"), 'Starts with the intro hook experience');
   assert.ok(homePage.includes("transitioning={experienceState === 'handoff'}"), 'Passes handoff state into the hero');
 });

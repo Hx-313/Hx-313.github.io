@@ -44,10 +44,9 @@ test('opening uses the animation asset as a gently cropped spherical layer', () 
   const globe = fs.readFileSync(openingGlobePath, 'utf8');
   const css = fs.readFileSync(openingCssPath, 'utf8');
 
-  assert.match(globe, /import FrameSequence/);
-  assert.match(globe, /import \{ ORB_FRAMES \}/);
-  assert.match(globe, /frames=\{ORB_FRAMES\}/);
-  assert.match(globe, /frameDuration=\{150\}/);
+  assert.match(globe, /import LoopVideo/);
+  assert.match(globe, /import \{ OPENING_ORB_VIDEO \}/);
+  assert.match(globe, /src=\{OPENING_ORB_VIDEO\}/);
   assert.match(globe, /opening-asset-globe-frame/);
   assert.match(css, /\.opening-asset-globe-crop\s*\{[^}]*clip-path:\s*circle\(40% at 50% 50%\)/s);
   assert.match(css, /openingAssetGlobeFloat\s+8s\s+ease-in-out\s+infinite/);
@@ -168,8 +167,8 @@ test('mascots keep a padded left and right lane with a measured entrance', () =>
   const jsx = fs.readFileSync(openingJsxPath, 'utf8');
   const css = fs.readFileSync(openingCssPath, 'utf8');
 
-  assert.match(css, /\.opening-mascot--aero\s*\{\s*left:\s*20%/);
-  assert.match(css, /\.opening-mascot--dash\s*\{\s*left:\s*80%/);
+  assert.match(css, /\.opening-mascot--aero\s*\{\s*left:\s*16%/);
+  assert.match(css, /\.opening-mascot--dash\s*\{\s*left:\s*84%/);
   assert.match(jsx, /createTimeline\(\{ defaults: \{ ease: 'outCubic' \} \}\)/);
 });
 
