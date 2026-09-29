@@ -100,12 +100,12 @@
   position: relative;
   max-width: 1240px;
   margin: 0 auto;
-  padding: 90px 44px 110px;
+  padding: 68px 44px 82px;
 }
 
 @media (max-width: 640px) {
   .about-container {
-    padding: 60px 22px 80px;
+    padding: 48px 22px 62px;
   }
 }
 

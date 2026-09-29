@@ -32,10 +32,7 @@ export default function SectionReveal({ motion = 'services', className = '', id,
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
+        setIsVisible(entry.isIntersecting);
       },
       {
         rootMargin: '0px 0px -12% 0px',

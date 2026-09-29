@@ -22,7 +22,17 @@ test('SiteHeader component contains tactical navigation, live telemetry, socials
   assert.ok(labels.includes('06 Tools'), 'should contain tools nav item');
   assert.ok(labels.includes('07 Contact'), 'should contain Contact nav item');
   assert.ok(labels.includes('08 Testimonials'), 'should contain testimonials nav item');
+  assert.deepEqual(HEADER_TEXT.topLevelNavIds, ['top', 'projects', 'contact']);
+  assert.deepEqual(
+    HEADER_TEXT.navGroups.map((group) => [group.label, group.itemIds]),
+    [
+      ['Capabilities', ['services', 'domains', 'tools']],
+      ['About', ['about', 'certifications', 'testimonials']],
+    ],
+    'related sections should remain grouped in the primary navigation'
+  );
   assert.match(jsx, /HEADER_TEXT\.navItems/, 'SiteHeader should reference HEADER_TEXT.navItems');
+  assert.match(jsx, /HEADER_TEXT\.navGroups/, 'SiteHeader should reference grouped navigation data');
   assert.match(jsx, /aria-current=\{isActive \? 'location' : undefined\}/, 'should set aria-current="location" for active section');
   assert.match(jsx, /IntersectionObserver/, 'should use IntersectionObserver for performant scroll-spying');
   assert.match(jsx, /prefers-reduced-motion/, 'should avoid smooth scrolling for reduced-motion users');
@@ -62,6 +72,7 @@ test('header.css defines sticky styling, frosted backdrop, light theme tokens, a
   assert.match(css, /:root\[data-theme='light'\]\s+\.site-header/, 'must have light theme styling');
   assert.match(css, /@media\s*\(max-width:\s*980px\)/, 'must contain responsive mobile breakpoint');
   assert.match(css, /\.mobile-nav-drawer/, 'must contain mobile drawer styles');
+  assert.match(css, /\.nav-dropdown/, 'must contain grouped desktop navigation styles');
   assert.match(css, /height:\s*100dvh/, 'mobile drawer must span the viewport height');
 });
 

@@ -266,8 +266,8 @@
   will-change: transform, opacity;
 }
 
-.opening-mascot--aero { left: 36%; }
-.opening-mascot--dash { left: 64%; }
+.opening-mascot--aero { left: 16%; }
+.opening-mascot--dash { left: 84%; }
 .opening-mascot > svg {
   position: relative;
   z-index: 1;
@@ -556,8 +556,8 @@
 
 @media (max-width: 980px) {
   .opening-network-globe { width: min(108vw, 92vh); }
-  .opening-mascot--dash { left: 64%; }
-  .opening-mascot--aero { left: 36%; }
+  .opening-mascot--dash { left: 84%; }
+  .opening-mascot--aero { left: 16%; }
   .opening-projector { width: min(42vw, 360px); }
 }
 

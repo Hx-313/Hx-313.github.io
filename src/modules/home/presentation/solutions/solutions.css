@@ -1,5 +1,5 @@
 .solutions-section {
-  padding: clamp(4.5rem, 9vw, 8rem) 0;
+  padding: clamp(3.5rem, 6vw, 5.5rem) 0;
   border-top: none;
   background: transparent;
   color: var(--color-foreground);

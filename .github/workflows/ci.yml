@@ -1,0 +1,30 @@
+name: CI
+on:
+    push:
+        branches: [deployment, main]
+    pull_request:
+        branches: [deployment, main]
+permissions:
+    contents: read
+
+jobs:
+    test:
+        name: Test and build node(24)
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout repository
+              uses: actions/checkout@v4
+            - name: Set up node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version-file: '.nvmrc'
+                  cache: npm
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run Tests
+              run: npm test
+
+            - name: Build
+              run: npm run build

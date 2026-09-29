@@ -408,7 +408,7 @@
 .hero-globe-portal__ring {
   position: absolute;
   top: 50%;
-  left: 62%;
+  left: 50%;
   width: min(44vw, 36rem);
   aspect-ratio: 1;
   border: 1px solid color-mix(in srgb, var(--color-accent) 42%, transparent);
@@ -428,7 +428,7 @@
 .hero-globe-portal__crosshair {
   position: absolute;
   top: 50%;
-  left: 62%;
+  left: 50%;
   z-index: 2;
   display: block;
   background: color-mix(in srgb, var(--color-foreground) 25%, transparent);
@@ -436,14 +436,14 @@
 }
 
 .hero-globe-portal__crosshair--horizontal {
-  left: 62%;
+  left: 50%;
   width: min(44vw, 36rem);
   height: 1px;
   transform: translate(-50%, -50%);
 }
 
 .hero-globe-portal__crosshair--vertical {
-  left: 62%;
+  left: 50%;
   width: 1px;
   height: min(44vw, 36rem);
   transform: translate(-50%, -50%);
