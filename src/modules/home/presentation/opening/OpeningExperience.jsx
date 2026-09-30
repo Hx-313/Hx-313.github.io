@@ -409,6 +409,9 @@ export default function OpeningExperience({ onHandoff = noop, onComplete = noop 
 
       {/* Tactical Sci-Fi Loader / Boot Indicator */}
       <div className="opening-boot-hud" data-opening-boot-hud aria-hidden="true">
+        <div className="opening-boot-identity">
+          {INTRO_TEXT.bootHud.identity}
+        </div>
         <div className="opening-boot-badge">
           <span className="opening-boot-beacon" />
           <span className="opening-boot-title">
