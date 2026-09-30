@@ -536,6 +536,21 @@
   color: var(--footer-signal);
 }
 
+.colophon-item--studio {
+  width: 100%;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--footer-line);
+  margin-bottom: 0.5rem;
+  color: var(--footer-muted);
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+.colophon-item--studio strong {
+  color: var(--footer-primary);
+  font-weight: 600;
+}
+
 .colophon-item--timezone {
   font-family: var(--font-mono, monospace);
 }

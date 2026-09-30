@@ -4,9 +4,8 @@ import { FaApple, FaGooglePlay } from 'react-icons/fa6';
 import { FiArrowUpRight } from 'react-icons/fi';
 
 import { showcaseProjects } from '../../data/projects.js';
-import SiteHeader from '../../modules/home/presentation/header/SiteHeader.jsx';
 import ContactSection from '../../modules/contact/presentation/ContactSection.jsx';
-import SiteFooter from '../../modules/footer/presentation/SiteFooter.jsx';
+import SEO from '../../shared/seo/SEO.jsx';
 import './projects-page.css';
 
 const STACK_QUERY = '(max-width: 900px) and (min-height: 521px)';
@@ -499,14 +498,10 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
 
   return (
     <div className="projects-page" ref={containerRef} data-theme={getThemeForIndex(0)}>
-      {/* Universal SiteHeader with Main Page Routes & ThemeToggle */}
-      <SiteHeader
-        theme={theme}
-        setTheme={setTheme}
-        onNavigate={handleHeaderNavigate}
-        activeSectionOverride={activeIdx >= projectCount ? 'contact' : 'projects'}
+      <SEO
+        title="Projects by Hafiz Ali Abdullah — Flutter & Node.js Apps"
+        description="Selected work by Hafiz Ali Abdullah: Dietify, WOS, Speak & Translate, and ExpenseFlow. Flutter apps with Node.js backends — shipped to production."
       />
-
       {/* Side Navigation Dots */}
       <nav className="projects-page__dots" aria-label="Projects navigation deck">
         {projects.map((project, i) => (
@@ -600,7 +595,7 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
         );
       })}
 
-      {/* Section 4: Contact Form tailored to Projects + SiteFooter */}
+      {/* Section 4: Contact Form tailored to Projects */}
       <div
         className={`projects-page__contact-wrap ${getThemeForIndex(projectCount)}`}
         data-title="Contact & Colophon"
@@ -612,7 +607,6 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
           titleAccent="Let's engineer it."
           lead="From offline-first Flutter applications to complex financial systems and AI engines, let's discuss requirements, technical architecture, and deployment milestones."
         />
-        <SiteFooter />
       </div>
     </div>
   );

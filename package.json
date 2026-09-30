@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "postbuild": "react-snap",
     "preview": "vite preview",
     "test": "node --test tests/*.test.mjs"
   },
@@ -17,7 +18,9 @@
     "motion": "^13.1.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-helmet-async": "^3.0.0",
     "react-icons": "^5.7.0",
+    "react-router-dom": "^7.18.4",
     "three": "^0.169.0"
   },
   "devDependencies": {
@@ -25,6 +28,24 @@
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.7.0",
     "playwright": "^1.63.0",
+    "react-snap": "^1.23.0",
     "vite": "^6.4.1"
+  },
+  "reactSnap": {
+    "source": "dist",
+    "include": [
+      "/",
+      "/about",
+      "/contact",
+      "/projects",
+      "/projects/dietify",
+      "/projects/wos",
+      "/projects/speak-and-translate",
+      "/projects/expenseflow"
+    ],
+    "puppeteerArgs": [
+      "--no-sandbox",
+      "--disable-setuid-sandbox"
+    ]
   }
 }

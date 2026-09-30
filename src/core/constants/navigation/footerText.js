@@ -121,5 +121,9 @@ export const FOOTER_TEXT = Object.freeze({
     timezone: 'PKT / UTC+5 (Rawalpindi)',
     craft: 'Engineered with React, Vite, Motion & Three.js',
     copyright: '© 2026 Hafiz Ali Abdullah. All rights reserved.',
+    studioText: {
+      part1: 'Hafiz Ali Abdullah — Flutter & Node.js Developer.',
+      part2: 'Solithx by ITHX — with ethics.'
+    },
   }),
 });

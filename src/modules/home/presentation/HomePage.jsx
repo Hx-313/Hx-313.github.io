@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 import OpeningExperience from './opening/OpeningExperience.jsx';
-import CosmicBackground from './CosmicBackground.jsx';
-import SiteHeader from './header/SiteHeader.jsx';
 import Hero from './hero/Hero.jsx';
 import AboutSection from '../../about/presentation/AboutSection.jsx';
 import SolutionsSection from './solutions/SolutionsSection.jsx';
@@ -12,15 +10,13 @@ import CertificationsSection from './certifications/CertificationsSection.jsx';
 import TestimonialsSection from './testimonials/TestimonialsSection.jsx';
 import SectionReveal from '../../../shared/motion/SectionReveal.jsx';
 import ContactSection from '../../contact/presentation/ContactSection.jsx';
-import SiteFooter from '../../footer/presentation/SiteFooter.jsx';
-import { useTheme } from '../../../shared/theme/useTheme.js';
+import SEO from '../../../shared/seo/SEO.jsx';
 import { useCommandCenter } from '../../../hooks/useCommandCenter.js';
 import './home.css';
 import './command-center/command-center.css';
 
 export default function HomePage({ initialExperienceState = 'intro', targetSection = null }) {
   const [experienceState, setExperienceState] = useState(initialExperienceState);
-  const { theme, setTheme } = useTheme();
   const commandCenter = useCommandCenter();
   const startHandoff = useCallback(() => {
     setExperienceState((state) => (state === 'intro' ? 'handoff' : state));
@@ -60,56 +56,53 @@ export default function HomePage({ initialExperienceState = 'intro', targetSecti
   }, [initialExperienceState, targetSection]);
 
   return (
-    <div className="home-page">
-      <CosmicBackground />
+    <>
+      <SEO
+        title="Hafiz Ali Abdullah — Flutter & Node.js Developer | Mobile App & Backend Systems"
+        description="I'm Hafiz Ali Abdullah — a Flutter developer and Node.js backend engineer. I build production mobile apps for Android and iOS, plus the APIs and dashboards behind them. 15+ apps shipped, 100K+ downloads."
+      />
       {!isSiteReady && <OpeningExperience onHandoff={startHandoff} onComplete={completeOpening} />}
       <div
         className={`site-experience is-${experienceState}`}
         aria-hidden={isSiteReady ? 'false' : 'true'}
         inert={isSiteReady ? undefined : ''}
       >
-        <SiteHeader theme={theme} setTheme={setTheme} />
+        <Hero revealed={isSiteVisible} transitioning={experienceState === 'handoff'} />
 
-        <main id="top">
-          <Hero revealed={isSiteVisible} transitioning={experienceState === 'handoff'} />
+        <SectionReveal id="projects" motion="projects" className="portfolio-flow-section">
+          <span id="command-center" className="section-anchor-compat" aria-hidden="true" />
+          <span id="systems" className="section-anchor-compat" aria-hidden="true" />
+          <CommandCenter controller={commandCenter} />
+        </SectionReveal>
 
-          <SectionReveal id="projects" motion="projects" className="portfolio-flow-section">
-            <span id="command-center" className="section-anchor-compat" aria-hidden="true" />
-            <span id="systems" className="section-anchor-compat" aria-hidden="true" />
-            <CommandCenter controller={commandCenter} />
-          </SectionReveal>
+        <SectionReveal motion="about" className="portfolio-flow-section">
+          <AboutSection />
+        </SectionReveal>
 
-          <SectionReveal motion="about" className="portfolio-flow-section">
-            <AboutSection />
-          </SectionReveal>
+        <SectionReveal motion="services" className="portfolio-flow-section">
+          <Services />
+        </SectionReveal>
 
-          <SectionReveal motion="services" className="portfolio-flow-section">
-            <Services />
-          </SectionReveal>
+        <SectionReveal id="domains" motion="domains" className="portfolio-flow-section">
+          <SolutionsSection />
+        </SectionReveal>
 
-          <SectionReveal id="domains" motion="domains" className="portfolio-flow-section">
-            <SolutionsSection />
-          </SectionReveal>
+        <SectionReveal motion="certifications" className="portfolio-flow-section">
+          <CertificationsSection />
+        </SectionReveal>
 
-          <SectionReveal motion="certifications" className="portfolio-flow-section">
-            <CertificationsSection />
-          </SectionReveal>
+        <SectionReveal id="tools" motion="tools" className="portfolio-flow-section">
+          <HowIBuild />
+        </SectionReveal>
 
-          <SectionReveal id="tools" motion="tools" className="portfolio-flow-section">
-            <HowIBuild />
-          </SectionReveal>
+        <SectionReveal motion="contact" className="portfolio-flow-section">
+          <ContactSection />
+        </SectionReveal>
 
-          <SectionReveal motion="contact" className="portfolio-flow-section">
-            <ContactSection />
-          </SectionReveal>
-
-          <SectionReveal motion="testimonials" className="portfolio-flow-section">
-            <TestimonialsSection />
-          </SectionReveal>
-        </main>
-
-        <SiteFooter />
+        <SectionReveal motion="testimonials" className="portfolio-flow-section">
+          <TestimonialsSection />
+        </SectionReveal>
       </div>
-    </div>
+    </>
   );
 }

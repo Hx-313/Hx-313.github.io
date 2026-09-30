@@ -184,6 +184,13 @@ export default function SiteFooter() {
         </div>
 
         <div className="footer-colophon-bar">
+          <div className="colophon-item colophon-item--studio">
+            <span>
+              <strong>Hafiz Ali Abdullah</strong> — Flutter & Node.js Developer. <br />
+              <strong>Solithx</strong> by <strong>ITHX</strong> — with ethics.
+            </span>
+          </div>
+
           <div className="colophon-item colophon-item--timezone">
             <LuClock3 aria-hidden="true" />
             <span>{FOOTER_COLOPHON.timezone}</span>

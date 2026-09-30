@@ -5,6 +5,7 @@ export default defineConfig({
   plugins: [react()],
   base: process.env.VITE_BASE || '/',
   build: {
+    target: 'es2015',
     rollupOptions: {
       output: {
         manualChunks: {
