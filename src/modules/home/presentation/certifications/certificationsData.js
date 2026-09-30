@@ -1,15 +1,27 @@
+import certiportJavaImg from '../../../../../certifications/Cert5816324103-1.webp';
+import courseraGgImg from '../../../../../certifications/Coursera GG2Y2MZOL6ZU-1.webp';
+import courseraTuImg from '../../../../../certifications/Coursera TUZAVQAMZ1G1-1.webp';
+import navttcImg from '../../../../../certifications/navttc-1.webp';
+import sscImg from '../../../../../certifications/1 pos in ssc1-1.webp';
+import urduSpeechImg from '../../../../../certifications/2nd pos in Urdu soeach-1.webp';
+import icsImg from '../../../../../certifications/best achievement in ics-1.webp';
+import readersClubImg from '../../../../../certifications/g sec of readers club-1.webp';
+import classSixImg from '../../../../../certifications/merit in 6 class pos 1-1.webp';
+import cricketImg from '../../../../../certifications/participate in cricket-1.webp';
+import wafaqImg from '../../../../../certifications/wafaq ul madaris-1.webp';
+
 const assets = Object.freeze({
-  certiportJava: new URL('../../../../../certifications/Cert5816324103-1.webp', import.meta.url).href,
-  courseraGg: new URL('../../../../../certifications/Coursera GG2Y2MZOL6ZU-1.webp', import.meta.url).href,
-  courseraTu: new URL('../../../../../certifications/Coursera TUZAVQAMZ1G1-1.webp', import.meta.url).href,
-  navttc: new URL('../../../../../certifications/navttc-1.webp', import.meta.url).href,
-  ssc: new URL('../../../../../certifications/1 pos in ssc1-1.webp', import.meta.url).href,
-  urduSpeech: new URL('../../../../../certifications/2nd pos in Urdu soeach-1.webp', import.meta.url).href,
-  ics: new URL('../../../../../certifications/best achievement in ics-1.webp', import.meta.url).href,
-  readersClub: new URL('../../../../../certifications/g sec of readers club-1.webp', import.meta.url).href,
-  classSix: new URL('../../../../../certifications/merit in 6 class pos 1-1.webp', import.meta.url).href,
-  cricket: new URL('../../../../../certifications/participate in cricket-1.webp', import.meta.url).href,
-  wafaq: new URL('../../../../../certifications/wafaq ul madaris-1.webp', import.meta.url).href,
+  certiportJava: certiportJavaImg,
+  courseraGg: courseraGgImg,
+  courseraTu: courseraTuImg,
+  navttc: navttcImg,
+  ssc: sscImg,
+  urduSpeech: urduSpeechImg,
+  ics: icsImg,
+  readersClub: readersClubImg,
+  classSix: classSixImg,
+  cricket: cricketImg,
+  wafaq: wafaqImg,
 });
 
 const preview = (src, alt) => Object.freeze({ type: 'image', src, alt });

@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { FaGithub, FaInstagram, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa6';
 import { LuArrowUpRight, LuCalendarDays, LuClock3, LuMail, LuMapPin, LuPhone } from 'react-icons/lu';
 import {
@@ -26,7 +27,9 @@ const CONTACT_ICONS = Object.freeze({
 
 export default function SiteFooter() {
   const scrollToTop = useCallback((event) => {
-    event.preventDefault();
+    // If it's a Link, we don't prevent default, or maybe we do? 
+    // Just window.scrollTo is fine. Let's let the link work but also scroll.
+    // The link will be to="/" and we want it to scroll to top.
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
@@ -100,9 +103,15 @@ export default function SiteFooter() {
             <ul className="footer-link-list">
               {FOOTER_NAVIGATION.map((item) => (
                 <li key={item.href}>
-                  <a href={item.href} className="footer-nav-link">
-                    {item.label}
-                  </a>
+                  {item.href.startsWith('/') ? (
+                    <Link to={item.href} className="footer-nav-link">
+                      {item.label}
+                    </Link>
+                  ) : (
+                    <a href={item.href} className="footer-nav-link">
+                      {item.label}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -177,10 +186,10 @@ export default function SiteFooter() {
             <h3>{FOOTER_TEXT.conversation.title}</h3>
             <p>{FOOTER_TEXT.conversation.description}</p>
           </div>
-          <a href="#contact" className="footer-project-cta">
+          <Link to="/contact" className="footer-project-cta">
             <span>{FOOTER_TEXT.conversation.action}</span>
             <LuArrowUpRight aria-hidden="true" />
-          </a>
+          </Link>
         </div>
 
         <div className="footer-colophon-bar">
@@ -202,15 +211,15 @@ export default function SiteFooter() {
 
           <div className="colophon-item colophon-item--copyright">
             <span>{FOOTER_COLOPHON.copyright}</span>
-            <a
-              href="#top"
+            <Link
+              to="/"
               onClick={scrollToTop}
               className="back-to-top-btn"
               aria-label={FOOTER_TEXT.aria.backToTop}
             >
               <span>{FOOTER_TEXT.backToTop}</span>
               <LuArrowUpRight aria-hidden="true" />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

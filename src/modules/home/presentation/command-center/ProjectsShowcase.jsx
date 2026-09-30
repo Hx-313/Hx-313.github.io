@@ -1,5 +1,6 @@
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 import './projects-showcase.css';
 
@@ -57,10 +58,10 @@ function SeeAllProjectsCard({ carouselState }) {
           <span>Start with a project brief</span>
           <span aria-hidden="true">↗</span>
         </a>
-        <a className="projects-showcase__secondary-link" href="#/projects" tabIndex={carouselState === 'active' ? 0 : -1}>
+        <Link className="projects-showcase__secondary-link" to="/projects" tabIndex={carouselState === 'active' ? 0 : -1}>
           <span>Explore project gallery</span>
           <span className="arrow" aria-hidden="true">→</span>
-        </a>
+        </Link>
       </div>
 
       <span className="projects-showcase__hold-note">You are here for a moment — choose a direction.</span>

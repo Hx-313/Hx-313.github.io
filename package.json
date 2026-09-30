@@ -43,6 +43,9 @@
       "/projects/speak-and-translate",
       "/projects/expenseflow"
     ],
+    "publicPath": "/",
+    "fixWebpackChunksIssue": false,
+    "removeBlobs": true,
     "puppeteerArgs": [
       "--no-sandbox",
       "--disable-setuid-sandbox"

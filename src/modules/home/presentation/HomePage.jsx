@@ -55,6 +55,10 @@ export default function HomePage({ initialExperienceState = 'intro', targetSecti
     };
   }, [initialExperienceState, targetSection]);
 
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => { setIsClient(navigator.userAgent !== 'ReactSnap'); }, []);
+  const hideMainContent = !isSiteReady && isClient;
+
   return (
     <>
       <SEO
@@ -64,8 +68,8 @@ export default function HomePage({ initialExperienceState = 'intro', targetSecti
       {!isSiteReady && <OpeningExperience onHandoff={startHandoff} onComplete={completeOpening} />}
       <div
         className={`site-experience is-${experienceState}`}
-        aria-hidden={isSiteReady ? 'false' : 'true'}
-        inert={isSiteReady ? undefined : ''}
+        aria-hidden={hideMainContent ? 'true' : undefined}
+        inert={hideMainContent ? '' : undefined}
       >
         <Hero revealed={isSiteVisible} transitioning={experienceState === 'handoff'} />
 

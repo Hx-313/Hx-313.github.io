@@ -1,0 +1,5 @@
+/* NotFound styles */
+.not-found-container {
+  max-width: var(--ithx-container-max);
+  margin: 0 auto;
+}

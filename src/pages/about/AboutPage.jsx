@@ -7,7 +7,7 @@ export default function AboutPage() {
     <>
       <SEO
         title="About Hafiz Ali Abdullah — Flutter Developer & Node.js Engineer"
-        description="Hafiz Ali Abdullah is a Flutter and Node.js developer based in Pakistan. Founder of ITHX. I build mobile applications, REST APIs, and backend systems for production use."
+        description="Hafiz Ali Abdullah is a Flutter and Node.js developer based in Pakistan. I build mobile applications, REST APIs, and backend systems for production use."
       />
       <div style={{ paddingTop: '80px' }}>
         <AboutSection />

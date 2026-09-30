@@ -6,6 +6,8 @@ import ContactPage from '../pages/contact/ContactPage.jsx';
 import ProjectsPage from '../pages/projects/ProjectsPage.jsx';
 import ProjectDetailPage from '../pages/projects/ProjectDetailPage.jsx';
 
+import NotFound from '../pages/not-found/NotFound.jsx';
+
 export default function App() {
   return (
     <Routes>
@@ -15,6 +17,7 @@ export default function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/projects" element={<ProjectsPage theme="dark" setTheme={() => {}} onNavigate={() => {}} />} />
         <Route path="/projects/:slug" element={<ProjectDetailPage />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
