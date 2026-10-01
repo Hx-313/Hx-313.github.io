@@ -27,9 +27,7 @@ const CONTACT_ICONS = Object.freeze({
 
 export default function SiteFooter() {
   const scrollToTop = useCallback((event) => {
-    // If it's a Link, we don't prevent default, or maybe we do? 
-    // Just window.scrollTo is fine. Let's let the link work but also scroll.
-    // The link will be to="/" and we want it to scroll to top.
+    event.preventDefault();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
@@ -211,15 +209,15 @@ export default function SiteFooter() {
 
           <div className="colophon-item colophon-item--copyright">
             <span>{FOOTER_COLOPHON.copyright}</span>
-            <Link
-              to="/"
+            <a
+              href="#top"
               onClick={scrollToTop}
               className="back-to-top-btn"
               aria-label={FOOTER_TEXT.aria.backToTop}
             >
               <span>{FOOTER_TEXT.backToTop}</span>
               <LuArrowUpRight aria-hidden="true" />
-            </Link>
+            </a>
           </div>
         </div>
       </div>

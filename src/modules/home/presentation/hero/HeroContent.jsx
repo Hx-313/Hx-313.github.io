@@ -1,7 +1,6 @@
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa';
 import { FiMail } from 'react-icons/fi';
 import { contactLinks, siteLinks } from '../../../../core/constants.js';
-import { Link } from 'react-router-dom';
 import { HERO_TEXT } from '../../../../core/constants/hero/heroText.js';
 
 const SOCIAL_LINKS = [
@@ -42,10 +41,10 @@ export default function HeroContent() {
       </p>
 
       <div className="hero-actions" data-hero-enter style={{ '--hero-enter-delay': '450ms' }}>
-        <Link className="hero-action hero-action--primary" to="/projects">
+        <a className="hero-action hero-action--primary" href="#projects">
           <span>{HERO_TEXT.actions.seeWork}</span>
           <span aria-hidden="true">↘</span>
-        </Link>
+        </a>
         <a className="hero-action hero-action--secondary" href="#contact">
           <span>{HERO_TEXT.actions.letPlan}</span>
           <span aria-hidden="true">↗</span>

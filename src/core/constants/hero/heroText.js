@@ -2,17 +2,17 @@ export const HERO_TEXT = Object.freeze({
   kicker: 'Flutter & Node.js Developer · Mobile Apps & Backend Systems',
 
   title: Object.freeze({
-    prefix: 'I build mobile apps',
-    highlight: 'that hold together.',
-    combined: 'I build mobile apps that hold together.',
+    prefix: 'Built to',
+    highlight: 'hold together.',
+    combined: 'Built to hold together.',
   }),
 
   description:
     'Flutter developer and Node.js backend engineer. I build production mobile apps for Android and iOS — plus the APIs, dashboards, and workflows behind them. From first screen to deployed system.',
 
   actions: Object.freeze({
-    seeWork: 'See My Work',
-    letPlan: "Let's Work Together",
+    seeWork: 'See Work',
+    letPlan: "Let's Plan",
   }),
 
   socials: Object.freeze({
