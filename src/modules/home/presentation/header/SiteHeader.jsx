@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { contactLinks, siteLinks } from '../../../../core/constants.js';
 import { HEADER_TEXT } from '../../../../core/constants/navigation/headerText.js';
 import ThemeToggle from '../../../../shared/theme/ThemeToggle.jsx';
@@ -19,6 +20,8 @@ export default function SiteHeader({ theme, setTheme, onNavigate, activeSectionO
   const [isScrolled, setIsScrolled] = useState(false);
   const [openNavGroup, setOpenNavGroup] = useState(null);
   const desktopNavRef = useRef(null);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const updateClock = () => {
@@ -91,7 +94,20 @@ export default function SiteHeader({ theme, setTheme, onNavigate, activeSectionO
       window.removeEventListener('scroll', handleScrollScrolled);
       observer.disconnect();
     };
-  }, []);
+  }, [location.pathname]);
+
+  // Handle hash scrolling when route changes or component mounts
+  useEffect(() => {
+    if (location.hash) {
+      setTimeout(() => {
+        const target = document.querySelector(location.hash);
+        if (target) {
+          const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+        }
+      }, 100);
+    }
+  }, [location.hash, location.pathname]);
 
   // Close open navigation surfaces on Escape key
   useEffect(() => {
@@ -131,32 +147,55 @@ export default function SiteHeader({ theme, setTheme, onNavigate, activeSectionO
   }, [isMobileOpen]);
 
   const handleNavClick = useCallback((e, href, id) => {
-    if (href.startsWith('#')) {
-      e.preventDefault();
-      setIsMobileOpen(false);
-      setOpenNavGroup(null);
-      setActiveSection(id);
-      if (typeof onNavigate === 'function') {
-        onNavigate(e, href, id);
-        return;
+    setIsMobileOpen(false);
+    setOpenNavGroup(null);
+    
+    // If the path matches the current path but has a hash
+    const [path, hash] = href.split('#');
+    
+    if (path === '' || path === location.pathname || (path === '/' && location.pathname === '/')) {
+      if (hash) {
+        e.preventDefault();
+        setActiveSection(id);
+        if (typeof onNavigate === 'function') {
+          onNavigate(e, href, id);
+          return;
+        }
+        const target = document.querySelector(`#${hash}`);
+        if (target) {
+          const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+        }
+        window.history.pushState(null, '', href);
+      } else if (href === '/') {
+        e.preventDefault();
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
       }
-      const target = document.querySelector(href);
-      if (target) {
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
-      } else {
-        window.location.hash = href;
-      }
-    } else {
-      setIsMobileOpen(false);
     }
-  }, [onNavigate]);
+  }, [onNavigate, location.pathname]);
 
   const currentActive = activeSectionOverride || activeSection;
 
   const renderNavLink = (item, { mobile = false, menuItem = false } = {}) => {
     const isActive = currentActive === item.id;
     const linkClassName = mobile ? 'mobile-nav-link' : 'nav-dropdown-link';
+    const isInternal = item.href.startsWith('/');
+
+    if (isInternal) {
+      return (
+        <Link
+          to={item.href}
+          className={`${linkClassName} ${isActive ? 'is-active' : ''}`}
+          role={menuItem ? 'menuitem' : undefined}
+          aria-label={item.shortLabel}
+          aria-current={isActive ? 'location' : undefined}
+          onClick={(e) => handleNavClick(e, item.href, item.id)}
+        >
+          <span className={mobile ? 'mobile-nav-text' : 'nav-dropdown-text'}>{item.shortLabel}</span>
+          <span className={mobile ? 'mobile-nav-arrow' : 'nav-dropdown-arrow'} aria-hidden="true">↗</span>
+        </Link>
+      );
+    }
 
     return (
       <a
@@ -183,11 +222,11 @@ export default function SiteHeader({ theme, setTheme, onNavigate, activeSectionO
       <div className="header-inner">
         {/* Left: Brand mark */}
         <div className="header-brand-wrap">
-          <a
+          <Link
             className="site-mark site-mark--logo"
-            href="#top"
+            to="/"
             aria-label={HEADER_TEXT.aria.logo}
-            onClick={(e) => handleNavClick(e, '#top', 'top')}
+            onClick={(e) => handleNavClick(e, '/', 'top')}
           >
             <span className="site-mark-visual">
               <img
@@ -199,7 +238,7 @@ export default function SiteHeader({ theme, setTheme, onNavigate, activeSectionO
               />
               <span className="status-live-dot" title={HEADER_TEXT.brand.titleAvailable} aria-hidden="true" />
             </span>
-          </a>
+          </Link>
         </div>
 
         {/* Center: Primary navigation */}
@@ -208,17 +247,30 @@ export default function SiteHeader({ theme, setTheme, onNavigate, activeSectionO
             <ul className="nav-list" role="list">
               {PRIMARY_NAV_ITEMS.map((item) => {
                 const isActive = currentActive === item.id;
+                const isInternal = item.href.startsWith('/');
                 return (
                   <li key={item.id} className="nav-item">
-                    <a
-                      href={item.href}
-                      className={`nav-link ${isActive ? 'is-active' : ''}`}
-                      aria-label={item.shortLabel}
-                      aria-current={isActive ? 'location' : undefined}
-                      onClick={(e) => handleNavClick(e, item.href, item.id)}
-                    >
-                      <span className="nav-label">{item.shortLabel}</span>
-                    </a>
+                    {isInternal ? (
+                      <Link
+                        to={item.href}
+                        className={`nav-link ${isActive ? 'is-active' : ''}`}
+                        aria-label={item.shortLabel}
+                        aria-current={isActive ? 'location' : undefined}
+                        onClick={(e) => handleNavClick(e, item.href, item.id)}
+                      >
+                        <span className="nav-label">{item.shortLabel}</span>
+                      </Link>
+                    ) : (
+                      <a
+                        href={item.href}
+                        className={`nav-link ${isActive ? 'is-active' : ''}`}
+                        aria-label={item.shortLabel}
+                        aria-current={isActive ? 'location' : undefined}
+                        onClick={(e) => handleNavClick(e, item.href, item.id)}
+                      >
+                        <span className="nav-label">{item.shortLabel}</span>
+                      </a>
+                    )}
                   </li>
                 );
               })}

@@ -32,15 +32,15 @@ export const FOOTER_TEXT = Object.freeze({
   }),
   backToTop: 'Back to top',
   navigation: Object.freeze([
-    Object.freeze({ label: 'Overview', href: '#top' }),
-    Object.freeze({ label: 'Projects', href: '#projects' }),
-    Object.freeze({ label: 'About', href: '#about' }),
-    Object.freeze({ label: 'Services', href: '#services' }),
-    Object.freeze({ label: 'Services in domains', href: '#domains' }),
-    Object.freeze({ label: 'Certifications', href: '#certifications' }),
-    Object.freeze({ label: 'Tools', href: '#tools' }),
-    Object.freeze({ label: 'Contact', href: '#contact' }),
-    Object.freeze({ label: 'Testimonials', href: '#testimonials' }),
+    Object.freeze({ label: 'Overview', href: '/' }),
+    Object.freeze({ label: 'Projects', href: '/projects' }),
+    Object.freeze({ label: 'About', href: '/about' }),
+    Object.freeze({ label: 'Services', href: '/#services' }),
+    Object.freeze({ label: 'Services in domains', href: '/#domains' }),
+    Object.freeze({ label: 'Certifications', href: '/#certifications' }),
+    Object.freeze({ label: 'Tools', href: '/#tools' }),
+    Object.freeze({ label: 'Contact', href: '/contact' }),
+    Object.freeze({ label: 'Testimonials', href: '/#testimonials' }),
   ]),
   systems: Object.freeze([
     Object.freeze({
@@ -121,5 +121,9 @@ export const FOOTER_TEXT = Object.freeze({
     timezone: 'PKT / UTC+5 (Rawalpindi)',
     craft: 'Engineered with React, Vite, Motion & Three.js',
     copyright: '© 2026 Hafiz Ali Abdullah. All rights reserved.',
+    studioText: {
+      part1: 'Hafiz Ali Abdullah — Flutter & Node.js Developer.',
+      part2: 'Solithx by ITHX — with ethics.'
+    },
   }),
 });

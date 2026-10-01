@@ -1,10 +1,23 @@
 import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import { createRoot, hydrateRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import App from './app/App.jsx';
 import './shared/theme/global.css';
 
-createRoot(document.getElementById('root')).render(
+const container = document.getElementById('root');
+const rootElement = (
   <StrictMode>
-    <App />
-  </StrictMode>,
+    <HelmetProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </HelmetProvider>
+  </StrictMode>
 );
+
+if (container.hasChildNodes()) {
+  hydrateRoot(container, rootElement);
+} else {
+  createRoot(container).render(rootElement);
+}

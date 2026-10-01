@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { aboutParagraphs } from '../domain/aboutData.js';
 import { ABOUT_TEXT } from '../../../core/constants/about/aboutText.js';
 import './about.css';
@@ -110,19 +111,23 @@ export default function AboutSection() {
         <p className="about-eyebrow eyebrow">{ABOUT_TEXT.label}</p>
 
         <div className="about-grid grid">
-          <h2 id="about-heading" className="about-headline headline">
+          <h2 id="about-heading" className="sr-only">
+            {ABOUT_TEXT.roleHeading}
+          </h2>
+          <p className="about-headline headline" aria-hidden="true">
             <span className="line">{ABOUT_TEXT.headline.line1}</span>
             <span className="line">{ABOUT_TEXT.headline.line2}</span>
             <span className="line soft">{ABOUT_TEXT.headline.line3Soft}</span>
-          </h2>
+          </p>
 
           <div className="about-copy copy about-body">
-            <p>{aboutParagraphs[0]}</p>
-            <p>{aboutParagraphs[1]}</p>
+            <p>{ABOUT_TEXT.paragraphs[0]}</p>
+            <p>{ABOUT_TEXT.paragraphs[1]}</p>
             <p>
               <strong>{ABOUT_TEXT.featuredProduct}</strong> {ABOUT_TEXT.paragraphs[2]}{' '}
-              <a href="#projects" className="about-signal-closing">{ABOUT_TEXT.signalClosing}</a>
+              <Link to="/projects" className="about-signal-closing">{ABOUT_TEXT.signalClosing}</Link>
             </p>
+            <p>{ABOUT_TEXT.paragraphs[3]}</p>
 
             <div className="about-credit">
               <span className="about-credit-name">{ABOUT_TEXT.credit.name}</span>

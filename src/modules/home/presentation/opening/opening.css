@@ -104,6 +104,14 @@
   letter-spacing: 0.16em;
 }
 
+.opening-boot-identity {
+  font-size: 0.58rem;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--ithx-sage-mist) 60%, transparent);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
 .opening-boot-meter {
   width: 140px;
   height: 2px;

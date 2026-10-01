@@ -1,10 +1,11 @@
 export const INTRO_TEXT = Object.freeze({
   aria: Object.freeze({
-    portfolioIntro: 'HX313 portfolio introduction',
+    portfolioIntro: 'Hafiz Ali Abdullah portfolio introduction',
   }),
   bootHud: Object.freeze({
     initializing: 'INITIALIZING SYSTEM',
     ready: 'SYSTEM READY',
+    identity: 'HAFIZ ALI ABDULLAH · FLUTTER & NODE.JS',
   }),
   actions: Object.freeze({
     skipIntro: 'SKIP INTRO',
