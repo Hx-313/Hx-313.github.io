@@ -1,27 +1,16 @@
-import certiportJavaImg from '../../../../../certifications/Cert5816324103-1.webp';
-import courseraGgImg from '../../../../../certifications/Coursera GG2Y2MZOL6ZU-1.webp';
-import courseraTuImg from '../../../../../certifications/Coursera TUZAVQAMZ1G1-1.webp';
-import navttcImg from '../../../../../certifications/navttc-1.webp';
-import sscImg from '../../../../../certifications/1 pos in ssc1-1.webp';
-import urduSpeechImg from '../../../../../certifications/2nd pos in Urdu soeach-1.webp';
-import icsImg from '../../../../../certifications/best achievement in ics-1.webp';
-import readersClubImg from '../../../../../certifications/g sec of readers club-1.webp';
-import classSixImg from '../../../../../certifications/merit in 6 class pos 1-1.webp';
-import cricketImg from '../../../../../certifications/participate in cricket-1.webp';
-import wafaqImg from '../../../../../certifications/wafaq ul madaris-1.webp';
-
 const assets = Object.freeze({
-  certiportJava: certiportJavaImg,
-  courseraGg: courseraGgImg,
-  courseraTu: courseraTuImg,
-  navttc: navttcImg,
-  ssc: sscImg,
-  urduSpeech: urduSpeechImg,
-  ics: icsImg,
-  readersClub: readersClubImg,
-  classSix: classSixImg,
-  cricket: cricketImg,
-  wafaq: wafaqImg,
+  googleCloudBigQuery: '/assets/certifications/google-cloud-onair-bigquery.webp',
+  certiportJava: '/certifications/Cert5816324103-1.webp',
+  courseraGg: '/certifications/Coursera GG2Y2MZOL6ZU-1.webp',
+  courseraTu: '/certifications/Coursera TUZAVQAMZ1G1-1.webp',
+  navttc: '/certifications/navttc-1.webp',
+  ssc: '/certifications/1 pos in ssc1-1.webp',
+  urduSpeech: '/certifications/2nd pos in Urdu soeach-1.webp',
+  ics: '/certifications/best achievement in ics-1.webp',
+  readersClub: '/certifications/g sec of readers club-1.webp',
+  classSix: '/certifications/merit in 6 class pos 1-1.webp',
+  cricket: '/certifications/participate in cricket-1.webp',
+  wafaq: '/certifications/wafaq ul madaris-1.webp',
 });
 
 const preview = (src, alt) => Object.freeze({ type: 'image', src, alt });
@@ -29,6 +18,17 @@ const credential = (href) => Object.freeze({ type: 'image', href });
 const record = (value) => Object.freeze({ ...value });
 
 export const CERTIFICATION_RECORDS = Object.freeze([
+  record({
+    id: 'google-cloud-onair-bigquery',
+    title: 'AI-Assisted Data Science with BigQuery',
+    issuer: 'Google Cloud Labs: OnAir',
+    date: 'Lab Completed',
+    issuerMark: 'GC',
+    identifier: 'Google Cloud Lab',
+    preview: preview(assets.googleCloudBigQuery, 'Google Cloud Labs AI-Assisted Data Science with BigQuery'),
+    document: credential(assets.googleCloudBigQuery),
+    status: 'verified',
+  }),
   record({
     id: 'certiport-java',
     title: 'Java',

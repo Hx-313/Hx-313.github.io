@@ -11,9 +11,9 @@ test('certification records preserve manifest order and immutable records', asyn
   );
 
   assert.ok(Object.isFrozen(CERTIFICATION_RECORDS));
-  assert.equal(CERTIFICATION_RECORDS.length, 11);
+  assert.equal(CERTIFICATION_RECORDS.length, 12);
   assert.equal(CERTIFICATION_RECORDS.length, new Set(CERTIFICATION_RECORDS.map((record) => record.id)).size);
-  assert.equal(CERTIFICATION_RECORDS[0].id, 'certiport-java');
+  assert.equal(CERTIFICATION_RECORDS[0].id, 'google-cloud-onair-bigquery');
   assert.equal(CERTIFICATION_RECORDS.at(-1).id, 'wifaq-ul-madaris-hifz');
 });
 

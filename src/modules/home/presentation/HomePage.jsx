@@ -12,6 +12,7 @@ import SectionReveal from '../../../shared/motion/SectionReveal.jsx';
 import ContactSection from '../../contact/presentation/ContactSection.jsx';
 import SEO from '../../../shared/seo/SEO.jsx';
 import { useCommandCenter } from '../../../hooks/useCommandCenter.js';
+import CosmicBackground from './CosmicBackground.jsx';
 import './home.css';
 import './command-center/command-center.css';
 
@@ -71,6 +72,7 @@ export default function HomePage({ initialExperienceState = 'intro', targetSecti
         aria-hidden={hideMainContent ? 'true' : undefined}
         inert={hideMainContent ? '' : undefined}
       >
+        <CosmicBackground />
         <Hero revealed={isSiteVisible} transitioning={experienceState === 'handoff'} />
 
         <SectionReveal id="projects" motion="projects" className="portfolio-flow-section">
