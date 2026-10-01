@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 const THEME_VALUES = new Set(['system', 'light', 'dark']);
 
 function getInitialTheme() {
+  if (typeof window === 'undefined') return 'dark';
   try {
     const storedTheme = window.localStorage.getItem('portfolio-theme');
     return THEME_VALUES.has(storedTheme) ? storedTheme : 'dark';
