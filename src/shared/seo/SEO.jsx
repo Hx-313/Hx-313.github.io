@@ -1,8 +1,8 @@
-import { Helmet } from 'react-helmet-async';
+import { Head } from 'vite-react-ssg';
 
 export default function SEO({ title, description, schema }) {
   return (
-    <Helmet>
+    <Head>
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta property="og:title" content={title} />
@@ -14,6 +14,6 @@ export default function SEO({ title, description, schema }) {
           {JSON.stringify(schema)}
         </script>
       )}
-    </Helmet>
+    </Head>
   );
 }
