@@ -1,16 +1,16 @@
 const assets = Object.freeze({
   googleCloudBigQuery: '/assets/certifications/google-cloud-onair-bigquery.webp',
-  certiportJava: '/certifications/Cert5816324103-1.webp',
-  courseraGg: '/certifications/Coursera GG2Y2MZOL6ZU-1.webp',
-  courseraTu: '/certifications/Coursera TUZAVQAMZ1G1-1.webp',
-  navttc: '/certifications/navttc-1.webp',
-  ssc: '/certifications/1 pos in ssc1-1.webp',
-  urduSpeech: '/certifications/2nd pos in Urdu soeach-1.webp',
-  ics: '/certifications/best achievement in ics-1.webp',
-  readersClub: '/certifications/g sec of readers club-1.webp',
-  classSix: '/certifications/merit in 6 class pos 1-1.webp',
-  cricket: '/certifications/participate in cricket-1.webp',
-  wafaq: '/certifications/wafaq ul madaris-1.webp',
+  certiportJava: '/assets/certifications/Cert5816324103-1.webp',
+  courseraGg: '/assets/certifications/Coursera GG2Y2MZOL6ZU-1.webp',
+  courseraTu: '/assets/certifications/Coursera TUZAVQAMZ1G1-1.webp',
+  navttc: '/assets/certifications/navttc-1.webp',
+  ssc: '/assets/certifications/1 pos in ssc1-1.webp',
+  urduSpeech: '/assets/certifications/2nd pos in Urdu soeach-1.webp',
+  ics: '/assets/certifications/best achievement in ics-1.webp',
+  readersClub: '/assets/certifications/g sec of readers club-1.webp',
+  classSix: '/assets/certifications/merit in 6 class pos 1-1.webp',
+  cricket: '/assets/certifications/participate in cricket-1.webp',
+  wafaq: '/assets/certifications/wafaq ul madaris-1.webp',
 });
 
 const preview = (src, alt) => Object.freeze({ type: 'image', src, alt });
