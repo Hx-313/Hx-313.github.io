@@ -17,7 +17,7 @@ test('certification records preserve manifest order and immutable records', asyn
   assert.equal(CERTIFICATION_RECORDS.at(-1).id, 'wifaq-ul-madaris-hifz');
 });
 
-test('records use the new PNG assets for both previews and credential links', async () => {
+test('records use the public WebP assets for both previews and credential links', async () => {
   const { CERTIFICATION_RECORDS } = await import(
     '../src/modules/home/presentation/certifications/certificationsData.js'
   );
@@ -26,6 +26,8 @@ test('records use the new PNG assets for both previews and credential links', as
   assert.ok(records.every((record) => record.preview?.type === 'image'));
   assert.ok(records.every((record) => ['verified', 'documented'].includes(record.status)));
   assert.ok(records.every((record) => record.document?.type === 'image'));
+  assert.ok(records.every((record) => record.preview?.src.startsWith('/assets/certifications/')));
+  assert.ok(records.every((record) => record.document?.href.startsWith('/assets/certifications/')));
   assert.ok(records.every((record) => /\.(webp|png)$/.test(record.document?.href)));
   assert.ok(records.every((record) => !record.title.includes('/') && !record.issuer.includes('/')));
 });
