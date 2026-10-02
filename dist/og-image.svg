@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0b0f0e"/>
+  <path fill="none" stroke="#174f2d" stroke-width="2" d="M0 470h1200M0 525h1200M850 0v630M930 0v630" opacity=".7"/>
+  <circle cx="930" cy="315" r="150" fill="none" stroke="#79f29a" stroke-width="2" opacity=".5"/>
+  <circle cx="930" cy="315" r="90" fill="#174f2d" opacity=".25"/>
+  <text x="80" y="145" fill="#79f29a" font-family="Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="6">HX313 / SYSTEM COMMAND CENTER</text>
+  <text x="80" y="290" fill="#f1f4f1" font-family="Arial, sans-serif" font-size="76" font-weight="800">A MINDSET</text>
+  <text x="80" y="385" fill="#79f29a" font-family="Arial, sans-serif" font-size="94" font-weight="900">BEYOND</text>
+  <text x="80" y="455" fill="#56615b" font-family="Arial, sans-serif" font-size="70" font-weight="800">ORDINARY.</text>
+  <text x="80" y="560" fill="#9ca8a1" font-family="Arial, sans-serif" font-size="22" letter-spacing="3">FULL-STACK SOFTWARE ENGINEER</text>
+</svg>
