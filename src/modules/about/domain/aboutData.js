@@ -125,7 +125,6 @@ export const toolCategories = Object.freeze([
     tools: Object.freeze([
       'Node.js',
       'Express',
-      'PostgreSQL',
       'MongoDB',
       'Docker',
       'Supabase',
