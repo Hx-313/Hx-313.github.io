@@ -135,7 +135,8 @@
 .about-grid {
   display: grid;
   grid-template-columns: 1.05fr 1fr;
-  gap: 60px;
+  column-gap: 60px;
+  row-gap: 24px;
   align-items: start;
 }
 
