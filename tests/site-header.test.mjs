@@ -17,17 +17,17 @@ test('SiteHeader component contains tactical navigation, live telemetry, socials
   assert.ok(labels.includes('01 Projects'), 'should contain projects nav item');
   assert.ok(labels.includes('02 About'), 'should contain about chapter nav item');
   assert.ok(labels.includes('03 Services'), 'should contain services nav item');
-  assert.ok(labels.includes('04 Domains'), 'should contain domain services nav item');
+  assert.ok(labels.includes('04 Industries'), 'should contain industry services nav item');
   assert.ok(labels.includes('05 Certifications'), 'should contain certifications nav item');
-  assert.ok(labels.includes('06 Tools'), 'should contain tools nav item');
+  assert.ok(labels.includes('06 How I Build'), 'should contain how I build nav item');
   assert.ok(labels.includes('07 Contact'), 'should contain Contact nav item');
-  assert.ok(labels.includes('08 Testimonials'), 'should contain testimonials nav item');
+  assert.ok(!labels.some((label) => label.includes('Testimonials')), 'should omit the inactive testimonials section');
   assert.deepEqual(HEADER_TEXT.topLevelNavIds, ['top', 'projects', 'contact']);
   assert.deepEqual(
     HEADER_TEXT.navGroups.map((group) => [group.label, group.itemIds]),
     [
       ['Capabilities', ['services', 'domains', 'tools']],
-      ['About', ['about', 'certifications', 'testimonials']],
+      ['About', ['about', 'certifications']],
     ],
     'related sections should remain grouped in the primary navigation'
   );

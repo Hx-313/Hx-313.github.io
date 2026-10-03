@@ -11,9 +11,9 @@ export const CONTACT_TEXT = Object.freeze({
   }),
   title: Object.freeze({
     prefix: 'Have a project in mind? ',
-    accent: 'Let’s talk it through.',
+    accent: 'Let’s scope it.',
   }),
-  lead: 'A rough idea is enough. Tell me what you know, and I’ll help you work out a clear next step.',
+  lead: 'A rough idea is enough. Tell me what you know, and I’ll help you work out a clear next step — no obligation.',
   form: Object.freeze({
     title: 'Start with the essentials',
     subtitle: 'Your email is all I need to reply.',
@@ -73,13 +73,13 @@ export const CONTACT_TEXT = Object.freeze({
     whatsapp: Object.freeze({
       title: 'Instant WhatsApp Chat',
       link: contactLinks.whatsapp,
-      label: '0347 5662750',
+      label: '+92 347 5662750',
       actionLabel: 'Chat on WhatsApp →',
     }),
     phone: Object.freeze({
       title: 'Phone call',
       link: contactLinks.phone,
-      label: '0347 5662750',
+      label: '+92 347 5662750',
       actionLabel: 'Call now →',
     }),
     email: Object.freeze({

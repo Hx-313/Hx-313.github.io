@@ -19,28 +19,7 @@ const record = (value) => Object.freeze({ ...value });
 
 export const CERTIFICATION_RECORDS = Object.freeze([
   record({
-    id: 'google-cloud-onair-bigquery',
-    title: 'AI-Assisted Data Science with BigQuery',
-    issuer: 'Google Cloud Labs: OnAir',
-    date: 'Lab Completed',
-    issuerMark: 'GC',
-    identifier: 'Google Cloud Lab',
-    preview: preview(assets.googleCloudBigQuery, 'Google Cloud Labs AI-Assisted Data Science with BigQuery'),
-    document: credential(assets.googleCloudBigQuery),
-    status: 'verified',
-  }),
-  record({
-    id: 'certiport-java',
-    title: 'Java',
-    issuer: 'Certiport',
-    date: 'Issued March 14, 2025',
-    issuerMark: 'CP',
-    identifier: 'UoE5-s4Na',
-    preview: preview(assets.certiportJava, 'Certiport Java certification'),
-    document: credential(assets.certiportJava),
-    status: 'verified',
-  }),
-  record({
+    category: 'professional',
     id: 'ibm-flutter-dart-mobile-apps',
     title: 'Flutter and Dart: Developing iOS, Android, and Mobile Apps',
     issuer: 'IBM and Coursera',
@@ -52,6 +31,7 @@ export const CERTIFICATION_RECORDS = Object.freeze([
     status: 'verified',
   }),
   record({
+    category: 'professional',
     id: 'ibm-introduction-mobile-app-development',
     title: 'Introduction to Mobile App Development',
     issuer: 'IBM and Coursera',
@@ -63,7 +43,32 @@ export const CERTIFICATION_RECORDS = Object.freeze([
     status: 'verified',
   }),
   record({
+    id: 'google-cloud-onair-bigquery',
+    category: 'professional',
+    title: 'AI-Assisted Data Science with BigQuery',
+    issuer: 'Google Cloud Labs: OnAir',
+    date: 'Lab Completed',
+    issuerMark: 'GC',
+    identifier: 'Google Cloud Lab',
+    preview: preview(assets.googleCloudBigQuery, 'Google Cloud Labs AI-Assisted Data Science with BigQuery'),
+    document: credential(assets.googleCloudBigQuery),
+    status: 'verified',
+  }),
+  record({
+    id: 'certiport-java',
+    category: 'professional',
+    title: 'Java',
+    issuer: 'Certiport',
+    date: 'Issued March 14, 2025',
+    issuerMark: 'CP',
+    identifier: 'UoE5-s4Na',
+    preview: preview(assets.certiportJava, 'Certiport Java certification'),
+    document: credential(assets.certiportJava),
+    status: 'verified',
+  }),
+  record({
     id: 'navttc-android-java-database',
+    category: 'professional',
     title: 'Android Java and Database',
     issuer: 'NAVTTC',
     date: 'Completed October 15, 2024',
@@ -75,6 +80,7 @@ export const CERTIFICATION_RECORDS = Object.freeze([
   }),
   record({
     id: 'askaria-first-position-ssc',
+    category: 'personal',
     title: 'First position in SSC I',
     issuer: 'Askaria Schools and Colleges',
     date: 'Academic year 2018 to 2019',
@@ -86,6 +92,7 @@ export const CERTIFICATION_RECORDS = Object.freeze([
   }),
   record({
     id: 'askaria-urdu-speech',
+    category: 'personal',
     title: 'Second position in Urdu speech competition',
     issuer: 'Askaria Schools and Colleges',
     date: 'Academic year 2019 to 2020',
@@ -97,6 +104,7 @@ export const CERTIFICATION_RECORDS = Object.freeze([
   }),
   record({
     id: 'askaria-best-achievement-ics',
+    category: 'personal',
     title: 'Best achievement in board exams',
     issuer: 'Askaria Schools and Colleges',
     date: 'Academic year 2019 to 2020',
@@ -108,6 +116,7 @@ export const CERTIFICATION_RECORDS = Object.freeze([
   }),
   record({
     id: 'askaria-readers-club',
+    category: 'personal',
     title: 'General Secretary of Readers Club',
     issuer: 'Askaria Schools and Colleges',
     date: 'Academic year 2017 to 2018',
@@ -119,6 +128,7 @@ export const CERTIFICATION_RECORDS = Object.freeze([
   }),
   record({
     id: 'iqra-quiz-position',
+    category: 'personal',
     title: 'First position in quiz competition',
     issuer: 'Iqra Huffaz Secondary School',
     date: 'February 28, 2015',
@@ -130,6 +140,7 @@ export const CERTIFICATION_RECORDS = Object.freeze([
   }),
   record({
     id: 'askaria-cricket-participation',
+    category: 'personal',
     title: 'Participation in cricket',
     issuer: 'Askaria Schools and Colleges',
     date: 'December 24, 2019',
@@ -141,6 +152,7 @@ export const CERTIFICATION_RECORDS = Object.freeze([
   }),
   record({
     id: 'wifaq-ul-madaris-hifz',
+    category: 'personal',
     title: 'Hifz ul Quran with Tajweed',
     issuer: 'Wifaq ul Madaris Al Arabia',
     date: 'Issued June 10, 2013',

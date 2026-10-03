@@ -10,7 +10,15 @@ export default function AboutSection() {
   const [isVisible, setIsVisible] = useState(false);
   const [isKpisInView, setIsKpisInView] = useState(false);
   const [isCounting, setIsCounting] = useState(false);
-  const [counts, setCounts] = useState(() => ABOUT_TEXT.stats.map(() => 0));
+  const [counts, setCounts] = useState(() => ABOUT_TEXT.stats.map((stat) => stat.targetNumber));
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const frame = window.requestAnimationFrame(() => {
+      setCounts(ABOUT_TEXT.stats.map(() => 0));
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
 
   useEffect(() => {
     const el = sectionRef.current;

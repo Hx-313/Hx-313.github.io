@@ -49,7 +49,6 @@ export default function SiteHeader({ theme, setTheme, onNavigate, activeSectionO
       { id: 'certifications', element: document.getElementById('certifications') },
       { id: 'tools', element: document.getElementById('tools') || document.getElementById('how-i-build') },
       { id: 'contact', element: document.getElementById('contact') },
-      { id: 'testimonials', element: document.getElementById('testimonials') },
     ];
 
     if (!('IntersectionObserver' in window)) {
@@ -231,7 +230,7 @@ export default function SiteHeader({ theme, setTheme, onNavigate, activeSectionO
             <span className="site-mark-visual">
               <img
                 src="/brand/ithx-logo.webp"
-                alt="itHX Logo"
+                alt="ITHX"
                 className="site-brand-logo-img"
                 width="120"
                 height="35"

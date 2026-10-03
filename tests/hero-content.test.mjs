@@ -7,10 +7,10 @@ import { HERO_TEXT } from '../src/core/constants/hero/heroText.js';
 test('HeroContent presents the approved punchline and conversion paths', () => {
   const content = readFileSync(resolve('src/modules/home/presentation/hero/HeroContent.jsx'), 'utf-8');
 
-  assert.equal(HERO_TEXT.title.prefix, 'Built to');
+  assert.equal(HERO_TEXT.title.prefix, 'I build mobile apps');
   assert.equal(HERO_TEXT.title.highlight, 'hold together.');
-  assert.equal(HERO_TEXT.actions.seeWork, 'See Work');
-  assert.equal(HERO_TEXT.actions.letPlan, "Let's Plan");
+  assert.equal(HERO_TEXT.actions.seeWork, 'See My Work');
+  assert.equal(HERO_TEXT.actions.letPlan, "Let's Work Together");
 
   assert.ok(content.includes('HERO_TEXT.title.prefix'), 'References hero punchline lead');
   assert.ok(content.includes('HERO_TEXT.title.highlight'), 'References hero punchline accent');

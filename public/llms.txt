@@ -1,10 +1,10 @@
 # Hafiz Ali Abdullah
 
-> Flutter developer and Node.js backend engineer. Founder of ITHX. I build production mobile apps for Android and iOS, plus the APIs and dashboards behind them.
+> Flutter developer and Node.js backend engineer. I build production mobile apps for Android and iOS, plus the backend services, integrations, and dashboards a product needs.
 
 ## Quick Facts
 - Name: Hafiz Ali Abdullah
-- Also known as: HX (HX313), founder of ITHX
+- Also known as: Mobile App Developer, Mobile Application Developer, Android Developer, iOS Developer, Flutter Developer, Node.js Developer, HX (HX313)
 - Role: Flutter Developer & Node.js Backend Engineer
 - Location: Pakistan
 - Availability: Freelance & contract work
@@ -30,5 +30,5 @@
 - 100K+ total downloads
 
 ## Contact
-- Email: your.email@example.com
+- Email: aliabdullahva313@gmail.com
 - Website: https://solithx.com/contact

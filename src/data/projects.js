@@ -14,6 +14,7 @@ export const projects = [
     platforms: ['Flutter', 'Android', 'iOS'],
     domains: ['mobile'],
     cta: 'Explore Dietify',
+    detailHref: '/projects/dietify',
   },
   {
     id: 'speak',
@@ -27,6 +28,7 @@ export const projects = [
     platforms: ['Flutter', 'AI engine', 'Offline mode'],
     domains: ['mobile', 'cloud'],
     cta: 'Explore Speak & Translate',
+    detailHref: '/projects/speak-and-translate',
   },
   {
     id: 'expenseflow',
@@ -40,6 +42,7 @@ export const projects = [
     platforms: ['Flutter', 'Android', 'iOS'],
     domains: ['mobile', 'backend'],
     cta: 'Explore ExpenseFlow',
+    detailHref: '/projects/expenseflow',
   },
   {
     id: 'wos',
@@ -56,6 +59,7 @@ export const projects = [
     metrics: { surfaces: '04', layers: '03', builtFor: 'Webticians' },
     domains: ['saas', 'backend', 'cloud'],
     cta: 'Explore the build',
+    detailHref: '/projects/wos',
     surfaces: [
       { label: 'Admin panel', image: assetPath('/assets/wos/epos-dark-mode-menu.webp'), href: wosLinks.adminPanel },
       { label: 'Order terminal', image: assetPath('/assets/wos/terminal-1.webp') },
@@ -76,7 +80,7 @@ export const showcaseProjects = [
     description:
       'An all-in-one offline document reader and editor that brings PDF, Word, Excel, PowerPoint, EPUB, and other file formats into one mobile workspace. Built with custom document engines for high-fidelity rendering, spreadsheet editing, and seamless file management without an internet connection.',
     role: 'Sole Developer · Design & Engineering',
-    tech: 'Flutter, Dart, Java, Swift',
+    tech: 'Flutter, Dart, Java',
     tools: 'BLoC, Clean Architecture, Git',
     platforms: ['Android'],
     storeLinks: {

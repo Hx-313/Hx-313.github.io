@@ -2,17 +2,17 @@ export const HERO_TEXT = Object.freeze({
   kicker: 'Flutter & Node.js Developer · Mobile Apps & Backend Systems',
 
   title: Object.freeze({
-    prefix: 'Built to',
+    prefix: 'I build mobile apps',
     highlight: 'hold together.',
-    combined: 'Built to hold together.',
+    combined: 'I build mobile apps that hold together.',
   }),
 
   description:
-    'Flutter developer and Node.js backend engineer. I build production mobile apps for Android and iOS — plus the APIs, dashboards, and workflows behind them. From first screen to deployed system.',
+    'Flutter developer and Node.js backend engineer. I build production mobile apps for Android and iOS — plus the backend services, integrations, and dashboards when the product needs them.',
 
   actions: Object.freeze({
-    seeWork: 'See Work',
-    letPlan: "Let's Plan",
+    seeWork: 'See My Work',
+    letPlan: "Let's Work Together",
   }),
 
   socials: Object.freeze({
@@ -28,6 +28,9 @@ export const HERO_TEXT = Object.freeze({
     'iOS',
     'REST APIs',
     'Backend Systems',
+    'Mobile App Development',
+    'AI Integration',
+    'SaaS',
   ]),
 
   orbitVisual: Object.freeze({

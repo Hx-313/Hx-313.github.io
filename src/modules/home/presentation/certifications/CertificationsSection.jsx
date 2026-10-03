@@ -4,6 +4,9 @@ import CertificationRail from './CertificationRail.jsx';
 import './certifications.css';
 
 export default function CertificationsSection() {
+  const professionalRecords = CERTIFICATION_RECORDS.filter((record) => record.category === 'professional');
+  const personalRecords = CERTIFICATION_RECORDS.filter((record) => record.category === 'personal');
+
   return (
     <section
       id="certifications"
@@ -23,9 +26,15 @@ export default function CertificationsSection() {
         </header>
 
         <div className="certifications-archive">
+          <h3 className="certifications-subheading">Professional certifications</h3>
           <CertificationRail
-            records={CERTIFICATION_RECORDS}
+            records={professionalRecords}
             ariaLabel={CERTIFICATIONS_TEXT.aria.archive}
+          />
+          <h3 className="certifications-subheading">Personal excellence</h3>
+          <CertificationRail
+            records={personalRecords}
+            ariaLabel="Personal excellence archive"
           />
         </div>
       </div>

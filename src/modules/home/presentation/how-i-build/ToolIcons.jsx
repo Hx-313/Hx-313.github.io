@@ -2,14 +2,17 @@ import {
   SiAndroid,
   SiFlutter,
   SiGithub,
+  SiGithubactions,
   SiHostinger,
   SiInsomnia,
   SiMongodb,
+  SiMysql,
   SiNodedotjs,
   SiPostman,
   SiSqlite,
   SiVercel,
 } from 'react-icons/si';
+import { LuBrainCircuit } from 'react-icons/lu';
 import { VscVscode } from 'react-icons/vsc';
 
 function FirebaseLogo({ className, ...props }) {
@@ -49,10 +52,13 @@ const TOOL_ICONS = {
   firebase: FirebaseLogo,
   nodejs: SiNodedotjs,
   mongodb: SiMongodb,
+  mysql: SiMysql,
   sqlite: SiSqlite,
   vercel: SiVercel,
   hostinger: SiHostinger,
   github: SiGithub,
+  'github-actions': SiGithubactions,
+  ai: LuBrainCircuit,
   vscode: VscVscode,
   postman: PostmanInsomniaLogo,
   slack: SlackLogo,

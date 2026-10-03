@@ -53,7 +53,10 @@ test('ToolIcons maps every tool to a real brand icon component', () => {
     'firebase',
     'nodejs',
     'mongodb',
+    'mysql',
     'sqlite',
+    'ai',
+    'github-actions',
     'vercel',
     'hostinger',
     'github',
@@ -61,7 +64,8 @@ test('ToolIcons maps every tool to a real brand icon component', () => {
     'postman',
     'slack',
   ]) {
-    assert.match(icons, new RegExp(`\\b${name}:`), `${name} must have a brand icon mapping`);
+    const token = name.includes('-') ? `['"]?${name}['"]?\\s*:` : `\\b${name}:`;
+    assert.match(icons, new RegExp(token), `${name} must have a brand icon mapping`);
   }
 
   for (const color of ['firebase-yellow', 'firebase-orange', 'firebase-red', 'slack-red', 'slack-blue', 'slack-green', 'slack-yellow']) {
