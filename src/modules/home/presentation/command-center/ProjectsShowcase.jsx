@@ -22,7 +22,13 @@ function ProjectCard({ project, carouselState }) {
       aria-hidden={carouselState === 'hidden'}
     >
       <div className="projects-showcase__media">
-        <img src={project.image} alt={project.imageAlt} width="800" height="640" loading="lazy" />
+        <img
+          src={project.image}
+          alt={project.imageAlt}
+          width={project.imageWidth}
+          height={project.imageHeight}
+          loading="lazy"
+        />
       </div>
       <div className="projects-showcase__body">
         <span className="projects-showcase__tag">{project.category}</span>

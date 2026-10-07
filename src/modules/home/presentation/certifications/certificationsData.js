@@ -62,7 +62,7 @@ export const CERTIFICATION_RECORDS = Object.freeze([
     date: 'Issued March 14, 2025',
     issuerMark: 'CP',
     identifier: 'UoE5-s4Na',
-    preview: preview(assets.certiportJava, 'Certiport Java certification'),
+    preview: preview(assets.certiportJava, 'Certiport Java certification awarded to Hafiz Ali Abdullah'),
     document: credential(assets.certiportJava),
     status: 'verified',
   }),

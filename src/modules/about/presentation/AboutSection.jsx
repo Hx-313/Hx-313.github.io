@@ -4,7 +4,8 @@ import { aboutParagraphs } from '../domain/aboutData.js';
 import { ABOUT_TEXT } from '../../../core/constants/about/aboutText.js';
 import './about.css';
 
-export default function AboutSection() {
+export default function AboutSection({ headingTag = 'h2' } = {}) {
+  const Heading = headingTag;
   const sectionRef = useRef(null);
   const kpisRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -119,9 +120,9 @@ export default function AboutSection() {
         <p className="about-eyebrow eyebrow">{ABOUT_TEXT.label}</p>
 
         <div className="about-grid grid">
-          <h2 id="about-heading" className="sr-only">
+          <Heading id="about-heading" className="sr-only">
             {ABOUT_TEXT.roleHeading}
-          </h2>
+          </Heading>
           <p className="about-headline headline" aria-hidden="true">
             <span className="line">{ABOUT_TEXT.headline.line1}</span>
             <span className="line">{ABOUT_TEXT.headline.line2}</span>
