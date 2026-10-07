@@ -1,7 +1,7 @@
 export const HEADER_TEXT = Object.freeze({
   aria: Object.freeze({
     header: 'Primary navigation',
-    logo: 'itHX - Hafiz Ali Abdullah',
+    logo: 'ITHX — Hafiz Ali Abdullah',
     mainNav: 'Main Navigation',
     contactCta: 'Contact Hafiz Ali Abdullah',
     openMenu: 'Open navigation menu',
@@ -32,7 +32,7 @@ export const HEADER_TEXT = Object.freeze({
     Object.freeze({
       id: 'about',
       label: 'About',
-      itemIds: Object.freeze(['about', 'certifications', 'testimonials']),
+      itemIds: Object.freeze(['about', 'certifications']),
     }),
   ]),
   navItems: Object.freeze([
@@ -40,10 +40,9 @@ export const HEADER_TEXT = Object.freeze({
     Object.freeze({ id: 'projects', label: '01 Projects', shortLabel: 'Projects', index: '01', href: '/projects' }),
     Object.freeze({ id: 'about', label: '02 About', shortLabel: 'About', index: '02', href: '/about' }),
     Object.freeze({ id: 'services', label: '03 Services', shortLabel: 'Services', index: '03', href: '/#services' }),
-    Object.freeze({ id: 'domains', label: '04 Domains', shortLabel: 'Domains', index: '04', href: '/#domains' }),
+    Object.freeze({ id: 'domains', label: '04 Industries', shortLabel: 'Industries', index: '04', href: '/#domains' }),
     Object.freeze({ id: 'certifications', label: '05 Certifications', shortLabel: 'Certifications', index: '05', href: '/#certifications' }),
-    Object.freeze({ id: 'tools', label: '06 Tools', shortLabel: 'Tools', index: '06', href: '/#tools' }),
+    Object.freeze({ id: 'tools', label: '06 How I Build', shortLabel: 'How I Build', index: '06', href: '/#tools' }),
     Object.freeze({ id: 'contact', label: '07 Contact', shortLabel: 'Contact', index: '07', href: '/contact' }),
-    Object.freeze({ id: 'testimonials', label: '08 Testimonials', shortLabel: 'Testimonials', index: '08', href: '/#testimonials' }),
   ]),
 });

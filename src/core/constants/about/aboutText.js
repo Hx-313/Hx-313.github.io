@@ -2,7 +2,7 @@ export const ABOUT_TEXT = Object.freeze({
   label: 'About me',
 
   // Category term lives HERE, in the H2
-  roleHeading: 'Hafiz Ali Abdullah — Mobile Application Developer | Flutter, Android & iOS | Node.js Backend',
+  roleHeading: 'Hafiz Ali Abdullah — Mobile Application Developer | Flutter (Android & iOS) | Node.js Backend',
 
   headline: Object.freeze({
     line1: 'Mobile first,',
@@ -12,7 +12,7 @@ export const ABOUT_TEXT = Object.freeze({
   }),
 
   paragraphs: Object.freeze([
-    "I'm a mobile application developer specializing in Flutter, with native Android and iOS experience. I build mobile applications and connect them to the Node.js services, APIs, and operational tools they need to work in production.",
+    "I'm a mobile application developer specializing in Flutter, with Android native (Java) and iOS development via Flutter. I build mobile applications and connect them to the Node.js services, APIs, and operational tools they need to work in production.",
     'My work spans customer-facing apps, internal workflows, dashboards, and connected systems — always shaped around the way people actually use them.',
     'is a restaurant ordering and POS system I built for Webticians.',
     'Based in Rawalpindi, Pakistan. Available for freelance projects and full-time roles, working remotely with teams worldwide.',
@@ -24,7 +24,7 @@ export const ABOUT_TEXT = Object.freeze({
 
   credit: Object.freeze({
     name: 'Hafiz Ali Abdullah',
-    title: 'Flutter + Native Mobile · Node.js Backend',
+    title: 'Mobile Application Developer · Flutter (Android & iOS) · Node.js Backend',
   }),
 
   aria: Object.freeze({

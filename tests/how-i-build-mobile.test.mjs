@@ -15,7 +15,7 @@ const stylesheet = readFileSync(
 );
 
 test('every capability carries a truthful service mapping for the reveal state', () => {
-  assert.equal(howIBuildData.tools.length, 12);
+  assert.equal(howIBuildData.tools.length, 15);
   assert.ok(
     howIBuildData.tools.every((tool) => typeof tool.service === 'string' && tool.service.length > 0),
     'each tool must describe the service it supports'

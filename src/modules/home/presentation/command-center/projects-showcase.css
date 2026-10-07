@@ -408,6 +408,24 @@
   border-radius: var(--radius-sm);
 }
 
+.projects-showcase__detail-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 1rem;
+  color: var(--projects-accent);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.projects-showcase__detail-link:hover,
+.projects-showcase__detail-link:focus-visible {
+  color: var(--projects-foreground);
+}
+
 /* ==========================================================================
    CTA Card ("See all projects")
    ========================================================================== */

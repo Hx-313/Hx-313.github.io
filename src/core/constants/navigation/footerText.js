@@ -4,13 +4,13 @@ export const FOOTER_TEXT = Object.freeze({
   aria: Object.freeze({
     footer: 'Site Footer and Navigation Directory',
     monogram: 'Hx-313 Insignia',
-    sitemap: 'Company navigation',
+    sitemap: 'Site navigation',
     socials: 'Social profiles',
     backToTop: 'Back to top of page',
   }),
   headings: Object.freeze({
     systems: 'Selected systems',
-    company: 'Company',
+    company: 'Navigate',
     contact: 'Contact',
     base: 'Base & reach',
   }),
@@ -27,7 +27,7 @@ export const FOOTER_TEXT = Object.freeze({
   conversation: Object.freeze({
     eyebrow: 'Have a project in mind?',
     title: 'Let’s make the next step clear.',
-    description: 'A rough idea is enough. We can shape a practical way forward together.',
+    description: 'A rough idea is enough. I can help shape a practical way forward together.',
     action: 'Start a project',
   }),
   backToTop: 'Back to top',
@@ -36,11 +36,10 @@ export const FOOTER_TEXT = Object.freeze({
     Object.freeze({ label: 'Projects', href: '/projects' }),
     Object.freeze({ label: 'About', href: '/about' }),
     Object.freeze({ label: 'Services', href: '/#services' }),
-    Object.freeze({ label: 'Services in domains', href: '/#domains' }),
+    Object.freeze({ label: 'Industries', href: '/#domains' }),
     Object.freeze({ label: 'Certifications', href: '/#certifications' }),
-    Object.freeze({ label: 'Tools', href: '/#tools' }),
+    Object.freeze({ label: 'How I Build', href: '/#tools' }),
     Object.freeze({ label: 'Contact', href: '/contact' }),
-    Object.freeze({ label: 'Testimonials', href: '/#testimonials' }),
   ]),
   systems: Object.freeze([
     Object.freeze({
@@ -72,13 +71,13 @@ export const FOOTER_TEXT = Object.freeze({
     Object.freeze({
       id: 'whatsapp',
       label: 'WhatsApp',
-      action: '0347 5662750',
+      action: '+92 347 5662750',
       url: contactLinks.whatsapp,
     }),
     Object.freeze({
       id: 'phone',
       label: 'Phone',
-      action: '0347 5662750',
+      action: '+92 347 5662750',
       url: contactLinks.phone,
     }),
     Object.freeze({
@@ -114,12 +113,12 @@ export const FOOTER_TEXT = Object.freeze({
   colophon: Object.freeze({
     author: 'Hafiz Ali Abdullah',
     handle: 'Hx-313',
-    title: 'Flutter + Native Mobile Developer · Node.js Backend Engineer',
+    title: 'Mobile Application Developer · Flutter (Android & iOS) · Node.js Backend',
     positioning:
       'Building mobile applications, APIs, dashboards, and operational systems for teams that need the whole workflow to work.',
     status: 'Available for project conversations & selected roles',
     timezone: 'PKT / UTC+5 (Rawalpindi)',
-    craft: 'Engineered with React, Vite, Motion & Three.js',
+    craft: 'Engineered with React, Vite & Motion',
     copyright: '© 2026 Hafiz Ali Abdullah. All rights reserved.',
     studioText: {
       part1: 'Hafiz Ali Abdullah — Flutter & Node.js Developer.',

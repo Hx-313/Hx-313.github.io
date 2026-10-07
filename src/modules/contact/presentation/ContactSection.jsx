@@ -8,9 +8,12 @@ export default function ContactSection({
   kickerLabel = CONTACT_TEXT.kicker.label,
   titlePrefix = CONTACT_TEXT.title.prefix,
   titleAccent = CONTACT_TEXT.title.accent,
+  titleTag = 'h2',
   lead = CONTACT_TEXT.lead,
   className = '',
 } = {}) {
+  const Title = titleTag;
+
   return (
     <section id="contact" className={`contact-section ${className}`.trim()} aria-label={CONTACT_TEXT.aria.section} data-section="contact">
       <div className="contact-container">
@@ -19,9 +22,9 @@ export default function ContactSection({
             <span className="kicker-index">{kickerIndex}</span>
             <span>{kickerLabel}</span>
           </div>
-          <h2 className="contact-title">
+          <Title className="contact-title">
             {titlePrefix}<strong className="title-accent">{titleAccent}</strong>
-          </h2>
+          </Title>
           <p className="contact-lead">
             {lead}
           </p>

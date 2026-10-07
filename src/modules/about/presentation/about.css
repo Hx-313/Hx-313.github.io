@@ -135,7 +135,8 @@
 .about-grid {
   display: grid;
   grid-template-columns: 1.05fr 1fr;
-  gap: 60px;
+  column-gap: 60px;
+  row-gap: 24px;
   align-items: start;
 }
 
@@ -148,6 +149,8 @@
 
 /* Left Column: Stacked Headline */
 .about-headline {
+  grid-column: 2;
+  grid-row: 1 / span 2;
   margin: 0;
   font-family: var(--font-display);
   font-weight: 800;
@@ -169,6 +172,8 @@
 
 /* Right Column: Copy Block */
 .about-copy {
+  grid-column: 1;
+  grid-row: 2;
   display: flex;
   flex-direction: column;
 }
@@ -185,6 +190,14 @@
 
 .about-copy p:last-child {
   margin-bottom: 0;
+}
+
+@media (max-width: 860px) {
+  .about-headline,
+  .about-copy {
+    grid-column: auto;
+    grid-row: auto;
+  }
 }
 
 .about-copy strong {

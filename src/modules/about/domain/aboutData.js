@@ -29,7 +29,7 @@ export const aboutHeadline = Object.freeze([
 ]);
 
 export const aboutParagraphs = Object.freeze([
-  'I build mobile applications with Flutter and native technologies, then connect them to the Node.js services, APIs, and operational tools they need to work in production.',
+  'I build mobile applications with Flutter and native Android technologies, then connect them to the Node.js services, APIs, and operational tools they need to work in production.',
   'My work spans customer-facing apps, internal workflows, dashboards, and connected systems — always shaped around the way people actually use them.',
   'One example is OnlineOrder.pk / WOS, a restaurant ordering and POS system I built for Webticians. My contribution covered mobile development, backend services, system connections, and UI/UX direction.',
 ]);
@@ -61,7 +61,7 @@ export const aboutStats = Object.freeze([
 export const aboutIntro = Object.freeze({
   eyebrow: 'About me',
   title: 'Hafiz Ali Abdullah',
-  subtitle: 'Flutter + Native Mobile Developer · Node.js Backend Engineer',
+  subtitle: 'Mobile Application Developer · Flutter (Android & iOS) · Node.js Backend Engineer',
   headline: aboutHeadline,
   paragraphs: aboutParagraphs,
   heading: 'Mobile first, systems included, built for real use.',
@@ -101,7 +101,6 @@ export const toolCategories = Object.freeze([
       'Flutter',
       'Dart',
       'Native Android',
-      'Native iOS',
       'Figma',
       'UI/UX direction',
     ]),
@@ -125,7 +124,6 @@ export const toolCategories = Object.freeze([
     tools: Object.freeze([
       'Node.js',
       'Express',
-      'PostgreSQL',
       'MongoDB',
       'Docker',
       'Supabase',

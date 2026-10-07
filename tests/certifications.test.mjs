@@ -13,7 +13,9 @@ test('certification records preserve manifest order and immutable records', asyn
   assert.ok(Object.isFrozen(CERTIFICATION_RECORDS));
   assert.equal(CERTIFICATION_RECORDS.length, 12);
   assert.equal(CERTIFICATION_RECORDS.length, new Set(CERTIFICATION_RECORDS.map((record) => record.id)).size);
-  assert.equal(CERTIFICATION_RECORDS[0].id, 'google-cloud-onair-bigquery');
+  assert.equal(CERTIFICATION_RECORDS[0].id, 'ibm-flutter-dart-mobile-apps');
+  assert.ok(CERTIFICATION_RECORDS.slice(0, 5).every((record) => record.category === 'professional'));
+  assert.ok(CERTIFICATION_RECORDS.slice(5).every((record) => record.category === 'personal'));
   assert.equal(CERTIFICATION_RECORDS.at(-1).id, 'wifaq-ul-madaris-hifz');
 });
 
@@ -58,7 +60,7 @@ test('CertificationRail tracks active cards and supports keyboard scrolling', ()
   assert.doesNotMatch(railSource, /position:\s*sticky|ScrollTrigger/);
 });
 
-test('CertificationsSection renders one sequential rail without categories or filter controls', () => {
+test('CertificationsSection renders professional and personal archives without filter controls', () => {
   const sectionSource = readFileSync(resolve(certificationsDirectory, 'CertificationsSection.jsx'), 'utf8');
   const railSource = readFileSync(resolve(certificationsDirectory, 'CertificationRail.jsx'), 'utf8');
   const styles = readFileSync(resolve(certificationsDirectory, 'certifications.css'), 'utf8');
@@ -66,9 +68,10 @@ test('CertificationsSection renders one sequential rail without categories or fi
   assert.match(sectionSource, /id="certifications"/);
   assert.match(sectionSource, /CERTIFICATION_RECORDS/);
   assert.match(sectionSource, /<CertificationRail/);
-  assert.doesNotMatch(sectionSource, /professional|lifetime/i);
+  assert.match(sectionSource, /Professional certifications/);
+  assert.match(sectionSource, /Personal excellence/);
   assert.doesNotMatch(railSource, /group|Professional certifications|Lifetime achievements/);
-  assert.doesNotMatch(sectionSource, /portfolio-placeholder|filter|button/);
+  assert.doesNotMatch(sectionSource, /portfolio-placeholder|filter-controls|<button/);
   assert.match(styles, /overflow-x:\s*auto/);
   assert.match(styles, /scrollbar-width:\s*none/);
   assert.match(styles, /::-webkit-scrollbar[\s\S]*display:\s*none/);

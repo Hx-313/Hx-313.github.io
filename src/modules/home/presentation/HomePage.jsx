@@ -7,7 +7,6 @@ import HowIBuild from './how-i-build/HowIBuild.jsx';
 import Services from './services/Services.jsx';
 import CommandCenter from './command-center/CommandCenter.jsx';
 import CertificationsSection from './certifications/CertificationsSection.jsx';
-import TestimonialsSection from './testimonials/TestimonialsSection.jsx';
 import SectionReveal from '../../../shared/motion/SectionReveal.jsx';
 import ContactSection from '../../contact/presentation/ContactSection.jsx';
 import SEO from '../../../shared/seo/SEO.jsx';
@@ -105,9 +104,6 @@ export default function HomePage({ initialExperienceState = 'intro', targetSecti
           <ContactSection />
         </SectionReveal>
 
-        <SectionReveal motion="testimonials" className="portfolio-flow-section">
-          <TestimonialsSection />
-        </SectionReveal>
       </div>
     </>
   );

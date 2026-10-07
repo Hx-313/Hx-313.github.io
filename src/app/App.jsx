@@ -15,6 +15,7 @@ export const routes = [
       { path: 'about', element: <AboutPage /> },
       { path: 'contact', element: <ContactPage /> },
       { path: 'projects', element: <ProjectsPage theme="dark" setTheme={() => {}} onNavigate={() => {}} /> },
+      { path: '404', element: <NotFound /> },
       {
         path: 'projects/:slug',
         element: <ProjectDetailPage />,

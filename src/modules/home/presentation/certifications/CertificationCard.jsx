@@ -49,6 +49,8 @@ export default function CertificationCard({ record, isActive = false }) {
           <img
             src={record.preview.src}
             alt={record.preview.alt}
+            width="400"
+            height="300"
             onError={() => setHasPreview(false)}
           />
         ) : (

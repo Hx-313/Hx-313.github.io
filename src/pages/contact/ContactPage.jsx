@@ -10,7 +10,7 @@ export default function ContactPage() {
         description="Get in touch with Hafiz Ali Abdullah for Flutter development, Node.js backends, or full-stack mobile projects. Available for freelance and contract work."
       />
       <div style={{ paddingTop: '80px' }}>
-        <ContactSection />
+        <ContactSection titleTag="h1" />
       </div>
     </>
   );

@@ -10,7 +10,7 @@ export default function AboutPage() {
         description="Hafiz Ali Abdullah is a Flutter and Node.js developer based in Pakistan. I build mobile applications, REST APIs, and backend systems for production use."
       />
       <div style={{ paddingTop: '80px' }}>
-        <AboutSection />
+        <AboutSection headingTag="h1" />
       </div>
     </>
   );

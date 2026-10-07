@@ -19,7 +19,7 @@ test('aboutData exports frozen contract with headline, paragraphs, stats, and me
 
   // Verify Body Copy
   assert.equal(aboutParagraphs.length, 3);
-  assert.match(aboutParagraphs[0], /Flutter and native technologies/);
+  assert.match(aboutParagraphs[0], /Flutter and native Android technologies/);
   assert.match(aboutParagraphs[1], /customer-facing apps, internal workflows/);
   assert.match(aboutParagraphs[2], /OnlineOrder\.pk \/ WOS/);
 

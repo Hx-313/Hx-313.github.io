@@ -498,6 +498,7 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
 
   return (
     <div className="projects-page" ref={containerRef} data-theme={getThemeForIndex(0)}>
+      <h1 className="projects-page__title">Selected projects by Hafiz Ali Abdullah</h1>
       <SEO
         title="Projects by Hafiz Ali Abdullah — Flutter & Node.js Apps"
         description="Selected work by Hafiz Ali Abdullah: Dietify, WOS, Speak & Translate, and ExpenseFlow. Flutter apps with Node.js backends — shipped to production."
@@ -526,7 +527,13 @@ export default function ProjectsPage({ theme, setTheme, onNavigate }) {
       <div className="projects-page__stage" ref={stageRef} id="stage" aria-hidden="true">
         {projects.map((project) => (
           <div className="projects-page__layer" key={`layer-${project.id}`}>
-            <img src={project.image} alt={project.imageAlt} loading="eager" />
+            <img
+              src={project.image}
+              alt={project.imageAlt}
+              width={project.imageWidth}
+              height={project.imageHeight}
+              loading="eager"
+            />
           </div>
         ))}
       </div>

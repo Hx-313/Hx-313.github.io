@@ -20,5 +20,5 @@ test('centralizes shared contact and site destinations', () => {
 });
 
 test('defines the schedule meeting link for the conversion funnel', () => {
-  assert.equal(scheduleLink, 'https://cal.com/hafiz-ali-abdulah-wb7fq');
+  assert.equal(scheduleLink, 'https://cal.com/hafiz-ali-abdullah-wb7fqf');
 });

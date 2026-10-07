@@ -16,7 +16,7 @@ export const HOW_I_BUILD_TEXT = deepFreeze({
   },
   paragraphs: [
     'Every layer gets a tool chosen for what it actually has to survive — not what’s trending this year.',
-    'Flutter and native mobile for the interface people use. Node.js, REST APIs, MongoDB, SQL, and Firebase for the services and data layer behind it. The stack follows the product, the workflow, and the reliability it needs.',
+    'Flutter and Android native for the interface people use. Node.js, REST APIs, MongoDB, MySQL, AI integrations, and Firebase for the services and data layer behind it. The stack follows the product, the workflow, and the reliability it needs.',
     'Architecture decides what’s possible. Clear ownership of every layer makes it shippable.',
   ],
   tags: [
@@ -65,12 +65,20 @@ export const HOW_I_BUILD_TEXT = deepFreeze({
       icon: 'nodejs',
     },
     {
-      id: 'mongodb-sql',
-      name: 'MongoDB + SQL',
+      id: 'mongodb',
+      name: 'MongoDB',
       kind: 'Database',
-      description: 'Document and relational data',
+      description: 'Document data',
       service: 'Product data architecture',
       icon: 'mongodb',
+    },
+    {
+      id: 'mysql',
+      name: 'MySQL',
+      kind: 'Database',
+      description: 'Relational data',
+      service: 'Structured product data',
+      icon: 'mysql',
     },
     {
       id: 'sqlite',
@@ -79,6 +87,22 @@ export const HOW_I_BUILD_TEXT = deepFreeze({
       description: 'Local data storage',
       service: 'Local-first mobile storage',
       icon: 'sqlite',
+    },
+    {
+      id: 'ai-integration',
+      name: 'AI Integration',
+      kind: 'AI integration',
+      description: 'Product intelligence and automation',
+      service: 'AI-assisted product workflows',
+      icon: 'ai',
+    },
+    {
+      id: 'github-actions',
+      name: 'GitHub Actions',
+      kind: 'CI/CD',
+      description: 'Automated delivery workflows',
+      service: 'Continuous integration and delivery',
+      icon: 'github-actions',
     },
     // Row 3
     {
