@@ -1,21 +1,19 @@
 import { useParams } from 'react-router-dom';
 import { projects } from '../../data/projects.js';
+import NotFound from '../not-found/NotFound.jsx';
 import SEO from '../../shared/seo/SEO.jsx';
 
 const PROJECT_SLUG_ALIASES = Object.freeze({
   'speak-and-translate': 'speak',
 });
 
-const projectSchemaFor = (slug) => {
-  const project = projects.find(({ id }) => id === (PROJECT_SLUG_ALIASES[slug] ?? slug));
-  const name = project?.name ?? slug.replaceAll('-', ' ');
-
+const projectSchemaFor = (project) => {
   return {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name,
-    applicationCategory: project?.category ?? 'MobileApplication',
-    operatingSystem: project?.platforms?.join(', ') ?? 'Android, iOS',
+    name: project.name,
+    applicationCategory: project.category,
+    operatingSystem: project.platforms.join(', '),
     author: {
       '@type': 'Person',
       name: 'Hafiz Ali Abdullah',
@@ -26,18 +24,27 @@ const projectSchemaFor = (slug) => {
 
 export default function ProjectDetailPage() {
   const { slug } = useParams();
+  const project = projects.find(({ id }) => id === (PROJECT_SLUG_ALIASES[slug] ?? slug));
 
-  // The user will provide the case study content later
+  if (!project) return <NotFound />;
+
   return (
     <>
       <SEO
-        title={`${slug} — Flutter App by Hafiz Ali Abdullah`}
-        description={`Case study for ${slug} built by Hafiz Ali Abdullah.`}
-        schema={projectSchemaFor(slug)}
+        title={`${project.name} — Project by Hafiz Ali Abdullah`}
+        description={project.description}
+        schema={projectSchemaFor(project)}
       />
-      <div style={{ paddingTop: '120px', minHeight: '80vh', padding: '120px 2rem 4rem', maxWidth: '1200px', margin: '0 auto' }}>
-        <h1>{slug}</h1>
-        <p>Project case study content will be placed here.</p>
+      <div style={{ minHeight: '80vh', padding: '120px 2rem 4rem', maxWidth: '1200px', margin: '0 auto' }}>
+        <h1>{project.name}</h1>
+        <p>{project.description}</p>
+        <img
+          src={project.image}
+          alt={project.imageAlt}
+          width={project.imageWidth}
+          height={project.imageHeight}
+          fetchPriority="high"
+        />
       </div>
     </>
   );

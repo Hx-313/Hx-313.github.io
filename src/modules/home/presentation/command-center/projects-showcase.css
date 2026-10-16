@@ -177,17 +177,14 @@
   opacity: 0;
   transform: translate3d(-50%, -50%, 0) scale(0.78);
   transform-origin: center center;
-  filter: blur(8px);
   pointer-events: none;
-  transition: border-color 360ms var(--ease-out), box-shadow 360ms var(--ease-out), opacity 600ms var(--ease-out), transform 600ms var(--ease-out), filter 600ms var(--ease-out);
-  will-change: transform, opacity, filter;
+  transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out), opacity 280ms var(--ease-out), transform 280ms var(--ease-out);
 }
 
 .projects-showcase__card[data-carousel-state="active"] {
   z-index: 3;
   opacity: 1;
   transform: translate3d(-50%, -50%, 0) scale(1);
-  filter: none;
   pointer-events: auto;
 }
 
@@ -195,7 +192,6 @@
 .projects-showcase__card[data-carousel-state="next"] {
   z-index: 2;
   opacity: 0.62;
-  filter: blur(2.4px) saturate(0.9);
   pointer-events: none;
 }
 
@@ -211,7 +207,6 @@
   z-index: 0;
   opacity: 0;
   transform: translate3d(-50%, -50%, 0) scale(0.78);
-  filter: blur(8px);
   pointer-events: none;
 }
 

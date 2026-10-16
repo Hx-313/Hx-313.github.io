@@ -1,10 +1,19 @@
 {
   "name": "hx-portfolio",
-  "type": "module",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": ">=18"
+  "description": "The personal portfolio of Hafiz Ali Abdullah, presented as a premium software engineering command center. The active experience is a React/Vite application with a WOS — OnlineOrder.pk restaurant technology system as its featured build.",
+  "repository": {
+    "type": "git",
+    "url": "git@github-personal:Hx-313/Hx-313.github.io.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "vite.config.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
   },
   "scripts": {
     "dev": "vite",
@@ -28,5 +37,8 @@
     "playwright": "^1.63.0",
     "vite": "^6.4.1",
     "vite-react-ssg": "^0.9.2"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }

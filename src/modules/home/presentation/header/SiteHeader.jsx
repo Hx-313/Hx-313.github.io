@@ -173,6 +173,23 @@ export default function SiteHeader({ theme, setTheme, onNavigate, activeSectionO
     }
   }, [onNavigate, location.pathname]);
 
+  const handleLogoClick = useCallback((event) => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+    event.preventDefault();
+    setIsMobileOpen(false);
+    setOpenNavGroup(null);
+
+    const isHomeRoute = location.pathname === '/';
+    const skipIntro = () => window.dispatchEvent(new Event('portfolio:skip-intro'));
+    if (isHomeRoute) skipIntro();
+
+    navigate('/#top', {
+      replace: isHomeRoute && location.hash === '#top',
+    });
+    if (!isHomeRoute) window.setTimeout(skipIntro, 0);
+  }, [location.hash, location.pathname, navigate]);
+
   const currentActive = activeSectionOverride || activeSection;
 
   const renderNavLink = (item, { mobile = false, menuItem = false } = {}) => {
@@ -223,9 +240,9 @@ export default function SiteHeader({ theme, setTheme, onNavigate, activeSectionO
         <div className="header-brand-wrap">
           <Link
             className="site-mark site-mark--logo"
-            to="/"
+            to="/#top"
             aria-label={HEADER_TEXT.aria.logo}
-            onClick={(e) => handleNavClick(e, '/', 'top')}
+            onClick={handleLogoClick}
           >
             <span className="site-mark-visual">
               <img

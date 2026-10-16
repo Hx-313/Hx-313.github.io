@@ -30,7 +30,7 @@
 }
 
 .site-experience.is-ready .site-header {
-  animation: heroContentAssemble 600ms var(--ease-out) both;
+  animation: heroContentAssemble 320ms var(--ease-out) both;
   animation-delay: 0ms;
 }
 

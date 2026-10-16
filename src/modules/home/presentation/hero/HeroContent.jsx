@@ -24,6 +24,26 @@ const SOCIAL_LINKS = [
   },
 ];
 
+export function HeroSocials() {
+  return (
+    <nav className="hero-socials" aria-label={HERO_TEXT.aria.socialLinks}>
+      {SOCIAL_LINKS.map(({ label, href, icon: Icon, external }) => (
+        <a
+          key={label}
+          className="hero-social-link"
+          href={href}
+          target={external ? '_blank' : undefined}
+          rel={external ? 'noopener noreferrer' : undefined}
+          aria-label={label}
+        >
+          <Icon aria-hidden="true" focusable="false" />
+          <span>{label}</span>
+        </a>
+      ))}
+    </nav>
+  );
+}
+
 export default function HeroContent() {
   return (
     <div className="hero-content">
@@ -31,16 +51,16 @@ export default function HeroContent() {
         {HERO_TEXT.kicker}
       </p>
 
-      <h1 id="hero-title" className="hero-title" data-hero-enter style={{ '--hero-enter-delay': '150ms' }}>
+      <h1 id="hero-title" className="hero-title" data-hero-enter style={{ '--hero-enter-delay': '40ms' }}>
         <span>{HERO_TEXT.title.prefix}</span>
         <strong>{HERO_TEXT.title.highlight}</strong>
       </h1>
 
-      <p className="hero-description" data-hero-enter style={{ '--hero-enter-delay': '300ms' }}>
+      <p className="hero-description" data-hero-enter style={{ '--hero-enter-delay': '80ms' }}>
         {HERO_TEXT.description}
       </p>
 
-      <div className="hero-actions" data-hero-enter style={{ '--hero-enter-delay': '450ms' }}>
+      <div className="hero-actions" data-hero-enter style={{ '--hero-enter-delay': '120ms' }}>
         <a className="hero-action hero-action--primary" href="#projects">
           <span>{HERO_TEXT.actions.seeWork}</span>
           <span aria-hidden="true">↘</span>
@@ -50,22 +70,6 @@ export default function HeroContent() {
           <span aria-hidden="true">↗</span>
         </a>
       </div>
-
-      <nav className="hero-socials" aria-label={HERO_TEXT.aria.socialLinks} data-hero-enter style={{ '--hero-enter-delay': '600ms' }}>
-        {SOCIAL_LINKS.map(({ label, href, icon: Icon, external }) => (
-          <a
-            key={label}
-            className="hero-social-link"
-            href={href}
-            target={external ? '_blank' : undefined}
-            rel={external ? 'noopener noreferrer' : undefined}
-            aria-label={label}
-          >
-            <Icon aria-hidden="true" focusable="false" />
-            <span>{label}</span>
-          </a>
-        ))}
-      </nav>
 
     </div>
   );

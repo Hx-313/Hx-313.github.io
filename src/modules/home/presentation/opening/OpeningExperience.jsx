@@ -28,6 +28,21 @@ export default function OpeningExperience({ onHandoff = noop, onComplete = noop 
   const handoffRef = useRef(false);
   const completeRef = useRef(false);
 
+  useEffect(() => {
+    const root = document.documentElement;
+    const body = document.body;
+    const previousRootOverflow = root.style.overflow;
+    const previousBodyOverflow = body.style.overflow;
+
+    root.style.overflow = 'hidden';
+    body.style.overflow = 'hidden';
+
+    return () => {
+      root.style.overflow = previousRootOverflow;
+      body.style.overflow = previousBodyOverflow;
+    };
+  }, []);
+
   const backgroundStars = useMemo(() => Array.from({ length: 42 }, (_, index) => ({
     id: index,
     x: (index * 19 + 7) % 100,
@@ -381,6 +396,12 @@ export default function OpeningExperience({ onHandoff = noop, onComplete = noop 
       onComplete: () => callOnce(onComplete, completeRef),
     });
   }, [onComplete, onHandoff]);
+
+  useEffect(() => {
+    const handleSkipRequest = () => skipOpening();
+    window.addEventListener('portfolio:skip-intro', handleSkipRequest);
+    return () => window.removeEventListener('portfolio:skip-intro', handleSkipRequest);
+  }, [skipOpening]);
 
   const activeSpeaker = liveStatement?.speaker ?? null;
   const currentDashStatement = liveStatement?.id === 'statement-three'

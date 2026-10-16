@@ -22,31 +22,19 @@ export const HERO_TEXT = Object.freeze({
   }),
 
   marqueeWords: Object.freeze([
+    'Mobile App Development',
+    'AI Integration',
+    'SaaS',
     'Flutter',
     'Node.js',
     'Android',
     'iOS',
     'REST APIs',
     'Backend Systems',
-    'Mobile App Development',
-    'AI Integration',
-    'SaaS',
   ]),
-
-  orbitVisual: Object.freeze({
-    nameArc: 'Hafiz Ali Abdullah',
-    rolesArc: 'Flutter · Node.js · Mobile',
-    readoutStatus: 'LIVE / CONNECTED',
-    readoutCode: 'GLB—01',
-    accessibleBio:
-      'Hafiz Ali Abdullah — Flutter developer, mobile application developer, and Node.js backend engineer.',
-  }),
 
   aria: Object.freeze({
     socialLinks: 'Social links',
-    heroSection: 'Hero introduction — Hafiz Ali Abdullah, Flutter and Node.js developer',
-    globePortal: "Digital green earth globe for Hafiz Ali Abdullah's Flutter and Node.js portfolio",
-    globeSequence: 'Looping digital green earth representing connected mobile apps and backend systems',
     proofMetrics: 'Selected proof points',
   }),
 });

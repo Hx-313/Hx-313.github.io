@@ -19,6 +19,7 @@
   border-radius: 0;
   min-height: 100dvh;
   overflow: clip;
+  overscroll-behavior: none;
   isolation: isolate;
   background: radial-gradient(circle at 52% 44%, var(--ithx-night-green) 0, var(--ithx-night-green) 38%, var(--ithx-night-green) 76%);
   color: var(--ithx-paper-marble);
