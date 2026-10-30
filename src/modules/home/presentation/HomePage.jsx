@@ -76,14 +76,14 @@ export default function HomePage({ initialExperienceState = 'intro', targetSecti
         <CosmicBackground />
         <Hero revealed={isSiteVisible} transitioning={experienceState === 'handoff'} />
 
+        <SectionReveal className="portfolio-flow-section">
+          <AboutSection />
+        </SectionReveal>
+
         <SectionReveal id="projects" className="portfolio-flow-section">
           <span id="command-center" className="section-anchor-compat" aria-hidden="true" />
           <span id="systems" className="section-anchor-compat" aria-hidden="true" />
           <CommandCenter controller={commandCenter} />
-        </SectionReveal>
-
-        <SectionReveal className="portfolio-flow-section">
-          <AboutSection />
         </SectionReveal>
 
         <SectionReveal className="portfolio-flow-section">

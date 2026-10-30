@@ -72,6 +72,6 @@ test('HomePage keeps the thesis story out of the approved portfolio flow', () =>
   const projectsIndex = page.indexOf('<CommandCenter');
   const aboutIndex = page.indexOf('<AboutSection');
 
-  assert.ok(heroIndex >= 0 && projectsIndex > heroIndex && aboutIndex > projectsIndex);
+  assert.ok(heroIndex >= 0 && aboutIndex > heroIndex && projectsIndex > aboutIndex);
   assert.doesNotMatch(page, /<ClientStory/);
 });
