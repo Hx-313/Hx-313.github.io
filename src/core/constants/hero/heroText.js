@@ -37,4 +37,9 @@ export const HERO_TEXT = Object.freeze({
     socialLinks: 'Social links',
     proofMetrics: 'Selected proof points',
   }),
+
+  orbitVisual: Object.freeze({
+    nameArc: 'Hafiz Ali Abdullah',
+    rolesArc: 'Flutter · Node.js · Mobile · Backend',
+  }),
 });

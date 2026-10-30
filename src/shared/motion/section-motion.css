@@ -27,3 +27,11 @@
     transition: none;
   }
 }
+
+.section-reveal--projects.is-motion-ready { animation-delay: 0ms; }
+.section-reveal--about.is-motion-ready { animation-delay: 40ms; }
+.section-reveal--services.is-motion-ready { animation-delay: 0ms; }
+.section-reveal--domains.is-motion-ready { animation-delay: 0ms; }
+.section-reveal--certifications.is-motion-ready { animation-delay: 0ms; }
+.section-reveal--tools.is-motion-ready { animation-delay: 0ms; }
+.section-reveal--contact.is-motion-ready { animation-delay: 0ms; }

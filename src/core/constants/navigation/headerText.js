@@ -22,7 +22,7 @@ export const HEADER_TEXT = Object.freeze({
     mainNavKicker: 'MAIN NAVIGATION',
     sysTimeLabel: 'SYS TIME',
   }),
-  topLevelNavIds: Object.freeze(['top', 'about', 'projects', 'contact']),
+  topLevelNavIds: Object.freeze(['top', 'projects', 'contact']),
   navGroups: Object.freeze([
     Object.freeze({
       id: 'capabilities',
@@ -30,15 +30,15 @@ export const HEADER_TEXT = Object.freeze({
       itemIds: Object.freeze(['services', 'domains', 'tools']),
     }),
     Object.freeze({
-      id: 'credentials',
-      label: 'Credentials',
-      itemIds: Object.freeze(['certifications']),
+      id: 'about',
+      label: 'About',
+      itemIds: Object.freeze(['about', 'certifications']),
     }),
   ]),
   navItems: Object.freeze([
     Object.freeze({ id: 'top', label: 'Overview', shortLabel: 'Overview', index: '00', href: '/' }),
-    Object.freeze({ id: 'about', label: '01 About', shortLabel: 'About', index: '01', href: '/about' }),
-    Object.freeze({ id: 'projects', label: '02 Projects', shortLabel: 'Projects', index: '02', href: '/projects' }),
+    Object.freeze({ id: 'projects', label: '01 Projects', shortLabel: 'Projects', index: '01', href: '/projects' }),
+    Object.freeze({ id: 'about', label: '02 About', shortLabel: 'About', index: '02', href: '/about' }),
     Object.freeze({ id: 'services', label: '03 Services', shortLabel: 'Services', index: '03', href: '/#services' }),
     Object.freeze({ id: 'domains', label: '04 Industries', shortLabel: 'Industries', index: '04', href: '/#domains' }),
     Object.freeze({ id: 'certifications', label: '05 Certifications', shortLabel: 'Certifications', index: '05', href: '/#certifications' }),

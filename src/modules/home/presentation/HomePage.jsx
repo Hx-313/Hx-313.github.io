@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Hero from './hero/Hero.jsx';
 import AboutSection from '../../about/presentation/AboutSection.jsx';
 import SolutionsSection from './solutions/SolutionsSection.jsx';
@@ -16,6 +16,8 @@ import './command-center/command-center.css';
 
 export default function HomePage({ targetSection = null }) {
   const commandCenter = useCommandCenter();
+  const initialExperienceState = 'intro';
+  const [experienceState] = useState(initialExperienceState);
 
   useEffect(() => {
     const previousScrollRestoration = window.history.scrollRestoration;
@@ -53,16 +55,16 @@ export default function HomePage({ targetSection = null }) {
       />
       <div className="site-experience is-ready">
         <CosmicBackground />
-        <Hero revealed />
-
-        <SectionReveal className="portfolio-flow-section">
-          <AboutSection />
-        </SectionReveal>
+        <Hero revealed transitioning={experienceState === 'handoff'} />
 
         <SectionReveal id="projects" className="portfolio-flow-section">
           <span id="command-center" className="section-anchor-compat" aria-hidden="true" />
           <span id="systems" className="section-anchor-compat" aria-hidden="true" />
           <CommandCenter controller={commandCenter} />
+        </SectionReveal>
+
+        <SectionReveal className="portfolio-flow-section">
+          <AboutSection />
         </SectionReveal>
 
         <SectionReveal className="portfolio-flow-section">

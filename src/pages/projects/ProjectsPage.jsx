@@ -9,6 +9,17 @@ import ContactSection from '../../modules/contact/presentation/ContactSection.js
 import SEO from '../../shared/seo/SEO.jsx';
 import './projects-page.css';
 
+const WHEEL_GESTURE_GAP = 60;
+
+const projectRevealConfig = {
+  readmate: { reveal: 'radial' },
+  expenseflow: { reveal: 'horizontal' },
+  translator: { reveal: 'vertical' },
+  'noor-ul-quran': { reveal: 'radial' },
+  'pet-care': { reveal: 'horizontal' },
+  quickscan: { reveal: 'vertical' },
+};
+
 const projectSummaries = {
   readmate: 'Read and work across document formats in one mobile office suite. Create protected PDFs, listen to EPUBs, and edit XLSX workbooks in version 2.',
   expenseflow: 'One offline-first workspace for personal and business finances, from daily spending to cheque lifecycles.',
