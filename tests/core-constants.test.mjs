@@ -7,6 +7,8 @@ test('defines the external WOS destinations used by the system constellation', (
     adminPanel: 'https://onlineorder.pk/wos/admin',
     epos: 'https://onlineorder.pk/epos',
     customerWebsite: 'https://westcoastcoffee.pk/',
+    liveSystem: 'https://onlineorder.pk',
+    clientSite: 'https://webticians.com',
   });
 });
 

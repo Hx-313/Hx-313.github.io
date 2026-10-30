@@ -31,3 +31,11 @@
     will-change: auto;
   }
 }
+
+.section-reveal--projects { --reveal-delay: 80ms; animation-delay: var(--reveal-delay, 0ms); }
+.section-reveal--about    { --reveal-delay: 0ms;  animation-delay: var(--reveal-delay, 0ms); }
+.section-reveal--services { --reveal-delay: 60ms; animation-delay: var(--reveal-delay, 0ms); }
+.section-reveal--domains  { --reveal-delay: 40ms; animation-delay: var(--reveal-delay, 0ms); }
+.section-reveal--certifications { --reveal-delay: 20ms; animation-delay: var(--reveal-delay, 0ms); }
+.section-reveal--tools    { --reveal-delay: 0ms;  animation-delay: var(--reveal-delay, 0ms); }
+.section-reveal--contact  { --reveal-delay: 60ms; animation-delay: var(--reveal-delay, 0ms); }

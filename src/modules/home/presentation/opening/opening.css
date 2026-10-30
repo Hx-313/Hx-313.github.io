@@ -23,7 +23,7 @@
   isolation: isolate;
   background: radial-gradient(circle at 52% 44%, var(--ithx-night-green) 0, var(--ithx-night-green) 38%, var(--ithx-night-green) 76%);
   color: var(--ithx-paper-marble);
-  transition: opacity 320ms cubic-bezier(0.22, 1, 0.36, 1), transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 280ms cubic-bezier(0.22, 1, 0.36, 1), transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .opening::after {
