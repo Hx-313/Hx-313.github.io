@@ -9,6 +9,9 @@ dist/
 test-artifacts/
 __pycache__/
 
+# agent skills and tooling
+.agents/
+
 # dependencies
 node_modules/
 

@@ -22,11 +22,14 @@ export default function SectionReveal({ className = '', id, subject, children, .
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsVisible(entry.isIntersecting);
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
       },
       {
-        rootMargin: '0px 0px 10% 0px',
-        threshold: 0.01,
+        rootMargin: '0px 0px 8% 0px',
+        threshold: 0.04,
       }
     );
 

@@ -8,15 +8,18 @@
 
 .section-reveal.is-motion-ready {
   opacity: 0;
-  transform: translate3d(0, 0.625rem, 0);
+  transform: translate3d(0, 1.5rem, 0);
   transition:
-    opacity 180ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 560ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 560ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
 }
 
 .section-reveal.is-motion-ready.is-visible {
   opacity: 1;
   transform: none;
+  will-change: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -25,13 +28,6 @@
     opacity: 1;
     transform: none;
     transition: none;
+    will-change: auto;
   }
 }
-
-.section-reveal--projects.is-motion-ready { animation-delay: 0ms; }
-.section-reveal--about.is-motion-ready { animation-delay: 40ms; }
-.section-reveal--services.is-motion-ready { animation-delay: 0ms; }
-.section-reveal--domains.is-motion-ready { animation-delay: 0ms; }
-.section-reveal--certifications.is-motion-ready { animation-delay: 0ms; }
-.section-reveal--tools.is-motion-ready { animation-delay: 0ms; }
-.section-reveal--contact.is-motion-ready { animation-delay: 0ms; }

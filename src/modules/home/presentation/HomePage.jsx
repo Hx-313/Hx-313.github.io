@@ -59,14 +59,14 @@ export default function HomePage({ targetSection = null }) {
         <CosmicBackground />
         <Hero revealed transitioning={experienceState === 'handoff'} />
 
+        <SectionReveal className="portfolio-flow-section">
+          <AboutSection />
+        </SectionReveal>
+
         <SectionReveal id="projects" className="portfolio-flow-section">
           <span id="command-center" className="section-anchor-compat" aria-hidden="true" />
           <span id="systems" className="section-anchor-compat" aria-hidden="true" />
           <CommandCenter controller={commandCenter} />
-        </SectionReveal>
-
-        <SectionReveal className="portfolio-flow-section">
-          <AboutSection />
         </SectionReveal>
 
         <SectionReveal className="portfolio-flow-section">
@@ -77,12 +77,12 @@ export default function HomePage({ targetSection = null }) {
           <SolutionsSection />
         </SectionReveal>
 
-        <SectionReveal className="portfolio-flow-section">
-          <CertificationsSection />
-        </SectionReveal>
-
         <SectionReveal id="tools" className="portfolio-flow-section">
           <HowIBuild />
+        </SectionReveal>
+
+        <SectionReveal className="portfolio-flow-section">
+          <CertificationsSection />
         </SectionReveal>
 
         <SectionReveal className="portfolio-flow-section">

@@ -51,16 +51,16 @@ export default function HeroContent() {
         {HERO_TEXT.kicker}
       </p>
 
-      <h1 id="hero-title" className="hero-title" data-hero-enter style={{ '--hero-enter-delay': '40ms' }}>
+      <h1 id="hero-title" className="hero-title" data-hero-enter style={{ '--hero-enter-delay': '80ms' }}>
         <span>{HERO_TEXT.title.prefix}</span>
         <strong>{HERO_TEXT.title.highlight}</strong>
       </h1>
 
-      <p className="hero-description" data-hero-enter style={{ '--hero-enter-delay': '80ms' }}>
+      <p className="hero-description" data-hero-enter style={{ '--hero-enter-delay': '180ms' }}>
         {HERO_TEXT.description}
       </p>
 
-      <div className="hero-actions" data-hero-enter style={{ '--hero-enter-delay': '120ms' }}>
+      <div className="hero-actions" data-hero-enter style={{ '--hero-enter-delay': '280ms' }}>
         <a className="hero-action hero-action--primary" href="#projects">
           <span>{HERO_TEXT.actions.seeWork}</span>
           <span aria-hidden="true">↘</span>
