@@ -10,8 +10,8 @@ test('HomePage follows the approved post-hero portfolio sequence', () => {
 
   const markers = [
     '<Hero',
-    '<CommandCenter',
     '<AboutSection',
+    '<CommandCenter',
     '<Services',
     '<SolutionsSection',
     '<CertificationsSection',

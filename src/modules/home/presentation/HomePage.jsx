@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import OpeningExperience from './opening/OpeningExperience.jsx';
 import Hero from './hero/Hero.jsx';
 import AboutSection from '../../about/presentation/AboutSection.jsx';
 import SolutionsSection from './solutions/SolutionsSection.jsx';
@@ -15,30 +16,37 @@ import CosmicBackground from './CosmicBackground.jsx';
 import './home.css';
 import './command-center/command-center.css';
 
-export default function HomePage({ targetSection = null }) {
+export default function HomePage({ initialExperienceState = 'intro', targetSection = null }) {
+  const [experienceState, setExperienceState] = useState(initialExperienceState);
   const commandCenter = useCommandCenter();
-  const initialExperienceState = 'intro';
-  const [experienceState] = useState(initialExperienceState);
+  const startHandoff = useCallback(() => {
+    setExperienceState((state) => (state === 'intro' ? 'handoff' : state));
+  }, []);
+  const completeOpening = useCallback(() => setExperienceState('ready'), []);
+  const isSiteVisible = experienceState !== 'intro';
+  const isSiteReady = experienceState === 'ready';
 
   useEffect(() => {
     const previousScrollRestoration = window.history.scrollRestoration;
     window.history.scrollRestoration = 'manual';
 
-    const hash = targetSection || window.location.hash;
-    if (hash && hash !== '#top') {
-      const scrollToTarget = () => {
-        const target = document.querySelector(hash);
-        if (target) {
-          const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-          target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
-        }
-      };
-      scrollToTarget();
-      const timer = setTimeout(scrollToTarget, 60);
-      return () => {
-        clearTimeout(timer);
-        window.history.scrollRestoration = previousScrollRestoration;
-      };
+    if (initialExperienceState === 'ready') {
+      const hash = targetSection || window.location.hash;
+      if (hash && hash !== '#top') {
+        const scrollToTarget = () => {
+          const target = document.querySelector(hash);
+          if (target) {
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+          }
+        };
+        scrollToTarget();
+        const timer = setTimeout(scrollToTarget, 60);
+        return () => {
+          clearTimeout(timer);
+          window.history.scrollRestoration = previousScrollRestoration;
+        };
+      }
     }
 
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
@@ -46,7 +54,11 @@ export default function HomePage({ targetSection = null }) {
     return () => {
       window.history.scrollRestoration = previousScrollRestoration;
     };
-  }, [targetSection]);
+  }, [initialExperienceState, targetSection]);
+
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => { setIsClient(navigator.userAgent !== 'ReactSnap'); }, []);
+  const hideMainContent = !isSiteReady && isClient;
 
   return (
     <>
@@ -55,18 +67,23 @@ export default function HomePage({ targetSection = null }) {
         description="Hafiz Ali Abdullah — Flutter developer & Node.js engineer. Production apps for Android and iOS, plus APIs and dashboards. 15+ apps shipped, 100K+ downloads."
         schema={profilePageSchema}
       />
-      <div className="site-experience is-ready">
+      {!isSiteReady && <OpeningExperience onHandoff={startHandoff} onComplete={completeOpening} />}
+      <div
+        className={`site-experience is-${experienceState}`}
+        aria-hidden={hideMainContent ? 'true' : undefined}
+        inert={hideMainContent ? '' : undefined}
+      >
         <CosmicBackground />
-        <Hero revealed transitioning={experienceState === 'handoff'} />
+        <Hero revealed={isSiteVisible} transitioning={experienceState === 'handoff'} />
+
+        <SectionReveal className="portfolio-flow-section">
+          <AboutSection />
+        </SectionReveal>
 
         <SectionReveal id="projects" className="portfolio-flow-section">
           <span id="command-center" className="section-anchor-compat" aria-hidden="true" />
           <span id="systems" className="section-anchor-compat" aria-hidden="true" />
           <CommandCenter controller={commandCenter} />
-        </SectionReveal>
-
-        <SectionReveal className="portfolio-flow-section">
-          <AboutSection />
         </SectionReveal>
 
         <SectionReveal className="portfolio-flow-section">

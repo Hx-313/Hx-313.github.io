@@ -121,16 +121,6 @@ export default function HolographicGlobe({ className = '', active = true }) {
     );
     backdropGroup.add(radarRing2);
 
-    // Subtle Radial Radar Crosshairs
-    const crosshairMat = new THREE.LineBasicMaterial({ color: palette.accent, transparent: true, opacity: 0.12 });
-    const crosshairGeo = new THREE.BufferGeometry().setFromPoints([
-      new THREE.Vector3(-3.5, 0, 0),
-      new THREE.Vector3(3.5, 0, 0),
-      new THREE.Vector3(0, -3.5, 0),
-      new THREE.Vector3(0, 3.5, 0),
-    ]);
-    const crosshairs = new THREE.LineSegments(crosshairGeo, crosshairMat);
-    backdropGroup.add(crosshairs);
 
     // Ambient Floating Deep-Space Stardust (280 particles)
     const dustCount = 280;
@@ -466,7 +456,6 @@ export default function HolographicGlobe({ className = '', active = true }) {
       if (!prefersReducedMotion) {
         radarRing1.rotation.z = -elapsedTime * 0.08;
         radarRing2.rotation.z = elapsedTime * 0.05;
-        crosshairs.rotation.z = -elapsedTime * 0.03;
         dustParticles.rotation.y = elapsedTime * 0.015;
 
         gyroRing1.rotation.z = elapsedTime * 0.3;
@@ -544,8 +533,6 @@ export default function HolographicGlobe({ className = '', active = true }) {
       radarRing1.material.dispose();
       radarRing2.geometry.dispose();
       radarRing2.material.dispose();
-      crosshairGeo.dispose();
-      crosshairMat.dispose();
       dustGeo.dispose();
       dustMat.dispose();
 
@@ -561,13 +548,6 @@ export default function HolographicGlobe({ className = '', active = true }) {
       {/* 3D WebGL Canvas */}
       <div ref={canvasContainerRef} className="holographic-globe-canvas-mount" />
 
-      {/* Futuristic Background Atmospheric & Radar Grid Rings */}
-      <div className="stage-backdrop-grid" aria-hidden="true">
-        <div className="radar-glow-aura" />
-        <div className="radar-sweep-beam" />
-        <div className="radar-axis-x" />
-        <div className="radar-axis-y" />
-      </div>
     </div>
   );
 }
