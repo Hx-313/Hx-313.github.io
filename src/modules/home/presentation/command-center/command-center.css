@@ -243,7 +243,7 @@
   height: 4.2rem;
   object-fit: cover;
   opacity: 0.78;
-  transition: opacity 180ms ease, transform 180ms ease;
+  transition: opacity 220ms var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)), transform 220ms var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
 }
 
 .surface-grid figure:hover img,
@@ -334,7 +334,7 @@
   letter-spacing: 0.12em;
   text-decoration: none;
   text-transform: uppercase;
-  transition: background-color 180ms ease, color 180ms ease;
+  transition: background-color 220ms var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)), color 220ms var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
 }
 
 .active-build__cta:hover {
@@ -344,7 +344,7 @@
 
 .active-build__cta span {
   margin-left: 0.45rem;
-  transition: transform 180ms ease;
+  transition: transform 220ms var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
 }
 
 .active-build__cta:hover span {
@@ -379,7 +379,7 @@
   color: var(--cc-primary);
   cursor: pointer;
   text-align: left;
-  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+  transition: background-color 220ms var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)), border-color 220ms var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)), transform 220ms var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
 }
 
 .project-card:hover,

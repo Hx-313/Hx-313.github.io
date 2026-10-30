@@ -1,22 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import './section-motion.css';
 
-export const SECTION_MOTIONS = Object.freeze([
-  'projects',
-  'about',
-  'services',
-  'domains',
-  'certifications',
-  'tools',
-  'contact',
-  'testimonials',
-]);
+const SECTION_SUBJECTS = ['projects', 'about', 'services', 'domains', 'certifications', 'tools', 'contact'];
 
-export default function SectionReveal({ motion = 'services', className = '', id, children, ...rest }) {
+export default function SectionReveal({ className = '', id, subject, children, ...rest }) {
   const sectionRef = useRef(null);
   const [isMotionReady, setIsMotionReady] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const subject = SECTION_MOTIONS.includes(motion) ? motion : 'services';
 
   useEffect(() => {
     const element = sectionRef.current;
@@ -35,8 +25,8 @@ export default function SectionReveal({ motion = 'services', className = '', id,
         setIsVisible(entry.isIntersecting);
       },
       {
-        rootMargin: '0px 0px -12% 0px',
-        threshold: 0.14,
+        rootMargin: '0px 0px 8% 0px',
+        threshold: 0.04,
       }
     );
 
@@ -44,12 +34,13 @@ export default function SectionReveal({ motion = 'services', className = '', id,
     return () => observer.disconnect();
   }, []);
 
+  const subjectClass = subject && SECTION_SUBJECTS.includes(subject) ? `section-reveal--${subject}` : '';
+
   return (
     <div
       ref={sectionRef}
       id={id}
-      className={`section-reveal section-reveal--${subject} ${isMotionReady ? 'is-motion-ready' : ''} ${isVisible ? 'is-visible' : ''} ${className}`.trim()}
-      data-motion={subject}
+      className={`section-reveal ${subjectClass} ${isMotionReady ? 'is-motion-ready' : ''} ${isVisible ? 'is-visible' : ''} ${className}`.trim()}
       {...rest}
     >
       {children}

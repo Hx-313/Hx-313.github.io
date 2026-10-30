@@ -80,6 +80,7 @@
   --radius-card: 0.75rem;
   --radius-lg: 1.25rem;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
   --color-background: var(--ithx-paper-marble);
   --color-surface: var(--ithx-primary-green);
   --color-surface-raised: var(--ithx-primary-green);

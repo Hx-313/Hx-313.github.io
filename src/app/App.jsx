@@ -11,7 +11,7 @@ export const routes = [
     path: '/',
     element: <Layout />,
     children: [
-      { index: true, element: <HomePage initialExperienceState="intro" /> },
+      { index: true, element: <HomePage /> },
       { path: 'about', element: <AboutPage /> },
       { path: 'contact', element: <ContactPage /> },
       { path: 'projects', element: <ProjectsPage theme="dark" setTheme={() => {}} onNavigate={() => {}} /> },

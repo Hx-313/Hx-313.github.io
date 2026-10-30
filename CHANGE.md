@@ -24,6 +24,24 @@ Documentation-only changes, configuration changes, dependency changes, source ch
 - Verification: Commands run and their result, or `Not run` with the reason.
 ```
 
+## 2026-10-16 — Add Noor ul Quran to the projects page
+
+- Summary: Added Noor ul Quran with the supplied banner, project scope, feature summary, 10K+ download claim, and Google Play/App Store links. Extended the page's existing transition and contact-index behavior for the fourth project and refreshed its SEO description.
+- Files: `src/data/projects.js`, `src/pages/projects/ProjectsPage.jsx`, `src/core/constants/seo/seoText.js`, `public/assets/noor-ul-quran/hero.png`, `CHANGE.md`
+- Verification: Not run; implementation was requested without test or build verification.
+
+## 2026-10-16 — Add Pet Care & My Buddy to the projects page
+
+- Summary: Added the offline-first pet health and routines app with the supplied banner, feature summary, Flutter/SQLite scope, and Google Play listing. Updated project-page SEO to include the fifth showcase project.
+- Files: `src/data/projects.js`, `src/core/constants/seo/seoText.js`, `public/assets/pet-care/hero.png`, `CHANGE.md`
+- Verification: Not run; tests and build verification were not requested.
+
+## 2026-10-16 — Add QuickScan to the projects page
+
+- Summary: Added the native Android QR/barcode scanner with the supplied banner, offline scanning and generation features, end-to-end delivery scope, and 10K+ download claim. Updated project-page SEO to include QuickScan.
+- Files: `src/data/projects.js`, `src/core/constants/seo/seoText.js`, `public/assets/qr-scanner/hero.png`, `CHANGE.md`
+- Verification: Not run; tests and build verification were not requested.
+
 ## 2026-09-20 — Connect portfolio booking actions to Cal.com
 
 - Summary: Updated the shared booking URL to the Cal.com username shown in the user's profile screenshot. Existing contact and footer booking actions use this constant.

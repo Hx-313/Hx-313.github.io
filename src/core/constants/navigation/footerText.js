@@ -33,8 +33,8 @@ export const FOOTER_TEXT = Object.freeze({
   backToTop: 'Back to top',
   navigation: Object.freeze([
     Object.freeze({ label: 'Overview', href: '/' }),
-    Object.freeze({ label: 'Projects', href: '/projects' }),
     Object.freeze({ label: 'About', href: '/about' }),
+    Object.freeze({ label: 'Projects', href: '/projects' }),
     Object.freeze({ label: 'Services', href: '/#services' }),
     Object.freeze({ label: 'Industries', href: '/#domains' }),
     Object.freeze({ label: 'Certifications', href: '/#certifications' }),

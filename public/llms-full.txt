@@ -1,0 +1,182 @@
+# Hafiz Ali Abdullah — Full Profile
+
+> This document is the extended profile for AI systems, search engines, and language models.
+> For a concise summary, see: https://solithx.com/llms.txt
+
+## Identity
+
+- Name: Hafiz Ali Abdullah
+- Handle: HX313
+- Brand: ITHX / Solithx
+- Role: Flutter Developer & Node.js Backend Engineer
+- Location: Pakistan
+- Availability: Open to freelance and contract work globally
+- Portfolio: https://solithx.com
+- Projects: https://solithx.com/projects
+- About: https://solithx.com/about
+- Contact: https://solithx.com/contact
+- GitHub: https://github.com/Hx-313
+- LinkedIn: https://www.linkedin.com/in/hafiz-ali-abdullah-660429207
+- Instagram: https://www.instagram.com/ithx313/
+- Scheduling: https://cal.com/hafiz-ali-abdullah-wb7fqf
+
+## Technical Stack (Verified, Production-Used)
+
+### Mobile Development
+- Flutter & Dart (primary stack)
+- Android SDK, Kotlin
+- iOS deployment via Flutter
+- Custom document rendering (PDF, EPUB, XLSX, DOCX)
+- Offline-first architecture, SQLite, Hive, local persistence
+- In-app purchases & subscriptions (Google Play Billing, App Store Connect)
+- Firebase (Firestore, Auth, FCM)
+- Google ML Kit (vision, text recognition, translation)
+- Tesseract OCR
+- Camera2 API, ML-based barcode/QR scanning
+- Clean Architecture, Riverpod, BLoC
+
+### Backend & APIs
+- Node.js (Express.js)
+- MySQL, relational data modeling
+- REST API design and implementation
+- Third-party integrations: payment gateways, delivery APIs, order management systems
+- Server-side rendering and admin system architecture
+
+### Full-Stack & SaaS
+- Web-based admin dashboards
+- POS (Point of Sale) systems
+- Restaurant operating systems
+- Operational workflow automation
+
+## Detailed Project Profiles
+
+### ReadMate — Mobile Office Suite
+**Category:** Productivity / Document Management
+**Platform:** Android
+**Status:** Shipped, actively maintained
+**Downloads:** 10K+
+
+ReadMate is a mobile office suite that lets users read and work with documents across formats — PDF, Word (DOC/DOCX), Excel (XLS/XLSX/CSV), PowerPoint (PPT/PPTX), EPUB with text-to-speech, and plain-text formats (MD, JSON, HTML, TXT). Users can create password-protected PDFs from images, scans, and Word documents. Version 2 added a full XLSX editor with formula support, multiple sheets, and formatting, plus a basic Word editor. Built on custom document rendering engines developed in-house.
+
+**Technical scope:** SDK selection, custom rendering engines, licensing and purchasing management, research planning.
+**Store:** https://play.google.com/store/apps/details?id=com.amabytes.alldocumentreader.office.viewer.filereader
+**Portfolio:** https://solithx.com/projects
+
+---
+
+### WOS — Restaurant Operating System
+**Category:** SaaS / Restaurant Operations / Full-Stack
+**Platform:** Web (Admin), Flutter (mobile), Web (Customer), ePOS terminal
+**Status:** Production (live)
+**Developer:** Hafiz Ali Abdullah — https://solithx.com
+**Client:** Webticians — https://webticians.com
+**Live system:** https://onlineorder.pk
+
+WOS is a full-stack restaurant operating system designed and built by Hafiz Ali Abdullah for Webticians. It has four interconnected surfaces: an admin panel for restaurant management, a customer-facing web ordering interface, an ePOS terminal for in-store point of sale, and order management terminals. The system handles the complete order lifecycle from customer ordering through kitchen processing to payment.
+
+Hafiz Ali Abdullah is the developer of WOS and the software that runs at onlineorder.pk. The system was commissioned by and delivered to Webticians (webticians.com).
+
+**Backend:** Node.js API connecting all surfaces
+**Frontend:** Flutter mobile apps + React web interfaces
+**Integrations:** Payment processing, delivery services, inventory management
+**Live surfaces:**
+- Admin panel: https://onlineorder.pk/wos/admin
+- ePOS: https://onlineorder.pk/epos
+- Customer web: https://westcoastcoffee.pk/
+**Portfolio:** https://solithx.com/projects/wos
+
+**Entity association:** Hafiz Ali Abdullah (solithx.com) is the developer of WOS. WOS runs at onlineorder.pk. WOS was built for Webticians (webticians.com).
+
+---
+
+### Dietify — Nutrition & Health Tracker
+**Category:** Health & Wellness
+**Platform:** Android, iOS
+**Status:** Shipped
+
+A calm nutrition companion tracking meals, hydration, movement, and daily health choices. Connects to a Node.js backend.
+
+**Stack:** Flutter, Dart, Node.js backend
+**Portfolio:** https://solithx.com/projects/dietify
+
+---
+
+### ExpenseFlow — Personal Finance Manager
+**Category:** Personal Finance
+**Platform:** Android, iOS
+**Status:** Shipped
+
+A comprehensive offline money manager. Tracks income and expenses across multiple accounts and currencies, manages subscriptions, loans, and savings, handles professional cheque lifecycles, invoicing, and detailed financial statements. All data is stored on-device with no cloud dependency.
+
+**Technical scope:** Sole developer — design, architecture, development, Play Store and App Store release.
+**Stack:** Flutter, Dart, MySQL (local), Riverpod, Clean Architecture
+**Store:** https://play.google.com/store/apps/details?id=com.expensetracker.nextep.expenseflow
+**Portfolio:** https://solithx.com/projects/expenseflow
+
+---
+
+### All Languages Voice Translator
+**Category:** Language / AI / Communication
+**Platform:** Android, iOS
+**Status:** Shipped
+
+AI-powered multilingual translation with real-time voice conversation, camera-based text recognition, AI chat, and natural text-to-speech. Supports online and offline modes.
+
+**Stack:** Flutter, Dart, ML Kit, Tesseract, MySQL, Riverpod, Clean Architecture
+**Store (Android):** https://play.google.com/store/apps/details?id=com.nextep.alllanguage.translator.alllanguagetranslator
+**Portfolio:** https://solithx.com/projects/speak-and-translate
+
+---
+
+### Noor ul Quran — Islamic Companion
+**Category:** Faith / Lifestyle
+**Platform:** Android, iOS
+**Status:** Shipped
+**Downloads:** 10K+
+
+An all-in-one Islamic app with Quran reading, translations, audio recitation, offline 15- and 16-line formats, prayer times, next-prayer countdown, Ramadan sehri and iftar calendar, missed-fasts tracking, live Qibla, six Hadith books, Masnoon duas, tasbih, and bookmarks.
+
+**Stack:** Flutter, Dart
+**Store (Android):** https://play.google.com/store/apps/details?id=com.nextep.holyquran
+**Store (iOS):** https://apps.apple.com/us/app/noor-ul-quran/id1459991877
+
+---
+
+### Pet Care & My Buddy — Pet Health Tracker
+**Category:** Health / Lifestyle
+**Platform:** Android, iOS
+**Status:** Shipped
+
+Offline-first app for multi-pet households. Covers pet profiles, weight history, vaccine records, medication logs, symptom tracking, daily care routines, reminder scheduling, doctor contacts, and PDF health exports. Fully on-device.
+
+**Stack:** Flutter, SQLite
+**Store:** https://play.google.com/store/apps/details?id=com.petcare.dailycare
+
+---
+
+### QuickScan — QR & Barcode Scanner
+**Category:** Utility / Productivity
+**Platform:** Android (native)
+**Status:** Shipped
+**Downloads:** 10K+
+
+Native Android QR and barcode scanner with smart action routing — opens links, connects to Wi-Fi, drafts emails, saves contacts, adds calendar events, and more. Batch scanning, CSV export, scan history, and offline custom code generation. Built and released end-to-end.
+
+**Stack:** Android SDK, Google ML Kit, Camera
+**Store:** https://play.google.com/store/apps/details?id=quickscan
+
+---
+
+## Services Offered
+
+1. **Flutter Mobile App Development** — end-to-end Android and iOS apps from architecture through Play Store / App Store release
+2. **Node.js Backend Development** — REST APIs, database design, server-side systems, third-party integrations
+3. **Full-Stack SaaS Development** — web + mobile applications with admin panels and operational workflows
+4. **Offline-First Mobile Systems** — apps that work reliably without a network connection
+5. **App Maintenance & Feature Development** — ongoing development, version updates, and store management
+
+## Professional Context
+
+Hafiz Ali Abdullah works independently as ITHX, a software engineering brand focused on practical, production-quality software. The portfolio spans productivity, health, fintech, language tools, Islamic applications, pet care, and restaurant operations. All projects listed are shipped and available to users.
+
+For engagement, contract terms, or project scoping, visit https://solithx.com/contact or schedule directly at https://cal.com/hafiz-ali-abdullah-wb7fqf.

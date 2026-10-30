@@ -14,8 +14,10 @@ export const wosLinks = Object.freeze({
   adminPanel: 'https://onlineorder.pk/wos/admin',
   epos: 'https://onlineorder.pk/epos',
   customerWebsite: 'https://westcoastcoffee.pk/',
+  liveSystem: 'https://onlineorder.pk',
+  clientSite: 'https://webticians.com',
 });
 
 export const scheduleLink = 'https://cal.com/hafiz-ali-abdullah-wb7fqf';
 
-export const siteUrl = 'https://YOURDOMAIN.com';
+export const siteUrl = 'https://solithx.com';

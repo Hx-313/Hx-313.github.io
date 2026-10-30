@@ -68,7 +68,7 @@ export default function AboutSection({ headingTag = 'h2' } = {}) {
           setIsCounting(true);
 
           const startTime = performance.now();
-          const duration = 1200;
+          const duration = 600;
 
           const animateCounts = (now) => {
             const elapsed = Math.min((now - startTime) / duration, 1);
