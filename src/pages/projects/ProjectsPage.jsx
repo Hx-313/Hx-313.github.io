@@ -7,6 +7,7 @@ import { SEO_TEXT } from '../../core/constants/seo/seoText.js';
 import { showcaseProjects } from '../../data/projects.js';
 import ContactSection from '../../modules/contact/presentation/ContactSection.jsx';
 import SEO from '../../shared/seo/SEO.jsx';
+import { breadcrumbSchema, projectsItemListSchema } from '../../core/constants/seo/schemas.js';
 import './projects-page.css';
 
 const WHEEL_GESTURE_GAP = 60;
@@ -128,6 +129,14 @@ function ProjectCard({ project }) {
   );
 }
 
+const projectsSchemas = [
+  breadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Projects', url: '/projects' },
+  ]),
+  projectsItemListSchema(showcaseProjects.map(({ name, id }) => ({ name, id }))),
+];
+
 export default function ProjectsPage({ theme = 'dark' }) {
   const introRef = useRef(null);
   const featuredRef = useRef(null);
@@ -153,7 +162,7 @@ export default function ProjectsPage({ theme = 'dark' }) {
 
   return (
     <div className="projects-page" data-theme={theme}>
-      <SEO title={SEO_TEXT.projectsTitle} description={SEO_TEXT.projectsDescription} />
+      <SEO title={SEO_TEXT.projectsTitle} description={SEO_TEXT.projectsDescription} schemas={projectsSchemas} />
 
       <div className="projects-page__shell">
         <header className="projects-page__intro" ref={introRef}>

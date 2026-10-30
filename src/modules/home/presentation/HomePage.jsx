@@ -9,6 +9,7 @@ import CertificationsSection from './certifications/CertificationsSection.jsx';
 import SectionReveal from '../../../shared/motion/SectionReveal.jsx';
 import ContactSection from '../../contact/presentation/ContactSection.jsx';
 import SEO from '../../../shared/seo/SEO.jsx';
+import { profilePageSchema } from '../../../core/constants/seo/schemas.js';
 import { useCommandCenter } from '../../../hooks/useCommandCenter.js';
 import CosmicBackground from './CosmicBackground.jsx';
 import './home.css';
@@ -50,8 +51,9 @@ export default function HomePage({ targetSection = null }) {
   return (
     <>
       <SEO
-        title="Hafiz Ali Abdullah — Flutter & Node.js Developer | Mobile App & Backend Systems"
-        description="I'm Hafiz Ali Abdullah — a Flutter developer and Node.js backend engineer. I build production mobile apps for Android and iOS, plus the APIs and dashboards behind them. 15+ apps shipped, 100K+ downloads."
+        title="Hafiz Ali Abdullah — Flutter & Node.js Developer"
+        description="Hafiz Ali Abdullah — Flutter developer & Node.js engineer. Production apps for Android and iOS, plus APIs and dashboards. 15+ apps shipped, 100K+ downloads."
+        schema={profilePageSchema}
       />
       <div className="site-experience is-ready">
         <CosmicBackground />

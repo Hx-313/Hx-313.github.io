@@ -20,3 +20,8 @@ User-agent: CCBot
 Allow: /
 
 Sitemap: https://solithx.com/sitemap.xml
+
+# AI / LLM discovery
+# Summary profile:  https://solithx.com/llms.txt
+# Full profile:     https://solithx.com/llms-full.txt
+# Machine catalog:  https://solithx.com/ai-catalog.json

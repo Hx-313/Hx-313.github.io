@@ -2,25 +2,11 @@ import { useParams } from 'react-router-dom';
 import { projects } from '../../data/projects.js';
 import NotFound from '../not-found/NotFound.jsx';
 import SEO from '../../shared/seo/SEO.jsx';
+import { breadcrumbSchema, softwareAppSchema, wosEntitySchemas } from '../../core/constants/seo/schemas.js';
 
 const PROJECT_SLUG_ALIASES = Object.freeze({
   'speak-and-translate': 'speak',
 });
-
-const projectSchemaFor = (project) => {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
-    name: project.name,
-    applicationCategory: project.category,
-    operatingSystem: project.platforms.join(', '),
-    author: {
-      '@type': 'Person',
-      name: 'Hafiz Ali Abdullah',
-      url: 'https://solithx.com',
-    },
-  };
-};
 
 export default function ProjectDetailPage() {
   const { slug } = useParams();
@@ -28,12 +14,24 @@ export default function ProjectDetailPage() {
 
   if (!project) return <NotFound />;
 
+  const detailSchemas = slug === 'wos'
+    ? [...wosEntitySchemas]
+    : [
+        breadcrumbSchema([
+          { name: 'Home', url: '/' },
+          { name: 'Projects', url: '/projects' },
+          { name: project.name, url: `/projects/${slug}` },
+        ]),
+        softwareAppSchema({ ...project, id: slug }),
+      ];
+
   return (
     <>
       <SEO
         title={`${project.name} — Project by Hafiz Ali Abdullah`}
         description={project.description}
-        schema={projectSchemaFor(project)}
+        schemas={detailSchemas}
+        ogType="article"
       />
       <div style={{ minHeight: '80vh', padding: '120px 2rem 4rem', maxWidth: '1200px', margin: '0 auto' }}>
         <h1>{project.name}</h1>

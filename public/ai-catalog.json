@@ -1,0 +1,122 @@
+{
+  "version": "1.0",
+  "entity": {
+    "type": "Person",
+    "name": "Hafiz Ali Abdullah",
+    "alternateName": ["HX313", "HX"],
+    "url": "https://solithx.com",
+    "description": "Flutter developer and Node.js backend engineer building production mobile apps, APIs, and backend systems.",
+    "jobTitle": "Flutter Developer & Node.js Backend Engineer",
+    "location": "Pakistan",
+    "availability": "Freelance & contract",
+    "contact": "https://solithx.com/contact",
+    "profiles": {
+      "github": "https://github.com/Hx-313",
+      "linkedin": "https://www.linkedin.com/in/hafiz-ali-abdullah-660429207",
+      "instagram": "https://www.instagram.com/ithx313/",
+      "scheduling": "https://cal.com/hafiz-ali-abdullah-wb7fqf"
+    }
+  },
+  "skills": [
+    "Flutter",
+    "Dart",
+    "Node.js",
+    "Android Development",
+    "iOS Development",
+    "REST API Development",
+    "Mobile App Architecture",
+    "Offline-First Systems",
+    "SaaS Development",
+    "Full-Stack Development",
+    "SQLite",
+    "MySQL",
+    "Google ML Kit",
+    "Firebase",
+    "In-App Purchases"
+  ],
+  "projects": [
+    {
+      "name": "ReadMate",
+      "type": "Mobile App",
+      "category": "Productivity",
+      "platform": "Android",
+      "url": "https://solithx.com/projects",
+      "store": "https://play.google.com/store/apps/details?id=com.amabytes.alldocumentreader.office.viewer.filereader",
+      "status": "shipped"
+    },
+    {
+      "name": "WOS — Restaurant Operating System",
+      "type": "Full-Stack SaaS",
+      "category": "Restaurant Operations",
+      "platform": "Web, Mobile",
+      "developer": "Hafiz Ali Abdullah",
+      "developerUrl": "https://solithx.com",
+      "client": "Webticians",
+      "clientUrl": "https://webticians.com",
+      "liveUrl": "https://onlineorder.pk",
+      "surfaces": [
+        "https://onlineorder.pk/wos/admin",
+        "https://onlineorder.pk/epos",
+        "https://westcoastcoffee.pk/"
+      ],
+      "portfolioUrl": "https://solithx.com/projects/wos",
+      "status": "production"
+    },
+    {
+      "name": "Dietify",
+      "type": "Mobile App",
+      "category": "Health & Wellness",
+      "platform": "Android, iOS",
+      "url": "https://solithx.com/projects/dietify",
+      "status": "shipped"
+    },
+    {
+      "name": "ExpenseFlow",
+      "type": "Mobile App",
+      "category": "Personal Finance",
+      "platform": "Android, iOS",
+      "url": "https://solithx.com/projects/expenseflow",
+      "store": "https://play.google.com/store/apps/details?id=com.expensetracker.nextep.expenseflow",
+      "status": "shipped"
+    },
+    {
+      "name": "All Languages Voice Translator",
+      "type": "Mobile App",
+      "category": "Language, AI",
+      "platform": "Android, iOS",
+      "url": "https://solithx.com/projects/speak-and-translate",
+      "store": "https://play.google.com/store/apps/details?id=com.nextep.alllanguage.translator.alllanguagetranslator",
+      "status": "shipped"
+    },
+    {
+      "name": "Noor ul Quran",
+      "type": "Mobile App",
+      "category": "Islamic / Faith",
+      "platform": "Android, iOS",
+      "status": "shipped"
+    },
+    {
+      "name": "Pet Care & My Buddy",
+      "type": "Mobile App",
+      "category": "Health / Lifestyle",
+      "platform": "Android, iOS",
+      "store": "https://play.google.com/store/apps/details?id=com.petcare.dailycare",
+      "status": "shipped"
+    },
+    {
+      "name": "QuickScan",
+      "type": "Mobile App",
+      "category": "Utility",
+      "platform": "Android",
+      "status": "shipped"
+    }
+  ],
+  "metrics": {
+    "appsShipped": "15+",
+    "totalDownloads": "100K+"
+  },
+  "llmFiles": {
+    "summary": "https://solithx.com/llms.txt",
+    "full": "https://solithx.com/llms-full.txt"
+  }
+}

@@ -2,33 +2,109 @@
 
 > Flutter developer and Node.js backend engineer. I build production mobile apps for Android and iOS, plus the backend services, integrations, and dashboards a product needs.
 
-## Quick Facts
+## Identity
+
 - Name: Hafiz Ali Abdullah
-- Also known as: Mobile App Developer, Mobile Application Developer, Android Developer, iOS Developer, Flutter Developer, Node.js Developer, HX (HX313)
+- Handle: HX313
+- Brand: ITHX / Solithx
 - Role: Flutter Developer & Node.js Backend Engineer
 - Location: Pakistan
 - Availability: Freelance & contract work
 - Website: https://solithx.com
 - GitHub: https://github.com/Hx-313
 - LinkedIn: https://www.linkedin.com/in/hafiz-ali-abdullah-660429207
+- Instagram: https://www.instagram.com/ithx313/
+- Contact: https://solithx.com/contact
 
-## Technical Stack
-- Flutter, Dart (mobile)
-- Node.js (backend)
-- REST APIs
-- Android, iOS
-- Dashboard and workflow systems
+## Technical Expertise
 
-## Projects
-- Dietify: Flutter nutrition tracking app with Node.js backend
-- WOS: A flagship restaurant operating system integrating POS, web interfaces, and robust backend.
-- Speak & Translate: Real-time voice translation app with AI engine integration and offline speech models.
-- ExpenseFlow: A personal finance app featuring secure data tracking and intuitive dashboard visualizations.
+**Mobile (Primary)**
+- Flutter & Dart — production apps for Android and iOS
+- Custom document rendering engines
+- Offline-first architecture with SQLite and local databases
+- In-app purchases and subscriptions
+- Google ML Kit, Tesseract OCR, Firebase
 
-## Metrics
-- 15+ apps shipped
-- 100K+ total downloads
+**Backend & APIs**
+- Node.js — REST APIs, backend services, server-side architecture
+- MySQL, relational database design
+- Third-party integrations (payment gateways, delivery systems)
 
-## Contact
-- Email: aliabdullahva313@gmail.com
-- Website: https://solithx.com/contact
+**SaaS & Systems**
+- Full-stack web applications
+- Admin dashboards and operational systems
+- POS and restaurant management platforms
+
+## Shipped Projects
+
+### ReadMate — Mobile Office Suite
+Document reader and editor for Android. Supports PDF, Word, Excel, PowerPoint, EPUB, and more. Features custom document rendering engines. Version 2 adds a full XLSX editor with formulas and a Word editor.
+- Platform: Android
+- Store: https://play.google.com/store/apps/details?id=com.amabytes.alldocumentreader.office.viewer.filereader
+- Detail: https://solithx.com/projects
+
+### WOS — Restaurant Operating System
+Full-stack restaurant platform built by Hafiz Ali Abdullah for Webticians (webticians.com). The live system runs at onlineorder.pk.
+- Client: Webticians — https://webticians.com
+- Live system: https://onlineorder.pk
+- Admin panel: https://onlineorder.pk/wos/admin
+- ePOS terminal: https://onlineorder.pk/epos
+- Customer ordering web: https://westcoastcoffee.pk/
+- Surfaces: Admin dashboard, customer web, ePOS, order terminals
+- Stack: Node.js backend, Flutter mobile, web interfaces
+- Developer: Hafiz Ali Abdullah — https://solithx.com
+- Detail: https://solithx.com/projects/wos
+
+### Dietify — Nutrition & Health Tracker
+Flutter nutrition companion for meals, hydration, movement, and daily health habits.
+- Platform: Android, iOS
+- Stack: Flutter, Node.js backend
+- Detail: https://solithx.com/projects/dietify
+
+### ExpenseFlow — Personal Finance Manager
+Offline-first money manager for personal and business finances. Tracks income, expenses, subscriptions, loans, savings, invoices, and cheque lifecycles. No cloud dependency.
+- Platform: Android, iOS
+- Store: https://play.google.com/store/apps/details?id=com.expensetracker.nextep.expenseflow
+- Detail: https://solithx.com/projects/expenseflow
+
+### All Languages Voice Translator — AI Translation App
+Multilingual translator with real-time voice, camera, and text translation. Online and offline capable, powered by ML Kit and Tesseract.
+- Platform: Android, iOS
+- Store: https://play.google.com/store/apps/details?id=com.nextep.alllanguage.translator.alllanguagetranslator
+- Detail: https://solithx.com/projects/speak-and-translate
+
+### Noor ul Quran — Islamic Companion App
+Quran reading, prayer times, Qibla, Ramadan tools, Hadith books, Masnoon duas, and tasbih. 10K+ downloads.
+- Platform: Android, iOS
+- Store: https://play.google.com/store/apps/details?id=com.nextep.holyquran
+- App Store: https://apps.apple.com/us/app/noor-ul-quran/id1459991877
+
+### Pet Care & My Buddy — Pet Health Tracker
+Offline-first pet health app with profiles, vaccines, medications, routines, reminders, and PDF health exports.
+- Platform: Android, iOS
+- Store: https://play.google.com/store/apps/details?id=com.petcare.dailycare
+
+### QuickScan — QR & Barcode Scanner
+Fast QR and barcode scanner with batch scanning, custom code creation, and offline scan history. 10K+ downloads.
+- Platform: Android
+- Store: https://play.google.com/store/apps/details?id=quickscan
+
+## Services
+
+- Flutter mobile app development (Android & iOS)
+- Node.js backend and REST API development
+- Full-stack SaaS and business application development
+- Mobile app architecture and offline-first systems
+- App Store and Google Play deployment
+
+## Track Record
+
+- 15+ apps shipped to production
+- 100K+ total downloads across app portfolio
+- Clients across restaurant operations, productivity, health, and fintech
+
+## Engagement
+
+- Schedule a call: https://cal.com/hafiz-ali-abdullah-wb7fqf
+- Portfolio: https://solithx.com/projects
+- Extended info: https://solithx.com/llms-full.txt

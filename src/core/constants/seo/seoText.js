@@ -4,7 +4,7 @@ export const SEO_TEXT = Object.freeze({
     'Hafiz Ali Abdullah builds Flutter mobile applications, Node.js backends, APIs, dashboards, and connected operational systems.',
   projectsTitle: 'Projects by Hafiz Ali Abdullah — Flutter & Node.js Apps',
   projectsDescription:
-    'Selected work by Hafiz Ali Abdullah: ReadMate, ExpenseFlow, All Languages Voice Translator, Noor ul Quran, Pet Care & My Buddy, and QuickScan. Mobile apps for productivity, finance, communication, Islamic tools, offline pet care, and code scanning.',
+    'Flutter and Node.js apps by Hafiz Ali Abdullah: ReadMate, ExpenseFlow, Voice Translator, Noor ul Quran, Pet Care & QuickScan. Android, iOS, and web apps.',
   author: 'Hafiz Ali Abdullah',
   keywords: Object.freeze([
     'Flutter Developer',
