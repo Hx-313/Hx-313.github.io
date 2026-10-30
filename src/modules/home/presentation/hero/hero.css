@@ -27,19 +27,6 @@
   color: var(--color-hero-text);
 }
 
-.hero::before {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(to right, color-mix(in srgb, var(--color-accent) 5%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in srgb, var(--color-accent) 5%, transparent) 1px, transparent 1px);
-  background-size: 48px 48px;
-  content: '';
-  opacity: 0.5;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 16%, #000 76%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 16%, #000 76%, transparent 100%);
-  pointer-events: none;
-}
 
 .hero::after {
   position: absolute;
